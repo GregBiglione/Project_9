@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/property_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/property_image" />
+
+    <LinearLayout
+        android:id="@+id/property_linear_lyt"
+        app:layout_constraintStart_toEndOf="@id/property_image"
+        app:layout_constraintTop_toTopOf="@id/property_image"
+        app:layout_constraintBottom_toBottomOf="@id/property_image"
+        style="@style/property_linear_lyt_style">
+
+        <TextView
+            android:id="@+id/property_type"
+            app:layout_constraintStart_toEndOf="@+id/property_image"
+            app:layout_constraintTop_toTopOf="@id/property_image"
+            android:text="@string/property_type"
+            style="@style/type_style"/>
+
+        <TextView
+            android:id="@+id/property_neighborhood"
+            app:layout_constraintStart_toEndOf="@id/property_image"
+            app:layout_constraintTop_toBottomOf="@id/property_type"
+            android:text="@string/property_neighborhood"
+            style="@style/neighborhood_style"/>
+
+        <TextView
+            android:id="@+id/property_price"
+            app:layout_constraintStart_toEndOf="@id/property_image"
+            app:layout_constraintTop_toBottomOf="@id/property_neighborhood"
+            android:text="@string/property_price"
+            style="@style/price_style"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/property_hr"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/property_hr_style"/>
+
+</android.support.constraint.ConstraintLayout>

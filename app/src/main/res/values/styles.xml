@@ -8,4 +8,48 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--//////////////////////////////////// N Size /////////////////////////////////////////////-->
+
+    <style name="image_style">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">75dp</item>
+    </style>
+
+    <style name="property_linear_lyt_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="type_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="neighborhood_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="price_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="property_hr_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
 </resources>
