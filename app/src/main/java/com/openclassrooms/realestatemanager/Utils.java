@@ -23,6 +23,12 @@ public class Utils {
         return (int) Math.round(dollars * 0.812);
     }
 
+    //----------------------------------------------------------------------------------------------
+    //------------------- Convert € to $ -----------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    public static int convertEuroToDollar(int euros){ return (int) Math.round(euros * 1.186); }
+
     /**
      * Conversion de la date d'aujourd'hui en un format plus approprié
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
