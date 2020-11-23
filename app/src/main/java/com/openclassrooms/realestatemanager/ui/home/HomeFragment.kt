@@ -17,7 +17,7 @@ import com.openclassrooms.realestatemanager.model.Property
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-    //private lateinit var propertyRecyclerView: RecyclerView
+    private lateinit var propertyRecyclerView: RecyclerView
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -27,15 +27,15 @@ class HomeFragment : Fragment() {
         homeViewModel =
                 ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        //propertyRecyclerView = root.findViewById(R.id.property_recycler_view)
+        propertyRecyclerView = root.findViewById(R.id.property_recycler_view)
         return root
     }
-//
- //   private fun configurePropertyRecyclerView(){
- //       val listOfProperty = listOf<Property>() //<-- Temporary empty list if not app will crash
- //       propertyRecyclerView.adapter = PropertyAdapter(listOfProperty)
- //       propertyRecyclerView.layoutManager = LinearLayoutManager(activity)
- //       propertyRecyclerView.setHasFixedSize(true)
- //   }
-//
+
+    private fun configurePropertyRecyclerView(){
+        val listOfProperty = listOf<Property>() //<-- Temporary empty list if not app will crash
+        propertyRecyclerView.adapter = PropertyAdapter(listOfProperty)
+        propertyRecyclerView.layoutManager = LinearLayoutManager(activity)
+        propertyRecyclerView.setHasFixedSize(true)
+    }
+
 }
