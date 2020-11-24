@@ -1,8 +1,12 @@
 package com.openclassrooms.realestatemanager.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
-class Property(
+@Entity
+data class Property(
+        @PrimaryKey(autoGenerate = true)
         var id: Int,
         var photo1: String?, var descriptionPhoto1: String?,
         var photo2: String?, var descriptionPhoto2: String?,
