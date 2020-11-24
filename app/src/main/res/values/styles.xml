@@ -13,6 +13,7 @@
     <style name="image_style">
         <item name="android:layout_width">75dp</item>
         <item name="android:layout_height">75dp</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
     <style name="property_linear_lyt_style">

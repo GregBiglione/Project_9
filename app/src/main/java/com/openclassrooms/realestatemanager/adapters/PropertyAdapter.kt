@@ -98,7 +98,7 @@ class PropertyAdapter(private val propertyList: List<Property>)  : RecyclerView.
             holder.propertyAvailable.text = "Sold"
         }
         //------------------- Proximity points of interest -----------------------------------------
-        holder.propertyProximityPointsOfInterest.text = currentProperty.proximityPointsOfInterest
+        holder.propertyProximityPointsOfInterest.text = currentProperty.proximityPointsOfInterest.toString()
 
         //------------------- Entry date -----------------------------------------------------------
         holder.propertyEntryDate.text = currentProperty.entryDate.toString() //<--- Maybe user date converter here

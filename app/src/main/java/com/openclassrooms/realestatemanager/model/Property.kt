@@ -25,8 +25,8 @@ class Property(
         var description: String?,
         var status: Boolean?,
         var available: String?,
-        var proximityPointsOfInterest: String?,
-        var entryDate: Date?,
-        var saleDate: Date?,
+        var proximityPointsOfInterest: List<String>?,
+        var entryDate: Calendar?,
+        var saleDate: Calendar?,
         var agentInCharge: String?
 )

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.PropertyAdapter
 import com.openclassrooms.realestatemanager.model.Property
+import com.openclassrooms.realestatemanager.model.PropertyDataSource
 
 class HomeFragment : Fragment() {
 
@@ -28,14 +29,25 @@ class HomeFragment : Fragment() {
                 ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         propertyRecyclerView = root.findViewById(R.id.property_recycler_view)
+        configurePropertyRecyclerView()
         return root
     }
 
+    //----------------------------------------------------------------------------------------------
+    //------------------- Configure properties list ---------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Configure recyclerview ---------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
     private fun configurePropertyRecyclerView(){
-        val listOfProperty = listOf<Property>() //<-- Temporary empty list if not app will crash
+        //val listOfProperty = da //<-- Temporary empty list if not app will crash
+        val listOfProperty = PropertyDataSource.createPropertyDataSet()
         propertyRecyclerView.adapter = PropertyAdapter(listOfProperty)
         propertyRecyclerView.layoutManager = LinearLayoutManager(activity)
-        propertyRecyclerView.setHasFixedSize(true)
     }
 
 }
