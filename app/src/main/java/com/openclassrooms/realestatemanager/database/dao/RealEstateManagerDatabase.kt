@@ -13,6 +13,7 @@ abstract class RealEstateManagerDatabase: RoomDatabase() {
 
     //------------------- DAO ----------------------------------------------------------------------
     abstract fun propertyDao(): PropertyDao
+    // add agentDao
 
     //------------------- Singleton ----------------------------------------------------------------
     companion object{
@@ -28,7 +29,7 @@ abstract class RealEstateManagerDatabase: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                         context.applicationContext,
                         RealEstateManagerDatabase::class.java,
-                        "property_database"
+                        "property_database" // change name
                 )
                         .addCallback(prepopulate(context))
                         .build()
