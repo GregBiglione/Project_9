@@ -1,10 +1,13 @@
 package com.openclassrooms.realestatemanager.model
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity
+@Entity(foreignKeys = [ForeignKey(entity = Agent::class,
+                        parentColumns = ["id"],
+                        childColumns = ["agentId"])])
 data class Property(
         @PrimaryKey(autoGenerate = true)
         var id: Int,
@@ -32,5 +35,5 @@ data class Property(
         var proximityPointsOfInterest: List<String>?,
         var entryDate: Calendar?,
         var saleDate: Calendar?,
-        var agentInCharge: String?
+        var agentId: Int?
 )

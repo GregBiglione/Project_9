@@ -57,7 +57,7 @@ class PropertyDataSource {
                             listOf("Sea", "Shops", "Park"),
                             calendar(2020, 8, 19),
                             null,
-                            "Arnold Schwarzenegger"
+                            5
                     )
             )
             listOfProperty.add(
@@ -111,7 +111,7 @@ class PropertyDataSource {
                             listOf("Metro", "Shops", "Park"),
                             calendar(2020, 10, 20),
                             null,
-                            "Arnold Schwarzenegger"
+                            2
                     )
             )
             listOfProperty.add(
@@ -156,7 +156,7 @@ class PropertyDataSource {
                             listOf("Sea", "Shops", "Park"),
                             calendar(2020, 5, 15),
                             null,
-                            "Arnold Schwarzenegger"
+                            2
                     )
             )
             listOfProperty.add(
@@ -204,7 +204,7 @@ class PropertyDataSource {
                             listOf("Metro", "Shops", "Park", "School"),
                             calendar(2020, 5, 23),
                             null,
-                            "Arnold Schwarzenegger"
+                            3
                     )
             )
             listOfProperty.add(
@@ -250,7 +250,7 @@ class PropertyDataSource {
                             listOf("Metro", "Shops", "Park"),
                             calendar(2015, 5, 8),
                             null,
-                            "Arnold Schwarzenegger"
+                            4
                     )
             )
             listOfProperty.add(
@@ -294,7 +294,7 @@ class PropertyDataSource {
                             listOf("Swimming pool", "Sea", "Park"),
                             calendar(2019, 8, 19),
                             null,
-                            "Arnold Schwarzenegger"
+                            1
                     )
             )
             listOfProperty.add(
@@ -340,7 +340,7 @@ class PropertyDataSource {
                             listOf("Metro", "Shops", "Park"),
                             null,
                             calendar(2020, 9, 9),
-                            "Arnold Schwarzenegger"
+                            5
                     )
             )
             listOfProperty.add(
@@ -383,7 +383,7 @@ class PropertyDataSource {
                             listOf("Metro", "Shops", "Park", "School"),
                             calendar(2020, 5, 24),
                             null,
-                            "Arnold Schwarzenegger"
+                            4
                     )
             )
             listOfProperty.add(
@@ -431,7 +431,7 @@ class PropertyDataSource {
                             listOf("Metro", "Shops", "Park"),
                             calendar(2020, 7, 21),
                             null,
-                            "Arnold Schwarzenegger"
+                            5
                     )
             )
             return listOfProperty

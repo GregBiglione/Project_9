@@ -11,7 +11,7 @@ class AgentDataSource {
                             "Schwarzenegger",
                             "Arnold",
                             "+1 260 222 8751",
-                            "ascharzenegger79@gmail.com"
+                            "aschwarzenegger79@gmail.com"
                     )
             )
             listOfAgent.add(
