@@ -107,7 +107,7 @@ class PropertyAdapter(private val propertyList: List<Property>)  : RecyclerView.
         holder.propertySaleDate.text = currentProperty.saleDate.toString()
 
         //------------------- Agent in charge ------------------------------------------------------
-        holder.propertyAgentInCharge.text = currentProperty.agentInCharge
+        holder.propertyAgentInCharge.text = currentProperty.agentId.toString()
     }
 
     class PropertyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

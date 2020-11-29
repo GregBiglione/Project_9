@@ -5,44 +5,55 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.openclassrooms.realestatemanager.model.Agent
+import com.openclassrooms.realestatemanager.model.AgentDataSource
 import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.model.PropertyDataSource
 
-@Database(entities = [PropertyDataSource::class], version = 1, exportSchema = false)
+@Database(entities = [PropertyDataSource::class, AgentDataSource::class], version = 1, exportSchema = false)
 abstract class RealEstateManagerDatabase: RoomDatabase() {
 
     //------------------- DAO ----------------------------------------------------------------------
-    abstract fun propertyDao(): PropertyDao
-    // add agentDao
+    abstract val propertyDao: PropertyDao
+    abstract val agentDao: AgentDao
 
     //------------------- Singleton ----------------------------------------------------------------
     companion object{
         @Volatile
-        private var INSTANCE: RealEstateManagerDatabase? = null
-
-        fun getDatabase(context: Context): RealEstateManagerDatabase{
-            val tempInstance = INSTANCE
-            if (tempInstance != null){
-                return tempInstance
-            }
+        private var INSTANCE : RealEstateManagerDatabase? = null
+        fun getInstance(context: Context): RealEstateManagerDatabase{
             synchronized(this){
-                val instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        RealEstateManagerDatabase::class.java,
-                        "property_database" // change name
-                )
-                        .addCallback(prepopulate(context))
-                        .build()
-                INSTANCE = instance
+                var  instance = INSTANCE
+                if (instance == null){
+                    instance = Room.databaseBuilder(
+                            context.applicationContext,
+                            RealEstateManagerDatabase::class.java,
+                            "RealEstateManager_database"
+                    )
+                            .addCallback(prepopulate(context))
+                            .build()
+                }
                 return instance
             }
         }
 
-        private fun prepopulate(context: Context): Callback {
-            return object: Callback(){
+        //------------------------------------------------------------------------------------------
+        //------------------- Prepopulate database -------------------------------------------------
+        //------------------------------------------------------------------------------------------
+
+        private fun prepopulate(context: Context): RoomDatabase.Callback {
+            return object : RoomDatabase.Callback(){
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
-                    val propertyDao = getDatabase(context).propertyDao()
+
+                    val propertyDao = getInstance(context).propertyDao
+                    val agentDao = getInstance(context).agentDao
+
+                    //--------- Agents -------------------------------------------------------------
+                    val agents: ArrayList<Agent> = AgentDataSource.createAgentDataSet()
+                    for (a in agents){
+                        agentDao.createAgent(a)
+                    }
 
                     //--------- Properties ---------------------------------------------------------
                     val properties: ArrayList<Property> = PropertyDataSource.createPropertyDataSet()

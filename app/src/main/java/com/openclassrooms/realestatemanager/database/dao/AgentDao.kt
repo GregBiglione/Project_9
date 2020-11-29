@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.openclassrooms.realestatemanager.model.Agent
 
+@Dao
 interface AgentDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -15,6 +16,6 @@ interface AgentDao {
     @Update
     fun updateAgent(agent: Agent)
 
-    @Query("DELETE FROM Agent WHERE id = id")
-    fun deleteAgent(id: Int)
+    @Delete
+    fun deleteAgent(agent: Agent)
 }
