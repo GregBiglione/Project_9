@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.PropertyAdapter
 import com.openclassrooms.realestatemanager.model.PropertyDataSource
-import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel
+import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var propertyRecyclerView: RecyclerView
-    private lateinit var propertyViewModel: PropertyViewModel
+    private lateinit var propertyViewModel: MainViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,

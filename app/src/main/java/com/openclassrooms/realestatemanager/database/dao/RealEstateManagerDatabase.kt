@@ -41,8 +41,8 @@ abstract class RealEstateManagerDatabase: RoomDatabase() {
         //------------------- Prepopulate database -------------------------------------------------
         //------------------------------------------------------------------------------------------
 
-        private fun prepopulate(context: Context): RoomDatabase.Callback {
-            return object : RoomDatabase.Callback(){
+        private fun prepopulate(context: Context): Callback {
+            return object : Callback(){
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
 
