@@ -32,8 +32,12 @@ data class Property(
         var description: String?,
         var status: Boolean?,
         var available: String?,
-        var proximityPointsOfInterest: List<String>?,
-        var entryDate: Calendar?,
-        var saleDate: Calendar?,
+        var proximityPointsOfInterest1: String?,
+        var proximityPointsOfInterest2: String?,
+        var proximityPointsOfInterest3: String?,
+        var proximityPointsOfInterest4: String?,
+        var proximityPointsOfInterest5: String?,
+        var entryDate: Long?,
+        var saleDate: Long?,
         var agentId: Int?
 )

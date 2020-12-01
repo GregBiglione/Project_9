@@ -98,7 +98,11 @@ class PropertyAdapter(private val propertyList: List<Property>)  : RecyclerView.
             holder.propertyAvailable.text = "Sold"
         }
         //------------------- Proximity points of interest -----------------------------------------
-        holder.propertyProximityPointsOfInterest.text = currentProperty.proximityPointsOfInterest.toString()
+        holder.propertyProximityPointsOfInterest1.text = currentProperty.proximityPointsOfInterest1
+        holder.propertyProximityPointsOfInterest2.text = currentProperty.proximityPointsOfInterest2
+        holder.propertyProximityPointsOfInterest3.text = currentProperty.proximityPointsOfInterest3
+        holder.propertyProximityPointsOfInterest4.text = currentProperty.proximityPointsOfInterest4
+        holder.propertyProximityPointsOfInterest5.text = currentProperty.proximityPointsOfInterest5
 
         //------------------- Entry date -----------------------------------------------------------
         holder.propertyEntryDate.text = currentProperty.entryDate.toString() //<--- Maybe user date converter here
@@ -154,7 +158,11 @@ class PropertyAdapter(private val propertyList: List<Property>)  : RecyclerView.
         //------------------- Status ---------------------------------------------------------------
         var propertyAvailable: TextView = itemView.findViewById(R.id.property_available)
         //------------------- Proximity points of interest -----------------------------------------
-        var propertyProximityPointsOfInterest: TextView = itemView.findViewById(R.id.property_point_of_interest)
+        var propertyProximityPointsOfInterest1: TextView = itemView.findViewById(R.id.property_point_of_interest_one)
+        var propertyProximityPointsOfInterest2: TextView = itemView.findViewById(R.id.property_point_of_interest_two)
+        var propertyProximityPointsOfInterest3: TextView = itemView.findViewById(R.id.property_point_of_interest_three)
+        var propertyProximityPointsOfInterest4: TextView = itemView.findViewById(R.id.property_point_of_interest_four)
+        var propertyProximityPointsOfInterest5: TextView = itemView.findViewById(R.id.property_point_of_interest_five)
         //------------------- Entry date -----------------------------------------------------------
         var propertyEntryDate: TextView = itemView.findViewById(R.id.property_property_entry_date)
         //------------------- Sale date ------------------------------------------------------------

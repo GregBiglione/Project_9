@@ -10,7 +10,7 @@ import com.openclassrooms.realestatemanager.model.AgentDataSource
 import com.openclassrooms.realestatemanager.model.Property
 import com.openclassrooms.realestatemanager.model.PropertyDataSource
 
-@Database(entities = [PropertyDataSource::class, AgentDataSource::class], version = 1, exportSchema = false)
+@Database(entities = [Property::class, Agent::class], version = 1, exportSchema = false)
 abstract class RealEstateManagerDatabase: RoomDatabase() {
 
     //------------------- DAO ----------------------------------------------------------------------

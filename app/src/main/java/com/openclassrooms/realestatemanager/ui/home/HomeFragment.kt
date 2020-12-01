@@ -10,14 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.PropertyAdapter
+import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.PropertyDataSource
+import com.openclassrooms.realestatemanager.repositories.AgentRepository
+import com.openclassrooms.realestatemanager.repositories.PropertyRepository
+import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var propertyRecyclerView: RecyclerView
-    private lateinit var propertyViewModel: MainViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -29,6 +34,7 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         propertyRecyclerView = root.findViewById(R.id.property_recycler_view)
         //initPropertyViewModel()
+        configureViewModel()
         configurePropertyRecyclerView()
         return root
     }
@@ -51,7 +57,16 @@ class HomeFragment : Fragment() {
     }
 
     //----------------------------------------------------------------------------------------------
-    //------------------- Initialize PropertyViewModel ---------------------------------------------
+    //------------------- Configure ViewModel ------------------------------------------------------
     //----------------------------------------------------------------------------------------------
+
+    private fun configureViewModel(){
+        val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
+        val propertyDao = RealEstateManagerDatabase.getInstance(requireContext()).propertyDao
+        val agentRepository = AgentRepository(agentDao)
+        val propertyRepository = PropertyRepository(propertyDao)
+        val factory = ViewModelFactory(agentRepository, propertyRepository)
+        mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+    }
 
 }

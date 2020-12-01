@@ -1,17 +1,9 @@
 package com.openclassrooms.realestatemanager.model
 
-import java.util.*
 import kotlin.collections.ArrayList
 
 class PropertyDataSource {
     companion object{
-
-        private fun calendar(year: Int, month: Int, date: Int): Calendar? {
-            val calendar = Calendar.getInstance()
-            calendar.set(year, month, date)
-            return calendar
-        }
-
         fun createPropertyDataSet(): ArrayList<Property>{
             val listOfProperty = ArrayList<Property>()
             listOfProperty.add(
@@ -54,8 +46,12 @@ class PropertyDataSource {
                                     "Four floors of the tower are devoted to state-of-the-art amenities: a huge fitness center, the beautifully appointed Water Club, unique childrens amenities, and the West Street Observatory, a spectacular 64th floor outdoor entertainment space with seemingly endless views of New York City and beyond. penthouse.",
                             true,
                             "Available",
-                            listOf("Sea", "Shops", "Park"),
-                            calendar(2020, 8, 19),
+                            "Sea",
+                            "Shops",
+                            "Park",
+                            null,
+                            null,
+                            1597844394,
                             null,
                             5
                     )
@@ -108,8 +104,12 @@ class PropertyDataSource {
                                     "\n",
                             true,
                             "Available",
-                            listOf("Metro", "Shops", "Park"),
-                            calendar(2020, 10, 20),
+                            "Metro",
+                            "Shops",
+                            "Park",
+                            null,
+                            null,
+                            1603204794,
                             null,
                             2
                     )
@@ -153,8 +153,12 @@ class PropertyDataSource {
                                     "Central Park will offer the most elevated residences in New York City. The towers vast footprint offered the unique opportunity to create the most gracious layouts and exceptional floor plans. The definitive aspect of living in Central Park Tower is the extraordinary views. The building was designed from the inside out to maximize these incomparable panoramas.",
                             true,
                             "Available",
-                            listOf("Sea", "Shops", "Park"),
-                            calendar(2020, 5, 15),
+                            "Sea",
+                            "Shops",
+                            "Park",
+                            "School",
+                            null,
+                            1589539194,
                             null,
                             2
                     )
@@ -201,8 +205,12 @@ class PropertyDataSource {
                                     "Translated with www.DeepL.com/Translator (free version)",
                             true,
                             "Available",
-                            listOf("Metro", "Shops", "Park", "School"),
-                            calendar(2020, 5, 23),
+                            "Metro",
+                            "Shops",
+                            "Park",
+                            "School",
+                            "Hospital",
+                            1590251994,
                             null,
                             3
                     )
@@ -247,8 +255,12 @@ class PropertyDataSource {
                                     "IN VIDEO shoots for MAJOR AND PRINCIPAL fashion brands, the purchase of this special home means that you will be buying a property that you can't find anywhere else in the world. You'll be buying a truly unique piece OF ART, ONE OF MANHATTAN'S CERTIFIED TREASURES and in the historic neighborhood of one of the most famous and sought-after neighborhoods in the world.",
                             true,
                             "Available",
-                            listOf("Metro", "Shops", "Park"),
-                            calendar(2015, 5, 8),
+                            "Metro",
+                            "Restaurant",
+                            "Metro",
+                            "Shops",
+                            "Park",
+                            1588945194,
                             null,
                             4
                     )
@@ -291,8 +303,12 @@ class PropertyDataSource {
                                     "Hammam basketball court. Walking distance to an upscale outdoor shopping mall Walking distance to a private preschool to grade 12 Exterior Smart Corinthian Stone House House with interior and exterior security Crestron System Built for the latest generations",
                             true,
                             "Available",
-                            listOf("Swimming pool", "Sea", "Park"),
-                            calendar(2019, 8, 19),
+                            "Swimming pool",
+                            "Sea",
+                            "Park",
+                            null,
+                            null,
+                            1597846674,
                             null,
                             1
                     )
@@ -337,9 +353,13 @@ class PropertyDataSource {
                                     "This property is in pristine condition and has thru-the-wall air conditioning. Pet friendly building. Flip tax: 3% by purchaser. Built in 1907, 901 Lexington Avenue was designed by George Mott Pollard, the renowned architect of the Hotel des Artistes. In addition to a full-time doorman/elevator man, there is a live-in superintendent. The building has a bike room, a laundry and private storage bins for tenants in the basement.",
                             true,
                             "Sold",
-                            listOf("Metro", "Shops", "Park"),
+                            "Metro",
+                            "Shops",
+                            "Park",
                             null,
-                            calendar(2020, 9, 9),
+                            null,
+                            null,
+                            1599661734,
                             5
                     )
             )
@@ -380,8 +400,11 @@ class PropertyDataSource {
                                     "West 53 combines world-class service and unique privileges with architectural distinction. The suite of in-house services and amenities include a 24-hour doorman and concierge, porter services, elevator starter, and 65-foot lap pool, squash court, golf simulator, private screening room, and a double height lounge with private dining room overlooking Central Park. Residents will also receive an exclusive Benefactor Membership to The Museum of Modern Art downstairs.",
                             true,
                             "Available",
-                            listOf("Metro", "Shops", "Park", "School"),
-                            calendar(2020, 5, 24),
+                            "Metro",
+                            "Shops",
+                            "Park", "School",
+                            null,
+                            1590330954,
                             null,
                             4
                     )
@@ -428,8 +451,12 @@ class PropertyDataSource {
                                     "There is a large closet and storage space throughout the apartment. Included in this offer is a separate studio apartment on the third floor, perfect for staff or guests or as a private home office, and it also includes an individual wine storage unit. 515 Park Avenue is one of Manhattan's most sought-after condominiums and is perfectly positioned at the corner of Park Avenue and 60th Street.",
                             true,
                             "Available",
-                            listOf("Metro", "Shops", "Park"),
-                            calendar(2020, 7, 21),
+                            "Metro",
+                            "Shops",
+                            "Park",
+                            null,
+                            null,
+                            1595339154,
                             null,
                             5
                     )

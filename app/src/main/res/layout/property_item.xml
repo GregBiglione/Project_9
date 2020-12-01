@@ -277,7 +277,39 @@
     <!--///////////////////// Hidden proximity point of interest ////////////////////////////////-->
 
     <TextView
-        android:id="@+id/property_point_of_interest"
+        android:id="@+id/property_point_of_interest_one"
+        app:layout_constraintStart_toEndOf="@+id/property_first_image"
+        app:layout_constraintTop_toTopOf="@id/property_first_image"
+        android:text="@string/property_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/property_point_of_interest_two"
+        app:layout_constraintStart_toEndOf="@+id/property_first_image"
+        app:layout_constraintTop_toTopOf="@id/property_first_image"
+        android:text="@string/property_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/property_point_of_interest_three"
+        app:layout_constraintStart_toEndOf="@+id/property_first_image"
+        app:layout_constraintTop_toTopOf="@id/property_first_image"
+        android:text="@string/property_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/property_point_of_interest_four"
+        app:layout_constraintStart_toEndOf="@+id/property_first_image"
+        app:layout_constraintTop_toTopOf="@id/property_first_image"
+        android:text="@string/property_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/property_point_of_interest_five"
         app:layout_constraintStart_toEndOf="@+id/property_first_image"
         app:layout_constraintTop_toTopOf="@id/property_first_image"
         android:text="@string/property_type"
