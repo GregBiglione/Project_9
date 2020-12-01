@@ -8,7 +8,6 @@ class PropertyDataSource {
             val listOfProperty = ArrayList<Property>()
             listOfProperty.add(
                     Property(
-                            1,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-b2660000000001e2000157b5fd0a-31614642.jpg",
                             "Living room",
                             "https://pic.le-cdn.com/thumbs/1024x768/04/2/properties/Property-b2660000000001e2000257b5fd0a-31614642.jpg",
@@ -58,7 +57,6 @@ class PropertyDataSource {
             )
             listOfProperty.add(
                     Property(
-                            2,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/4/properties/Property-431f0000000005d2000a5f9be394-97656643.jpg",
                             "Living room",
                             "https://fr.luxuryestate.com/p97656643-appartement-en-vente-new-york",
@@ -116,7 +114,6 @@ class PropertyDataSource {
             )
             listOfProperty.add(
                     Property(
-                            3,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-d7aa00000000054e00055fa5bc67-89041623.jpg",
                             "Living romm",
                             "https://pic.le-cdn.com/thumbs/1024x768/04/9/properties/Property-d7aa00000000054e00065ebe7ef0-89041623.jpg",
@@ -165,7 +162,6 @@ class PropertyDataSource {
             )
             listOfProperty.add(
                     Property(
-                            4,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-e79900000000055400015ec8cf50-89430503.jpg",
                             "Terrace",
                             "https://pic.le-cdn.com/thumbs/1024x768/04/2/properties/Property-e79900000000055400025ec8cf50-89430503.jpg",
@@ -217,7 +213,6 @@ class PropertyDataSource {
             )
             listOfProperty.add(
                     Property(
-                            5,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-b68c00000000011d0003554b9f71-18713782.jpg",
                             "Kitchen",
                             "https://pic.le-cdn.com/thumbs/1024x768/04/6/properties/Property-b68c00000000011d0007554b9f71-18713782.jpg",
@@ -267,7 +262,6 @@ class PropertyDataSource {
             )
             listOfProperty.add(
                     Property(
-                            6,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-537600000000049900015d64ea56-77166163.jpg",
                             "Facade",
                             "https://pic.le-cdn.com/thumbs/1024x768/04/3/properties/Property-537600000000049900025d64e93a-77166163.jpg",
@@ -315,7 +309,6 @@ class PropertyDataSource {
             )
             listOfProperty.add(
                     Property(
-                            7,
                             "https://pic.le-cdn.com/thumbs/1024x768/08/1/properties/Property-0824a142bb3c7a06fe680fc2d4fc1840-94891005.jpg",
                             "Living room",
                             "https://pic.le-cdn.com/thumbs/1024x768/08/7/properties/Property-bf6e860a639e4e8c05652cf22fc57f91-94891005.jpg",
@@ -365,7 +358,6 @@ class PropertyDataSource {
             )
             listOfProperty.add(
                     Property(
-                            8,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/4/properties/Property-0b8e00000000055500035eca19cc-89493003.jpg",
                             "Living room",
                             "https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-0b8e00000000055500045eca19cc-89493003.jpg",
@@ -411,7 +403,6 @@ class PropertyDataSource {
             )
             listOfProperty.add(
                     Property(
-                            9,
                             "https://pic.le-cdn.com/thumbs/1024x768/794/6/properties/Property-7c963a464e52f0a0eeb1b6e7eb447a94-92568645.jpg",
                             "Living room",
                             "https://pic.le-cdn.com/thumbs/1024x768/794/9/properties/Property-69b030422e7b5797b5d1ed2d7a7a4cad-92568645.jpg",

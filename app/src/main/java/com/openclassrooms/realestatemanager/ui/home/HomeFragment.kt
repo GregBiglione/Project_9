@@ -15,7 +15,6 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.PropertyDataSource
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.PropertyRepository
-import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
@@ -33,7 +32,6 @@ class HomeFragment : Fragment() {
                 ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         propertyRecyclerView = root.findViewById(R.id.property_recycler_view)
-        //initPropertyViewModel()
         configureViewModel()
         configurePropertyRecyclerView()
         return root
@@ -50,8 +48,7 @@ class HomeFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun configurePropertyRecyclerView(){
-        //val listOfProperty = da //<-- Temporary empty list if not app will crash
-        val listOfProperty = PropertyDataSource.createPropertyDataSet()
+        val listOfProperty = PropertyDataSource.createPropertyDataSet() //<-- Temporary list with no data from database
         propertyRecyclerView.adapter = PropertyAdapter(listOfProperty)
         propertyRecyclerView.layoutManager = LinearLayoutManager(activity)
     }

@@ -9,8 +9,6 @@ import java.util.*
                         parentColumns = ["id"],
                         childColumns = ["agentId"])])
 data class Property(
-        @PrimaryKey(autoGenerate = true)
-        var id: Int,
         var photo1: String?, var descriptionPhoto1: String?,
         var photo2: String?, var descriptionPhoto2: String?,
         var photo3: String?, var descriptionPhoto3: String?,
@@ -40,4 +38,7 @@ data class Property(
         var entryDate: Long?,
         var saleDate: Long?,
         var agentId: Int?
-)
+){
+        @PrimaryKey(autoGenerate = true)
+        var id: Int? = null
+}
