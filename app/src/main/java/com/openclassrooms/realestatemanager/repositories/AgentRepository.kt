@@ -7,6 +7,10 @@ class AgentRepository(private val agentDao: AgentDao) {
 
     val getAllAgents = agentDao.getAllAgents()
 
+    fun getAgent(id: Int){
+        agentDao.getAgent(id)
+    }
+
     fun createAgent(agent: Agent){
         agentDao.createAgent(agent)
     }

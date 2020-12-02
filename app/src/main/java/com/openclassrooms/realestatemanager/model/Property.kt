@@ -22,7 +22,7 @@ data class Property(
         var typeOfProperty: String?,
         var neighborhood: String?,
         var address: String?,
-        var price: Int?,
+        var price: Long?,
         var surface: Int?,
         var numberOfRooms: Int?,
         var numberOfBathRooms: Int?,
@@ -37,8 +37,8 @@ data class Property(
         var proximityPointsOfInterest5: String?,
         var entryDate: Long?,
         var saleDate: Long?,
-        var agentId: Int?
+        var agentId: Long?
 ){
         @PrimaryKey(autoGenerate = true)
-        var id: Int? = null
+        var id: Long? = null
 }

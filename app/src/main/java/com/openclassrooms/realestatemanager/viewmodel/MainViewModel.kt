@@ -14,6 +14,8 @@ class MainViewModel(private val agentRepository: AgentRepository, private val pr
     val properties = propertyRepository.getAllProperties
 
     //------------------- Agents -------------------------------------------------------------------
+    fun getAgent(id: Int) = viewModelScope.launch { agentRepository.getAgent(id) }
+
     fun createAgent(agent: Agent) = viewModelScope.launch { agentRepository.createAgent(agent) }
 
     fun updateAgent(agent: Agent) = viewModelScope.launch { agentRepository.updateAgent(agent) }
@@ -21,6 +23,8 @@ class MainViewModel(private val agentRepository: AgentRepository, private val pr
     fun deleteAgent(agent: Agent) = viewModelScope.launch { agentRepository.deleteAgent(agent) }
 
     //------------------- Properties ---------------------------------------------------------------
+    fun getProperty(id: Int) = viewModelScope.launch { propertyRepository.getProperty(id) }
+
     fun createProperty(property: Property) = viewModelScope.launch { propertyRepository.createProperty(property) }
 
     fun updateProperty(property: Property) = viewModelScope.launch {  propertyRepository.updateProperty(property)  }

@@ -13,6 +13,9 @@ interface AgentDao {
     @Query("SELECT * FROM Agent")
     fun getAllAgents(): LiveData<List<Agent>>
 
+    @Query("SELECT * FROM agent WHERE id = :id")
+    fun getAgent(id: Int): LiveData<List<Agent>>
+
     @Update
     fun updateAgent(agent: Agent)
 

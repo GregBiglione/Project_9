@@ -7,6 +7,10 @@ class PropertyRepository(private val propertyDao: PropertyDao) {
 
     val getAllProperties = propertyDao.getAllProperties()
 
+    fun getProperty(id: Int){
+        propertyDao.getProperty(id)
+    }
+
     fun createProperty(property: Property){
         propertyDao.createProperty(property)
     }
