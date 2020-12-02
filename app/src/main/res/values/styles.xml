@@ -10,6 +10,7 @@
 
     <!--//////////////////////////////////// N Size /////////////////////////////////////////////-->
 
+    <!-- Home Fragment -->
     <style name="image_style">
         <item name="android:layout_width">75dp</item>
         <item name="android:layout_height">75dp</item>
@@ -51,6 +52,19 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <!-- Add Agent Fragment -->
+    <style name="agent_photo_style">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="agent_first_name_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">15dp</item>
     </style>
 
 </resources>

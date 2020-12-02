@@ -1,10 +1,10 @@
-package com.openclassrooms.realestatemanager.ui.gallery
+package com.openclassrooms.realestatemanager.ui.add_agent
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
+class AddAgentViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is gallery Fragment"
