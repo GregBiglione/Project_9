@@ -28,5 +28,4 @@ class MainViewModel(private val agentRepository: AgentRepository, private val pr
     fun createProperty(property: Property) = viewModelScope.launch { propertyRepository.createProperty(property) }
 
     fun updateProperty(property: Property) = viewModelScope.launch {  propertyRepository.updateProperty(property)  }
-
 }
