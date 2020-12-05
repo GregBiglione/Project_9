@@ -29,7 +29,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:contentDescription="@string/agent_photo"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/colorPrimary"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/image_view_border_gray"
                 android:src="@drawable/ic_baseline_person_24"
                 style="@style/agent_photo_style"/>
 

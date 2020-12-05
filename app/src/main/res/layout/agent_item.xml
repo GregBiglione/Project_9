@@ -28,7 +28,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                style="@style/agent_item_l_lyt_style">
 
                 <TextView
                     android:id="@+id/agent_item_first_name"
@@ -38,14 +39,15 @@
                 <TextView
                     android:id="@+id/agent_item_name"
                     android:text="@string/name"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     style="@style/agent_item_style"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                style="@style/agent_item_l_lyt_style">
 
                 <TextView
                     android:id="@+id/agent_item_phone"
@@ -59,13 +61,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:gravity="end">
+                    android:gravity="end"
+                    style="@style/agent_item_l_lyt_style">
 
                     <ImageButton
                         android:id="@+id/agent_item_update_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginEnd="6dp"
                         android:background="@null"
                         android:src="@drawable/ic_baseline_edit_24"
                         android:gravity="end"/>
@@ -74,7 +77,7 @@
                         android:id="@+id/item_list_delete_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="6dp"
                         android:background="@null"
                         android:src="@drawable/ic_baseline_delete_24"
                         android:gravity="end"/>
@@ -85,9 +88,9 @@
             <TextView
                 android:id="@+id/agent_item_email"
                 android:text="@string/mail"
-                style="@style/agent_item_style"
                 app:drawableStartCompat="@drawable/ic_baseline_email_24"
-                android:drawablePadding="5dp"/>
+                android:drawablePadding="5dp"
+                style="@style/agent_item_style"/>
         </LinearLayout>
 
     </RelativeLayout>

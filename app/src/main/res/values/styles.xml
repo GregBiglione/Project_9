@@ -56,8 +56,8 @@
 
     <!-- Add Agent Fragment -->
     <style name="agent_photo_style">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">120dp</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
 
@@ -69,8 +69,8 @@
 
     <!-- Add Agent item -->
     <style name="agent_item_image_style">
-        <item name="android:layout_width">60dp</item>
-        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
         <item name="android:layout_marginEnd">8dp</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
@@ -90,6 +90,10 @@
         <item name="android:layout_weight">0.5</item>
         <item name="android:textSize">18sp</item>
         <item name="android:padding">15sp</item>
+    </style>
+
+    <style name="agent_item_l_lyt_style">
+        <item name="android:layout_marginBottom">2dp</item>
     </style>
 
 </resources>
