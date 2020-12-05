@@ -113,4 +113,5 @@
     <string name="mail">Email</string>
     <string name="add">Add</string>
     <string name="delete">Delete</string>
+    <string name="permission_denied">Permission denied</string>
 </resources>
