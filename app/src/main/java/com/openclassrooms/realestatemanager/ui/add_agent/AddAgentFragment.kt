@@ -1,13 +1,16 @@
 package com.openclassrooms.realestatemanager.ui.add_agent
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -179,19 +182,19 @@ class AddAgentFragment : Fragment() {
         val email: String = agentEmail.text.toString().trim()
 
         if(firstName.isEmpty()){
-            agentFirstName.error = "Enter a first name"
+            agentFirstName.error = getString(R.string.enter_first_name)
         }
 
         if(name.isEmpty()){
-            agentName.error = "Enter a name"
+            agentName.error = getString(R.string.enter_name)
         }
 
         if(phone.isEmpty()){
-            agentPhone.error = "Enter a phone number"
+            agentPhone.error = getString(R.string.enter_phone)
         }
 
         if(email.isEmpty()){
-            agentEmail.error = "Enter an email"
+            agentEmail.error = getString(R.string.enter_email)
         }
 
         addAgent(agent = Agent(id, photo, firstName, name, phone, email))
@@ -200,6 +203,16 @@ class AddAgentFragment : Fragment() {
     private fun addAgent(agent: Agent) {
         mainViewModel.createAgent(agent)
         activity?.showSuccessToast("Welcome " + agent.firstName, Toast.LENGTH_SHORT, true)
+        closeKeyboard(agentEmail)
 
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Hide keyboard ------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun closeKeyboard(view: View){
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
