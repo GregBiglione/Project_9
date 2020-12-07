@@ -13,10 +13,10 @@
     <string name="menu_home">Real Estate Manager</string>
     <string name="menu_add_agent">Add agent</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="property_type">Property type</string>
-    <string name="property_neighborhood">Property neighborhood</string>
-    <string name="property_price">50,000,000$</string>
-    <string name="property_image">property_image</string>
+    <string name="house_type">Property type</string>
+    <string name="house_neighborhood">Property neighborhood</string>
+    <string name="house_price">50,000,000$</string>
+    <string name="house_image">property_image</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

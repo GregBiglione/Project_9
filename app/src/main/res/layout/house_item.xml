@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/house_first_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image" />
+
+    <LinearLayout
+        android:id="@+id/house_linear_lyt"
+        app:layout_constraintStart_toEndOf="@id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        app:layout_constraintBottom_toBottomOf="@id/house_first_image"
+        style="@style/house_linear_lyt_style">
+
+        <TextView
+            android:id="@+id/house_type"
+            app:layout_constraintStart_toEndOf="@+id/house_first_image"
+            app:layout_constraintTop_toTopOf="@id/house_first_image"
+            android:text="@string/house_type"
+            style="@style/type_style"/>
+
+        <TextView
+            android:id="@+id/house_neighborhood"
+            app:layout_constraintStart_toEndOf="@id/house_first_image"
+            app:layout_constraintTop_toBottomOf="@id/house_first_image"
+            android:text="@string/house_neighborhood"
+            style="@style/neighborhood_style"/>
+
+        <TextView
+            android:id="@+id/house_price"
+            app:layout_constraintStart_toEndOf="@id/house_first_image"
+            app:layout_constraintTop_toBottomOf="@id/house_neighborhood"
+            android:text="@string/house_price"
+            style="@style/price_style"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/house_hr"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/house_hr_style"/>
+
+    <!--///////////////////// Hidden values /////////////////////////////////////////////////////-->
+
+    <!--///////////////////// Hidden images /////////////////////////////////////////////////////-->
+    <ImageView
+        android:id="@+id/house_second_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/house_third_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/house_fourth_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/house_fifth_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/house_sixth_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/house_seventh_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/house_eighth_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/house_ninth_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/house_tenth_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden image description //////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/description_first_image"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/description_second_image"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/description_third_image"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/description_fourth_image"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/description_fifth_image"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/description_sixth_image"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/description_seventh_image"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/description_eighth_image"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/description_ninth_image"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/description_tenth_image"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden address ////////////////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_address"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden surface ////////////////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_surface"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden number of rooms ////////////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_number_of_rooms"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden number of bathrooms ////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_number_of_bathrooms"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden number of bedrooms /////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_number_of_bedrooms"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden description ////////////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_description"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden status /////////////////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_available"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden proximity point of interest ////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_point_of_interest_one"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/house_point_of_interest_two"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/house_point_of_interest_three"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/house_point_of_interest_four"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/house_point_of_interest_five"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden house entry date ////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_entry_date"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden house sale date ////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_sale_date"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+    <!--///////////////////// Hidden agent in charge ////////////////////////////////////////////-->
+
+    <TextView
+        android:id="@+id/house_agent_in_charge"
+        app:layout_constraintStart_toEndOf="@+id/house_first_image"
+        app:layout_constraintTop_toTopOf="@id/house_first_image"
+        android:text="@string/house_type"
+        style="@style/type_style"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

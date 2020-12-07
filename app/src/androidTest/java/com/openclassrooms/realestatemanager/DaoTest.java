@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -206,10 +205,10 @@ public class DaoTest {
     public void createAndGetAllProperties() throws InterruptedException{
         // Before add agent before a property
         db.getAgentDao().createAgent(AGENT_TEST1);
-        db.getPropertyDao().createProperty(PROPERTY_TEST1);
-        db.getPropertyDao().createProperty(PROPERTY_TEST2);
+        db.getHouseDao().createProperty(PROPERTY_TEST1);
+        db.getHouseDao().createProperty(PROPERTY_TEST2);
         // Test
-        List<Property> properties = LiveDataTestUtil.getValue(db.getPropertyDao().getAllProperties());
+        List<Property> properties = LiveDataTestUtil.getValue(db.getHouseDao().getAllProperties());
         assertEquals(2, properties.size());
     }
 
@@ -217,12 +216,12 @@ public class DaoTest {
     public void createAndUpdateProperty() throws InterruptedException{
         // Before add agent before a property
         db.getAgentDao().createAgent(AGENT_TEST1);
-        db.getPropertyDao().createProperty(PROPERTY_TEST1);
+        db.getHouseDao().createProperty(PROPERTY_TEST1);
         Property propertyToUpdate = PROPERTY_TEST1;
         propertyToUpdate.setProximityPointsOfInterest4(proximityPointOfInterest4);
-        db.getPropertyDao().updateProperty(propertyToUpdate);
+        db.getHouseDao().updateProperty(propertyToUpdate);
         // Test
-        List<Property> properties = LiveDataTestUtil.getValue(db.getPropertyDao().getProperty(1));
+        List<Property> properties = LiveDataTestUtil.getValue(db.getHouseDao().getProperty(1));
         assertEquals(properties.get(0).getProximityPointsOfInterest4(), 1, properties.size());
     }
 }

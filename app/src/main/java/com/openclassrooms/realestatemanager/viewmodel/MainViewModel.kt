@@ -3,18 +3,18 @@ package com.openclassrooms.realestatemanager.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.model.Property
+import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
-import com.openclassrooms.realestatemanager.repositories.PropertyRepository
+import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val agentRepository: AgentRepository, private val propertyRepository: PropertyRepository) : ViewModel() {
+class MainViewModel(private val agentRepository: AgentRepository, private val houseRepository: HouseRepository) : ViewModel() {
 
     val agents = agentRepository.getAllAgents
-    val properties = propertyRepository.getAllProperties
+    val houses = houseRepository.getAllHouses
 
     //------------------- Agents -------------------------------------------------------------------
-    fun getAgent(id: Int) = viewModelScope.launch { agentRepository.getAgent(id) }
+    fun getAgent(id: Long) = viewModelScope.launch { agentRepository.getAgent(id) }
 
     fun createAgent(agent: Agent) = viewModelScope.launch { agentRepository.createAgent(agent) }
 
@@ -22,10 +22,10 @@ class MainViewModel(private val agentRepository: AgentRepository, private val pr
 
     fun deleteAgent(agent: Agent) = viewModelScope.launch { agentRepository.deleteAgent(agent) }
 
-    //------------------- Properties ---------------------------------------------------------------
-    fun getProperty(id: Int) = viewModelScope.launch { propertyRepository.getProperty(id) }
+    //------------------- Houses ---------------------------------------------------------------
+    fun getHouse(id: Long) = viewModelScope.launch { houseRepository.getHouse(id) }
 
-    fun createProperty(property: Property) = viewModelScope.launch { propertyRepository.createProperty(property) }
+    fun createHouse(house: House) = viewModelScope.launch { houseRepository.createHouse(house) }
 
-    fun updateProperty(property: Property) = viewModelScope.launch {  propertyRepository.updateProperty(property)  }
+    fun updateHouse(house: House) = viewModelScope.launch {  houseRepository.updateHouse(house) }
 }

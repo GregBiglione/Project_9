@@ -5,13 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Agent(
+        @PrimaryKey(autoGenerate = true)
+        var id: Long = 0L,
         var agentPhoto: String,
         var name: String,
         var firstName: String,
         var phoneNumber: String,
         var email: String
-){
-        @PrimaryKey(autoGenerate = true)
-        var id: Long = 0L
-
-}
+)

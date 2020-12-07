@@ -7,11 +7,11 @@
     tools:context=".ui.home.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/property_recycler_view"
+        android:id="@+id/house_recycler_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        tools:listitem="@layout/property_item"/>
+        tools:listitem="@layout/house_item"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

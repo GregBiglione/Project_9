@@ -9,18 +9,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.adapters.PropertyAdapter
+import com.openclassrooms.realestatemanager.adapters.HouseAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
-import com.openclassrooms.realestatemanager.model.PropertyDataSource
+import com.openclassrooms.realestatemanager.model.HouseDataSource
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
-import com.openclassrooms.realestatemanager.repositories.PropertyRepository
+import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var propertyRecyclerView: RecyclerView
+    private lateinit var houseRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
         homeViewModel =
                 ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        propertyRecyclerView = root.findViewById(R.id.property_recycler_view)
+        houseRecyclerView = root.findViewById(R.id.house_recycler_view)
         configureViewModel()
         configurePropertyRecyclerView()
         return root
@@ -48,9 +48,9 @@ class HomeFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun configurePropertyRecyclerView(){
-        val listOfProperty = PropertyDataSource.createPropertyDataSet() //<-- Temporary list with no data from database
-        propertyRecyclerView.adapter = PropertyAdapter(listOfProperty)
-        propertyRecyclerView.layoutManager = LinearLayoutManager(activity)
+        val listOfProperty = HouseDataSource.createPropertyDataSet() //<-- Temporary list with no data from database
+        houseRecyclerView.adapter = HouseAdapter(listOfProperty)
+        houseRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
     //----------------------------------------------------------------------------------------------
@@ -59,10 +59,10 @@ class HomeFragment : Fragment() {
 
     private fun configureViewModel(){
         val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
-        val propertyDao = RealEstateManagerDatabase.getInstance(requireContext()).propertyDao
+        val houseDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
         val agentRepository = AgentRepository(agentDao)
-        val propertyRepository = PropertyRepository(propertyDao)
-        val factory = ViewModelFactory(agentRepository, propertyRepository)
+        val houseRepository = HouseRepository(houseDao)
+        val factory = ViewModelFactory(agentRepository, houseRepository)
         mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
     }
 
