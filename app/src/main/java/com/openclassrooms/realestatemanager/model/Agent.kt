@@ -12,5 +12,6 @@ data class Agent(
         var email: String
 ){
         @PrimaryKey(autoGenerate = true)
-        var id: Long? = null
+        var id: Long = 0L
+
 }

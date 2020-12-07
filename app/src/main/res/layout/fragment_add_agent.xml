@@ -120,7 +120,6 @@
                     app:layout_constraintTop_toBottomOf="@id/agent_email_input"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/agent_delete_button"
-                    android:enabled="false"
                     android:hint="@string/add"
                     app:cornerRadius="20dp"
                     android:nextFocusDown="@+id/agent_delete_button"
@@ -131,7 +130,7 @@
                     app:layout_constraintTop_toBottomOf="@id/agent_email_input"
                     app:layout_constraintStart_toStartOf="@id/agent_add_button"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:hint="@string/delete"
+                    android:hint="@string/clear"
                     android:textSize="18sp"
                     app:cornerRadius="20dp"
                     style="@style/agent_item_btn_style"/>

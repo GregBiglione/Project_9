@@ -3,7 +3,6 @@ package com.openclassrooms.realestatemanager.model
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity(foreignKeys = [ForeignKey(entity = Agent::class,
                         parentColumns = ["id"],
@@ -28,7 +27,7 @@ data class Property(
         var numberOfBathRooms: Int?,
         var numberOfBedRooms: Int?,
         var description: String?,
-        var status: Boolean?,
+        var status: Boolean,
         var available: String?,
         var proximityPointsOfInterest1: String?,
         var proximityPointsOfInterest2: String?,
@@ -40,5 +39,18 @@ data class Property(
         var agentId: Long?
 ){
         @PrimaryKey(autoGenerate = true)
-        var id: Long? = null
+        var id: Long = 0L
+        //constructor(photo1: String?, descriptionPhoto1: String?, photo2: String?, descriptionPhoto2: String?, photo3: String?, descriptionPhoto3: String?,
+        //            photo4: String?, descriptionPhoto4: String?, photo5: String?, descriptionPhoto5: String?, photo6: String?, descriptionPhoto6: String?,
+        //            photo7: String?, descriptionPhoto7: String?, photo8: String?, descriptionPhoto8: String?, photo9: String?, descriptionPhoto9: String?,
+        //            photo10: String?, descriptionPhoto10: String?, typeOfProperty: String?, neighborhood: String?, address: String?, price: Long?, surface: Int?,
+        //            numberOfRooms: Int?, numberOfBathRooms: Int?, numberOfBedRooms: Int?, description: String?, status: Boolean, available: String?,
+        //            proximityPointsOfInterest1: String?, proximityPointsOfInterest2: String?, proximityPointsOfInterest3: String?,
+        //            proximityPointsOfInterest4: String?, proximityPointsOfInterest5: String?, entryDate: Long?, saleDate: Long?, agentId: Long?)
+        //constructor(): this( null, null, null, null, null, null, null,
+        //        null, null, null, null, null, null, null, null,
+        //        null, null, null, null, null, null, null,
+        //        null, null, null, null, null, null, null, true,
+        //        null, null, null, null, null,
+        //        null, null, null, null)
 }

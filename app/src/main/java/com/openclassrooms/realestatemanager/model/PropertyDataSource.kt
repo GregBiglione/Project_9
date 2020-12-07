@@ -52,7 +52,7 @@ class PropertyDataSource {
                             null,
                             1597844394,
                             null,
-                            5
+                            5L
                     )
             )
             listOfProperty.add(
@@ -109,7 +109,7 @@ class PropertyDataSource {
                             null,
                             1603204794,
                             null,
-                            2
+                            2L
                     )
             )
             listOfProperty.add(
@@ -124,7 +124,8 @@ class PropertyDataSource {
                             "Neighborhood",
                             null,
                             null,
-                            null, null,
+                            null,
+                            null,
                             null,
                             null,
                             null,
@@ -157,7 +158,7 @@ class PropertyDataSource {
                             null,
                             1589539194,
                             null,
-                            2
+                            2L
                     )
             )
             listOfProperty.add(
@@ -208,7 +209,7 @@ class PropertyDataSource {
                             "Hospital",
                             1590251994,
                             null,
-                            3
+                            3L
                     )
             )
             listOfProperty.add(
@@ -304,7 +305,7 @@ class PropertyDataSource {
                             null,
                             1597846674,
                             null,
-                            1
+                            1L
                     )
             )
             listOfProperty.add(
@@ -353,7 +354,7 @@ class PropertyDataSource {
                             null,
                             null,
                             1599661734,
-                            5
+                            5L
                     )
             )
             listOfProperty.add(
@@ -398,7 +399,7 @@ class PropertyDataSource {
                             null,
                             1590330954,
                             null,
-                            4
+                            4L
                     )
             )
             listOfProperty.add(
@@ -449,7 +450,7 @@ class PropertyDataSource {
                             null,
                             1595339154,
                             null,
-                            5
+                            5L
                     )
             )
             return listOfProperty
