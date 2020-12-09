@@ -118,4 +118,5 @@
     <string name="enter_name">Enter a name</string>
     <string name="enter_phone">Enter a phone number</string>
     <string name="enter_email">Enter an email</string>
+    <string name="add_house">fab_add_house</string>
 </resources>

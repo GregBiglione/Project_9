@@ -7,7 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase;
 import com.openclassrooms.realestatemanager.model.Agent;
-import com.openclassrooms.realestatemanager.model.Property;
+import com.openclassrooms.realestatemanager.model.House;
 
 import org.junit.After;
 import org.junit.Before;
@@ -45,6 +45,7 @@ public class DaoTest {
 
     // Data set for test
     private static final Agent AGENT_TEST1 = new Agent(
+            1L,
             "https://wallpapertag.com/wallpaper/full/a/2/0/569247-cool-terminator-2-wallpaper-1920x1200.jpg",
             "Schwarzenegger",
             "Arnold",
@@ -53,6 +54,7 @@ public class DaoTest {
 
 
     private static final Agent AGENT_TEST2 = new Agent(
+            2L,
             "https://www.everythingaction.com/wp-content/uploads/2011/08/Cobra.1986.BDRip_.720p.01.png",
             "Stallone",
             "Sylvester",
@@ -61,7 +63,8 @@ public class DaoTest {
 
     String phoneUpdated = "+1 440 222 8751";
 
-    private static final Property PROPERTY_TEST1 = new Property(
+    private static final House PROPERTY_TEST1 = new House(
+            1L,
             "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-b2660000000001e2000157b5fd0a-31614642.jpg",
             "Living room",
             "https://pic.le-cdn.com/thumbs/1024x768/04/2/properties/Property-b2660000000001e2000257b5fd0a-31614642.jpg",
@@ -109,7 +112,8 @@ public class DaoTest {
             (long) 1
     );
 
-    private static final Property PROPERTY_TEST2 = new Property(
+    private static final House PROPERTY_TEST2 = new House(
+            2L,
             "https://pic.le-cdn.com/thumbs/1024x768/04/4/properties/Property-431f0000000005d2000a5f9be394-97656643.jpg",
             "Living room",
             "https://fr.luxuryestate.com/p97656643-appartement-en-vente-new-york",
@@ -205,10 +209,10 @@ public class DaoTest {
     public void createAndGetAllProperties() throws InterruptedException{
         // Before add agent before a property
         db.getAgentDao().createAgent(AGENT_TEST1);
-        db.getHouseDao().createProperty(PROPERTY_TEST1);
-        db.getHouseDao().createProperty(PROPERTY_TEST2);
+        db.getHouseDao().createHouse(PROPERTY_TEST1);
+        db.getHouseDao().createHouse(PROPERTY_TEST2);
         // Test
-        List<Property> properties = LiveDataTestUtil.getValue(db.getHouseDao().getAllProperties());
+        List<House> properties = LiveDataTestUtil.getValue(db.getHouseDao().getAllHouses());
         assertEquals(2, properties.size());
     }
 
@@ -216,12 +220,12 @@ public class DaoTest {
     public void createAndUpdateProperty() throws InterruptedException{
         // Before add agent before a property
         db.getAgentDao().createAgent(AGENT_TEST1);
-        db.getHouseDao().createProperty(PROPERTY_TEST1);
-        Property propertyToUpdate = PROPERTY_TEST1;
+        db.getHouseDao().createHouse(PROPERTY_TEST1);
+        House propertyToUpdate = PROPERTY_TEST1;
         propertyToUpdate.setProximityPointsOfInterest4(proximityPointOfInterest4);
-        db.getHouseDao().updateProperty(propertyToUpdate);
+        db.getHouseDao().updateHouse(propertyToUpdate);
         // Test
-        List<Property> properties = LiveDataTestUtil.getValue(db.getHouseDao().getProperty(1));
+        List<House> properties = LiveDataTestUtil.getValue(db.getHouseDao().getHouse(1));
         assertEquals(properties.get(0).getProximityPointsOfInterest4(), 1, properties.size());
     }
 }
