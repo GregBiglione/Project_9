@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 class House (
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0L,
-        var photo1: String?, var descriptionPhoto1: String?,
+        var photo1: String?, var descriptionPhoto1: String?, // try to replace with a photo list and with a description
         var photo2: String?, var descriptionPhoto2: String?,
         var photo3: String?, var descriptionPhoto3: String?,
         var photo4: String?, var descriptionPhoto4: String?,
@@ -31,7 +31,7 @@ class House (
         var description: String?,
         var status: Boolean,
         var available: String?,
-        var proximityPointsOfInterest1: String?,
+        var proximityPointsOfInterest1: String?, // Try to replace with a point of interest list
         var proximityPointsOfInterest2: String?,
         var proximityPointsOfInterest3: String?,
         var proximityPointsOfInterest4: String?,

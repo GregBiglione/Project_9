@@ -119,4 +119,43 @@
     <string name="enter_phone">Enter a phone number</string>
     <string name="enter_email">Enter an email</string>
     <string name="add_house">fab_add_house</string>
+    <string name="add_house_image">add house image</string>
+    <string name="type">Type of house</string>
+    <string name="neighborhood">Neighborhood</string>
+    <string name="address">Address</string>
+    <string name="price">Price</string>
+    <string name="surface">Surface</string>
+    <string name="number_of_rooms">Number of rooms</string>
+    <string name="number_of_bedrooms">Number of bedrooms</string>
+    <string name="description">Description</string>
+    <string name="number_of_bathrooms">Number of bathrooms</string>
+    <string name="status">Available</string>
+    <string name="park">Park</string>
+    <string name="museum">Museum</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="bar">Bar</string>
+    <string name="metro">Metro</string>
+    <string name="shops">Shops</string>
+    <string name="sea">Sea</string>
+    <string name="school">School</string>
+    <string name="hospital">Hospital</string>
+    <string name="swimming_pool">Swimming pool</string>
+    <string name="points_of_interests">Points of interests</string>
+    <string name="type_of_house">Type of house</string>
+
+    <string-array name="house_status_array">
+        <item>Available</item>
+        <item>Sold</item>
+    </string-array>
+
+    <string-array name="house_type">
+        <item>Apartment</item>
+        <item>Castle</item>
+        <item>Duplex</item>
+        <item>Luxury Apartment</item>
+        <item>Luxury House</item>
+        <item>Penthouse</item>
+        <item>Prestige Residence</item>
+        <item>Private Mansion</item>
+    </string-array>
 </resources>

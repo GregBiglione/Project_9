@@ -256,7 +256,7 @@ class HouseDataSource {
                             "Available",
                             "Metro",
                             "Restaurant",
-                            "Metro",
+                            "Hospital",
                             "Shops",
                             "Park",
                             1588945194,
