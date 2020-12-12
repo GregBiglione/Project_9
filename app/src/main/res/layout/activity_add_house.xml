@@ -62,31 +62,26 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_house_neighborhood_input"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/neighborhood"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/add_house_description_input"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:layout_marginBottom="10dp"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/add_house_neighborhood"
-                    android:hint="@string/neighborhood"
-                    android:inputType="text"
-                    style="@style/agent_first_name_style"
-                    android:nextFocusDown="@+id/agent_name"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:id="@+id/add_house_neighborhood_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/add_house_address_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/add_house_neighborhood_input"
+                app:layout_constraintTop_toBottomOf="@id/add_house_neighborhood_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">

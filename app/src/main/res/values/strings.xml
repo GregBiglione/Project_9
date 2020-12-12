@@ -158,4 +158,238 @@
         <item>Prestige Residence</item>
         <item>Private Mansion</item>
     </string-array>
+
+    <string-array name="house_neighborhood">
+        <item>Admiral\'s Row</item>
+        <item>Allerton-Pelham Gardens</item>
+        <item>Alphabet City</item>
+        <item>Annadale-Huguenot-Prince\'s Bay-Eltingville</item>
+        <item>Arden Heights</item>
+        <item>Astoria</item>
+        <item>ATURA</item>
+        <item>Auburndale</item>
+        <item>Barren Island</item>
+        <item>Bath Beach</item>
+        <item>Battery Park</item>
+        <item>Battery Park City</item>
+        <item>Bay Ridge</item>
+        <item>Bayside-Bayside Hills</item>
+        <item>Bedford</item>
+        <item>Bedford Park-Fordham-North</item>
+        <item>Bedford-Stuyvesant</item>
+        <item>Beekman</item>
+        <item>Belmont Bensonhurst</item>
+        <item>Bellerose</item>
+        <item>Bergen Beach</item>
+        <item>BoCoCa</item>
+        <item>Boerum Hill</item>
+        <item>Borough Park</item>
+        <item>Bowery</item>
+        <item>Breezy Point-Belle Harbor-Rockaway Park-Broad Channel</item>
+        <item>Briarwood-Jamaica Hills</item>
+        <item>Brighton Beach</item>
+        <item>Brooklyn Heights</item>
+        <item>Bronxdale</item>
+        <item>Brownsville</item>
+        <item>Bushwick</item>
+        <item>Cadman Plaza</item>
+        <item>Cambria Heights</item>
+        <item>Canarsie</item>
+        <item>Carroll Gardens</item>
+        <item>Charleston-Richmond Valley-Tottenville</item>
+        <item>Chelsea</item>
+        <item>Chinatown</item>
+        <item>City Hall</item>
+        <item>City Line</item>
+        <item>Clinton Hill</item>
+        <item>Claremont-Bathgate</item>
+        <item>Cobble Hill</item>
+        <item>College Point</item>
+        <item>Coney Island</item>
+        <item>Co-Op City</item>
+        <item>Cooper Square</item>
+        <item>Corona</item>
+        <item>Crotona Park East</item>
+        <item>Crown Heights</item>
+        <item>Cypress Hills</item>
+        <item>Ditmas Park</item>
+        <item>Douglas Manor-Douglaston-Little Neck</item>
+        <item>Downtown</item>
+        <item>DUMBO</item>
+        <item>Dyker Heights</item>
+        <item>Eastchester-Edenwald-Baychester </item>
+        <item>East Concourse-Concourse Village</item>
+        <item>East Elmhurst</item>
+        <item>East Flatbush </item>
+        <item>East Flushing</item>
+        <item>East Harlem (El Barrio)</item>
+        <item>East New York</item>
+        <item>East Tremont</item>
+        <item>East Village</item>
+        <item>East Williamsburg</item>
+        <item>Elmhurst</item>
+        <item>Farragut</item>
+        <item>Far Rockaway-Bayswater</item>
+        <item>Fordham South</item>
+        <item>Fiske Terrace</item>
+        <item>Flatbush</item>
+        <item>Flatiron District</item>
+        <item>Flatlands</item>
+        <item>Flushing</item>
+        <item>Forest Hills</item>
+        <item>Fort Greene</item>
+        <item>Fort Hamilton</item>
+        <item>Fresh Meadows-Utopia</item>
+        <item>Ft. Totten-Bay Terrace-Clearview</item>
+        <item>Fulton Ferry</item>
+        <item>Garment District</item>
+        <item>Georgetown</item>
+        <item>Gerritsen Beach</item>
+        <item>Glendale</item>
+        <item>Glen Oaks-Floral Park-New Hyde Park</item>
+        <item>Gowanus</item>
+        <item>Gramercy Park</item>
+        <item>Grasmere-Arrochar-Ft. Wadsworth</item>
+        <item>Gravesend</item>
+        <item>Great Kills</item>
+        <item>Greenpoint</item>
+        <item>Greenwich Village</item>
+        <item>Greenwood Heights</item>
+        <item>Grymes Hill-Clifton-Fox Hills</item>
+        <item>Hamilton Heights</item>
+        <item>Hammels-Arverne-Edgemere</item>
+        <item>Harlem</item>
+        <item>Hell\'s Kitchen</item>
+        <item>Highland Park</item>
+        <item>Hollis</item>
+        <item>Homecrest</item>
+        <item>Hunters Point-Sunnyside-West Maspeth</item>
+        <item>Hunts Point</item>
+        <item>Inwood</item>
+        <item>Jackson Heights</item>
+        <item>Jamaica</item>
+        <item>Jamaica Estates-Holliswood</item>
+        <item>Kensington</item>
+        <item>Kew Gardens</item>
+        <item>Kew Gardens Hills</item>
+        <item>Kingsbridge</item>
+        <item>Kingsbridge Heights</item>
+        <item>Kips Bay</item>
+        <item>Koreatown</item>
+        <item>Laurelton</item>
+        <item>Lindenwood-Howard Beach</item>
+        <item>Little Italy</item>
+        <item>Little Poland</item>
+        <item>Longwood</item>
+        <item>Lower East Side (LES)</item>
+        <item>Madison</item>
+        <item>Manhattan Beach</item>
+        <item>Manhattanville</item>
+        <item>Marine Park</item>
+        <item>Mariner\'s Harbor-Arlington-Port Ivory-Graniteville</item>
+        <item>Maspeth</item>
+        <item>Meatpacking District</item>
+        <item>Melrose South-Mott Haven North</item>
+        <item>Middle Village</item>
+        <item>Midtown East</item>
+        <item>Midwood</item>
+        <item>Mill Basin</item>
+        <item>Morrisania-Melrose</item>
+        <item>Morningside Heights</item>
+        <item>Mott Haven-Port Morris</item>
+        <item>Mount Hope</item>
+        <item>Murray Hill</item>
+        <item>Navy Yard</item>
+        <item>New Brighton-Silver Lake</item>
+        <item>New Dorp-Midland Beach</item>
+        <item>New Lots</item>
+        <item>New Utrecht</item>
+        <item>NoHo (North of Houston)</item>
+        <item>NoLIta (North of Little Italy)</item>
+        <item>NoMad (North of Madison Square Park)</item>
+        <item>North Corona</item>
+        <item>North Riverdale-Fieldston-Riverdale</item>
+        <item>New Springville-Bloomfield-Travis</item>
+        <item>Norwood</item>
+        <item>Oakland Gardens</item>
+        <item>Oakwood-Oakwood Beach</item>
+        <item>Ocean Hill</item>
+        <item>Ocean Parkwa</item>
+        <item>Old Astoria</item>
+        <item>Old Town-Dongan Hills-South Beach</item>
+        <item>Ozone Park</item>
+        <item>Parkchester</item>
+        <item>Park Slope</item>
+        <item>Pelham Bay-Country Club-City Island</item>
+        <item>Pigtown</item>
+        <item>Plum Beach</item>
+        <item>Pomonok-Flushing Heights-Hillcrest</item>
+        <item>Port Richmond</item>
+        <item>Prospect Heights</item>
+        <item>Prospect-Lefferts Gardens</item>
+        <item>Prospect Park South</item>
+        <item>Queensboro Hill</item>
+        <item>Queensbridge-Ravenswood-Long Island City</item>
+        <item>Queens Village</item>
+        <item>RAMBO</item>
+        <item>Red Hook</item>
+        <item>Rego Park</item>
+        <item>Richmond Hill</item>
+        <item>Ridgewood</item>
+        <item>Rikers Island</item>
+        <item>Rosedale</item>
+        <item>Rose Hill</item>
+        <item>Rossville-Woodrow</item>
+        <item>Sea Gate</item>
+        <item>Schuylerville-Throgs Neck-Edgewater Park</item>
+        <item>Sheepshead Bay</item>
+        <item>Soundview-Bruckner</item>
+        <item>Soundview-Castle Hill-Clason Point-Harding Park</item>
+        <item>South Brooklyn</item>
+        <item>South Ferry</item>
+        <item>South Jamaica</item>
+        <item>SoHo (South of Houston)</item>
+        <item>South Ozone Park</item>
+        <item>South Park Slope</item>
+        <item>Springfield Gardens North</item>
+        <item>Springfield Gardens South-Brookville</item>
+        <item>Spuyten Duyvil-Kingsbridge</item>
+        <item>St. Albans</item>
+        <item>Stapleton-Rosebank</item>
+        <item>Starrett City</item>
+        <item>Stuyvesant Heights</item>
+        <item>Steinway</item>
+        <item>Stuyvesant Town (Stuy Town)</item>
+        <item>Sunset Park</item>
+        <item>Sutton</item>
+        <item>Theater District</item>
+        <item>Todt Hill-Emerson Hill-Heartland Village-Lighthouse Hill</item>
+        <item>Tribeca</item>
+        <item>Tudor City</item>
+        <item>Turtle Bay</item>
+        <item>Upper West Side (UWS + Lincoln Square + Manhattan Valley)</item>
+        <item>Upper East Side (UES + Lenox Hill + Yorkville + Carnegie)</item>
+        <item>Vinegar Hill</item>
+        <item>Washington Heights</item>
+        <item>Weeksville</item>
+        <item>West Village</item>
+        <item>White Sands</item>
+        <item>Williamsburg</item>
+        <item>Windsor Terrace</item>
+        <item>University Heights-Morris Heights</item>
+        <item>Van Cortlandt Village</item>
+        <item>Van Nest-Morris Park-Westchester Square</item>
+        <item>Wall Street</item>
+        <item>West Concourse</item>
+        <item>Westchester-Unionport</item>
+        <item>West Farms-Bronx River</item>
+        <item>West New Brighton-New Brighton-St. George</item>
+        <item>Westerleigh</item>
+        <item>Whitestone</item>
+        <item>Williamsbridge-Olinville</item>
+        <item>Wingate</item>
+        <item>Woodhaven</item>
+        <item>Woodlawn-Wakefield</item>
+        <item>Woodside</item>
+    </string-array>
 </resources>

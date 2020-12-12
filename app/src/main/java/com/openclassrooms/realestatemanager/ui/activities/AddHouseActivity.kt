@@ -15,6 +15,7 @@ class AddHouseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
         typeSpinner()
+        neighborhoodSpinner()
     }
 
     //----------------------------------------------------------------------------------------------
@@ -34,11 +35,30 @@ class AddHouseActivity : AppCompatActivity() {
                     showSuccessToast("Type selected: $typeHouseSelected", Toast.LENGTH_SHORT)
                 }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+        }
+    }
 
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Neighborhood spinner ----------------------------------------
+    //----------------------------------------------------------------------------------------------
 
+    private fun neighborhoodSpinner(){
+        val neighborhood = resources.getStringArray(R.array.house_neighborhood)
+        val neighborSpinner = findViewById<Spinner>(R.id.add_house_neighborhood_spinner)
+        if (neighborSpinner != null){
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, neighborhood)
+            neighborSpinner.adapter = adapter
+
+            neighborSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val neighborhoodSelected: String = neighborSpinner.selectedItem.toString().trim()
+                    showSuccessToast("Neighborhood selected: $neighborhoodSelected", Toast.LENGTH_SHORT)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
         }
     }
 }
