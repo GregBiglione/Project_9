@@ -10,7 +10,9 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.Agent
 import de.hdodenhof.circleimageview.CircleImageView
 
-class AgentAdapter(private val agentList: List<Agent>): RecyclerView.Adapter<AgentAdapter.AgentViewHolder>() {
+class AgentAdapter: RecyclerView.Adapter<AgentAdapter.AgentViewHolder>() {
+
+    private var agentList = emptyList<Agent>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AgentViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -38,5 +40,10 @@ class AgentAdapter(private val agentList: List<Agent>): RecyclerView.Adapter<Age
         val agentName: TextView = itemView.findViewById(R.id.agent_item_name)
         val agentPhone: TextView = itemView.findViewById(R.id.agent_item_phone)
         val agentEmail: TextView = itemView.findViewById(R.id.agent_item_email)
+    }
+
+    fun setData(agent: List<Agent>){
+        this.agentList = agent
+        notifyDataSetChanged()
     }
 }

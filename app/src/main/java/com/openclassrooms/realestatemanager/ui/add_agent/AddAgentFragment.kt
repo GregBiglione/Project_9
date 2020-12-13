@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -26,7 +25,6 @@ import com.openclassrooms.realestatemanager.adapters.AgentAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.model.AgentDataSource
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
@@ -38,6 +36,7 @@ class AddAgentFragment : Fragment() {
     private lateinit var agentRecyclerView: RecyclerView
     private lateinit var agentPhoto: CircleImageView
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var agentAdapter: AgentAdapter
     //------------------- Photo from gallery code --------------------------------------------------
     private val IMAGE_PICK_CODE = 2108
     private val IMAGE_PERMISSION_CODE = 1201
@@ -76,9 +75,25 @@ class AddAgentFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun configureAgentRecyclerView(){
-        val listOfAgent = AgentDataSource.createAgentDataSet() //<-- Temporary list with no data from database
-        agentRecyclerView.adapter = AgentAdapter(listOfAgent)
+        agentAdapter = AgentAdapter()
+        agentRecyclerView.adapter = agentAdapter
         agentRecyclerView.layoutManager = LinearLayoutManager(activity)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Configure ViewModel ------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun configureViewModel(){
+        val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
+        val propertyDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
+        val agentRepository = AgentRepository(agentDao)
+        val propertyRepository = HouseRepository(propertyDao)
+        val factory = ViewModelFactory(agentRepository, propertyRepository)
+        mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        mainViewModel.allAgents.observe(viewLifecycleOwner, { agent ->
+            agentAdapter.setData(agent)
+        })
     }
 
     //----------------------------------------------------------------------------------------------
@@ -149,19 +164,6 @@ class AddAgentFragment : Fragment() {
     }
 
     //----------------------------------------------------------------------------------------------
-    //------------------- Configure ViewModel ------------------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun configureViewModel(){
-        val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
-        val propertyDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
-        val agentRepository = AgentRepository(agentDao)
-        val propertyRepository = HouseRepository(propertyDao)
-        val factory = ViewModelFactory(agentRepository, propertyRepository)
-        mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
-    }
-
-    //----------------------------------------------------------------------------------------------
     //------------------- Add agent in room db -----------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
@@ -175,7 +177,7 @@ class AddAgentFragment : Fragment() {
 
     private fun saveAgent(){
         val id: Long = System.currentTimeMillis()
-        val photo: String = agentPhoto.toString()
+        val photo: String = agentPhoto.toString() // <-- photo nott shown may be Uri
         val firstName: String = agentFirstName.text.toString().trim()
         val name: String = agentName.text.toString().trim()
         val phone: String = agentPhone.text.toString().trim()
@@ -215,4 +217,8 @@ class AddAgentFragment : Fragment() {
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Get agents from room db --------------------------------------------------
+    //----------------------------------------------------------------------------------------------
 }

@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val agentRepository: AgentRepository, private val houseRepository: HouseRepository) : ViewModel() {
 
-    val agents = agentRepository.getAllAgents
-    val houses = houseRepository.getAllHouses
+    val allAgents = agentRepository.getAllAgents
+    val allHouses = houseRepository.getAllHouses
 
     //------------------- Agents -------------------------------------------------------------------
     fun getAgent(id: Long) = viewModelScope.launch(Dispatchers.IO) { agentRepository.getAgent(id) }
