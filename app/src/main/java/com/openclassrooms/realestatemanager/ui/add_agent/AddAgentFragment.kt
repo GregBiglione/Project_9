@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -177,7 +178,7 @@ class AddAgentFragment : Fragment() {
 
     private fun saveAgent(){
         val id: Long = System.currentTimeMillis()
-        val photo: String = agentPhoto.toString() // <-- photo nott shown may be Uri
+        val photo: Uri = Uri.parse(agentPhoto.toString())// <-- photo not shown may be Uri
         val firstName: String = agentFirstName.text.toString().trim()
         val name: String = agentName.text.toString().trim()
         val phone: String = agentPhone.text.toString().trim()

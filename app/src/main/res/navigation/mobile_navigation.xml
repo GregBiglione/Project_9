@@ -9,17 +9,41 @@
         android:id="@+id/nav_home"
         android:name="com.openclassrooms.realestatemanager.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_add_agent"
+            app:destination="@id/nav_add_agent" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_add_agent"
         android:name="com.openclassrooms.realestatemanager.ui.add_agent.AddAgentFragment"
         android:label="@string/menu_add_agent"
-        tools:layout="@layout/fragment_add_agent" />
+        tools:layout="@layout/fragment_add_agent" >
+        <action
+            android:id="@+id/action_nav_add_agent_to_nav_update_agent3"
+            app:destination="@id/nav_update_agent" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.openclassrooms.realestatemanager.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_update_agent"
+        android:name="com.openclassrooms.realestatemanager.ui.update_agent.UpdateAgentFragment"
+        android:label="@string/menu_update"
+        tools:layout="@layout/fragment_update_agent" >
+        <argument
+            android:name="currentAgent"
+            app:argType="com.openclassrooms.realestatemanager.model.Agent" />
+        <action
+            android:id="@+id/action_nav_update_agent_to_nav_add_agent3"
+            app:destination="@id/nav_add_agent" />
+    </fragment>
 </navigation>

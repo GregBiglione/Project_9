@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -38,6 +39,6 @@ class House (
         var proximityPointsOfInterest5: String?,
         var entryDate: Long?,
         var saleDate: Long?,
+        @ColumnInfo(name = "agentId", index = true)
         var agentId: Long?
-
 )

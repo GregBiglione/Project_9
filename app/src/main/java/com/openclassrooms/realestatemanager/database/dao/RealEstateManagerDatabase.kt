@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.House
+import com.openclassrooms.realestatemanager.utils.UriConverters
 
 @Database(entities = [House::class, Agent::class], version = 1, exportSchema = false)
+@TypeConverters(UriConverters::class)
 abstract class RealEstateManagerDatabase : RoomDatabase() {
 
     //------------------- DAO ----------------------------------------------------------------------
