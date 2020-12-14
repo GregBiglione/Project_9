@@ -25,12 +25,15 @@ import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
+import com.openclassrooms.realestatemanager.events.DeleteAgentEvent
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class AddAgentFragment : Fragment() {
 
@@ -213,6 +216,25 @@ class AddAgentFragment : Fragment() {
         activity?.showSuccessToast("Welcome " + agent.firstName, Toast.LENGTH_SHORT, true)
         closeKeyboard(agentEmail)
 
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Remove agent from room db ------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    @Subscribe
+    fun onDeleteAgent(event: DeleteAgentEvent) {
+        mainViewModel.deleteAgent(event.agent)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 
     //----------------------------------------------------------------------------------------------

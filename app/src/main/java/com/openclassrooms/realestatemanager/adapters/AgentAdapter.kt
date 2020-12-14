@@ -1,19 +1,25 @@
 package com.openclassrooms.realestatemanager.adapters
 
+import android.content.Context
 import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.droidman.ktoasty.KToasty
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.events.DeleteAgentEvent
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.ui.add_agent.AddAgentFragment
 import com.openclassrooms.realestatemanager.ui.home.HomeFragment
 import de.hdodenhof.circleimageview.CircleImageView
+import org.greenrobot.eventbus.EventBus
+import kotlin.coroutines.coroutineContext
 
 class AgentAdapter: RecyclerView.Adapter<AgentAdapter.AgentViewHolder>() {
 
@@ -41,6 +47,10 @@ class AgentAdapter: RecyclerView.Adapter<AgentAdapter.AgentViewHolder>() {
         holder.updateButton.setOnClickListener {
             holder.updateButton.findNavController().navigate(R.id.nav_update_agent)
         }
+
+        holder.deleteButton.setOnClickListener {
+            EventBus.getDefault().post(DeleteAgentEvent(currentAgent))
+        }
     }
 
     class AgentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -50,6 +60,7 @@ class AgentAdapter: RecyclerView.Adapter<AgentAdapter.AgentViewHolder>() {
         val agentPhone: TextView = itemView.findViewById(R.id.agent_item_phone)
         val agentEmail: TextView = itemView.findViewById(R.id.agent_item_email)
         val updateButton: ImageButton = itemView.findViewById(R.id.agent_item_update_button)
+        val deleteButton: ImageButton = itemView.findViewById(R.id.item_list_delete_button)
     }
 
     fun setData(agent: List<Agent>){
