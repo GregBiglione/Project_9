@@ -52,6 +52,7 @@ class AddAgentFragment : Fragment() {
     private lateinit var agentEmail: TextInputEditText
     //------------------- Button -------------------------------------------------------------------
     private lateinit var addAgentButton: Button
+    private lateinit var clearButton: Button
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -68,10 +69,12 @@ class AddAgentFragment : Fragment() {
         agentPhone = root.findViewById(R.id.agent_phone)
         agentEmail = root.findViewById(R.id.agent_email)
         addAgentButton = root.findViewById(R.id.agent_add_button)
+        clearButton = root.findViewById(R.id.agent_delete_button)
         configureViewModel()
         configureAgentRecyclerView()
         clickToAddAgentPhoto()
         clickOnAddAgent()
+        clickOnClear()
         return root
     }
 
@@ -186,7 +189,7 @@ class AddAgentFragment : Fragment() {
         val photo: Uri = Uri.parse(agentPhoto.toString())// <-- photo not shown may be Uri
         val firstName: String = agentFirstName.text.toString().trim()
         val name: String = agentName.text.toString().trim()
-        val phone: String = agentPhone.text.toString().trim()
+        val phone: String = "+1 " + agentPhone.text.toString().trim()
         val email: String = agentEmail.text.toString().trim()
 
         if (inputCheck(firstName, name, phone, email)){
@@ -207,6 +210,7 @@ class AddAgentFragment : Fragment() {
             }
             else{
                 addAgent(agent = Agent(id, photo, firstName, name, phone, email))
+                clearChamps()
             }
         }
     }
@@ -235,6 +239,37 @@ class AddAgentFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         EventBus.getDefault().unregister(this)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Clear champs -------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun clearChamps(){ //Maybe use TextUtils.isEmpty(firstName) & add parameter to method
+        //if (agentPhoto.){
+        //    agentPhoto.setImageDrawable(R.drawable.ic_baseline_add_a_photo_24)
+        //}
+
+        if (agentFirstName.text != null){
+            agentFirstName.setText("")
+        }
+        if (agentName.text != null){
+            agentName.setText("")
+        }
+        if (agentPhone.text != null){
+            agentPhone.setText("")
+        }
+        if (agentEmail.text != null){
+            agentEmail.setText("")
+        }
+    }
+
+    //------------------- Click on clear button -------------------------------------------------------
+
+    private fun clickOnClear(){
+        clearButton.setOnClickListener {
+            clearChamps()
+        }
     }
 
     //----------------------------------------------------------------------------------------------
