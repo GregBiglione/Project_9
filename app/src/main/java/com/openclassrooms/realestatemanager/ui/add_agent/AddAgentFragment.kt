@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,6 +93,7 @@ class AddAgentFragment : Fragment() {
         val propertyRepository = HouseRepository(propertyDao)
         val factory = ViewModelFactory(agentRepository, propertyRepository)
         mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        //------------------- Get agents from room db ----------------------------------------------
         mainViewModel.allAgents.observe(viewLifecycleOwner, { agent ->
             agentAdapter.setData(agent)
         })
@@ -184,23 +186,26 @@ class AddAgentFragment : Fragment() {
         val phone: String = agentPhone.text.toString().trim()
         val email: String = agentEmail.text.toString().trim()
 
-        if(firstName.isEmpty()){
-            agentFirstName.error = getString(R.string.enter_first_name)
-        }
+        if (inputCheck(firstName, name, phone, email)){
+            if(firstName.isEmpty()){
+                agentFirstName.error = getString(R.string.enter_first_name)
+            }
 
-        if(name.isEmpty()){
-            agentName.error = getString(R.string.enter_name)
-        }
+            if(name.isEmpty()){
+                agentName.error = getString(R.string.enter_name)
+            }
 
-        if(phone.isEmpty()){
-            agentPhone.error = getString(R.string.enter_phone)
-        }
+            if(phone.isEmpty()){
+                agentPhone.error = getString(R.string.enter_phone)
+            }
 
-        if(email.isEmpty()){
-            agentEmail.error = getString(R.string.enter_email)
+            if(email.isEmpty()){
+                agentEmail.error = getString(R.string.enter_email)
+            }
+            else{
+                addAgent(agent = Agent(id, photo, firstName, name, phone, email))
+            }
         }
-
-        addAgent(agent = Agent(id, photo, firstName, name, phone, email))
     }
 
     private fun addAgent(agent: Agent) {
@@ -211,6 +216,14 @@ class AddAgentFragment : Fragment() {
     }
 
     //----------------------------------------------------------------------------------------------
+    //------------------- Check empty champs -------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun inputCheck(firstName: String, name: String, phone: String, email: String): Boolean{
+        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(name) && TextUtils.isEmpty(phone) && TextUtils.isEmpty(email))
+    }
+
+    //----------------------------------------------------------------------------------------------
     //------------------- Hide keyboard ------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
@@ -218,8 +231,4 @@ class AddAgentFragment : Fragment() {
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
-    //----------------------------------------------------------------------------------------------
-    //------------------- Get agents from room db --------------------------------------------------
-    //----------------------------------------------------------------------------------------------
 }
