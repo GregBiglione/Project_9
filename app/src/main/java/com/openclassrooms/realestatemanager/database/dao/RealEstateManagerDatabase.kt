@@ -18,6 +18,7 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
     //------------------- DAO ----------------------------------------------------------------------
     abstract val agentDao: AgentDao
     abstract val houseDao: HouseDao
+    abstract val housePhotoDao: HousePhotoDao
 
     //------------------- Singleton ----------------------------------------------------------------
     companion object{
