@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun configurePropertyRecyclerView(){
-        val listOfProperty = HouseDataSource.createPropertyDataSet() //<-- Temporary list with no data from database
+        val listOfProperty = HouseDataSource.createHouseDataSet() //<-- Temporary list with no data from database
         houseRecyclerView.adapter = HouseAdapter(listOfProperty)
         houseRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
