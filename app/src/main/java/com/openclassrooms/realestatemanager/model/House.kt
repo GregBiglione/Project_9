@@ -1,26 +1,16 @@
 package com.openclassrooms.realestatemanager.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.openclassrooms.realestatemanager.utils.ListConverters
 
 @Entity(foreignKeys = [ForeignKey(entity = Agent::class,
             parentColumns = ["id"],
             childColumns = ["agentId"])])
-class House (
+data class House (
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0L,
-        var photo1: String?, var descriptionPhoto1: String?, // try to replace with a photo list and with a description
-        var photo2: String?, var descriptionPhoto2: String?,
-        var photo3: String?, var descriptionPhoto3: String?,
-        var photo4: String?, var descriptionPhoto4: String?,
-        var photo5: String?, var descriptionPhoto5: String?,
-        var photo6: String?, var descriptionPhoto6: String?,
-        var photo7: String?, var descriptionPhoto7: String?,
-        var photo8: String?, var descriptionPhoto8: String?,
-        var photo9: String?, var descriptionPhoto9: String?,
-        var photo10: String?, var descriptionPhoto10: String?,
+        @TypeConverters(ListConverters::class)
+        var housePhotoList: ArrayList<HousePhoto>?,
         var typeOfHouse: String?,
         var neighborhood: String?,
         var address: String?,
@@ -30,13 +20,8 @@ class House (
         var numberOfBathRooms: Int?,
         var numberOfBedRooms: Int?,
         var description: String?,
-        var status: Boolean,
         var available: String?,
-        var proximityPointsOfInterest1: String?, // Try to replace with a point of interest list
-        var proximityPointsOfInterest2: String?,
-        var proximityPointsOfInterest3: String?,
-        var proximityPointsOfInterest4: String?,
-        var proximityPointsOfInterest5: String?,
+        var proximityPointsOfInterest: String?,
         var entryDate: Long?,
         var saleDate: Long?,
         @ColumnInfo(name = "agentId", index = true)

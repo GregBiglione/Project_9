@@ -24,47 +24,47 @@ class HouseAdapter(private val houseList: List<House>)  : RecyclerView.Adapter<H
 
         //------------------- Images ---------------------------------------------------------------
         Glide.with(holder.housePhoto1.context)
-               .load(currentHouse.photo1)
+               .load(currentHouse.housePhotoList!![0].photo) // <-- get 1st item
                .into(holder.housePhoto1)
-        Glide.with(holder.housePhoto2.context)
-                .load(currentHouse.photo2)
-                .into(holder.housePhoto3)
-        Glide.with(holder.housePhoto3.context)
-                .load(currentHouse.photo3)
-                .into(holder.housePhoto4)
-        Glide.with(holder.housePhoto4.context)
-                .load(currentHouse.photo4)
-                .into(holder.housePhoto4)
-        Glide.with(holder.housePhoto5.context)
-                .load(currentHouse.photo5)
-                .into(holder.housePhoto5)
-        Glide.with(holder.housePhoto6.context)
-                .load(currentHouse.photo6)
-                .into(holder.housePhoto6)
-        Glide.with(holder.housePhoto7.context)
-                .load(currentHouse.photo7)
-                .into(holder.housePhoto7)
-        Glide.with(holder.housePhoto8.context)
-                .load(currentHouse.photo8)
-                .into(holder.housePhoto8)
-        Glide.with(holder.housePhoto9.context)
-                .load(currentHouse.photo9)
-                .into(holder.housePhoto9)
-        Glide.with(holder.housePhoto10.context)
-                .load(currentHouse.photo10)
-                .into(holder.housePhoto10)
+        //Glide.with(holder.housePhoto2.context)
+        //        .load(currentHouse.photo2)
+        //        .into(holder.housePhoto3)
+        //Glide.with(holder.housePhoto3.context)
+        //        .load(currentHouse.photo3)
+        //        .into(holder.housePhoto4)
+        //Glide.with(holder.housePhoto4.context)
+        //        .load(currentHouse.photo4)
+        //        .into(holder.housePhoto4)
+        //Glide.with(holder.housePhoto5.context)
+        //        .load(currentHouse.photo5)
+        //        .into(holder.housePhoto5)
+        //Glide.with(holder.housePhoto6.context)
+        //        .load(currentHouse.photo6)
+        //        .into(holder.housePhoto6)
+        //Glide.with(holder.housePhoto7.context)
+        //        .load(currentHouse.photo7)
+        //        .into(holder.housePhoto7)
+        //Glide.with(holder.housePhoto8.context)
+        //        .load(currentHouse.photo8)
+        //        .into(holder.housePhoto8)
+        //Glide.with(holder.housePhoto9.context)
+        //        .load(currentHouse.photo9)
+        //        .into(holder.housePhoto9)
+        //Glide.with(holder.housePhoto10.context)
+        //        .load(currentHouse.photo10)
+        //        .into(holder.housePhoto10)
 
         //------------------- Image description-----------------------------------------------------
-        holder.descriptionPhoto1.text = currentHouse.descriptionPhoto1
-        holder.descriptionPhoto2.text = currentHouse.descriptionPhoto2
-        holder.descriptionPhoto3.text = currentHouse.descriptionPhoto3
-        holder.descriptionPhoto4.text = currentHouse.descriptionPhoto4
-        holder.descriptionPhoto5.text = currentHouse.descriptionPhoto5
-        holder.descriptionPhoto6.text = currentHouse.descriptionPhoto6
-        holder.descriptionPhoto7.text = currentHouse.descriptionPhoto7
-        holder.descriptionPhoto8.text = currentHouse.descriptionPhoto8
-        holder.descriptionPhoto9.text = currentHouse.descriptionPhoto9
-        holder.descriptionPhoto10.text = currentHouse.descriptionPhoto10
+        holder.descriptionPhoto1.text = currentHouse.housePhotoList!![0].photoDescription
+        //holder.descriptionPhoto2.text = currentHouse.descriptionPhoto2
+        //holder.descriptionPhoto3.text = currentHouse.descriptionPhoto3
+        //holder.descriptionPhoto4.text = currentHouse.descriptionPhoto4
+        //holder.descriptionPhoto5.text = currentHouse.descriptionPhoto5
+        //holder.descriptionPhoto6.text = currentHouse.descriptionPhoto6
+        //holder.descriptionPhoto7.text = currentHouse.descriptionPhoto7
+        //holder.descriptionPhoto8.text = currentHouse.descriptionPhoto8
+        //holder.descriptionPhoto9.text = currentHouse.descriptionPhoto9
+        //holder.descriptionPhoto10.text = currentHouse.descriptionPhoto10
 
         //------------------- Type -----------------------------------------------------------------
         holder.houseType.text = currentHouse.typeOfHouse
@@ -93,19 +93,15 @@ class HouseAdapter(private val houseList: List<House>)  : RecyclerView.Adapter<H
         //------------------- Description ----------------------------------------------------------
         holder.houseDescription.text = currentHouse.description
 
-        //------------------- Status ---------------------------------------------------------------
-        if (currentHouse.status){
-            holder.houseAvailable.text = "Available" //<--Change if/else to Kotlin
-        }
-        else{
-            holder.houseAvailable.text = "Sold"
-        }
+        //------------------- Available ------------------------------------------------------------
+        holder.houseAvailable.text = currentHouse.available
+
         //------------------- Proximity points of interest -----------------------------------------
-        holder.houseProximityPointsOfInterest1.text = currentHouse.proximityPointsOfInterest1
-        holder.houseProximityPointsOfInterest2.text = currentHouse.proximityPointsOfInterest2
-        holder.houseProximityPointsOfInterest3.text = currentHouse.proximityPointsOfInterest3
-        holder.houseProximityPointsOfInterest4.text = currentHouse.proximityPointsOfInterest4
-        holder.houseProximityPointsOfInterest5.text = currentHouse.proximityPointsOfInterest5
+        holder.houseProximityPointsOfInterest.text = currentHouse.proximityPointsOfInterest
+        //holder.houseProximityPointsOfInterest2.text = currentHouse.proximityPointsOfInterest2
+        //holder.houseProximityPointsOfInterest3.text = currentHouse.proximityPointsOfInterest3
+        //holder.houseProximityPointsOfInterest4.text = currentHouse.proximityPointsOfInterest4
+        //holder.houseProximityPointsOfInterest5.text = currentHouse.proximityPointsOfInterest5
 
         //------------------- Entry date -----------------------------------------------------------
         holder.houseEntryDate.text = currentHouse.entryDate.toString() //<--- Maybe user date converter here
@@ -161,11 +157,11 @@ class HouseAdapter(private val houseList: List<House>)  : RecyclerView.Adapter<H
         //------------------- Status ---------------------------------------------------------------
         var houseAvailable: TextView = itemView.findViewById(R.id.house_available)
         //------------------- Proximity points of interest -----------------------------------------
-        var houseProximityPointsOfInterest1: TextView = itemView.findViewById(R.id.house_point_of_interest_one)
-        var houseProximityPointsOfInterest2: TextView = itemView.findViewById(R.id.house_point_of_interest_two)
-        var houseProximityPointsOfInterest3: TextView = itemView.findViewById(R.id.house_point_of_interest_three)
-        var houseProximityPointsOfInterest4: TextView = itemView.findViewById(R.id.house_point_of_interest_four)
-        var houseProximityPointsOfInterest5: TextView = itemView.findViewById(R.id.house_point_of_interest_five)
+        var houseProximityPointsOfInterest: TextView = itemView.findViewById(R.id.house_point_of_interest_one)
+        //var houseProximityPointsOfInterest2: TextView = itemView.findViewById(R.id.house_point_of_interest_two)
+        //var houseProximityPointsOfInterest3: TextView = itemView.findViewById(R.id.house_point_of_interest_three)
+        //var houseProximityPointsOfInterest4: TextView = itemView.findViewById(R.id.house_point_of_interest_four)
+        //var houseProximityPointsOfInterest5: TextView = itemView.findViewById(R.id.house_point_of_interest_five)
         //------------------- Entry date -----------------------------------------------------------
         var houseEntryDate: TextView = itemView.findViewById(R.id.house_entry_date)
         //------------------- Sale date ------------------------------------------------------------
