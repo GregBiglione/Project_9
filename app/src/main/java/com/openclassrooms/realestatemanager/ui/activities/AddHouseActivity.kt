@@ -1,21 +1,40 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
 
 class AddHouseActivity : AppCompatActivity() {
+
+    private lateinit var housePhotoRecyclerView: RecyclerView
+    private lateinit var housePhotoAdapter: HousePhotoAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
+        configureHousePhotoRecyclerView()
         typeSpinner()
         neighborhoodSpinner()
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Configure agent recyclerview ---------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun configureHousePhotoRecyclerView(){
+        housePhotoRecyclerView = findViewById(R.id.add_house_photo_rv)
+        housePhotoAdapter = HousePhotoAdapter()
+        housePhotoRecyclerView.adapter = housePhotoAdapter
+        housePhotoRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
     }
 
     //----------------------------------------------------------------------------------------------
