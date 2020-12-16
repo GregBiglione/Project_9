@@ -29,6 +29,7 @@ import com.openclassrooms.realestatemanager.events.DeleteAgentEvent
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
+import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
@@ -95,9 +96,11 @@ class AddAgentFragment : Fragment() {
     private fun configureViewModel(){
         val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
         val propertyDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
+        val housePhotoDao = RealEstateManagerDatabase.getInstance(requireContext()).housePhotoDao
         val agentRepository = AgentRepository(agentDao)
         val propertyRepository = HouseRepository(propertyDao)
-        val factory = ViewModelFactory(agentRepository, propertyRepository)
+        val housePhotoRepository = HousePhotoRepository(housePhotoDao)
+        val factory = ViewModelFactory(agentRepository, propertyRepository, housePhotoRepository)
         mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
         //------------------- Get agents from room db ----------------------------------------------
         mainViewModel.allAgents.observe(viewLifecycleOwner, { agent ->

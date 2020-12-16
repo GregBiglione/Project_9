@@ -16,6 +16,7 @@ import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDataba
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.HouseDataSource
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
+import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
@@ -65,9 +66,11 @@ class HomeFragment : Fragment() {
     private fun configureViewModel(){
         val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
         val houseDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
+        val housePhotoDao = RealEstateManagerDatabase.getInstance(requireContext()).housePhotoDao
         val agentRepository = AgentRepository(agentDao)
         val houseRepository = HouseRepository(houseDao)
-        val factory = ViewModelFactory(agentRepository, houseRepository)
+        val housePhotoRepository = HousePhotoRepository(housePhotoDao)
+        val factory = ViewModelFactory(agentRepository, houseRepository, housePhotoRepository)
         mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
     }
 
