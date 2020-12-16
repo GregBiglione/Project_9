@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.HousePhoto
 
 class HousePhotoAdapter: RecyclerView.Adapter<HousePhotoAdapter.HousePhotoViewHolder>() {
@@ -38,4 +39,9 @@ class HousePhotoAdapter: RecyclerView.Adapter<HousePhotoAdapter.HousePhotoViewHo
         val addHousePhotoUpdateBtn: Button = itemView.findViewById(R.id.add_house_photo_update_button)
         val addHousePhotoDeleteBtn: Button = itemView.findViewById(R.id.add_house_photo_delete_button)
     }
+
+    //fun setData(housePhoto: List<HousePhoto>){
+    //    this.housePhotoList = housePhoto
+    //    notifyDataSetChanged()
+    //}
 }

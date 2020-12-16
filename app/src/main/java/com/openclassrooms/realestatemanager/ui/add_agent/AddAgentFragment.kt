@@ -159,7 +159,7 @@ class AddAgentFragment : Fragment() {
         }
     }
 
-    //------------------- Click on image view ------------------------------------------------------
+    //------------------- Intent to access gallery -------------------------------------------------
 
     private fun pickAgentPhotoFromGallery() {
         val accessGallery = Intent(Intent.ACTION_PICK)

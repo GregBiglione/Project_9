@@ -1,26 +1,41 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
+import com.droidman.ktoasty.showWarningToast
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
+import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.repositories.AgentRepository
+import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
+import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.ui.dialog_box.AddHousePhotoDialog
+import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class AddHouseActivity : AppCompatActivity() {
 
     private lateinit var housePhotoRecyclerView: RecyclerView
     private lateinit var housePhotoAdapter: HousePhotoAdapter
+    private lateinit var housePhoto: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
+        clickOnAddHouseButton()
         configureHousePhotoRecyclerView()
         typeSpinner()
         neighborhoodSpinner()
@@ -36,6 +51,20 @@ class AddHouseActivity : AppCompatActivity() {
         housePhotoRecyclerView.adapter = housePhotoAdapter
         housePhotoRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
     }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Show house photo dialog box ---------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    fun clickOnAddHouseButton(){
+        housePhoto = findViewById(R.id.add_house_photo)
+        housePhoto.setOnClickListener { showHousePhotoDialogBox() }
+    }
+
+    private fun showHousePhotoDialogBox() {
+        AddHousePhotoDialog(this).show()
+    }
+
 
     //----------------------------------------------------------------------------------------------
     //-------------------------------- House type spinner ------------------------------------------
