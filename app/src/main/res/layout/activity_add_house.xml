@@ -26,7 +26,8 @@
                 android:id="@+id/add_house_photo_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                tools:listitem="@layout/house_photo_item"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -310,6 +311,15 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/agent_in_charge"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
 
             <Spinner
                 android:id="@+id/add_house_agent_spinner"

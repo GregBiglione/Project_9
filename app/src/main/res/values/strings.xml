@@ -396,4 +396,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="update">Update</string>
     <string name="menu_update">Update agent</string>
+    <string name="agent_in_charge">Agent in charge</string>
+    <string name="photo_description">Photo description</string>
 </resources>
