@@ -46,4 +46,13 @@
             android:id="@+id/action_nav_update_agent_to_nav_add_agent3"
             app:destination="@id/nav_add_agent" />
     </fragment>
+    <fragment
+        android:id="@+id/updateHousePhotoFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.update_house_photo.UpdateHousePhotoFragment"
+        android:label="fragment_update_house_photo"
+        tools:layout="@layout/fragment_update_house_photo" >
+        <argument
+            android:name="currentHousePhoto"
+            app:argType="com.openclassrooms.realestatemanager.model.HousePhoto" />
+    </fragment>
 </navigation>

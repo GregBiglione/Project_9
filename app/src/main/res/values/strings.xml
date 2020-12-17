@@ -401,4 +401,5 @@
     <string name="cancel">Cancel</string>
     <string name="add_photo">Add photo</string>
     <string name="enter_photo_description">Add a description to add a photo</string>
+    <string name="update_photo">Update photo</string>
 </resources>
