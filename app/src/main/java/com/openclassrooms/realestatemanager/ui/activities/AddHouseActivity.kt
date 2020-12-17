@@ -1,30 +1,14 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
-import android.Manifest
-import android.app.Activity
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
-import com.droidman.ktoasty.showWarningToast
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
-import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
-import com.openclassrooms.realestatemanager.injections.ViewModelFactory
-import com.openclassrooms.realestatemanager.repositories.AgentRepository
-import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
-import com.openclassrooms.realestatemanager.repositories.HouseRepository
-import com.openclassrooms.realestatemanager.ui.dialog_box.AddHousePhotoDialog
-import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class AddHouseActivity : AppCompatActivity() {
 
@@ -58,12 +42,12 @@ class AddHouseActivity : AppCompatActivity() {
 
     fun clickOnAddHouseButton(){
         housePhoto = findViewById(R.id.add_house_photo)
-        housePhoto.setOnClickListener { showHousePhotoDialogBox() }
+        housePhoto.setOnClickListener {showSuccessToast("Click on add photo icon", Toast.LENGTH_SHORT) }
     }
 
-    private fun showHousePhotoDialogBox() {
-        AddHousePhotoDialog(this).show()
-    }
+    //private fun showHousePhotoDialogBox() {
+    //    AddHousePhotoDialog(this).show()
+    //}
 
 
     //----------------------------------------------------------------------------------------------

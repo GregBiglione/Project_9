@@ -113,4 +113,11 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="add_house_photo_btn_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">15sp</item>
+    </style>
+
 </resources>

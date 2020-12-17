@@ -399,4 +399,5 @@
     <string name="agent_in_charge">Agent in charge</string>
     <string name="photo_description">Photo description</string>
     <string name="cancel">Cancel</string>
+    <string name="add_photo">Add photo</string>
 </resources>
