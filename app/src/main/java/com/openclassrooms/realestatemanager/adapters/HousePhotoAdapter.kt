@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -36,12 +37,12 @@ class HousePhotoAdapter: RecyclerView.Adapter<HousePhotoAdapter.HousePhotoViewHo
     class HousePhotoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val addHousePhoto: ImageView = itemView.findViewById(R.id.add_house_photo_image)
         val addHousePhotoDescription: TextView = itemView.findViewById(R.id.add_house_photo_description)
-        val addHousePhotoUpdateBtn: Button = itemView.findViewById(R.id.add_house_photo_update_button)
-        val addHousePhotoDeleteBtn: Button = itemView.findViewById(R.id.add_house_photo_delete_button)
+        val addHousePhotoUpdateBtn: ImageButton = itemView.findViewById(R.id.add_house_photo_update_button)
+        val addHousePhotoDeleteBtn: ImageButton = itemView.findViewById(R.id.add_house_photo_delete_button)
     }
 
-    //fun setData(housePhoto: List<HousePhoto>){
-    //    this.housePhotoList = housePhoto
-    //    notifyDataSetChanged()
-    //}
+    fun setData(housePhoto: List<HousePhoto>){
+        this.housePhotoList = housePhoto
+        notifyDataSetChanged()
+    }
 }

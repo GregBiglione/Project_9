@@ -249,12 +249,9 @@ class AddAgentFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun clearChamps(){ //Maybe use TextUtils.isEmpty(firstName) & add parameter to method
-        //if (agentPhoto.){
-        //    agentPhoto.setImageDrawable(R.drawable.ic_baseline_add_a_photo_24)
-        //}
-
         if (agentFirstName.text != null){
             agentFirstName.setText("")
+            agentPhoto.setImageResource(R.drawable.ic_baseline_person_24)
         }
         if (agentName.text != null){
             agentName.setText("")

@@ -16,6 +16,6 @@ data class HousePhoto (
         @PrimaryKey(autoGenerate = true)
         var id: Long,
         @TypeConverters(UriConverters::class)
-        var photo: Uri?,
-        var photoDescription: String?
+        var photo: Uri,
+        var photoDescription: String
 ): Parcelable

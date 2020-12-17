@@ -3,33 +3,50 @@ package com.openclassrooms.realestatemanager.ui.activities
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
 import com.droidman.ktoasty.showWarningToast
+import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
+import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.model.HousePhoto
+import com.openclassrooms.realestatemanager.repositories.AgentRepository
+import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
+import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class AddHouseActivity : AppCompatActivity() {
 
     private lateinit var housePhotoRecyclerView: RecyclerView
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var housePhotoAdapter: HousePhotoAdapter
     private lateinit var housePhoto: ImageView
+    private lateinit var housePhotoDescriptionEditText: TextInputEditText
     //------------------- Photo from gallery code --------------------------------------------------
     private val IMAGE_PICK_CODE = 2108
     private val IMAGE_PERMISSION_CODE = 1201
+    //------------------- Button -------------------------------------------------------------------
+    private lateinit var addHousePhotoButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
+        housePhoto = findViewById(R.id.add_house_photo)
         clickOnAddHouseButton()
+        configureViewModel()
         configureHousePhotoRecyclerView()
+        clickOnAddHousePhotoButton()
         typeSpinner()
         neighborhoodSpinner()
     }
@@ -46,14 +63,30 @@ class AddHouseActivity : AppCompatActivity() {
     }
 
     //----------------------------------------------------------------------------------------------
+    //------------------- Configure ViewModel ------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun configureViewModel(){
+        val agentDao = RealEstateManagerDatabase.getInstance(applicationContext).agentDao
+        val propertyDao = RealEstateManagerDatabase.getInstance(applicationContext).houseDao
+        val housePhotoDao = RealEstateManagerDatabase.getInstance(applicationContext).housePhotoDao
+        val agentRepository = AgentRepository(agentDao)
+        val propertyRepository = HouseRepository(propertyDao)
+        val housePhotoRepository = HousePhotoRepository(housePhotoDao)
+        val factory = ViewModelFactory(agentRepository, propertyRepository, housePhotoRepository)
+        mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        //------------------- Get house photos from room db ----------------------------------------------
+        mainViewModel.allHousePhotos.observe(this, { housePhoto ->
+            housePhotoAdapter.setData(housePhoto)
+        })
+    }
+
+    //----------------------------------------------------------------------------------------------
     //------------------- Add house photo from gallery ---------------------------------------------
     //----------------------------------------------------------------------------------------------
 
     private fun clickOnAddHouseButton(){
-        housePhoto = findViewById(R.id.add_house_photo)
-        housePhoto.setOnClickListener {
-            checkPermission()
-            showSuccessToast("Click on add photo icon", Toast.LENGTH_SHORT) }
+        housePhoto.setOnClickListener { checkPermission() }
     }
 
     //------------------- Check permission ---------------------------------------------------------
@@ -109,6 +142,49 @@ class AddHouseActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             housePhoto.setImageURI(data?.data)
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Add house photo in room db -----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //------------------- Click on add house photo button ------------------------------------------
+
+    private fun clickOnAddHousePhotoButton(){
+        addHousePhotoButton = findViewById(R.id.add_house_add_photo_button)
+        addHousePhotoButton.setOnClickListener {
+            saveHousePhoto()
+        }
+    }
+
+    private fun saveHousePhoto(){
+      housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
+        val idHousePhoto: Long = System.currentTimeMillis()
+        val housePhoto: Uri = Uri.parse(housePhoto.toString())
+        val housePhotoDescription: String = housePhotoDescriptionEditText.text.toString().trim()
+
+        if (housePhotoDescription.isEmpty()){
+            housePhotoDescriptionEditText.error = getString(R.string.enter_photo_description)
+        }
+        else{
+            addHousePhoto(housePhoto = HousePhoto(idHousePhoto, housePhoto, housePhotoDescription))
+        }
+    }
+
+    private fun addHousePhoto(housePhoto: HousePhoto){
+        mainViewModel.createHousePhoto(housePhoto)
+        clearChamps()
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Clear champs -------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun clearChamps(){ //Maybe use TextUtils.isEmpty(firstName) & add parameter to method
+        if (housePhotoDescriptionEditText.text != null){
+            housePhotoDescriptionEditText.setText("")
+            housePhoto.setImageResource(R.drawable.ic_baseline_add_a_photo_24)
         }
     }
 
