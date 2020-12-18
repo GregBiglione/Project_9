@@ -45,7 +45,7 @@ class UpdateAgentFragment : Fragment() {
         agentUpdatedName = view.findViewById(R.id.update_agent_name)
         agentUpdatedPhone = view.findViewById(R.id.update_agent_phone)
         agentUpdatedEmail = view.findViewById(R.id.update_agent_email)
-        autoFillUpdateChamps()
+        //autoFillUpdateChamps()
         configureViewModel()
         clickOnUpdateAgent()
         return view
@@ -72,8 +72,9 @@ class UpdateAgentFragment : Fragment() {
 
     private fun autoFillUpdateChamps(){
         //agentUpdatedPhoto.setImageResource(args.currentAgent.agentPhoto)
-        agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto) //no
+        //agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto) //no
         //agentUpdatedPhoto.setImageResource()
+        agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto)
         agentUpdatedFirstName.setText(args.currentAgent.firstName)
         agentUpdatedName.setText(args.currentAgent.name)
         agentUpdatedPhone.setText(args.currentAgent.phoneNumber)

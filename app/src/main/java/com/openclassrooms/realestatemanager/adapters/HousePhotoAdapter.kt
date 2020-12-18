@@ -3,15 +3,15 @@ package com.openclassrooms.realestatemanager.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.model.Agent
+import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.model.HousePhoto
+import org.greenrobot.eventbus.EventBus
 
 class HousePhotoAdapter: RecyclerView.Adapter<HousePhotoAdapter.HousePhotoViewHolder>() {
 
@@ -30,6 +30,10 @@ class HousePhotoAdapter: RecyclerView.Adapter<HousePhotoAdapter.HousePhotoViewHo
                 .load(currentHousePhoto.photo)
                 .into(holder.addHousePhoto)
         holder.addHousePhotoDescription.text = currentHousePhoto.photoDescription
+
+        holder.addHousePhotoDeleteBtn.setOnClickListener {
+            EventBus.getDefault().post(DeleteHousePhotoEvent(currentHousePhoto))
+        }
     }
 
     override fun getItemCount() = housePhotoList.size
@@ -37,7 +41,6 @@ class HousePhotoAdapter: RecyclerView.Adapter<HousePhotoAdapter.HousePhotoViewHo
     class HousePhotoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val addHousePhoto: ImageView = itemView.findViewById(R.id.add_house_photo_image)
         val addHousePhotoDescription: TextView = itemView.findViewById(R.id.add_house_photo_description)
-        val addHousePhotoUpdateBtn: ImageButton = itemView.findViewById(R.id.add_house_photo_update_button)
         val addHousePhotoDeleteBtn: ImageButton = itemView.findViewById(R.id.add_house_photo_delete_button)
     }
 

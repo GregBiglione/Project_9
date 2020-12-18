@@ -72,30 +72,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="216" />
-                            <option name="y" value="14" />
+                            <option name="x" value="254" />
+                            <option name="y" value="17" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_nav_update_agent_to_nav_add_agent3">
+                            <entry key="action_nav_update_agent_to_nav_add_agent">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="updateHousePhotoFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="217" />
-                            <option name="y" value="371" />
-                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

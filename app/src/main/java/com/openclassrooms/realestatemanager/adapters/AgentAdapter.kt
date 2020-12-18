@@ -1,25 +1,18 @@
 package com.openclassrooms.realestatemanager.adapters
 
-import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.droidman.ktoasty.KToasty
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.events.DeleteAgentEvent
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.ui.add_agent.AddAgentFragment
-import com.openclassrooms.realestatemanager.ui.home.HomeFragment
 import de.hdodenhof.circleimageview.CircleImageView
 import org.greenrobot.eventbus.EventBus
-import kotlin.coroutines.coroutineContext
 
 class AgentAdapter: RecyclerView.Adapter<AgentAdapter.AgentViewHolder>() {
 

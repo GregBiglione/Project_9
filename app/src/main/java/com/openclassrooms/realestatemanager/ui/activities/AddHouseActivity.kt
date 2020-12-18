@@ -19,12 +19,15 @@ import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
+import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class AddHouseActivity : AppCompatActivity() {
 
@@ -187,6 +190,26 @@ class AddHouseActivity : AppCompatActivity() {
             housePhoto.setImageResource(R.drawable.ic_baseline_add_a_photo_24)
         }
     }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Remove house photo from room db ------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    @Subscribe
+    fun onDeleteHousePhoto(event: DeleteHousePhotoEvent){
+        mainViewModel.deleteHousePhoto(event.housePhoto)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
 
     //----------------------------------------------------------------------------------------------
     //-------------------------------- House type spinner ------------------------------------------
