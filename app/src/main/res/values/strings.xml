@@ -129,7 +129,7 @@
     <string name="number_of_bedrooms">Number of bedrooms</string>
     <string name="description">Description</string>
     <string name="number_of_bathrooms">Number of bathrooms</string>
-    <string name="status">Available</string>
+    <string name="status">Status</string>
     <string name="park">Park</string>
     <string name="museum">Museum</string>
     <string name="restaurant">Restaurant</string>
@@ -402,4 +402,5 @@
     <string name="add_photo">Add photo</string>
     <string name="enter_photo_description">Add a description to add a photo</string>
     <string name="update_photo">Update photo</string>
+    <string name="sale_date">Select a sale date</string>
 </resources>
