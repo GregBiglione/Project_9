@@ -21,6 +21,7 @@ import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
@@ -28,6 +29,8 @@ import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AddHouseActivity : AppCompatActivity() {
 
@@ -54,6 +57,10 @@ class AddHouseActivity : AppCompatActivity() {
     private lateinit var houseTypeSpinner: Spinner
     private lateinit var neighborSpinner: Spinner
     private lateinit var statusSpinner: Spinner
+    private lateinit var agentsSpinner: Spinner
+    private lateinit var allAgents: ArrayList<Agent>
+    //test adapter
+    //private lateinit var agentSpinnerAdapter: SpinnerAgentAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +74,7 @@ class AddHouseActivity : AppCompatActivity() {
         typeSpinner()
         neighborhoodSpinner()
         statusSpinner()
+        agentsSpinner()
     }
 
     //----------------------------------------------------------------------------------------------
@@ -134,11 +142,10 @@ class AddHouseActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when(requestCode){
             IMAGE_PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission from popup granted
                     pickHousePhotoFromGallery()
-                }
-                else{
+                } else {
                     // Permission from popup denied
                     applicationContext.showWarningToast("Permission denied", Toast.LENGTH_SHORT, true)
                 }
@@ -290,6 +297,41 @@ class AddHouseActivity : AppCompatActivity() {
                     //    //houseSaleDate
                     //    showWarningToast("House is: $item", Toast.LENGTH_SHORT)
                     //}
+                    //val itemPosition = statusSpinner.selectedItem
+                    //val itemPosition = parent?.getItemAtPosition(position)
+                    //if (itemPosition == 0){
+                    //    showWarningToast("House is: $itemPosition", Toast.LENGTH_SHORT)
+                    //}
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Agents spinner ----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun agentsSpinner(){
+        val agentsSpinner = findViewById<Spinner>(R.id.add_house_agent_spinner)
+        if (agentsSpinner != null){
+            val adapter = applicationContext?.let {
+                ArrayAdapter<Agent>(applicationContext, android.R.layout.simple_spinner_item)
+            }
+            //val adapter = SpinnerAgentAdapter()
+            mainViewModel.allAgents.observe(this, androidx.lifecycle.Observer { agent ->
+                agent.forEach{
+                    adapter?.add(it)
+                }
+            })
+            agentsSpinner.adapter = adapter
+
+            agentsSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val selectedAgent: String = agentsSpinner.selectedItem.toString().trim()
+                    showSuccessToast("Status: $selectedAgent", Toast.LENGTH_SHORT)
+
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
