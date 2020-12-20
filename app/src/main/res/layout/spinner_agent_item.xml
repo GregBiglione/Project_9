@@ -7,23 +7,23 @@
     app:cardCornerRadius="10dp">
 
     <RelativeLayout
-        android:id="@+id/agent_item_relative_layout"
+        android:id="@+id/spinner_agent_item_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="6dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/agent_item_image"
+            android:id="@+id/spinner_agent_item_image"
             style="@style/agent_item_image_style"/>
 
         <LinearLayout
-            android:id="@+id/agent_item_tv_lyt"
+            android:id="@+id/spinner_agent_item_tv_lyt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_alignTop="@+id/agent_item_image"
-            android:layout_toEndOf="@+id/agent_item_image"
-            android:layout_alignBottom="@+id/agent_item_image">
+            android:layout_alignTop="@+id/spinner_agent_item_image"
+            android:layout_toEndOf="@+id/spinner_agent_item_image"
+            android:layout_alignBottom="@+id/spinner_agent_item_image">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -32,12 +32,12 @@
                 style="@style/agent_item_l_lyt_style">
 
                 <TextView
-                    android:id="@+id/agent_item_first_name"
+                    android:id="@+id/spinner_agent_item_first_name"
                     android:text="@string/first_name"
                     style="@style/agent_item_style"/>
 
                 <TextView
-                    android:id="@+id/agent_item_name"
+                    android:id="@+id/spinner_agent_item_name"
                     android:text="@string/name"
                     android:layout_marginStart="5dp"
                     style="@style/agent_item_style"/>
@@ -50,7 +50,7 @@
                 style="@style/agent_item_l_lyt_style">
 
                 <TextView
-                    android:id="@+id/agent_item_phone"
+                    android:id="@+id/spinner_agent_item_phone"
                     android:text="@string/phone"
                     style="@style/agent_item_style"
                     app:drawableStartCompat="@drawable/ic_baseline_phone_24"
@@ -60,7 +60,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/agent_item_email"
+                android:id="@+id/spinner_agent_item_email"
                 android:text="@string/mail"
                 app:drawableStartCompat="@drawable/ic_baseline_email_24"
                 android:drawablePadding="5dp"
