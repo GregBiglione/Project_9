@@ -9,7 +9,7 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.Agent
 import kotlinx.android.synthetic.main.spinner_agent_item.view.*
 
-class AgentSpinnerAdapter(context: Context, agentList: List<Agent>): ArrayAdapter<Agent>(context, 0, agentList) {
+class AgentSpinnerAdapter(context: Context): ArrayAdapter<Agent>(context, 0) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return initView(position, convertView, parent)

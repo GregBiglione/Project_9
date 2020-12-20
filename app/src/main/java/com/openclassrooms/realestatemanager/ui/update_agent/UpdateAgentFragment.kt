@@ -45,6 +45,7 @@ class UpdateAgentFragment : Fragment() {
         agentUpdatedName = view.findViewById(R.id.update_agent_name)
         agentUpdatedPhone = view.findViewById(R.id.update_agent_phone)
         agentUpdatedEmail = view.findViewById(R.id.update_agent_email)
+        updateButton = view.findViewById(R.id.update_agent_update_button)
         //autoFillUpdateChamps()
         configureViewModel()
         clickOnUpdateAgent()

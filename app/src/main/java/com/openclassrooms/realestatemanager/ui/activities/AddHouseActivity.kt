@@ -17,6 +17,7 @@ import com.droidman.ktoasty.showSuccessToast
 import com.droidman.ktoasty.showWarningToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
@@ -316,10 +317,7 @@ class AddHouseActivity : AppCompatActivity() {
     private fun agentsSpinner(){
         val agentsSpinner = findViewById<Spinner>(R.id.add_house_agent_spinner)
         if (agentsSpinner != null){
-            val adapter = applicationContext?.let {
-                ArrayAdapter<Agent>(applicationContext, android.R.layout.simple_spinner_item)
-            }
-            //val adapter = SpinnerAgentAdapter()
+            val adapter = AgentSpinnerAdapter(this)
             mainViewModel.allAgents.observe(this, androidx.lifecycle.Observer { agent ->
                 agent.forEach{
                     adapter?.add(it)
