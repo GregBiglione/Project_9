@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -22,7 +24,6 @@ import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
-import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
@@ -31,7 +32,6 @@ import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
-import kotlin.collections.ArrayList
 
 class AddHouseActivity : AppCompatActivity() {
 
@@ -59,10 +59,11 @@ class AddHouseActivity : AppCompatActivity() {
     private lateinit var neighborSpinner: Spinner
     private lateinit var statusSpinner: Spinner
     private lateinit var agentsSpinner: Spinner
-    private lateinit var allAgents: ArrayList<Agent>
-    //test adapter
-    //private lateinit var agentSpinnerAdapter: SpinnerAgentAdapter
-
+    //------------------- Checkbox -----------------------------------------------------------------
+    private lateinit var pointsOfInterests: TextInputEditText
+    private lateinit var listOfPointsOfInterests: Array<String?>
+    private lateinit var checkedPointsOfInterests: BooleanArray
+    private var poi: ArrayList<Int> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +76,7 @@ class AddHouseActivity : AppCompatActivity() {
         typeSpinner()
         neighborhoodSpinner()
         statusSpinner()
+        clickOnPointsOfInterestsEditText() //<--
         agentsSpinner()
     }
 
@@ -311,6 +313,68 @@ class AddHouseActivity : AppCompatActivity() {
     }
 
     //----------------------------------------------------------------------------------------------
+    //-------------------------------- Points of interest checkbox ---------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun clickOnPointsOfInterestsEditText(){
+        pointsOfInterests = findViewById(R.id.add_house_points_of_interests)
+        pointsOfInterests.setOnClickListener {
+            pointsOfInterestsCheckBox()
+        }
+    }
+
+
+    private fun pointsOfInterestsCheckBox(){
+        listOfPointsOfInterests = resources.getStringArray(R.array.points_of_interests_array)
+        checkedPointsOfInterests = BooleanArray(listOfPointsOfInterests.size)
+
+        //pointsOfInterests = findViewById(R.id.add_house_points_of_interests)
+        pointsOfInterests.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(R.string.points_of_interests)
+            builder.setMultiChoiceItems(listOfPointsOfInterests, checkedPointsOfInterests,
+                    DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
+                        if (isChecked) {
+                            if (!poi.contains(which)) {
+                                poi.add(which)
+                            }
+                        }
+                        else {
+                            poi.remove(which)
+                        }
+                    })
+            //-------------------------------- Behavior if you cancel the selection ----------------
+            builder.setCancelable(false)
+            //-------------------------------- Positive button -------------------------------------
+            builder.setPositiveButton(R.string.add, DialogInterface.OnClickListener { dialog, which ->
+                var item: String = " "
+                for (i in poi.indices) {
+                    item += listOfPointsOfInterests[poi[i]]
+
+                    if (i != poi.size - 1) {
+                        item = item + ", "
+                    }
+                }
+                pointsOfInterests.setText(item) // use event if moved in DialogFragment()
+            })
+            //-------------------------------- Negative button -------------------------------------
+            builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, which ->
+                dialog.dismiss()
+            })
+            //-------------------------------- Neutral button --------------------------------------
+            builder.setNeutralButton(R.string.clear, DialogInterface.OnClickListener { dialog, which ->
+                for (i in checkedPointsOfInterests.indices) {
+                    checkedPointsOfInterests[i] = false
+                    poi.clear()
+                    pointsOfInterests.setText("")
+                }
+            })
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
     //-------------------------------- Agents spinner ----------------------------------------------
     //----------------------------------------------------------------------------------------------
 
@@ -319,8 +383,8 @@ class AddHouseActivity : AppCompatActivity() {
         if (agentsSpinner != null){
             val adapter = AgentSpinnerAdapter(this)
             mainViewModel.allAgents.observe(this, androidx.lifecycle.Observer { agent ->
-                agent.forEach{
-                    adapter?.add(it)
+                agent.forEach {
+                    adapter.add(it)
                 }
             })
             agentsSpinner.adapter = adapter
@@ -363,6 +427,8 @@ class AddHouseActivity : AppCompatActivity() {
         var houseBathRooms: String = houseBathRoomsEditText.text. toString().trim()
         var houseBedRooms: String = houseBedRoomsEditText.text. toString().trim()
         val statusSelected: String = statusSpinner.selectedItem.toString().trim()
+        val pointsOfInterestsSelected: String = pointsOfInterests.text.toString().trim()
+        val selectedAgent: String = agentsSpinner.selectedItem.toString().trim() //agent id: long in house model
         // set entry date with Today date
         // Set sale date with Date picker
     }
