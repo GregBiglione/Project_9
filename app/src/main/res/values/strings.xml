@@ -393,6 +393,7 @@
     <string name="enter_photo_description">Add a description to add a photo</string>
     <string name="update_photo">Update photo</string>
     <string name="sale_date">Select a sale date</string>
+    <string name="sold">Sold</string>
 
     <string-array name="points_of_interests_array">
         <item>Park</item>

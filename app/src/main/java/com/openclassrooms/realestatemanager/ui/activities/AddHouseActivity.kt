@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
 import com.droidman.ktoasty.showWarningToast
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
@@ -45,6 +46,8 @@ class AddHouseActivity : AppCompatActivity() {
     private val IMAGE_PERMISSION_CODE = 1201
     //------------------- Button -------------------------------------------------------------------
     private lateinit var addHousePhotoButton: Button
+    //------------------- Text input layout --------------------------------------------------------
+    private lateinit var houseSaleDateInputLyt: TextInputLayout
     //------------------- Edit text ----------------------------------------------------------------
     private lateinit var houseDescriptionEditText: TextInputEditText
     private lateinit var houseAddressEditText: TextInputEditText
@@ -235,7 +238,6 @@ class AddHouseActivity : AppCompatActivity() {
         EventBus.getDefault().unregister(this)
     }
 
-
     //----------------------------------------------------------------------------------------------
     //-------------------------------- House type spinner ------------------------------------------
     //----------------------------------------------------------------------------------------------
@@ -295,16 +297,13 @@ class AddHouseActivity : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val statusSelected: String = statusSpinner.selectedItem.toString().trim()
                     showSuccessToast("Status: $statusSelected", Toast.LENGTH_SHORT)
-                    //val item = statusSpinner.getItemAtPosition(1)
-                    //if (item == 1){
-                    //    //houseSaleDate
-                    //    showWarningToast("House is: $item", Toast.LENGTH_SHORT)
-                    //}
-                    //val itemPosition = statusSpinner.selectedItem
-                    //val itemPosition = parent?.getItemAtPosition(position)
-                    //if (itemPosition == 0){
-                    //    showWarningToast("House is: $itemPosition", Toast.LENGTH_SHORT)
-                    //}
+                    houseSaleDateInputLyt = findViewById(R.id.add_house_sale_date_input)
+                    if (statusSelected == getString(R.string.sold)){
+                        houseSaleDateInputLyt.visibility = View.VISIBLE
+                    }
+                    else{
+                        houseSaleDateInputLyt.visibility = View.GONE
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -323,7 +322,7 @@ class AddHouseActivity : AppCompatActivity() {
         }
     }
 
-
+    //-------------------------------- Dialog box multi choices checkbox ---------------------------
     private fun pointsOfInterestsCheckBox(){
         listOfPointsOfInterests = resources.getStringArray(R.array.points_of_interests_array)
         checkedPointsOfInterests = BooleanArray(listOfPointsOfInterests.size)

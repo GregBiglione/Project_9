@@ -255,14 +255,14 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/add_house_sale_date"
                     android:hint="@string/sale_date"
                     android:inputType="date"
-                    style="@style/agent_first_name_style"
-                    android:visibility="gone"/>
+                    style="@style/agent_first_name_style"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -271,6 +271,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/points_of_interests"
                 android:textSize="24sp"
+                android:layout_marginTop="10dp"
                 android:textStyle="bold"/>
 
             <com.google.android.material.textfield.TextInputLayout
