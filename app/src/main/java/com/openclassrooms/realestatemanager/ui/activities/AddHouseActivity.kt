@@ -32,6 +32,7 @@ import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddHouseActivity : AppCompatActivity() {
@@ -56,6 +57,7 @@ class AddHouseActivity : AppCompatActivity() {
     private lateinit var houseRoomsEditText: TextInputEditText
     private lateinit var houseBathRoomsEditText: TextInputEditText
     private lateinit var houseBedRoomsEditText: TextInputEditText
+    private lateinit var houseEntryDate: TextInputEditText
     private lateinit var houseSaleDate: TextInputEditText
     //------------------- Spinner ------------------------------------------------------------------
     private lateinit var houseTypeSpinner: Spinner
@@ -79,7 +81,8 @@ class AddHouseActivity : AppCompatActivity() {
         typeSpinner()
         neighborhoodSpinner()
         statusSpinner()
-        clickOnPointsOfInterestsEditText() //<--
+        todayDate()
+        clickOnPointsOfInterestsEditText()
         agentsSpinner()
     }
 
@@ -309,6 +312,17 @@ class AddHouseActivity : AppCompatActivity() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Set entry date ----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun todayDate(){
+        houseEntryDate = findViewById(R.id.add_house_entry_date)
+        val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd")
+        val currentDate: String = simpleDateFormat.format(Date())
+        houseEntryDate.setText(currentDate)
     }
 
     //----------------------------------------------------------------------------------------------
