@@ -30,6 +30,7 @@ import com.openclassrooms.realestatemanager.picker.DatePickerFragment
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -323,7 +324,7 @@ class AddHouseActivity : AppCompatActivity() {
 
     private fun todayDate(){
         houseEntryDate = findViewById(R.id.add_house_entry_date)
-        val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd")
+        val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd") //Check if ok when passing data
         val currentDate: String = simpleDateFormat.format(Date())
         houseEntryDate.setText(currentDate)
     }
@@ -333,7 +334,6 @@ class AddHouseActivity : AppCompatActivity() {
     //----------------------------------------------------------------------------------------------
 
     private fun saleDate(){
-        //pick = Pick()
         houseSaleDate = findViewById(R.id.add_house_sale_date)
         houseSaleDate.setOnClickListener { showDatePickerDialog()}
     }
@@ -452,22 +452,25 @@ class AddHouseActivity : AppCompatActivity() {
         houseBathRoomsEditText = findViewById(R.id.add_house_number_of_bathrooms)
         houseBedRoomsEditText = findViewById(R.id.add_house_number_of_bedrooms)
 
+        val timeConverter = TimeConverters()
+
         val id: Long = System.currentTimeMillis()
         //var housePhotoList: List<HousePhoto> = mainViewModel.allHousePhotos
         val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
-        val neighborhoodSelected: String = neighborSpinner.selectedItem.toString().trim()
         var houseDescription: String = housePhotoDescriptionEditText.text.toString().trim()
+        val neighborhoodSelected: String = neighborSpinner.selectedItem.toString().trim()
         var houseAddress: String = houseAddressEditText.text.toString().trim()
+        var housePrice: Long = housePriceEditText.text.toString().toLong()
         var houseSurface: String = houseSurfaceEditText.text.toString().trim()
-        var houseRooms: String = houseRoomsEditText.text. toString().trim()
-        var houseBathRooms: String = houseBathRoomsEditText.text. toString().trim()
-        var houseBedRooms: String = houseBedRoomsEditText.text. toString().trim()
+        var houseRooms: Int = houseRoomsEditText.text.toString().toInt()
+        var houseBathRooms: Int = houseBathRoomsEditText.text.toString().toInt()
+        var houseBedRooms: Int = houseBedRoomsEditText.text.toString().toInt()
         val statusSelected: String = statusSpinner.selectedItem.toString().trim()
-        //val entryDate: Date = houseEntryDate.text.toString().trim()
-        //val saleDateSelected: Date = houseSaleDate.text.toString().trim()
+        val entryDate: Long = timeConverter.convertDateToLong(houseEntryDate.text.toString().trim())
+        if (houseSaleDate.text != null){
+            val saleDateSelected: Long = timeConverter.convertDateToLong(houseSaleDate.text.toString().trim())
+        }
         val pointsOfInterestsSelected: String = pointsOfInterests.text.toString().trim()
         val selectedAgent: String = agentsSpinner.selectedItem.toString().trim() //agent id: long in house model
-        // set entry date with Today date
-        // Set sale date with Date picker
     }
 }
