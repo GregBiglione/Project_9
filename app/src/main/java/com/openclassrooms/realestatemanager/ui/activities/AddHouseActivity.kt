@@ -26,6 +26,7 @@ import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDataba
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.HousePhoto
+import com.openclassrooms.realestatemanager.picker.DatePickerFragment
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
@@ -33,6 +34,7 @@ import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.text.SimpleDateFormat
+import java.time.Month
 import java.util.*
 
 class AddHouseActivity : AppCompatActivity() {
@@ -82,6 +84,7 @@ class AddHouseActivity : AppCompatActivity() {
         neighborhoodSpinner()
         statusSpinner()
         todayDate()
+        saleDate()
         clickOnPointsOfInterestsEditText()
         agentsSpinner()
     }
@@ -326,6 +329,26 @@ class AddHouseActivity : AppCompatActivity() {
     }
 
     //----------------------------------------------------------------------------------------------
+    //-------------------------------- Set sold date -----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun saleDate(){
+        //pick = Pick()
+        houseSaleDate = findViewById(R.id.add_house_sale_date)
+        houseSaleDate.setOnClickListener { showDatePickerDialog()}
+    }
+
+    private fun showDatePickerDialog() {
+        val datePicker = DatePickerFragment{ year, month, day -> onDateSelected(year, month, day) }
+        datePicker.show(supportFragmentManager, "Date picker")
+    }
+
+    private fun onDateSelected(year: Int, month: Int, day: Int){
+        houseSaleDate.setText("$month/$day/$year")
+    }
+
+
+    //----------------------------------------------------------------------------------------------
     //-------------------------------- Points of interest checkbox ---------------------------------
     //----------------------------------------------------------------------------------------------
 
@@ -440,6 +463,8 @@ class AddHouseActivity : AppCompatActivity() {
         var houseBathRooms: String = houseBathRoomsEditText.text. toString().trim()
         var houseBedRooms: String = houseBedRoomsEditText.text. toString().trim()
         val statusSelected: String = statusSpinner.selectedItem.toString().trim()
+        //val entryDate: Date = houseEntryDate.text.toString().trim()
+        //val saleDateSelected: Date = houseSaleDate.text.toString().trim()
         val pointsOfInterestsSelected: String = pointsOfInterests.text.toString().trim()
         val selectedAgent: String = agentsSpinner.selectedItem.toString().trim() //agent id: long in house model
         // set entry date with Today date
