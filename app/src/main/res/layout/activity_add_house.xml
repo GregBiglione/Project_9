@@ -201,7 +201,7 @@
                     android:hint="@string/number_of_bathrooms"
                     android:inputType="number"
                     style="@style/add_house_input_with_icon_style"
-                    android:drawableStart="@drawable/ic_baseline_bathtub_24"
+                    android:drawableStart="@drawable/ic_baseline_hot_tub_24"
                     android:nextFocusDown="@+id/agent_name"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -221,7 +221,7 @@
                     android:hint="@string/number_of_bedrooms"
                     android:inputType="number"
                     style="@style/add_house_input_with_icon_style"
-                    android:drawableStart="@drawable/ic_baseline_king_bed_24"
+                    android:drawableStart="@drawable/ic_baseline_bed_24"
                     android:nextFocusDown="@+id/agent_name"/>
 
             </com.google.android.material.textfield.TextInputLayout>

@@ -35,7 +35,6 @@ import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.text.SimpleDateFormat
-import java.time.Month
 import java.util.*
 
 class AddHouseActivity : AppCompatActivity() {
