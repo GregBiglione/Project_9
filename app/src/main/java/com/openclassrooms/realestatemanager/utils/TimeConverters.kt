@@ -1,13 +1,15 @@
 package com.openclassrooms.realestatemanager.utils
 
+import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
 class TimeConverters {
 
+    @SuppressLint("SimpleDateFormat")
     fun convertLongToTime(time: Long): String {
         val date = Date(time)
-        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        val format = SimpleDateFormat("yyyy.MM.dd")
         return format.format(date)
     }
 
@@ -15,8 +17,9 @@ class TimeConverters {
         return System.currentTimeMillis()
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun convertDateToLong(date: String): Long {
-        val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
         return simpleDateFormat.parse(date).time
     }
 }

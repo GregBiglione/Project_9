@@ -313,6 +313,8 @@
     <string name="update_photo">Update photo</string>
     <string name="sale_date">Select a sale date</string>
     <string name="sold">Sold</string>
+    <string name="published_date">Published on:</string>
+    <string name="sold_on">Sold on:</string>
 
     <string-array name="points_of_interests_array">
         <item>Park</item>

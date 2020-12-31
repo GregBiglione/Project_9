@@ -14,7 +14,7 @@ data class Agent(
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0L,
         @TypeConverters(UriConverters::class)
-        var agentPhoto: Uri,
+        var agentPhoto: Uri?,
         var firstName: String,
         var name: String,
         var phoneNumber: String,

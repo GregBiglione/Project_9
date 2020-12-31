@@ -8,6 +8,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +27,7 @@ import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.picker.DatePickerFragment
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
@@ -34,6 +37,7 @@ import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.lang.Long.parseLong
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,6 +53,7 @@ class AddHouseActivity : AppCompatActivity() {
     private val IMAGE_PERMISSION_CODE = 1201
     //------------------- Button -------------------------------------------------------------------
     private lateinit var addHousePhotoButton: Button
+    private lateinit var addHouseButton: Button
     //------------------- Text input layout --------------------------------------------------------
     private lateinit var houseSaleDateInputLyt: TextInputLayout
     //------------------- Edit text ----------------------------------------------------------------
@@ -72,10 +77,14 @@ class AddHouseActivity : AppCompatActivity() {
     private lateinit var checkedPointsOfInterests: BooleanArray
     private var poi: ArrayList<Int> = ArrayList()
 
+    private val TAG = "AddHouseActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
         housePhoto = findViewById(R.id.add_house_photo)
+        housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
+        agentsSpinner = findViewById(R.id.add_house_agent_spinner)
         clickOnAddHouseButton()
         configureViewModel()
         configureHousePhotoRecyclerView()
@@ -87,6 +96,7 @@ class AddHouseActivity : AppCompatActivity() {
         saleDate()
         clickOnPointsOfInterestsEditText()
         agentsSpinner()
+        clickOnAddHouse()
     }
 
     //----------------------------------------------------------------------------------------------
@@ -196,7 +206,7 @@ class AddHouseActivity : AppCompatActivity() {
     }
 
     private fun saveHousePhoto(){
-      housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
+      //housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
         val idHousePhoto: Long = System.currentTimeMillis()
         val housePhoto: Uri = Uri.parse(housePhoto.toString())
         val housePhotoDescription: String = housePhotoDescriptionEditText.text.toString().trim()
@@ -271,6 +281,7 @@ class AddHouseActivity : AppCompatActivity() {
     //----------------------------------------------------------------------------------------------
 
     private fun neighborhoodSpinner(){
+        neighborSpinner = findViewById(R.id.add_house_neighborhood_spinner)
         val neighborhood = resources.getStringArray(R.array.house_neighborhood)
         val neighborSpinner = findViewById<Spinner>(R.id.add_house_neighborhood_spinner)
         if (neighborSpinner != null){
@@ -294,7 +305,7 @@ class AddHouseActivity : AppCompatActivity() {
 
     private fun statusSpinner(){
         val houseStatus = resources.getStringArray(R.array.house_status_array)
-        val statusSpinner = findViewById<Spinner>(R.id.add_house_status_spinner)
+        statusSpinner = findViewById(R.id.add_house_status_spinner)
         if (statusSpinner != null){
             val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, houseStatus)
             statusSpinner.adapter = adapter
@@ -440,9 +451,19 @@ class AddHouseActivity : AppCompatActivity() {
     //-------------------------------- Add house in room db ----------------------------------------
     //----------------------------------------------------------------------------------------------
 
+    //------------------- Click on add button ------------------------------------------------------
+
+    private fun clickOnAddHouse(){
+        addHouseButton = findViewById(R.id.add_house_add_button)
+        addHouseButton.setOnClickListener {
+            saveHouse()
+        }
+    }
+
     private fun saveHouse(){
         // house photos uses housePhoto getAllHousePhotos
 
+        houseTypeSpinner = findViewById(R.id.add_house_type_spinner)
         houseDescriptionEditText = findViewById(R.id.add_house_description)
         houseAddressEditText = findViewById(R.id.add_house_address)
         housePriceEditText = findViewById(R.id.add_house_price)
@@ -450,26 +471,56 @@ class AddHouseActivity : AppCompatActivity() {
         houseRoomsEditText = findViewById(R.id.add_house_number_of_rooms)
         houseBathRoomsEditText = findViewById(R.id.add_house_number_of_bathrooms)
         houseBedRoomsEditText = findViewById(R.id.add_house_number_of_bedrooms)
+        //statusSpinner = findViewById(R.id.add_house_status_spinner)
 
         val timeConverter = TimeConverters()
-
         val id: Long = System.currentTimeMillis()
         //var housePhotoList: List<HousePhoto> = mainViewModel.allHousePhotos
         val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
-        var houseDescription: String = housePhotoDescriptionEditText.text.toString().trim()
+        val houseDescription: String? = housePhotoDescriptionEditText.text.toString().trim()
         val neighborhoodSelected: String = neighborSpinner.selectedItem.toString().trim()
-        var houseAddress: String = houseAddressEditText.text.toString().trim()
-        var housePrice: Long = housePriceEditText.text.toString().toLong()
-        var houseSurface: String = houseSurfaceEditText.text.toString().trim()
-        var houseRooms: Int = houseRoomsEditText.text.toString().toInt()
-        var houseBathRooms: Int = houseBathRoomsEditText.text.toString().toInt()
-        var houseBedRooms: Int = houseBedRoomsEditText.text.toString().toInt()
+        val houseAddress: String? = houseAddressEditText.text.toString().trim()
+        //val housePrice: Int = Integer.parseInt(housePriceEditText.text.toString())
+        //val houseSurface: Int = Integer.parseInt(houseSurfaceEditText.text.toString())
+        //val houseRooms: Int = Integer.parseInt(houseRoomsEditText.text.toString())
+        //val houseBathRooms: Int = Integer.parseInt(houseBathRoomsEditText.text.toString())
+        //val houseBedRooms: Int = Integer.parseInt(houseBedRoomsEditText.text.toString())
         val statusSelected: String = statusSpinner.selectedItem.toString().trim()
-        val entryDate: Long = timeConverter.convertDateToLong(houseEntryDate.text.toString().trim())
-        if (houseSaleDate.text != null){
-            val saleDateSelected: Long = timeConverter.convertDateToLong(houseSaleDate.text.toString().trim())
+        val entryDate: Long = id
+        val pointsOfInterestsSelected: String? = pointsOfInterests.text.toString().trim()
+        //val selectedAgent: String = agentsSpinner.selectedItem.toString().trim() //agent id: long in house model
+        val selectedAgentId: Long = agentsSpinner.selectedItemId
+
+
+        try {
+            val housePrice: Int = Integer.parseInt(housePriceEditText.text.toString())
+            val houseSurface: Int = Integer.parseInt(houseSurfaceEditText.text.toString())
+            val houseRooms: Int = Integer.parseInt(houseRoomsEditText.text.toString())
+            val houseBathRooms: Int = Integer.parseInt(houseBathRoomsEditText.text.toString())
+            val houseBedRooms: Int = Integer.parseInt(houseBedRoomsEditText.text.toString())
+
+            if (houseSaleDate.text != null){
+                val saleDateSelected: Long = timeConverter.convertDateToLong(houseSaleDate.text.toString().trim())
+                addHouse(house = House(id, null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
+                        houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
+                        saleDateSelected, selectedAgentId))
+            }
+            else{
+                addHouse(house = House(id, null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
+                        houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
+                        null, selectedAgentId))
+            }
+        }catch (e: NumberFormatException ){
+            Log.e(TAG, e.message.toString())
         }
-        val pointsOfInterestsSelected: String = pointsOfInterests.text.toString().trim()
-        val selectedAgent: String = agentsSpinner.selectedItem.toString().trim() //agent id: long in house model
+
+        //addHouse(house = House(id, null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
+        //        houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
+        //        saleDateSelected, selectedAgentId))
+    }
+
+    private fun addHouse(house: House){
+        mainViewModel.createHouse(house)
+        showSuccessToast("House added with success ", Toast.LENGTH_SHORT, true)
     }
 }
