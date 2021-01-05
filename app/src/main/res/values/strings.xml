@@ -331,4 +331,11 @@
         <item>Hospital</item>
         <item>Swimming pool</item>
     </string-array>
+
+    <!-- Preference Titles -->
+    <string name="notification_header">Notification</string>
+
+    <!-- Sync Preferences -->
+    <string name="notifications">Notifications</string>
+
 </resources>
