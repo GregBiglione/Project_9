@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.openclassrooms.realestatemanager.ui.home.HomeFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/nav_add_agent"
-        android:name="com.openclassrooms.realestatemanager.ui.add_agent.AddAgentFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.AddAgentFragment"
         android:label="@string/menu_add_agent"
         tools:layout="@layout/fragment_add_agent" >
         <action
@@ -30,13 +30,13 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.openclassrooms.realestatemanager.ui.slideshow.SlideshowFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
         android:id="@+id/nav_update_agent"
-        android:name="com.openclassrooms.realestatemanager.ui.update_agent.UpdateAgentFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.UpdateAgentFragment"
         android:label="@string/menu_update"
         tools:layout="@layout/fragment_update_agent" >
         <argument

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.home
+package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,7 +23,6 @@ import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
     private lateinit var houseRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
 
@@ -32,8 +31,6 @@ class HomeFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         houseRecyclerView = root.findViewById(R.id.house_recycler_view)
         val fab: FloatingActionButton = root.findViewById(R.id.add_house_fab)
@@ -44,7 +41,7 @@ class HomeFragment : Fragment() {
     }
 
     //----------------------------------------------------------------------------------------------
-    //------------------- Configure properties list ------------------------------------------------
+    //------------------- Configure houses list ----------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
 

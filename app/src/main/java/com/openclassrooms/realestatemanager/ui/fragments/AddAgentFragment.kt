@@ -1,15 +1,13 @@
-package com.openclassrooms.realestatemanager.ui.add_agent
+package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -35,18 +33,15 @@ import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.ui.add_agent.AddAgentViewModel
 import com.openclassrooms.realestatemanager.utils.UriConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import java.io.ByteArrayOutputStream
-import java.util.*
 
 class AddAgentFragment : Fragment() {
 
-    private lateinit var addAgentViewModel: AddAgentViewModel
     private lateinit var agentRecyclerView: RecyclerView
     private lateinit var agentPhoto: CircleImageView
     private lateinit var mainViewModel: MainViewModel
@@ -70,8 +65,6 @@ class AddAgentFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        addAgentViewModel =
-                ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(AddAgentViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_add_agent, container, false)
         agentRecyclerView = root.findViewById(R.id.add_agent_recycler_view)
         agentPhoto = root.findViewById(R.id.agent_photo)

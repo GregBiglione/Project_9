@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.ui.update_agent
+package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.net.Uri
 import android.os.Bundle
@@ -21,6 +21,7 @@ import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+//import com.openclassrooms.realestatemanager.ui.update_agent.UpdateAgentFragmentArgs
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
