@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R
 
-class SlideshowFragment : Fragment() {
+class SettingFragment : Fragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater,

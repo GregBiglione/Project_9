@@ -14,8 +14,8 @@
             android:id="@+id/action_nav_home_to_nav_add_agent"
             app:destination="@id/nav_add_agent" />
         <action
-            android:id="@+id/action_nav_home_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
+            android:id="@+id/action_nav_home_to_nav_setting"
+            app:destination="@id/nav_settings" />
     </fragment>
 
     <fragment
@@ -29,9 +29,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.openclassrooms.realestatemanager.ui.fragments.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:id="@+id/nav_settings"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.SettingFragment"
+        android:label="@string/menu_settings"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment

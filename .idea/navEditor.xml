@@ -45,7 +45,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_nav_home_to_nav_slideshow">
+                            <entry key="action_nav_home_to_nav_setting">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -55,13 +55,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_slideshow">
+                  <entry key="nav_settings">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="12" />
-                            <option name="y" value="368" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -78,7 +78,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_nav_update_agent_to_nav_add_agent">
+                            <entry key="action_nav_update_agent_to_nav_add_agent3">
                               <value>
                                 <LayoutPositions />
                               </value>
