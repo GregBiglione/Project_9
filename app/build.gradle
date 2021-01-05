@@ -14,6 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        multiDexEnabled true
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -100,4 +101,15 @@ dependencies {
 
     //------------------------------ Firebase cloud messaging --------------------------------------
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
+
+    //------------------------------ Import the BoM for the Firebase platform ----------------------
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+
+    //------------------------------ Firebase Cloud Messaging and Analytics libraries --------------
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // ----------------------------- Multi Dex -----------------------------------------------------
+    implementation 'com.android.support:multidex:1.0.3'
+
 }

@@ -1,12 +1,15 @@
 package com.openclassrooms.realestatemanager.ui.add_agent
 
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +17,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -31,10 +35,14 @@ import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.utils.UriConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.io.ByteArrayOutputStream
+import java.util.*
 
 class AddAgentFragment : Fragment() {
 
@@ -54,6 +62,8 @@ class AddAgentFragment : Fragment() {
     //------------------- Button -------------------------------------------------------------------
     private lateinit var addAgentButton: Button
     private lateinit var clearButton: Button
+    //------------------- Uri to bitmap Conversion -------------------------------------------------
+    private val contentResolver: ContentResolver? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -147,11 +157,10 @@ class AddAgentFragment : Fragment() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when(requestCode){
             IMAGE_PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission from popup granted
                     pickAgentPhotoFromGallery()
-                }
-                else{
+                } else {
                     // Permission from popup denied
                     activity?.showWarningToast(getString(R.string.permission_denied), Toast.LENGTH_SHORT, true)
                 }
@@ -169,27 +178,47 @@ class AddAgentFragment : Fragment() {
 
     //------------------- Handle image pick result -------------------------------------------------
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             agentPhoto.setImageURI(data?.data)
+            //val photoFromGallery: Uri? = data?.data
+            //if (photoFromGallery != null){
+            //    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, photoFromGallery)
+//
+            //    val outputStream = ByteArrayOutputStream()
+            //    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            //    val byteArray = outputStream.toByteArray()
+//
+            //    val encodedString: String = Base64.getEncoder().encodeToString(byteArray)
+            //    agentPhoto.setImageURI(Uri.parse(encodedString))
+//
+            //}
         }
     }
-
-    //----------------------------------------------------------------------------------------------
-    //------------------- Add agent in room db -----------------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    //------------------- Click on add button ------------------------------------------------------
 
     private fun clickOnAddAgent(){
         addAgentButton.setOnClickListener {
             saveAgent()
         }
+        
+        //----------------------------------------------------------------------------------------------
+        //------------------- Add agent in room db -----------------------------------------------------
+        //----------------------------------------------------------------------------------------------
+
+        //------------------- Click on add button ------------------------------------------------------
+
     }
 
     private fun saveAgent(){
         val id: Long = System.currentTimeMillis()
-        val photo: Uri = Uri.parse(agentPhoto.toString())// <-- photo not shown may be Uri
+        val uriConverters = UriConverters()
+        //l 175
+        //val photo: Uri = Uri.parse(agentPhoto.toString())// <-- photo not shown may be Uri
+        val photo: Uri? = uriConverters.fromString(agentPhoto.toString()) //Doesn't work too
+        //val photo: Uri? = uriConverters.toString(Uri.parse(agentPhoto.toString()))
+        //val photo: Uri? = Uri.parse(agentPhoto.toString())
+        //val photo: Uri? = agentPhoto.toString()
         val firstName: String = agentFirstName.text.toString().trim()
         val name: String = agentName.text.toString().trim()
         val phone: String = "+1 " + agentPhone.text.toString().trim()
