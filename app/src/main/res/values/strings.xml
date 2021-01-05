@@ -315,6 +315,8 @@
     <string name="sold">Sold</string>
     <string name="published_date">Published on:</string>
     <string name="sold_on">Sold on:</string>
+    <string name="notification_title">Message from Real Estate Manager</string>
+    <string name="default_notification_channel_id">fcm default channel</string>
 
     <string-array name="points_of_interests_array">
         <item>Park</item>
