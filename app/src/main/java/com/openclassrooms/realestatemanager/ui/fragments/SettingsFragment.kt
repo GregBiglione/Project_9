@@ -31,13 +31,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(NOTIFICATIONS_PREF, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putBoolean("silentMode", false)
-        editor.apply()
+        editor.commit()
     }
 
     private fun disableNotifications() {
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(NOTIFICATIONS_PREF, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putBoolean("silentMode", true)
-        editor.apply()
+        editor.commit()
     }
 }

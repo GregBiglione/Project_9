@@ -4,9 +4,11 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.preference.PreferenceManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.openclassrooms.realestatemanager.R
@@ -16,14 +18,19 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     val NOTIFICATION_ID = 2109
     val NOTIFICATION_TAG = "FIRE_BASE_REAL_ESTATE_MANGER"
-    val TAG = "NotificationService"
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        if (remoteMessage.notification != null){
-            val message: String? = remoteMessage.notification?.body
-            sendVisualNotification(message)
+        // After that show notification clicking on addHouse btn in AddHouseActivity
+        val sharePreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val receivedNotification = sharePreferences.getBoolean("switchNotification", true)
+
+        if (receivedNotification){
+            if (remoteMessage.notification != null){
+                val message: String? = remoteMessage.notification?.body
+                sendVisualNotification(message)
+            }
         }
     }
     //----------------------------------------------------------------------------------------------
