@@ -335,7 +335,9 @@
     <!-- Preference Titles -->
     <string name="notification_header">Notification</string>
 
-    <!-- Sync Preferences -->
-    <string name="notifications">Notifications</string>
+    <!-- Notifications Preferences -->
+    <string name="notifications">Disable notifications</string>
+    <string name="summary_notifications_off">Notifications disabled</string>
+    <string name="summary_notifications_on">Notifications enabled</string>
 
 </resources>
