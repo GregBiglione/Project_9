@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +49,7 @@ class AddAgentFragment : Fragment() {
     //------------------- Photo from gallery code --------------------------------------------------
     private val IMAGE_PICK_CODE = 2108
     private val IMAGE_PERMISSION_CODE = 1201
+    //private val CAMERA_REQUEST_CODE = 807
     //------------------- Agent input --------------------------------------------------------------
     private lateinit var agentFirstName: TextInputEditText
     private lateinit var agentName: TextInputEditText
@@ -167,6 +169,12 @@ class AddAgentFragment : Fragment() {
         accessGallery.type ="image/*"
         startActivityForResult(accessGallery, IMAGE_PICK_CODE)
     }
+
+    //------------------- Intent to access camera --------------------------------------------------
+    //private fun takeAgentPicture(){
+    //    val accessCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    //    startActivityForResult(accessCamera, CAMERA_REQUEST_CODE)
+    //}
 
     //------------------- Handle image pick result -------------------------------------------------
 

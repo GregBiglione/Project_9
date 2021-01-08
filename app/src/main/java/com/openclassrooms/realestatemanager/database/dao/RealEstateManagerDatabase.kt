@@ -31,11 +31,12 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                             context.applicationContext,
                             RealEstateManagerDatabase::class.java,
-                            "RealEstateManager"
+                            "Db"
                     )
                             .addCallback(roomCallback!!)
                             .build()
                 }
+                INSTANCE = instance
                 return instance
             }
         }
@@ -67,8 +68,48 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                 }
 
                 //--------- Houses photos-----------------------------------------------------------
-                val housePhotos: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet1()
-                for (p in housePhotos){
+                val housePhotos1: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet1()
+                for (p in housePhotos1){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos2: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet2()
+                for (p in housePhotos2){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos3: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet3()
+                for (p in housePhotos3){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos4: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet4()
+                for (p in housePhotos4){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos5: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet5()
+                for (p in housePhotos5){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos6: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet6()
+                for (p in housePhotos6){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos7: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet7()
+                for (p in housePhotos7){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos8: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet8()
+                for (p in housePhotos8){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos9: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet9()
+                for (p in housePhotos9){
                     housePhotoDao?.createHousePhoto(p)
                 }
                 return null

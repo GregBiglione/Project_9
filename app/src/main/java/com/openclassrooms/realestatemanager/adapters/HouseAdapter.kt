@@ -11,6 +11,9 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.House
 
 class HouseAdapter(private val houseList: List<House>)  : RecyclerView.Adapter<HouseAdapter.PropertyViewHolder>(){
+
+    //private var houseList = emptyList<House>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.house_item, parent,false)
@@ -169,4 +172,9 @@ class HouseAdapter(private val houseList: List<House>)  : RecyclerView.Adapter<H
         //------------------- Agent in charge ------------------------------------------------------
         var houseAgentInCharge: TextView = itemView.findViewById(R.id.house_agent_in_charge)
     }
+
+    //fun setData(house: List<House>){
+    //    this.houseList = house
+    //    notifyDataSetChanged()
+    //}
 }

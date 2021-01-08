@@ -124,9 +124,9 @@ class AddHouseActivity : AppCompatActivity() {
         val factory = ViewModelFactory(agentRepository, propertyRepository, housePhotoRepository)
         mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
         //------------------- Get house photos from room db ----------------------------------------------
-        mainViewModel.allHousePhotos.observe(this, { housePhoto ->
-            housePhotoAdapter.setData(housePhoto)
-        })
+        //mainViewModel.allHousePhotos.observe(this, { housePhoto ->
+        //    housePhotoAdapter.setData(housePhoto)
+        //})
     }
 
     //----------------------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ class AddHouseActivity : AppCompatActivity() {
     private fun clickOnAddHousePhotoButton(){
         addHousePhotoButton = findViewById(R.id.add_house_add_photo_button)
         addHousePhotoButton.setOnClickListener {
-            saveHousePhoto()
+            //saveHousePhoto()
         }
     }
 
@@ -473,6 +473,7 @@ class AddHouseActivity : AppCompatActivity() {
         houseBedRoomsEditText = findViewById(R.id.add_house_number_of_bedrooms)
         //statusSpinner = findViewById(R.id.add_house_status_spinner)
 
+        var housePrice = 0
         val timeConverter = TimeConverters()
         val id: Long = System.currentTimeMillis()
         //var housePhotoList: List<HousePhoto> = mainViewModel.allHousePhotos
@@ -480,39 +481,44 @@ class AddHouseActivity : AppCompatActivity() {
         val houseDescription: String? = housePhotoDescriptionEditText.text.toString().trim()
         val neighborhoodSelected: String = neighborSpinner.selectedItem.toString().trim()
         val houseAddress: String? = houseAddressEditText.text.toString().trim()
-        //val housePrice: Int = Integer.parseInt(housePriceEditText.text.toString())
-        //val houseSurface: Int = Integer.parseInt(houseSurfaceEditText.text.toString())
-        //val houseRooms: Int = Integer.parseInt(houseRoomsEditText.text.toString())
-        //val houseBathRooms: Int = Integer.parseInt(houseBathRoomsEditText.text.toString())
-        //val houseBedRooms: Int = Integer.parseInt(houseBedRoomsEditText.text.toString())
+        if (!housePriceEditText.text.isNullOrEmpty()){
+            housePrice = Integer.parseInt(housePriceEditText.text.toString())
+        }
+        val houseSurface: Int = Integer.parseInt(houseSurfaceEditText.text.toString())
+        val houseRooms: Int = Integer.parseInt(houseRoomsEditText.text.toString())
+        val houseBathRooms: Int = Integer.parseInt(houseBathRoomsEditText.text.toString())
+        val houseBedRooms: Int = Integer.parseInt(houseBedRoomsEditText.text.toString())
         val statusSelected: String = statusSpinner.selectedItem.toString().trim()
         val entryDate: Long = id
         val pointsOfInterestsSelected: String? = pointsOfInterests.text.toString().trim()
         //val selectedAgent: String = agentsSpinner.selectedItem.toString().trim() //agent id: long in house model
         val selectedAgentId: Long = agentsSpinner.selectedItemId
 
+        addHouse(house = House(id, null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
+                houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
+                null, selectedAgentId))
 
-        try {
-            val housePrice: Int = Integer.parseInt(housePriceEditText.text.toString())
-            val houseSurface: Int = Integer.parseInt(houseSurfaceEditText.text.toString())
-            val houseRooms: Int = Integer.parseInt(houseRoomsEditText.text.toString())
-            val houseBathRooms: Int = Integer.parseInt(houseBathRoomsEditText.text.toString())
-            val houseBedRooms: Int = Integer.parseInt(houseBedRoomsEditText.text.toString())
-
-            if (houseSaleDate.text != null){
-                val saleDateSelected: Long = timeConverter.convertDateToLong(houseSaleDate.text.toString().trim())
-                addHouse(house = House(id, null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
-                        houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
-                        saleDateSelected, selectedAgentId))
-            }
-            else{
-                addHouse(house = House(id, null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
-                        houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
-                        null, selectedAgentId))
-            }
-        }catch (e: NumberFormatException ){
-            Log.e(TAG, e.message.toString())
-        }
+        //try {
+        //    val housePrice: Int = Integer.parseInt(housePriceEditText.text.toString())
+        //    val houseSurface: Int = Integer.parseInt(houseSurfaceEditText.text.toString())
+        //    val houseRooms: Int = Integer.parseInt(houseRoomsEditText.text.toString())
+        //    val houseBathRooms: Int = Integer.parseInt(houseBathRoomsEditText.text.toString())
+        //    val houseBedRooms: Int = Integer.parseInt(houseBedRoomsEditText.text.toString())
+//
+        //    if (houseSaleDate.text != null){
+        //        val saleDateSelected: Long = timeConverter.convertDateToLong(houseSaleDate.text.toString().trim())
+        //        addHouse(house = House(id, null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
+        //                houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
+        //                saleDateSelected, selectedAgentId))
+        //    }
+        //    else{
+        //        addHouse(house = House(id, null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
+        //                houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
+        //                null, selectedAgentId))
+        //    }
+        //}catch (e: NumberFormatException ){
+        //    Log.e(TAG, e.message.toString())
+        //}
 
         //addHouse(house = House(id, null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
         //        houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
