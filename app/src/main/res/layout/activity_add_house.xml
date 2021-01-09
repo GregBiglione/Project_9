@@ -88,7 +88,7 @@
                     android:inputType="textMultiLine"
                     android:maxLines="20"
                     style="@style/agent_first_name_style"
-                    android:nextFocusDown="@+id/agent_name"/>
+                    android:nextFocusDown="@+id/add_house_neighborhood_spinner"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
