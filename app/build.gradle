@@ -112,4 +112,7 @@ dependencies {
 
     //------------------------------ Multi Dex -----------------------------------------------------
     implementation 'com.android.support:multidex:1.0.3'
+
+    //----------------------------- Easy Permissions -----------------------------------------------
+    implementation 'pub.devrel:easypermissions:3.0.0'
 }

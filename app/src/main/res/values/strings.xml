@@ -341,5 +341,9 @@
     <string name="summary_notifications_on">Notifications enabled</string>
     <string name="title_camera">Camera</string>
     <string name="title_gallery">Gallery</string>
+    <string name="camera_permission">Access camera granted</string>
+    <string name="camera_permission_message">We need your permission to access the camera</string>
+    <string name="gallery_permission">Access gallery granted</string>
+    <string name="gallery_permission_message">We need your permission to access the gallery</string>
 
 </resources>
