@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +34,7 @@ import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.UriConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
@@ -120,7 +122,15 @@ class AddAgentFragment : Fragment() {
     private fun clickToAddAgentPhoto(){
         agentPhoto.setOnClickListener{
             //checkPermission()
+            showPhotoChoiceDialogBox()
         }
+    }
+
+    //------------------- Show dialog box ----------------------------------------------------------
+
+    private fun showPhotoChoiceDialogBox(){
+        val photoChoiceDialog = PhotoChoiceDialog()
+        fragmentManager?.let { photoChoiceDialog.show(it, "Photo choice dialog box") }
     }
 
     //------------------- Check permission to access gallery ---------------------------------------
