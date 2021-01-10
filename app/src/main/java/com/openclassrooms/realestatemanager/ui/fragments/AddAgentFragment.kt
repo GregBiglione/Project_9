@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -120,55 +119,55 @@ class AddAgentFragment : Fragment() {
 
     private fun clickToAddAgentPhoto(){
         agentPhoto.setOnClickListener{
-            checkPermission()
+            //checkPermission()
         }
     }
 
     //------------------- Check permission to access gallery ---------------------------------------
 
-    private fun checkPermission(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (ActivityCompat.checkSelfPermission(context?.applicationContext!!, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_DENIED){
-                // Permission denied
-                val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                // Show popup permission request
-                requestPermissions(permissions, IMAGE_PERMISSION_CODE)
-            }
-            else{
-                // Permission already granted
-                pickAgentPhotoFromGallery()
-            }
-        }
-        else{
-            // System OS < Marshmallow
-            pickAgentPhotoFromGallery()
-        }
-    }
+    //private fun checkPermission(){
+    //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+    //        if (ActivityCompat.checkSelfPermission(context?.applicationContext!!, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    //                == PackageManager.PERMISSION_DENIED){
+    //            // Permission denied
+    //            val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    //            // Show popup permission request
+    //            requestPermissions(permissions, IMAGE_PERMISSION_CODE)
+    //        }
+    //        else{
+    //            // Permission already granted
+    //            pickAgentPhotoFromGallery()
+    //        }
+    //    }
+    //    else{
+    //        // System OS < Marshmallow
+    //        pickAgentPhotoFromGallery()
+    //    }
+    //}
 
     //------------------- Handle permission result -------------------------------------------------
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode){
-            IMAGE_PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission from popup granted
-                    pickAgentPhotoFromGallery()
-                } else {
-                    // Permission from popup denied
-                    activity?.showWarningToast(getString(R.string.permission_denied), Toast.LENGTH_SHORT, true)
-                }
-            }
-        }
-    }
+    //override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    //    when(requestCode){
+    //        IMAGE_PERMISSION_CODE -> {
+    //            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    //                // Permission from popup granted
+    //                pickAgentPhotoFromGallery()
+    //            } else {
+    //                // Permission from popup denied
+    //                activity?.showWarningToast(getString(R.string.permission_denied), Toast.LENGTH_SHORT, true)
+    //            }
+    //        }
+    //    }
+    //}
 
     //------------------- Intent to access gallery -------------------------------------------------
 
-    private fun pickAgentPhotoFromGallery() {
-        val accessGallery = Intent(Intent.ACTION_PICK)
-        accessGallery.type ="image/*"
-        startActivityForResult(accessGallery, IMAGE_PICK_CODE)
-    }
+    //private fun pickAgentPhotoFromGallery() {
+    //    val accessGallery = Intent(Intent.ACTION_PICK)
+    //    accessGallery.type ="image/*"
+    //    startActivityForResult(accessGallery, IMAGE_PICK_CODE)
+    //}
 
     //------------------- Intent to access camera --------------------------------------------------
     //private fun takeAgentPicture(){
@@ -178,24 +177,24 @@ class AddAgentFragment : Fragment() {
 
     //------------------- Handle image pick result -------------------------------------------------
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            agentPhoto.setImageURI(data?.data)
-            //val photoFromGallery: Uri? = data?.data
-            //if (photoFromGallery != null){
-            //    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, photoFromGallery)
-//
-            //    val outputStream = ByteArrayOutputStream()
-            //    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-            //    val byteArray = outputStream.toByteArray()
-//
-            //    val encodedString: String = Base64.getEncoder().encodeToString(byteArray)
-            //    agentPhoto.setImageURI(Uri.parse(encodedString))
-//
-            //}
-        }
-    }
+    //@RequiresApi(Build.VERSION_CODES.O)
+    //override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    //    if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+    //        agentPhoto.setImageURI(data?.data)
+    //        //val photoFromGallery: Uri? = data?.data
+    //        //if (photoFromGallery != null){
+    //        //    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, photoFromGallery)
+////
+    //        //    val outputStream = ByteArrayOutputStream()
+    //        //    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+    //        //    val byteArray = outputStream.toByteArray()
+////
+    //        //    val encodedString: String = Base64.getEncoder().encodeToString(byteArray)
+    //        //    agentPhoto.setImageURI(Uri.parse(encodedString))
+////
+    //        //}
+    //    }
+    //}
 
     private fun clickOnAddAgent(){
         addAgentButton.setOnClickListener {

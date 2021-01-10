@@ -110,7 +110,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
-    // ----------------------------- Multi Dex -----------------------------------------------------
+    //------------------------------ Multi Dex -----------------------------------------------------
     implementation 'com.android.support:multidex:1.0.3'
-
 }

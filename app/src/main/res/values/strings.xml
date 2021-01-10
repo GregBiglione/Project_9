@@ -339,5 +339,7 @@
     <string name="notifications">Disable notifications</string>
     <string name="summary_notifications_off">Notifications disabled</string>
     <string name="summary_notifications_on">Notifications enabled</string>
+    <string name="title_camera">Camera</string>
+    <string name="title_gallery">Gallery</string>
 
 </resources>

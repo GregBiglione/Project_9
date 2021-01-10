@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:id="@+id/dialog_photo_camera_lyt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/dialog_photo_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_photo_camera_48"
+            android:contentDescription="@string/title_camera" />
+
+        <TextView
+            android:id="@+id/dialog_photo_camera_title"
+            android:text="@string/title_camera"
+            style="@style/add_photo_image_view_style"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_photo_gallery_lyt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/dialog_photo_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_photo_48"
+            android:contentDescription="@string/title_gallery" />
+
+        <TextView
+            android:id="@+id/dialog_photo_gallery_title"
+            android:text="@string/title_gallery"
+            style="@style/add_photo_image_view_style"/>
+
+    </LinearLayout>
+
+</LinearLayout>
