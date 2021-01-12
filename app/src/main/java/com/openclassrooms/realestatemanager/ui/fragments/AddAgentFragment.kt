@@ -1,12 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
-import android.app.Activity
-import android.content.ContentResolver
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -15,15 +10,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
-import com.droidman.ktoasty.showWarningToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
@@ -41,16 +32,12 @@ import de.hdodenhof.circleimageview.CircleImageView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-class AddAgentFragment : Fragment() {
+class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener {
 
     private lateinit var agentRecyclerView: RecyclerView
     private lateinit var agentPhoto: CircleImageView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var agentAdapter: AgentAdapter
-    //------------------- Photo from gallery code --------------------------------------------------
-    private val IMAGE_PICK_CODE = 2108
-    private val IMAGE_PERMISSION_CODE = 1201
-    //private val CAMERA_REQUEST_CODE = 807
     //------------------- Agent input --------------------------------------------------------------
     private lateinit var agentFirstName: TextInputEditText
     private lateinit var agentName: TextInputEditText
@@ -60,7 +47,7 @@ class AddAgentFragment : Fragment() {
     private lateinit var addAgentButton: Button
     private lateinit var clearButton: Button
     //------------------- Uri to bitmap Conversion -------------------------------------------------
-    private val contentResolver: ContentResolver? = null
+    //private val contentResolver: ContentResolver? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -130,81 +117,18 @@ class AddAgentFragment : Fragment() {
 
     private fun showPhotoChoiceDialogBox(){
         val photoChoiceDialog = PhotoChoiceDialog()
-        fragmentManager?.let { photoChoiceDialog.show(it, "Photo choice dialog box") }
+        //fragmentManager?.let { photoChoiceDialog.show(it, "Photo choice dialog box") }
+        photoChoiceDialog.show(requireFragmentManager(), "Photo choice dialog box")
+        photoChoiceDialog.setTargetFragment(this, 1)
     }
 
-    //------------------- Check permission to access gallery ---------------------------------------
+    //------------------- Get Uri from dialog box --------------------------------------------------
 
-    //private fun checkPermission(){
-    //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-    //        if (ActivityCompat.checkSelfPermission(context?.applicationContext!!, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-    //                == PackageManager.PERMISSION_DENIED){
-    //            // Permission denied
-    //            val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-    //            // Show popup permission request
-    //            requestPermissions(permissions, IMAGE_PERMISSION_CODE)
-    //        }
-    //        else{
-    //            // Permission already granted
-    //            pickAgentPhotoFromGallery()
-    //        }
-    //    }
-    //    else{
-    //        // System OS < Marshmallow
-    //        pickAgentPhotoFromGallery()
-    //    }
-    //}
-
-    //------------------- Handle permission result -------------------------------------------------
-
-    //override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-    //    when(requestCode){
-    //        IMAGE_PERMISSION_CODE -> {
-    //            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-    //                // Permission from popup granted
-    //                pickAgentPhotoFromGallery()
-    //            } else {
-    //                // Permission from popup denied
-    //                activity?.showWarningToast(getString(R.string.permission_denied), Toast.LENGTH_SHORT, true)
-    //            }
-    //        }
-    //    }
-    //}
-
-    //------------------- Intent to access gallery -------------------------------------------------
-
-    //private fun pickAgentPhotoFromGallery() {
-    //    val accessGallery = Intent(Intent.ACTION_PICK)
-    //    accessGallery.type ="image/*"
-    //    startActivityForResult(accessGallery, IMAGE_PICK_CODE)
-    //}
-
-    //------------------- Intent to access camera --------------------------------------------------
-    //private fun takeAgentPicture(){
-    //    val accessCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-    //    startActivityForResult(accessCamera, CAMERA_REQUEST_CODE)
-    //}
+    override fun applyGalleryPhoto(uriPhoto: Uri?) {
+        agentPhoto.setImageURI(uriPhoto)
+    }
 
     //------------------- Handle image pick result -------------------------------------------------
-
-    //@RequiresApi(Build.VERSION_CODES.O)
-    //override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    //    if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-    //        agentPhoto.setImageURI(data?.data)
-    //        //val photoFromGallery: Uri? = data?.data
-    //        //if (photoFromGallery != null){
-    //        //    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, photoFromGallery)
-////
-    //        //    val outputStream = ByteArrayOutputStream()
-    //        //    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-    //        //    val byteArray = outputStream.toByteArray()
-////
-    //        //    val encodedString: String = Base64.getEncoder().encodeToString(byteArray)
-    //        //    agentPhoto.setImageURI(Uri.parse(encodedString))
-////
-    //        //}
-    //    }
-    //}
 
     private fun clickOnAddAgent(){
         addAgentButton.setOnClickListener {

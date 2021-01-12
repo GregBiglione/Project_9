@@ -1,6 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
-import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,11 +14,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.droidman.ktoasty.KToasty
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -71,4 +71,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+    override fun applyGalleryPhoto(uriPhoto: Uri?) {}
 }
