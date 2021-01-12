@@ -7,8 +7,10 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -30,6 +32,7 @@ class PhotoChoiceDialog : DialogFragment() {
         const val GALLERY_REQUEST_CODE = 1201
         const val CAMERA_REQUEST_CODE = 807
         const val IMAGE_PICK_CODE = 2108
+        const val TAKE_PHOTO_CODE = 3003
     }
     //------------------- Listener -----------------------------------------------------------------
     private lateinit var galleryListener: GalleryListener
@@ -67,13 +70,12 @@ class PhotoChoiceDialog : DialogFragment() {
     //----------------------------- Camera permission ----------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    //TODO("@annotate")
-    //@AfterPermissionGranted(CAMERA_REQUEST_CODE)
+    @AfterPermissionGranted(CAMERA_REQUEST_CODE)
     private fun checkCameraPermission(){
         val perms = arrayOf(CAMERA, WRITE_STORAGE)
         if (EasyPermissions.hasPermissions(requireContext(), *perms)){
             activity?.showSuccessToast(getString(R.string.camera_permission), Toast.LENGTH_SHORT, true)
-            //TODO("Add camera access method")
+            takePhoto()
         }
         else{
             EasyPermissions.requestPermissions(this, getString(R.string.camera_permission_message), CAMERA_REQUEST_CODE, *perms)
@@ -81,7 +83,7 @@ class PhotoChoiceDialog : DialogFragment() {
     }
 
     //----------------------------------------------------------------------------------------------
-    //----------------------------- gallery permission ---------------------------------------------
+    //----------------------------- Gallery permission ---------------------------------------------
     //----------------------------------------------------------------------------------------------
 
     @AfterPermissionGranted(GALLERY_REQUEST_CODE)
@@ -104,6 +106,13 @@ class PhotoChoiceDialog : DialogFragment() {
         startActivityForResult(accessGallery, IMAGE_PICK_CODE)
     }
 
+    //------------------- Intent to access camera --------------------------------------------------
+
+    private fun takePhoto(){
+        val accessCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(accessCamera, TAKE_PHOTO_CODE)
+    }
+
     //------------------- Handle image pick result -------------------------------------------------
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -113,7 +122,10 @@ class PhotoChoiceDialog : DialogFragment() {
             galleryListener.applyGalleryPhoto(uriPhoto)
             dismiss()
         }
-        //TODO("Add same method with TAKE_PHOTO_CODE")
+        if (resultCode == Activity.RESULT_OK && requestCode == TAKE_PHOTO_CODE){
+            var bitmapPhoto = data?.extras?.get("data") as Bitmap
+            dismiss()
+        }
     }
 
     //------------------- Gallery interface --------------------------------------------------------
