@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.ui.activities
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -36,7 +37,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener {
+class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
     private lateinit var housePhotoRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
@@ -142,6 +143,12 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener 
 
     override fun applyGalleryPhoto(uriPhoto: Uri?) {
         housePhoto.setImageURI(uriPhoto)
+    }
+
+    //------------------- Get Bitmap from dialog box -----------------------------------------------
+
+    override fun applyCameraPhoto(bitmapPhoto: Bitmap) {
+        housePhoto.setImageBitmap(bitmapPhoto)
     }
 
     //----------------------------------------------------------------------------------------------

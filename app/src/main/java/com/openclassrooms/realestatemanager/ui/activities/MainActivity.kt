@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
@@ -18,7 +19,7 @@ import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 
-class MainActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener {
+class MainActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -73,4 +74,5 @@ class MainActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener {
     }
 
     override fun applyGalleryPhoto(uriPhoto: Uri?) {}
+    override fun applyCameraPhoto(bitmapPhoto: Bitmap) {}
 }

@@ -36,6 +36,7 @@ class PhotoChoiceDialog : DialogFragment() {
     }
     //------------------- Listener -----------------------------------------------------------------
     private lateinit var galleryListener: GalleryListener
+    private lateinit var cameraListener: CameraListener
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
@@ -113,7 +114,9 @@ class PhotoChoiceDialog : DialogFragment() {
         startActivityForResult(accessCamera, TAKE_PHOTO_CODE)
     }
 
+    //----------------------------------------------------------------------------------------------
     //------------------- Handle image pick result -------------------------------------------------
+    //----------------------------------------------------------------------------------------------
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -123,7 +126,8 @@ class PhotoChoiceDialog : DialogFragment() {
             dismiss()
         }
         if (resultCode == Activity.RESULT_OK && requestCode == TAKE_PHOTO_CODE){
-            var bitmapPhoto = data?.extras?.get("data") as Bitmap
+            val bitmapPhoto = data?.extras?.get("data") as Bitmap
+            cameraListener.applyCameraPhoto(bitmapPhoto)
             dismiss()
         }
     }
@@ -134,16 +138,23 @@ class PhotoChoiceDialog : DialogFragment() {
         fun applyGalleryPhoto(uriPhoto: Uri?)
     }
 
+    //------------------- Camera interface ---------------------------------------------------------
+    interface CameraListener {
+        fun applyCameraPhoto(bitmapPhoto: Bitmap)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
             if (context == activity) {
                 galleryListener = context as GalleryListener
+                cameraListener = context as CameraListener
             } else {
                 galleryListener = targetFragment as GalleryListener
+                cameraListener = targetFragment as CameraListener
             }
         } catch (e: ClassCastException) {
-            throw ClassCastException(context.toString() + "must implement GalleryListener")
+            throw ClassCastException(context.toString() + "must implement GalleryListener or CameraListener")
         }
         //try {
         //    //galleryListener = context as GalleryListener

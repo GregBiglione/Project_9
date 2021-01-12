@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
@@ -32,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener {
+class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
     private lateinit var agentRecyclerView: RecyclerView
     private lateinit var agentPhoto: CircleImageView
@@ -128,20 +129,25 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener {
         agentPhoto.setImageURI(uriPhoto)
     }
 
+    //------------------- Get Bitmap from dialog box -----------------------------------------------
+
+    override fun applyCameraPhoto(bitmapPhoto: Bitmap) {
+        agentPhoto.setImageBitmap(bitmapPhoto)
+    }
+
     //------------------- Handle image pick result -------------------------------------------------
 
     private fun clickOnAddAgent(){
         addAgentButton.setOnClickListener {
             saveAgent()
         }
-        
-        //----------------------------------------------------------------------------------------------
-        //------------------- Add agent in room db -----------------------------------------------------
-        //----------------------------------------------------------------------------------------------
-
-        //------------------- Click on add button ------------------------------------------------------
-
     }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Add agent in room db -----------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //------------------- Click on add button ------------------------------------------------------
 
     private fun saveAgent(){
         val id: Long = System.currentTimeMillis()
