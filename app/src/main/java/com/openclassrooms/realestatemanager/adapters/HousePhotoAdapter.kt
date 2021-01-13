@@ -13,9 +13,7 @@ import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import org.greenrobot.eventbus.EventBus
 
-class HousePhotoAdapter: RecyclerView.Adapter<HousePhotoAdapter.HousePhotoViewHolder>() {
-
-    private var housePhotoList = emptyList<HousePhoto>()
+class HousePhotoAdapter(private var housePhotoList: List<HousePhoto>): RecyclerView.Adapter<HousePhotoAdapter.HousePhotoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HousePhotoViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -42,10 +40,5 @@ class HousePhotoAdapter: RecyclerView.Adapter<HousePhotoAdapter.HousePhotoViewHo
         val addHousePhoto: ImageView = itemView.findViewById(R.id.add_house_photo_image)
         val addHousePhotoDescription: TextView = itemView.findViewById(R.id.add_house_photo_description)
         val addHousePhotoDeleteBtn: ImageButton = itemView.findViewById(R.id.add_house_photo_delete_button)
-    }
-
-    fun setData(housePhoto: List<HousePhoto>){
-        this.housePhotoList = housePhoto
-        notifyDataSetChanged()
     }
 }

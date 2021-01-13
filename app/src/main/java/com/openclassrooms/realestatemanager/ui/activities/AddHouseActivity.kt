@@ -41,9 +41,9 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
     private lateinit var housePhotoRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var housePhotoAdapter: HousePhotoAdapter
     private lateinit var housePhoto: ImageView
-    private var housePhotoList = emptyList<HousePhoto>()
+    private var housePhotoList = generateHousePhotoList()
+    private var housePhotoAdapter = HousePhotoAdapter(housePhotoList)
     private lateinit var housePhotoDescriptionEditText: TextInputEditText
     //------------------- Button -------------------------------------------------------------------
     private lateinit var addHousePhotoButton: Button
@@ -80,7 +80,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         housePhoto = findViewById(R.id.add_house_photo)
         housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
         agentsSpinner = findViewById(R.id.add_house_agent_spinner)
-        clickOnAddHouseButton()
+        clickOnAddHouseImageView()
         configureViewModel()
         configureHousePhotoRecyclerView()
         clickOnAddHousePhotoButton()
@@ -95,12 +95,11 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     }
 
     //----------------------------------------------------------------------------------------------
-    //------------------- Configure agent recyclerview ---------------------------------------------
+    //------------------- Configure house photo recyclerview ---------------------------------------
     //----------------------------------------------------------------------------------------------
 
     private fun configureHousePhotoRecyclerView(){
         housePhotoRecyclerView = findViewById(R.id.add_house_photo_rv)
-        housePhotoAdapter = HousePhotoAdapter()
         housePhotoRecyclerView.adapter = housePhotoAdapter
         housePhotoRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
     }
@@ -128,7 +127,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //------------------- Add house photo from gallery ---------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    private fun clickOnAddHouseButton(){
+    private fun clickOnAddHouseImageView(){
         housePhoto.setOnClickListener { /*checkPermission()*/showPhotoChoiceDialogBox() }
     }
 
@@ -160,26 +159,23 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private fun clickOnAddHousePhotoButton(){
         addHousePhotoButton = findViewById(R.id.add_house_add_photo_button)
         addHousePhotoButton.setOnClickListener {
-            //saveHousePhoto()
+            addHousePhoto()
         }
     }
 
-    private fun saveHousePhoto(){
-      //housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
+    private fun generateHousePhotoList(): ArrayList<HousePhoto>{
+        return ArrayList()
+    }
+
+    private fun addHousePhoto(){
         val idHousePhoto: Long = System.currentTimeMillis()
         val housePhoto: Uri = Uri.parse(housePhoto.toString())
         val housePhotoDescription: String = housePhotoDescriptionEditText.text.toString().trim()
 
-        if (housePhotoDescription.isEmpty()){
-            housePhotoDescriptionEditText.error = getString(R.string.enter_photo_description)
-        }
-        else{
-            addHousePhoto(housePhoto = HousePhoto(idHousePhoto, housePhoto, housePhotoDescription))
-        }
-    }
+        val newHousePhoto = HousePhoto(idHousePhoto, housePhoto, housePhotoDescription)
 
-    private fun addHousePhoto(housePhoto: HousePhoto){
-        mainViewModel.createHousePhoto(housePhoto)
+        housePhotoList.add(newHousePhoto)
+        housePhotoAdapter.notifyDataSetChanged()
         clearChamps()
     }
 
@@ -200,7 +196,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
     @Subscribe
     fun onDeleteHousePhoto(event: DeleteHousePhotoEvent){
-        mainViewModel.deleteHousePhoto(event.housePhoto)
+        //mainViewModel.deleteHousePhoto(event.housePhoto)
+        // 3) Do delete on list of photo
     }
 
     override fun onStart() {
@@ -447,7 +444,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         val id: Long = System.currentTimeMillis()
 
         if (housePhotoRecyclerView.isNotEmpty()){
-            housePhotoAdapter.setData(housePhotoList)
+            //housePhotoAdapter.setData(housePhotoList)
         }
 
         val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
@@ -489,7 +486,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
             pointsOfInterestsSelected = pointsOfInterests.text.toString().trim()
         }
 
-        addHouse(house = House(id, housePhotoList = ArrayList(housePhotoList), typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
+        addHouse(house = House(id, /*housePhotoList = ArrayList(housePhotoList)*/null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
                 houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
                 null, selectedAgentId))
     }
