@@ -108,10 +108,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     //------------------- Click on image view ------------------------------------------------------
 
     private fun clickToAddAgentPhoto(){
-        agentPhoto.setOnClickListener{
-            //checkPermission()
-            showPhotoChoiceDialogBox()
-        }
+        agentPhoto.setOnClickListener{ showPhotoChoiceDialogBox() }
     }
 
     //------------------- Show dialog box ----------------------------------------------------------
@@ -138,9 +135,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     //------------------- Handle image pick result -------------------------------------------------
 
     private fun clickOnAddAgent(){
-        addAgentButton.setOnClickListener {
-            saveAgent()
-        }
+        addAgentButton.setOnClickListener { saveAgent() }
     }
 
     //----------------------------------------------------------------------------------------------

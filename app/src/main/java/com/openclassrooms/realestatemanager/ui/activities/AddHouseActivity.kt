@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
+import com.droidman.ktoasty.showWarningToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
@@ -36,12 +37,13 @@ import org.greenrobot.eventbus.Subscribe
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
     private lateinit var housePhotoRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var housePhoto: ImageView
+    private lateinit var housePhotoImageView: ImageView
     private var housePhotoList = generateHousePhotoList()
     private var housePhotoAdapter = HousePhotoAdapter(housePhotoList)
     private lateinit var housePhotoDescriptionEditText: TextInputEditText
@@ -77,7 +79,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
-        housePhoto = findViewById(R.id.add_house_photo)
+        housePhotoImageView = findViewById(R.id.add_house_photo)
         housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
         agentsSpinner = findViewById(R.id.add_house_agent_spinner)
         clickOnAddHouseImageView()
@@ -124,11 +126,11 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     }
 
     //----------------------------------------------------------------------------------------------
-    //------------------- Add house photo from gallery ---------------------------------------------
+    //------------------- Add house photo from dialog box ------------------------------------------
     //----------------------------------------------------------------------------------------------
 
     private fun clickOnAddHouseImageView(){
-        housePhoto.setOnClickListener { /*checkPermission()*/showPhotoChoiceDialogBox() }
+        housePhotoImageView.setOnClickListener { showPhotoChoiceDialogBox() }
     }
 
     //------------------- Show dialog box ----------------------------------------------------------
@@ -141,26 +143,24 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //------------------- Get Uri from dialog box --------------------------------------------------
 
     override fun applyGalleryPhoto(uriPhoto: Uri?) {
-        housePhoto.setImageURI(uriPhoto)
+        housePhotoImageView.setImageURI(uriPhoto)
     }
 
     //------------------- Get Bitmap from dialog box -----------------------------------------------
 
     override fun applyCameraPhoto(bitmapPhoto: Bitmap) {
-        housePhoto.setImageBitmap(bitmapPhoto)
+        housePhotoImageView.setImageBitmap(bitmapPhoto)
     }
 
     //----------------------------------------------------------------------------------------------
-    //------------------- Add house photo in room db -----------------------------------------------
+    //------------------- Add house photo in recyclerview ------------------------------------------
     //----------------------------------------------------------------------------------------------
 
     //------------------- Click on add house photo button ------------------------------------------
 
     private fun clickOnAddHousePhotoButton(){
         addHousePhotoButton = findViewById(R.id.add_house_add_photo_button)
-        addHousePhotoButton.setOnClickListener {
-            addHousePhoto()
-        }
+        addHousePhotoButton.setOnClickListener { addHousePhoto() }
     }
 
     private fun generateHousePhotoList(): ArrayList<HousePhoto>{
@@ -169,7 +169,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
     private fun addHousePhoto(){
         val idHousePhoto: Long = System.currentTimeMillis()
-        val housePhoto: Uri = Uri.parse(housePhoto.toString())
+        val housePhoto: Uri = Uri.parse(housePhotoImageView.toString())
         val housePhotoDescription: String = housePhotoDescriptionEditText.text.toString().trim()
 
         val newHousePhoto = HousePhoto(idHousePhoto, housePhoto, housePhotoDescription)
@@ -186,18 +186,18 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private fun clearChamps(){ //Maybe use TextUtils.isEmpty(firstName) & add parameter to method
         if (housePhotoDescriptionEditText.text != null){
             housePhotoDescriptionEditText.setText("")
-            housePhoto.setImageResource(R.drawable.ic_baseline_add_a_photo_24)
+            housePhotoImageView.setImageResource(R.drawable.ic_baseline_add_a_photo_24)
         }
     }
 
     //----------------------------------------------------------------------------------------------
-    //------------------- Remove house photo from room db ------------------------------------------
+    //------------------- Remove house photo from recyclerview--------------------------------------
     //----------------------------------------------------------------------------------------------
 
     @Subscribe
-    fun onDeleteHousePhoto(event: DeleteHousePhotoEvent){
-        //mainViewModel.deleteHousePhoto(event.housePhoto)
-        // 3) Do delete on list of photo
+    fun onDeleteHousePhoto(event: DeleteHousePhotoEvent) {
+        housePhotoList.remove(event.housePhoto)
+        housePhotoAdapter.notifyDataSetChanged()
     }
 
     override fun onStart() {
