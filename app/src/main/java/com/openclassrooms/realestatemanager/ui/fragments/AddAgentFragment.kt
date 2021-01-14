@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +34,7 @@ import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+
 
 class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
@@ -67,6 +70,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
         configureViewModel()
         configureAgentRecyclerView()
         clickToAddAgentPhoto()
+        formatPhoneNumber()
         clickOnAddAgent()
         clickOnClear()
         return root
@@ -139,6 +143,79 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     }
 
     //----------------------------------------------------------------------------------------------
+    //------------------- Convert phone number 2345678989 to (234) 567-8989 ------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun formatPhoneNumber(){
+        agentPhone.addTextChangedListener(textWatcher)
+    }
+
+    //------------------- Text watcher -------------------------------------------------------------
+
+    private val textWatcher = object : TextWatcher{
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+
+            //------------------- StringBuilder to hold all digits of the edit text ----------------
+            val digits = StringBuilder()
+            //------------------- StringBuilder to hold phone number -------------------------------
+            val phoneDigits = StringBuilder()
+            //------------------- Get characters from teh edit text --------------------------------
+            val chars: CharArray = agentPhone.text.toString().toCharArray()
+            //------------------- Get each digit with a for loop -----------------------------------
+            for (x in chars.indices) {
+                if (Character.isDigit(chars[x])) {
+                    //------------------- Add digit into digits StringBuilder ----------------------
+                    digits.append(chars[x])
+                }
+            }
+
+            //------------------- Add space between digit's phone number ---------------------------
+            if (digits.toString().length >= 3){
+                //------------------- Formatting after 3rd character -------------------------------
+                var countryCode = String()
+                //------------------- Create country code ------------------------------------------
+                countryCode += "(" + digits.toString().substring(0, 3) + ") "
+                //------------------- Add country code into phoneDigits StringBuilder --------------
+                phoneDigits.append(countryCode)
+                //------------------- if digits are more than or just 6, that means we already have the country code
+                if (digits.toString().length >= 7){
+                    var regionCode = String()
+                    //------------------- Create state code ----------------------------------------
+                    regionCode += digits.toString().substring(3, 6) + "-"
+                    //------------------- Add region code into phoneDigits StringBuilder -----------
+                    phoneDigits.append(regionCode)
+
+                    //------------------- Limit digits to 10 max ---------------------------------------
+                    if (digits.toString().length >= 10){
+                        phoneDigits.append(digits.toString().substring(6, 10))
+                    }
+                    else{
+                        phoneDigits.append(digits.toString().substring(6))
+                    }
+                }
+                else{
+                    phoneDigits.append(digits.toString().substring(3))
+                }
+                //------------------- Remove watcher if not we'll have an ∞ loop -----------------------
+                agentPhone.removeTextChangedListener(this)
+                //------------------- Set the new text into the EditText -------------------------------
+                agentPhone.setText(phoneDigits.toString())
+                //------------------- Bring the cursor to the end of input -----------------------------
+                agentPhone.setSelection(agentPhone.text.toString().length)
+                //------------------- Bring back the watcher and go on listening to change events ------
+                agentPhone.addTextChangedListener(this)
+            }
+            else{
+                return
+            }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
     //------------------- Add agent in room db -----------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
@@ -153,6 +230,8 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
         //val photo: Uri? = uriConverters.toString(Uri.parse(agentPhoto.toString()))
         //val photo: Uri? = Uri.parse(agentPhoto.toString())
         //val photo: Uri? = agentPhoto.toString()
+        //val phone: String = phoneInputEditText.addTextChangedListener(textWatcher.toString())
+
         val firstName: String = agentFirstName.text.toString().trim()
         val name: String = agentName.text.toString().trim()
         val phone: String = "+1 " + agentPhone.text.toString().trim()

@@ -58,6 +58,10 @@ class HomeFragment : Fragment() {
         //houseAdapter = HouseAdapter()
         //houseRecyclerView.adapter = houseAdapter
         //houseRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+        //houseAdapter = HouseAdapter()
+        //houseRecyclerView.adapter = houseAdapter
+        //houseRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
     //----------------------------------------------------------------------------------------------

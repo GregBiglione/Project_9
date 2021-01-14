@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.ui.activities
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -13,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
-import com.droidman.ktoasty.showWarningToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
@@ -34,10 +34,12 @@ import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.io.File
+import java.io.FileInputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.random.Random
+
 
 class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
@@ -144,13 +146,50 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
     override fun applyGalleryPhoto(uriPhoto: Uri?) {
         housePhotoImageView.setImageURI(uriPhoto)
+        //var imageFile = File(uriPhoto?.let { getRealPathFromURI(it) });
     }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Get real path from Uri ---------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //private fun getRealPathFromURI(contentURI: Uri): String? {
+    //    val result: String?
+    //    val cursor: Cursor? = contentResolver.query(contentURI, null, null, null, null)
+    //    if (cursor == null) { // Source is Dropbox or other similar local file path
+    //        result = contentURI.path
+    //    } else {
+    //        cursor.moveToFirst()
+    //        val idx: Int = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+    //        result = cursor.getString(idx)
+    //        cursor.close()
+    //    }
+    //    return result
+    //}
 
     //------------------- Get Bitmap from dialog box -----------------------------------------------
 
     override fun applyCameraPhoto(bitmapPhoto: Bitmap) {
         housePhotoImageView.setImageBitmap(bitmapPhoto)
     }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Get real path from Bitmap ------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //fun getBitmap(path: String?): Bitmap? {
+    //    var bitmap: Bitmap? = null
+    //    try {
+    //        val f = File(path)
+    //        val options = BitmapFactory.Options()
+    //        options.inPreferredConfig = Bitmap.Config.ARGB_8888
+    //        bitmap = BitmapFactory.decodeStream(FileInputStream(f), null, options)
+    //        housePhotoImageView.setImageBitmap(bitmap)
+    //    } catch (e: Exception) {
+    //        e.printStackTrace()
+    //    }
+    //    return bitmap
+    //}
 
     //----------------------------------------------------------------------------------------------
     //------------------- Add house photo in recyclerview ------------------------------------------
@@ -339,8 +378,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
                             if (!poi.contains(which)) {
                                 poi.add(which)
                             }
-                        }
-                        else {
+                        } else {
                             poi.remove(which)
                         }
                     })
