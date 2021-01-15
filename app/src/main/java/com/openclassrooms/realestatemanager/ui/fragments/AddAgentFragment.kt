@@ -118,7 +118,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     //------------------- Show dialog box ----------------------------------------------------------
 
     private fun showPhotoChoiceDialogBox(){
-        val photoChoiceDialog = PhotoChoiceDialog()
+        val photoChoiceDialog = PhotoChoiceDialog(this, this)
         //fragmentManager?.let { photoChoiceDialog.show(it, "Photo choice dialog box") }
         photoChoiceDialog.show(requireFragmentManager(), "Photo choice dialog box")
         photoChoiceDialog.setTargetFragment(this, 1)
@@ -182,7 +182,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
                 //------------------- Add country code into phoneDigits StringBuilder --------------
                 phoneDigits.append(countryCode)
                 //------------------- if digits are more than or just 6, that means we already have the country code
-                if (digits.toString().length >= 7){
+                if (digits.toString().length >= 6){
                     var regionCode = String()
                     //------------------- Create state code ----------------------------------------
                     regionCode += digits.toString().substring(3, 6) + "-"
@@ -222,7 +222,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     //------------------- Click on add button ------------------------------------------------------
 
     private fun saveAgent(){
-        val id: Long = System.currentTimeMillis()
+        //val id: Long = System.currentTimeMillis()
         val uriConverters = UriConverters()
         //l 175
         //val photo: Uri = Uri.parse(agentPhoto.toString())// <-- photo not shown may be Uri
@@ -254,7 +254,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
                 agentEmail.error = getString(R.string.enter_email)
             }
             else{
-                addAgent(agent = Agent(id, photo, firstName, name, phone, email))
+                addAgent(agent = Agent(null, photo, firstName, name, phone, email))
                 clearChamps()
             }
         }

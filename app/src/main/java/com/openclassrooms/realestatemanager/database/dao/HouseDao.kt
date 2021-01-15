@@ -7,7 +7,7 @@ import com.openclassrooms.realestatemanager.model.House
 @Dao
 interface HouseDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun createHouse(house: House)
 
     @Query("SELECT * FROM house")

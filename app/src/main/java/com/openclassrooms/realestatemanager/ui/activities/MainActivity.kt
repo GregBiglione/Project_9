@@ -19,7 +19,7 @@ import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 
-class MainActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -72,7 +72,4 @@ class MainActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener, Pho
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-    override fun applyGalleryPhoto(uriPhoto: Uri?) {}
-    override fun applyCameraPhoto(bitmapPhoto: Bitmap) {}
 }

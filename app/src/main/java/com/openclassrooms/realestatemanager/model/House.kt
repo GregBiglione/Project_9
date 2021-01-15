@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
             childColumns = ["agentId"])])
 data class House (
         @PrimaryKey(autoGenerate = true)
-        var id: Long = 0L,
+        var id: Long? = null,
         @TypeConverters(ListConverters::class)
         var housePhotoList: ArrayList<HousePhoto>?,
         var typeOfHouse: String?,

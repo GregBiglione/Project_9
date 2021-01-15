@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 data class Agent(
         @PrimaryKey(autoGenerate = true)
-        var id: Long = 0L,
+        var id: Long? = null,
         @TypeConverters(UriConverters::class)
         var agentPhoto: Uri?,
         var firstName: String,

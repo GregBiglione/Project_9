@@ -138,7 +138,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //------------------- Show dialog box ----------------------------------------------------------
 
     private fun showPhotoChoiceDialogBox(){
-        val photoChoiceDialog = PhotoChoiceDialog()
+        val photoChoiceDialog = PhotoChoiceDialog(this, this)
         photoChoiceDialog.show(supportFragmentManager, "Photo choice dialog box")
     }
 
@@ -432,7 +432,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                     val selectedObject = agentsSpinner.selectedItem as Agent
-                    selectedAgentId = selectedObject.id
+                    selectedAgentId = selectedObject.id!!
                     showSuccessToast("Status: $selectedAgentId", Toast.LENGTH_SHORT)
                 }
 
@@ -479,7 +479,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         var houseAddress = ""
         var pointsOfInterestsSelected = ""
         val timeConverter = TimeConverters()
-        val id: Long = System.currentTimeMillis()
+        //val id: Long = System.currentTimeMillis()
 
         if (housePhotoRecyclerView.isNotEmpty()){
             //housePhotoAdapter.setData(housePhotoList)
@@ -518,13 +518,13 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         }
 
         val statusSelected: String = statusSpinner.selectedItem.toString().trim()
-        val entryDate: Long = id
+        val entryDate: Long = System.currentTimeMillis()
 
         if (!pointsOfInterests.text.isNullOrEmpty()){
             pointsOfInterestsSelected = pointsOfInterests.text.toString().trim()
         }
 
-        addHouse(house = House(id, /*housePhotoList = ArrayList(housePhotoList)*/null, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
+        addHouse(house = House(/*id*/null, /*housePhotoList = ArrayList(housePhotoList)*/arrayListOf(), typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
                 houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
                 null, selectedAgentId))
     }

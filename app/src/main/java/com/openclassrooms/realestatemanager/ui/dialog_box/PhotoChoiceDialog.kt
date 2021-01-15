@@ -20,7 +20,7 @@ import com.openclassrooms.realestatemanager.R
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
-class PhotoChoiceDialog : DialogFragment() {
+class PhotoChoiceDialog(private val galleryListener: GalleryListener, private val cameraListener: CameraListener) : DialogFragment() {
 
     private lateinit var photoCamera: ImageView
     private lateinit var photoGallery: ImageView
@@ -34,9 +34,6 @@ class PhotoChoiceDialog : DialogFragment() {
         const val IMAGE_PICK_CODE = 2108
         const val TAKE_PHOTO_CODE = 3003
     }
-    //------------------- Listener -----------------------------------------------------------------
-    private lateinit var galleryListener: GalleryListener
-    private lateinit var cameraListener: CameraListener
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
@@ -141,36 +138,5 @@ class PhotoChoiceDialog : DialogFragment() {
     //------------------- Camera interface ---------------------------------------------------------
     interface CameraListener {
         fun applyCameraPhoto(bitmapPhoto: Bitmap)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        try {
-            if (context == activity) {
-                galleryListener = context as GalleryListener
-                cameraListener = context as CameraListener
-            } else {
-                galleryListener = targetFragment as GalleryListener
-                cameraListener = targetFragment as CameraListener
-            }
-        } catch (e: ClassCastException) {
-            throw ClassCastException(context.toString() + "must implement GalleryListener or CameraListener")
-        }
-        //try {
-        //    //galleryListener = context as GalleryListener
-        //    //galleryListener = targetFragment as GalleryListener
-        //
-        //    //when (activity){ //no crash but image selected not shown into image view in AddAgentFragment
-        //    //    context as GalleryListener -> galleryListener = context
-        //    //    targetFragment as GalleryListener -> galleryListener = context
-        //    //}
-//
-        //    //when (context){
-        //    //    context as GalleryListener -> galleryListener = context
-        //    //    targetFragment as GalleryListener -> galleryListener = context
-        //    //}
-        //} catch (e: ClassCastException) {
-        //    throw ClassCastException(context.toString() + "must implement GalleryListener")
-        //}
     }
 }
