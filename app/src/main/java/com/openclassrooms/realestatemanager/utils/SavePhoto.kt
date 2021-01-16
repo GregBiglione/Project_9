@@ -21,7 +21,7 @@ class SavePhoto {
     fun saveBitmap(context: Context, bitmap: Bitmap, format: CompressFormat, mimeType: String, displayName: String){
         val relativeLocation: String = Environment.DIRECTORY_PICTURES
         val contentValues = ContentValues()
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "$displayName.jpg")
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, mimeType + "image/jpg")
         contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, relativeLocation)
 

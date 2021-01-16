@@ -1,15 +1,10 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
-import android.content.ContentResolver
-import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -25,7 +20,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
-import com.droidman.ktoasty.showWarningToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
@@ -37,15 +31,13 @@ import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
+import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
 import com.openclassrooms.realestatemanager.utils.UriConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
 
 
 class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
@@ -63,7 +55,8 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     private lateinit var addAgentButton: Button
     private lateinit var clearButton: Button
     //------------------- Uri to bitmap Conversion -------------------------------------------------
-    //private val contentResolver: ContentResolver? = null
+    private lateinit var savePhoto: SavePhoto
+    private lateinit var imageConverters: ImageConverters
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -81,6 +74,8 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
         clearButton = root.findViewById(R.id.agent_delete_button)
         configureViewModel()
         configureAgentRecyclerView()
+        imageConverters = ImageConverters()
+        savePhoto = SavePhoto()
         clickToAddAgentPhoto()
         formatPhoneNumber()
         clickOnAddAgent()
@@ -141,17 +136,11 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun applyGalleryPhoto(uriPhoto: Uri?) {
         agentPhoto.setImageURI(uriPhoto)
-
-        //convert image to a stream
-        //val inputStream: InputStream = uriPhoto?.let { context?.contentResolver?.openInputStream(it) }!!
-//
-        //// open image as bitmap
-        //val uriConvertToBitmap = BitmapFactory.decodeStream(inputStream)
-//
-        //val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
-        //val mimeType = "image/jpg"
-        //val displayName = "agent.jpg"
-        //saveBitmap(requireContext(), uriConvertToBitmap, format, mimeType, displayName)
+        val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+        val mimeType = "image/jpg"
+        val displayName = "agent.jpg"
+        val bitmap = imageConverters.uriToBitmap(uriPhoto, requireContext())
+        savePhoto.saveBitmap(requireContext(), bitmap, format, mimeType, displayName)
     }
 
     //------------------- Get Bitmap from dialog box -----------------------------------------------
@@ -159,13 +148,10 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun applyCameraPhoto(bitmapPhoto: Bitmap) {
         agentPhoto.setImageBitmap(bitmapPhoto)
-        // crash when try to put a îc with camera
-        //val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
-        //val mimeType = "image/jpg"
-        //val displayName = "agent.jpg"
-        //saveBitmap(requireContext(), bitmapPhoto, format, mimeType, displayName)
-        //var savePhoto = SavePhoto()
-        //savePhoto.saveBitmap()
+        val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+        val mimeType = "image/jpg"
+        val displayName = "agent.jpg"
+        savePhoto.saveBitmap(requireContext(), bitmapPhoto, format, mimeType, displayName)
     }
 
     //------------------- Handle image pick result -------------------------------------------------
@@ -362,48 +348,4 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
-    //@RequiresApi(Build.VERSION_CODES.Q)
-    //@Throws(IOException::class)
-    //private fun saveBitmap(context: Context, bitmap: Bitmap, format: Bitmap.CompressFormat, mimeType: String, displayName: String){
-    //    val relativeLocation: String = Environment.DIRECTORY_PICTURES
-    //    val contentValues = ContentValues()
-    //    contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
-    //    contentValues.put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
-    //    contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, relativeLocation)
-//
-    //    val resolver: ContentResolver = context.contentResolver
-    //    var stream: OutputStream? = null
-    //    var uri: Uri? = null
-    //    val quality: Int = 95
-//
-    //    try {
-    //        //------------------- Media creation ---------------------------------------------------
-    //        val contentUri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-    //        uri = resolver.insert(contentUri, contentValues)
-    //        activity?.showWarningToast("Image added in external", Toast.LENGTH_SHORT, true)
-    //        if (uri == null){
-    //            throw IOException("Failed to create new MediaStore record.")
-    //        }
-//
-    //        //------------------- Output stream creation -------------------------------------------
-    //        stream = resolver.openOutputStream(uri)
-    //        if (stream == null){
-    //            throw IOException("Failed to get output stream.")
-    //        }
-//
-    //        //------------------- Compress bitmap --------------------------------------------------
-    //        if (!bitmap.compress(format, quality, stream)){
-    //            throw IOException("Failed to save bitmap.")
-    //        }
-    //    } catch (e: Exception) {
-    //        if (uri != null){
-    //            //------------------- Remove orphan entry in the media store -----------------------
-    //            resolver.delete(uri, null, null)
-    //        }
-    //        throw e
-    //    } finally {
-    //        stream?.close()
-    //    }
-    //}
 }

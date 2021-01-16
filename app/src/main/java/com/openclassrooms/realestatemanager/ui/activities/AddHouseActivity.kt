@@ -5,9 +5,11 @@ import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isNotEmpty
 import androidx.lifecycle.ViewModelProvider
@@ -30,6 +32,8 @@ import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
+import com.openclassrooms.realestatemanager.utils.ImageConverters
+import com.openclassrooms.realestatemanager.utils.SavePhoto
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
@@ -75,6 +79,9 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private lateinit var listOfPointsOfInterests: Array<String?>
     private lateinit var checkedPointsOfInterests: BooleanArray
     private var poi: ArrayList<Int> = ArrayList()
+    //------------------- Uri to bitmap Conversion -------------------------------------------------
+    private lateinit var savePhoto: SavePhoto
+    private lateinit var imageConverters: ImageConverters
 
     private val TAG = "AddHouseActivity"
 
@@ -87,6 +94,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         clickOnAddHouseImageView()
         configureViewModel()
         configureHousePhotoRecyclerView()
+        imageConverters = ImageConverters()
+        savePhoto = SavePhoto()
         clickOnAddHousePhotoButton()
         typeSpinner()
         neighborhoodSpinner()
@@ -144,9 +153,14 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
     //------------------- Get Uri from dialog box --------------------------------------------------
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun applyGalleryPhoto(uriPhoto: Uri?) {
         housePhotoImageView.setImageURI(uriPhoto)
-        //var imageFile = File(uriPhoto?.let { getRealPathFromURI(it) });
+        val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+        val mimeType = "image/jpg"
+        val displayName = "house.jpg"
+        val bitmap = imageConverters.uriToBitmap(uriPhoto, this)
+        savePhoto.saveBitmap(this, bitmap, format, mimeType, displayName)
     }
 
     //----------------------------------------------------------------------------------------------
@@ -169,8 +183,13 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
     //------------------- Get Bitmap from dialog box -----------------------------------------------
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun applyCameraPhoto(bitmapPhoto: Bitmap) {
         housePhotoImageView.setImageBitmap(bitmapPhoto)
+        val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+        val mimeType = "image/jpg"
+        val displayName = "house.jpg"
+        savePhoto.saveBitmap(this, bitmapPhoto, format, mimeType, displayName)
     }
 
     //----------------------------------------------------------------------------------------------
