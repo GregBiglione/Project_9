@@ -33,7 +33,6 @@ import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
-import com.openclassrooms.realestatemanager.utils.UriConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 import org.greenrobot.eventbus.EventBus
@@ -57,6 +56,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     //------------------- Uri to bitmap Conversion -------------------------------------------------
     private lateinit var savePhoto: SavePhoto
     private lateinit var imageConverters: ImageConverters
+    private var photoFromStorage: Uri? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -136,11 +136,14 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun applyGalleryPhoto(uriPhoto: Uri?) {
         agentPhoto.setImageURI(uriPhoto)
-        val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
-        val mimeType = "image/jpg"
-        val displayName = "agent.jpg"
+        //val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+        //val mimeType = "image/jpg"
+        //val displayName = "agent.jpg"
         val bitmap = imageConverters.uriToBitmap(uriPhoto, requireContext())
-        savePhoto.saveBitmap(requireContext(), bitmap, format, mimeType, displayName)
+        //savePhoto.saveBitmap(requireContext(), bitmap, format, mimeType, displayName)
+        val tempUri: Uri? = savePhoto.getImageUri(requireContext(), bitmap)
+        //val finalFile = File(savePhoto.getRealPathFromUri(requireContext(), tempUri))
+        photoFromStorage = tempUri
     }
 
     //------------------- Get Bitmap from dialog box -----------------------------------------------
@@ -148,10 +151,13 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun applyCameraPhoto(bitmapPhoto: Bitmap) {
         agentPhoto.setImageBitmap(bitmapPhoto)
-        val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
-        val mimeType = "image/jpg"
-        val displayName = "agent.jpg"
-        savePhoto.saveBitmap(requireContext(), bitmapPhoto, format, mimeType, displayName)
+        //val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+        //val mimeType = "image/jpg"
+        //val displayName = "agent.jpg"
+        //savePhoto.saveBitmap(requireContext(), bitmapPhoto, format, mimeType, displayName)
+        val tempUri: Uri? = savePhoto.getImageUri(requireContext(), bitmapPhoto)
+        //val finalFile = File(savePhoto.getRealPathFromUri(requireContext(), tempUri))
+        photoFromStorage = tempUri
     }
 
     //------------------- Handle image pick result -------------------------------------------------
@@ -240,15 +246,6 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     //------------------- Click on add button ------------------------------------------------------
 
     private fun saveAgent(){
-        //val id: Long = System.currentTimeMillis()
-        val uriConverters = UriConverters()
-        //l 175
-        //val photo: Uri = Uri.parse(agentPhoto.toString())// <-- photo not shown may be Uri
-        val photo: Uri? = uriConverters.fromString(agentPhoto.toString()) //Doesn't work too
-        //val photo: Uri? = uriConverters.toString(Uri.parse(agentPhoto.toString()))
-        //val photo: Uri? = Uri.parse(agentPhoto.toString())
-        //val photo: Uri? = agentPhoto.toString()
-        //val phone: String = phoneInputEditText.addTextChangedListener(textWatcher.toString())
 
         val firstName: String = agentFirstName.text.toString().trim()
         val name: String = agentName.text.toString().trim()
@@ -272,7 +269,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
                 agentEmail.error = getString(R.string.enter_email)
             }
             else{
-                addAgent(agent = Agent(null, photo, firstName, name, phone, email))
+                addAgent(agent = Agent(null, /*photo*/photoFromStorage, firstName, name, phone, email))
                 clearChamps()
             }
         }

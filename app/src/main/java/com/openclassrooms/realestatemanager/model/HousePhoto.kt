@@ -14,8 +14,9 @@ import kotlinx.android.parcel.Parcelize
 @TypeConverters(ListConverters::class)
 data class HousePhoto (
         @PrimaryKey(autoGenerate = true)
-        var id: Long,
+        //var id: Long,
+        var id: Long? = null,
         @TypeConverters(UriConverters::class)
-        var photo: Uri,
+        var photo: Uri?,
         var photoDescription: String
 ): Parcelable

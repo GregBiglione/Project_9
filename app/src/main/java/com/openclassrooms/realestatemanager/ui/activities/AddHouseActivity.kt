@@ -36,6 +36,7 @@ import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
+import kotlinx.android.synthetic.main.house_item.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.io.File
@@ -82,6 +83,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //------------------- Uri to bitmap Conversion -------------------------------------------------
     private lateinit var savePhoto: SavePhoto
     private lateinit var imageConverters: ImageConverters
+    private var photoFromStorage: Uri? = null
+    private lateinit var housePhotoDescriptionInRecyclerView: String
 
     private val TAG = "AddHouseActivity"
 
@@ -91,6 +94,15 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         housePhotoImageView = findViewById(R.id.add_house_photo)
         housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
         agentsSpinner = findViewById(R.id.add_house_agent_spinner)
+        housePhotoRecyclerView = findViewById(R.id.add_house_photo_rv)
+        houseTypeSpinner = findViewById(R.id.add_house_type_spinner)
+        houseDescriptionEditText = findViewById(R.id.add_house_description)
+        houseAddressEditText = findViewById(R.id.add_house_address)
+        housePriceEditText = findViewById(R.id.add_house_price)
+        houseSurfaceEditText = findViewById(R.id.add_house_surface)
+        houseRoomsEditText = findViewById(R.id.add_house_number_of_rooms)
+        houseBathRoomsEditText = findViewById(R.id.add_house_number_of_bathrooms)
+        houseBedRoomsEditText = findViewById(R.id.add_house_number_of_bedrooms)
         clickOnAddHouseImageView()
         configureViewModel()
         configureHousePhotoRecyclerView()
@@ -156,59 +168,27 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun applyGalleryPhoto(uriPhoto: Uri?) {
         housePhotoImageView.setImageURI(uriPhoto)
-        val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
-        val mimeType = "image/jpg"
-        val displayName = "house.jpg"
+        //val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+        //val mimeType = "image/jpg"
+        //val displayName = "house.jpg"
         val bitmap = imageConverters.uriToBitmap(uriPhoto, this)
-        savePhoto.saveBitmap(this, bitmap, format, mimeType, displayName)
+        //savePhoto.saveBitmap(this, bitmap, format, mimeType, displayName)
+        val tempUri: Uri? = savePhoto.getImageUri(this, bitmap)
+        photoFromStorage = tempUri
     }
-
-    //----------------------------------------------------------------------------------------------
-    //------------------- Get real path from Uri ---------------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    //private fun getRealPathFromURI(contentURI: Uri): String? {
-    //    val result: String?
-    //    val cursor: Cursor? = contentResolver.query(contentURI, null, null, null, null)
-    //    if (cursor == null) { // Source is Dropbox or other similar local file path
-    //        result = contentURI.path
-    //    } else {
-    //        cursor.moveToFirst()
-    //        val idx: Int = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-    //        result = cursor.getString(idx)
-    //        cursor.close()
-    //    }
-    //    return result
-    //}
 
     //------------------- Get Bitmap from dialog box -----------------------------------------------
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun applyCameraPhoto(bitmapPhoto: Bitmap) {
         housePhotoImageView.setImageBitmap(bitmapPhoto)
-        val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
-        val mimeType = "image/jpg"
-        val displayName = "house.jpg"
-        savePhoto.saveBitmap(this, bitmapPhoto, format, mimeType, displayName)
+        //val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+        //val mimeType = "image/jpg"
+        //val displayName = "house.jpg"
+        //savePhoto.saveBitmap(this, bitmapPhoto, format, mimeType, displayName)
+        val tempUri: Uri? = savePhoto.getImageUri(this, bitmapPhoto)
+        photoFromStorage = tempUri
     }
-
-    //----------------------------------------------------------------------------------------------
-    //------------------- Get real path from Bitmap ------------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    //fun getBitmap(path: String?): Bitmap? {
-    //    var bitmap: Bitmap? = null
-    //    try {
-    //        val f = File(path)
-    //        val options = BitmapFactory.Options()
-    //        options.inPreferredConfig = Bitmap.Config.ARGB_8888
-    //        bitmap = BitmapFactory.decodeStream(FileInputStream(f), null, options)
-    //        housePhotoImageView.setImageBitmap(bitmap)
-    //    } catch (e: Exception) {
-    //        e.printStackTrace()
-    //    }
-    //    return bitmap
-    //}
 
     //----------------------------------------------------------------------------------------------
     //------------------- Add house photo in recyclerview ------------------------------------------
@@ -218,21 +198,22 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
     private fun clickOnAddHousePhotoButton(){
         addHousePhotoButton = findViewById(R.id.add_house_add_photo_button)
-        addHousePhotoButton.setOnClickListener { addHousePhoto() }
+        addHousePhotoButton.setOnClickListener { addHousePhotoInRecyclerView() }
     }
 
     private fun generateHousePhotoList(): ArrayList<HousePhoto>{
         return ArrayList()
     }
 
-    private fun addHousePhoto(){
-        val idHousePhoto: Long = System.currentTimeMillis()
-        val housePhoto: Uri = Uri.parse(housePhotoImageView.toString())
+    private fun addHousePhotoInRecyclerView(){
+        //val idHousePhoto: Long = System.currentTimeMillis()
+        //val housePhoto: Uri = Uri.parse(housePhotoImageView.toString())
         val housePhotoDescription: String = housePhotoDescriptionEditText.text.toString().trim()
 
-        val newHousePhoto = HousePhoto(idHousePhoto, housePhoto, housePhotoDescription)
+        val newHousePhoto = HousePhoto(null, photoFromStorage, housePhotoDescription)
 
         housePhotoList.add(newHousePhoto)
+        housePhotoDescriptionInRecyclerView = housePhotoDescription
         housePhotoAdapter.notifyDataSetChanged()
         clearChamps()
     }
@@ -474,20 +455,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     }
 
     private fun saveHouse(){
-        // house photos uses housePhoto getAllHousePhotos
 
-        housePhotoRecyclerView = findViewById(R.id.add_house_photo_rv)
-        houseTypeSpinner = findViewById(R.id.add_house_type_spinner)
-        houseDescriptionEditText = findViewById(R.id.add_house_description)
-        houseAddressEditText = findViewById(R.id.add_house_address)
-        housePriceEditText = findViewById(R.id.add_house_price)
-        houseSurfaceEditText = findViewById(R.id.add_house_surface)
-        houseRoomsEditText = findViewById(R.id.add_house_number_of_rooms)
-        houseBathRoomsEditText = findViewById(R.id.add_house_number_of_bathrooms)
-        houseBedRoomsEditText = findViewById(R.id.add_house_number_of_bedrooms)
-        //statusSpinner = findViewById(R.id.add_house_status_spinner)
-
-        //var listOfAddedPhoto: List<HousePhoto> = emptyList()
         var housePrice = 0
         var houseSurface = 0
         var houseRooms = 0
@@ -497,8 +465,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         var houseDescription = ""
         var houseAddress = ""
         var pointsOfInterestsSelected = ""
-        val timeConverter = TimeConverters()
-        //val id: Long = System.currentTimeMillis()
 
         if (housePhotoRecyclerView.isNotEmpty()){
             //housePhotoAdapter.setData(housePhotoList)
@@ -543,7 +509,9 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
             pointsOfInterestsSelected = pointsOfInterests.text.toString().trim()
         }
 
-        addHouse(house = House(/*id*/null, /*housePhotoList = ArrayList(housePhotoList)*/arrayListOf(), typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
+        addHousePhoto(housePhotoList = HousePhoto(null, photoFromStorage, housePhotoDescriptionInRecyclerView))
+
+        addHouse(house = House(/*id*/null, housePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
                 houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
                 null, selectedAgentId))
     }
@@ -552,5 +520,9 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         mainViewModel.createHouse(house)
         showSuccessToast("House added with success ", Toast.LENGTH_SHORT, true)
         // Notification instead of KToasty
+    }
+
+    private fun addHousePhoto(housePhotoList: HousePhoto){
+        mainViewModel.createHousePhoto(housePhotoList)
     }
 }
