@@ -42,26 +42,20 @@ class HomeFragment : Fragment() {
     }
 
     //----------------------------------------------------------------------------------------------
-    //------------------- Configure houses list ----------------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-
-
-    //----------------------------------------------------------------------------------------------
     //------------------- Configure recyclerview ---------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
     private fun configurePropertyRecyclerView(){
-        val listOfProperty = HouseDataSource.createHouseDataSet() //<-- Temporary list with no data from database
-        houseRecyclerView.adapter = HouseAdapter(listOfProperty)
-        houseRecyclerView.layoutManager = LinearLayoutManager(activity)
+        //val listOfProperty = HouseDataSource.createHouseDataSet() //<-- Temporary list with no data from database
+        //houseRecyclerView.adapter = HouseAdapter(listOfProperty)
+        //houseRecyclerView.layoutManager = LinearLayoutManager(activity)
         //houseAdapter = HouseAdapter()
         //houseRecyclerView.adapter = houseAdapter
         //houseRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        //houseAdapter = HouseAdapter()
-        //houseRecyclerView.adapter = houseAdapter
-        //houseRecyclerView.layoutManager = LinearLayoutManager(activity)
+        houseAdapter = HouseAdapter()
+        houseRecyclerView.adapter = houseAdapter
+        houseRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
     //----------------------------------------------------------------------------------------------
@@ -79,7 +73,7 @@ class HomeFragment : Fragment() {
         mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
         //mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
-        //    houseAdapter.setData(house)
+        //    //houseAdapter.setData(house)
         //})
     }
 

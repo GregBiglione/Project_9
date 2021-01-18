@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -21,11 +24,15 @@ import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
+import com.openclassrooms.realestatemanager.utils.ImageConverters
+import com.openclassrooms.realestatemanager.utils.SavePhoto
 //import com.openclassrooms.realestatemanager.ui.update_agent.UpdateAgentFragmentArgs
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
+import java.lang.reflect.InvocationTargetException
 
-class UpdateAgentFragment : Fragment() {
+class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
     private val args by navArgs<UpdateAgentFragmentArgs>()
     private lateinit var agentUpdatedPhoto: CircleImageView
@@ -35,6 +42,10 @@ class UpdateAgentFragment : Fragment() {
     private lateinit var agentUpdatedEmail: TextInputEditText
     private lateinit var updateButton: Button
     private lateinit var mainViewModel: MainViewModel
+    //------------------- Uri to bitmap Conversion -------------------------------------------------
+    private lateinit var savePhoto: SavePhoto
+    private lateinit var imageConverters: ImageConverters
+    private var photoFromStorage: Uri? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,6 +59,10 @@ class UpdateAgentFragment : Fragment() {
         updateButton = view.findViewById(R.id.update_agent_update_button)
         //autoFillUpdateChamps()
         configureViewModel()
+        imageConverters = ImageConverters()
+        savePhoto = SavePhoto()
+        //autoFillUpdateChamps()
+        clickToUpdateAgentPhoto()
         clickOnUpdateAgent()
         return view
     }
@@ -65,6 +80,48 @@ class UpdateAgentFragment : Fragment() {
         val housePhotoRepository = HousePhotoRepository(housePhotoDao)
         val factory = ViewModelFactory(agentRepository, houseRepository, housePhotoRepository)
         mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        try {
+            args.currentAgent.id?.let { mainViewModel.getAgent(it) }
+        } catch (e: InvocationTargetException) {
+            e.printStackTrace();
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Update agent photo from gallery ------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //------------------- Click on image view ------------------------------------------------------
+
+    private fun clickToUpdateAgentPhoto(){
+        agentUpdatedPhoto.setOnClickListener{ showPhotoChoiceDialogBox() }
+    }
+
+    //------------------- Show dialog box ----------------------------------------------------------
+
+    private fun showPhotoChoiceDialogBox(){
+        val photoChoiceDialog = PhotoChoiceDialog(this, this)
+        photoChoiceDialog.show(requireFragmentManager(), "Photo choice dialog box")
+        photoChoiceDialog.setTargetFragment(this, 1)
+    }
+
+    //------------------- Get Uri from dialog box --------------------------------------------------
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun applyGalleryPhoto(uriPhoto: Uri?) {
+        agentUpdatedPhoto.setImageURI(uriPhoto)
+        val bitmap = imageConverters.uriToBitmap(uriPhoto, requireContext())
+        val tempUri: Uri? = savePhoto.getImageUri(requireContext(), bitmap)
+        photoFromStorage = tempUri //update end 69) word
+    }
+
+    //------------------- Get Bitmap from dialog box -----------------------------------------------
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun applyCameraPhoto(bitmapPhoto: Bitmap) {
+        agentUpdatedPhoto.setImageBitmap(bitmapPhoto)
+        val tempUri: Uri? = savePhoto.getImageUri(requireContext(), bitmapPhoto)
+        photoFromStorage = tempUri
     }
 
     //----------------------------------------------------------------------------------------------
@@ -75,6 +132,7 @@ class UpdateAgentFragment : Fragment() {
         //agentUpdatedPhoto.setImageResource(args.currentAgent.agentPhoto)
         //agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto) //no
         //agentUpdatedPhoto.setImageResource()
+        //agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto)
         agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto)
         agentUpdatedFirstName.setText(args.currentAgent.firstName)
         agentUpdatedName.setText(args.currentAgent.name)
@@ -95,7 +153,7 @@ class UpdateAgentFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun updateAgent(){
-        val updatedPhoto = Uri.parse(agentUpdatedPhoto.toString())
+        //val updatedPhoto = Uri.parse(agentUpdatedPhoto.toString())
         val updatedFirstName = agentUpdatedFirstName.text.toString()
         val updatedName = agentUpdatedName.text.toString()
         val updatedPhone = agentUpdatedPhone.text.toString()
@@ -103,7 +161,7 @@ class UpdateAgentFragment : Fragment() {
 
         if (inputCheck(updatedFirstName, updatedName, updatedPhone, updatedEmail)){
             //------------------- Create updated agent ---------------------------------------------
-            val updatedAgent = Agent(args.currentAgent.id, updatedPhoto, updatedFirstName, updatedName, updatedPhone, updatedEmail)
+            val updatedAgent = Agent(args.currentAgent.id, /*updatedPhoto*/photoFromStorage, updatedFirstName, updatedName, updatedPhone, updatedEmail)
             //------------------- Update agent -----------------------------------------------------
             mainViewModel.updateAgent(updatedAgent)
             activity?.showSuccessToast("Agent $updatedFirstName updated", Toast.LENGTH_SHORT, true)

@@ -10,9 +10,9 @@ import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.House
 
-class HouseAdapter(private val houseList: List<House>)  : RecyclerView.Adapter<HouseAdapter.PropertyViewHolder>(){
+class HouseAdapter/*(private val houseList: List<House>)*/: RecyclerView.Adapter<HouseAdapter.PropertyViewHolder>(){
 
-    //private var houseList = emptyList<House>()
+    private var houseList = emptyList<House>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -30,44 +30,44 @@ class HouseAdapter(private val houseList: List<House>)  : RecyclerView.Adapter<H
                .load(currentHouse.housePhotoList!![0].photo) // <-- get 1st item
                .into(holder.housePhoto1)
         //Glide.with(holder.housePhoto2.context)
-        //        .load(currentHouse.photo2)
+        //        .load(currentHouse.housePhotoList!![1].photo)
         //        .into(holder.housePhoto3)
         //Glide.with(holder.housePhoto3.context)
-        //        .load(currentHouse.photo3)
+        //        .load(currentHouse.housePhotoList!![2].photo)
         //        .into(holder.housePhoto4)
         //Glide.with(holder.housePhoto4.context)
-        //        .load(currentHouse.photo4)
+        //        .load(currentHouse.housePhotoList!![3].photo)
         //        .into(holder.housePhoto4)
         //Glide.with(holder.housePhoto5.context)
-        //        .load(currentHouse.photo5)
+        //        .load(currentHouse.housePhotoList!![4].photo)
         //        .into(holder.housePhoto5)
         //Glide.with(holder.housePhoto6.context)
-        //        .load(currentHouse.photo6)
+        //        .load(currentHouse.housePhotoList!![5].photo)
         //        .into(holder.housePhoto6)
         //Glide.with(holder.housePhoto7.context)
-        //        .load(currentHouse.photo7)
+        //        .load(currentHouse.housePhotoList!![6].photo)
         //        .into(holder.housePhoto7)
         //Glide.with(holder.housePhoto8.context)
-        //        .load(currentHouse.photo8)
+        //        .load(currentHouse.housePhotoList!![7].photo)
         //        .into(holder.housePhoto8)
         //Glide.with(holder.housePhoto9.context)
-        //        .load(currentHouse.photo9)
+        //        .load(currentHouse.housePhotoList!![8].photo)
         //        .into(holder.housePhoto9)
         //Glide.with(holder.housePhoto10.context)
-        //        .load(currentHouse.photo10)
+        //        .load(currentHouse.housePhotoList!![9].photo)
         //        .into(holder.housePhoto10)
 
         //------------------- Image description-----------------------------------------------------
         holder.descriptionPhoto1.text = currentHouse.housePhotoList!![0].photoDescription
-        //holder.descriptionPhoto2.text = currentHouse.descriptionPhoto2
-        //holder.descriptionPhoto3.text = currentHouse.descriptionPhoto3
-        //holder.descriptionPhoto4.text = currentHouse.descriptionPhoto4
-        //holder.descriptionPhoto5.text = currentHouse.descriptionPhoto5
-        //holder.descriptionPhoto6.text = currentHouse.descriptionPhoto6
-        //holder.descriptionPhoto7.text = currentHouse.descriptionPhoto7
-        //holder.descriptionPhoto8.text = currentHouse.descriptionPhoto8
-        //holder.descriptionPhoto9.text = currentHouse.descriptionPhoto9
-        //holder.descriptionPhoto10.text = currentHouse.descriptionPhoto10
+        //holder.descriptionPhoto2.text = currentHouse.housePhotoList!![1].photoDescription
+        //holder.descriptionPhoto3.text = currentHouse.housePhotoList!![2].photoDescription
+        //holder.descriptionPhoto4.text = currentHouse.housePhotoList!![3].photoDescription
+        //holder.descriptionPhoto5.text = currentHouse.housePhotoList!![4].photoDescription
+        //holder.descriptionPhoto6.text = currentHouse.housePhotoList!![5].photoDescription
+        //holder.descriptionPhoto7.text = currentHouse.housePhotoList!![6].photoDescription
+        //holder.descriptionPhoto8.text = currentHouse.housePhotoList!![7].photoDescription
+        //holder.descriptionPhoto9.text = currentHouse.housePhotoList!![8].photoDescription
+        //holder.descriptionPhoto10.text = currentHouse.housePhotoList!![9].photoDescription
 
         //------------------- Type -----------------------------------------------------------------
         holder.houseType.text = currentHouse.typeOfHouse
@@ -173,8 +173,8 @@ class HouseAdapter(private val houseList: List<House>)  : RecyclerView.Adapter<H
         var houseAgentInCharge: TextView = itemView.findViewById(R.id.house_agent_in_charge)
     }
 
-    //fun setData(house: List<House>){
-    //    this.houseList = house
-    //    notifyDataSetChanged()
-    //}
+    fun setData(house: List<House>){
+        this.houseList = house
+        notifyDataSetChanged()
+    }
 }
