@@ -57,11 +57,10 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         agentUpdatedPhone = view.findViewById(R.id.update_agent_phone)
         agentUpdatedEmail = view.findViewById(R.id.update_agent_email)
         updateButton = view.findViewById(R.id.update_agent_update_button)
-        //autoFillUpdateChamps()
         configureViewModel()
         imageConverters = ImageConverters()
         savePhoto = SavePhoto()
-        //autoFillUpdateChamps()
+        autoFillUpdateChamps()
         clickToUpdateAgentPhoto()
         clickOnUpdateAgent()
         return view
@@ -80,11 +79,6 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         val housePhotoRepository = HousePhotoRepository(housePhotoDao)
         val factory = ViewModelFactory(agentRepository, houseRepository, housePhotoRepository)
         mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
-        try {
-            args.currentAgent.id?.let { mainViewModel.getAgent(it) }
-        } catch (e: InvocationTargetException) {
-            e.printStackTrace();
-        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -101,6 +95,7 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     private fun showPhotoChoiceDialogBox(){
         val photoChoiceDialog = PhotoChoiceDialog(this, this)
+        //check with parentFragment etc to solve deprecated requireFragmentManager()
         photoChoiceDialog.show(requireFragmentManager(), "Photo choice dialog box")
         photoChoiceDialog.setTargetFragment(this, 1)
     }
@@ -129,11 +124,8 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //----------------------------------------------------------------------------------------------
 
     private fun autoFillUpdateChamps(){
-        //agentUpdatedPhoto.setImageResource(args.currentAgent.agentPhoto)
-        //agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto) //no
-        //agentUpdatedPhoto.setImageResource()
-        //agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto)
-        agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto)
+        val photo: String = args.currentAgent.agentPhoto.toString()
+        agentUpdatedPhoto.setImageURI(Uri.parse(photo))
         agentUpdatedFirstName.setText(args.currentAgent.firstName)
         agentUpdatedName.setText(args.currentAgent.name)
         agentUpdatedPhone.setText(args.currentAgent.phoneNumber)
@@ -153,7 +145,6 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //----------------------------------------------------------------------------------------------
 
     private fun updateAgent(){
-        //val updatedPhoto = Uri.parse(agentUpdatedPhoto.toString())
         val updatedFirstName = agentUpdatedFirstName.text.toString()
         val updatedName = agentUpdatedName.text.toString()
         val updatedPhone = agentUpdatedPhone.text.toString()
@@ -161,10 +152,10 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
         if (inputCheck(updatedFirstName, updatedName, updatedPhone, updatedEmail)){
             //------------------- Create updated agent ---------------------------------------------
-            val updatedAgent = Agent(args.currentAgent.id, /*updatedPhoto*/photoFromStorage, updatedFirstName, updatedName, updatedPhone, updatedEmail)
+            val updatedAgent = Agent(args.currentAgent.id, photoFromStorage, updatedFirstName, updatedName, updatedPhone, updatedEmail)
             //------------------- Update agent -----------------------------------------------------
             mainViewModel.updateAgent(updatedAgent)
-            activity?.showSuccessToast("Agent $updatedFirstName updated", Toast.LENGTH_SHORT, true)
+            activity?.showSuccessToast("Agent updated", Toast.LENGTH_SHORT, true)
             //------------------- back to AddAgentFragment after update ----------------------------
             findNavController().navigate(R.id.nav_add_agent)
         }

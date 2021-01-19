@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.events.DeleteAgentEvent
 import com.openclassrooms.realestatemanager.model.Agent
+import com.openclassrooms.realestatemanager.ui.fragments.AddAgentFragmentDirections
 import de.hdodenhof.circleimageview.CircleImageView
 import org.greenrobot.eventbus.EventBus
 
@@ -38,7 +39,9 @@ class AgentAdapter: RecyclerView.Adapter<AgentAdapter.AgentViewHolder>() {
         holder.agentEmail.text = currentAgent.email
 
         holder.updateButton.setOnClickListener {
-            holder.updateButton.findNavController().navigate(R.id.nav_update_agent)
+            //holder.updateButton.findNavController().navigate(R.id.nav_update_agent)
+            val action = AddAgentFragmentDirections.actionNavAddAgentToNavUpdateAgent3(currentAgent)
+            holder.updateButton.findNavController().navigate(action)
         }
 
         holder.deleteButton.setOnClickListener {
