@@ -1,17 +1,18 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -27,10 +28,8 @@ import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
-//import com.openclassrooms.realestatemanager.ui.update_agent.UpdateAgentFragmentArgs
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
-import java.lang.reflect.InvocationTargetException
 
 class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
@@ -107,7 +106,7 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         agentUpdatedPhoto.setImageURI(uriPhoto)
         val bitmap = imageConverters.uriToBitmap(uriPhoto, requireContext())
         val tempUri: Uri? = savePhoto.getImageUri(requireContext(), bitmap)
-        photoFromStorage = tempUri //update end 69) word
+        photoFromStorage = tempUri
     }
 
     //------------------- Get Bitmap from dialog box -----------------------------------------------
@@ -120,12 +119,15 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     }
 
     //----------------------------------------------------------------------------------------------
-    //------------------- Auto fill update champ ---------------------------------------------------
+    //------------------- Auto fill update champs --------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
+    //@SuppressLint("ResourceAsColor")
     private fun autoFillUpdateChamps(){
-        val photo: String = args.currentAgent.agentPhoto.toString()
-        agentUpdatedPhoto.setImageURI(Uri.parse(photo))
+        //val photo: String = args.currentAgent.agentPhoto.toString()  // String --> Uri fail
+        //agentUpdatedPhoto.setImageURI(Uri.parse(photo))
+        agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto) // Uri fail
+        //agentUpdatedPhoto.setBackgroundColor(R.color.colorAccent) // Color test ok
         agentUpdatedFirstName.setText(args.currentAgent.firstName)
         agentUpdatedName.setText(args.currentAgent.name)
         agentUpdatedPhone.setText(args.currentAgent.phoneNumber)

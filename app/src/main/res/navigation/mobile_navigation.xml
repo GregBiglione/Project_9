@@ -9,14 +9,7 @@
         android:id="@+id/nav_home"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_nav_home_to_nav_add_agent"
-            app:destination="@id/nav_add_agent" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_setting"
-            app:destination="@id/nav_settings" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_add_agent"
