@@ -14,42 +14,42 @@ class HousePhotoDataSource {
             listOfPhoto1.add(
                     HousePhoto(
                             1L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-b2660000000001e2000157b5fd0a-31614642.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-b2660000000001e2000157b5fd0a-31614642.jpg",
                             "Living room"
                     )
             )
             listOfPhoto1.add(
                     HousePhoto(
                             11L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/2/properties/Property-b2660000000001e2000257b5fd0a-31614642.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/2/properties/Property-b2660000000001e2000257b5fd0a-31614642.jpg",
                             "Terrace"
                     )
             )
             listOfPhoto1.add(
                     HousePhoto(
                             12L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/3/properties/Property-b2660000000001e2000357b5fd0a-31614642.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/3/properties/Property-b2660000000001e2000357b5fd0a-31614642.jpg",
                             "Fitness room"
                     )
             )
             listOfPhoto1.add(
                     HousePhoto(
                             13L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-b2660000000001e2000557b5fd0a-31614642.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-b2660000000001e2000557b5fd0a-31614642.jpg",
                             "Swimming pool"
                     )
             )
             listOfPhoto1.add(
                     HousePhoto(
                             14L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/8/properties/Property-b2660000000001e2000857b5fd0a-31614642.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/8/properties/Property-b2660000000001e2000857b5fd0a-31614642.jpg",
                             "Bed room"
                     )
             )
             listOfPhoto1.add(
                     HousePhoto(
                             15L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/9/properties/Property-b2660000000001e2000957b5fd0a-31614642.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/9/properties/Property-b2660000000001e2000957b5fd0a-31614642.jpg",
                             "Kitchen"
                     )
             )
@@ -65,42 +65,42 @@ class HousePhotoDataSource {
             listOfPhoto2.add(
                     HousePhoto(
                             2L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/4/properties/Property-431f0000000005d2000a5f9be394-97656643.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/4/properties/Property-431f0000000005d2000a5f9be394-97656643.jpg",
                             "Living room"
                     )
             )
             listOfPhoto2.add(
                     HousePhoto(
                             21L,
-                            Uri.parse("https://fr.luxuryestate.com/p97656643-appartement-en-vente-new-york"),
+                            "https://fr.luxuryestate.com/p97656643-appartement-en-vente-new-york",
                             "Terrace"
                     )
             )
             listOfPhoto2.add(
                     HousePhoto(
                             22L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/15/properties/Property-431f0000000005d200115f9be395-97656643.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/15/properties/Property-431f0000000005d200115f9be395-97656643.jpg",
                             "Bathroom"
                     )
             )
             listOfPhoto2.add(
                     HousePhoto(
                             23L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/17/properties/Property-431f0000000005d200135f9be395-97656643.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/17/properties/Property-431f0000000005d200135f9be395-97656643.jpg",
                             "Bedroom"
                     )
             )
             listOfPhoto2.add(
                     HousePhoto(
                             24L,
-                            Uri.parse("https://fr.luxuryestate.com/p97656643-appartement-en-vente-new-york"),
+                            "https://fr.luxuryestate.com/p97656643-appartement-en-vente-new-york",
                             "Facade"
                     )
             )
             listOfPhoto2.add(
                     HousePhoto(
                             25L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-431f0000000005d200025f9be394-97656643.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-431f0000000005d200025f9be394-97656643.jpg",
                             "Swimming pool"
                     )
             )
@@ -116,28 +116,28 @@ class HousePhotoDataSource {
             listOfPhoto3.add(
                     HousePhoto(
                             3L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-d7aa00000000054e00055fa5bc67-89041623.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-d7aa00000000054e00055fa5bc67-89041623.jpg",
                             "Living room"
                     )
             )
             listOfPhoto3.add(
                     HousePhoto(
                             31L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/9/properties/Property-d7aa00000000054e00065ebe7ef0-89041623.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/9/properties/Property-d7aa00000000054e00065ebe7ef0-89041623.jpg",
                             "Kitchen"
                     )
             )
             listOfPhoto3.add(
                     HousePhoto(
                             32L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/13/properties/Property-d7aa00000000054e000a5ebe7ef0-89041623.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/13/properties/Property-d7aa00000000054e000a5ebe7ef0-89041623.jpg",
                             "WC"
                     )
             )
             listOfPhoto3.add(
                     HousePhoto(
                             33L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-d7aa00000000054e00015fa5bc67-89041623.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-d7aa00000000054e00015fa5bc67-89041623.jpg",
                             "Neighborhood"
                     )
             )
@@ -153,56 +153,56 @@ class HousePhotoDataSource {
             listOfPhoto4.add(
                     HousePhoto(
                             4L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-e79900000000055400015ec8cf50-89430503.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-e79900000000055400015ec8cf50-89430503.jpg",
                             "Terrace"
                     )
             )
             listOfPhoto4.add(
                     HousePhoto(
                             41L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/2/properties/Property-e79900000000055400025ec8cf50-89430503.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/2/properties/Property-e79900000000055400025ec8cf50-89430503.jpg",
                             "Living room"
                     )
             )
             listOfPhoto4.add(
                     HousePhoto(
                             42L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/3/properties/Property-e79900000000055400035ec8cf50-89430503.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/3/properties/Property-e79900000000055400035ec8cf50-89430503.jpg",
                             "Terrace"
                     )
             )
             listOfPhoto4.add(
                     HousePhoto(
                             43L,
-                            Uri.parse("https://fr.luxuryestate.com/p89430503-appartement-en-vente-new-york"),
+                            "https://fr.luxuryestate.com/p89430503-appartement-en-vente-new-york",
                             "Wine cellar"
                     )
             )
             listOfPhoto4.add(
                     HousePhoto(
                             44L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/8/properties/Property-e79900000000055400085ec8cf50-89430503.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/8/properties/Property-e79900000000055400085ec8cf50-89430503.jpg",
                             "Bedroom",
                     )
             )
             listOfPhoto4.add(
                     HousePhoto(
                             45L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/13/properties/Property-e799000000000554000d5ec8cf50-89430503.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/13/properties/Property-e799000000000554000d5ec8cf50-89430503.jpg",
                             "Bathroom"
                     )
             )
             listOfPhoto4.add(
                     HousePhoto(
                             46L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/14/properties/Property-e799000000000554000e5ec8cf50-89430503.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/14/properties/Property-e799000000000554000e5ec8cf50-89430503.jpg",
                             "Kitchen"
                     )
             )
             listOfPhoto4.add(
                     HousePhoto(
                             47L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/11/properties/Property-e799000000000554000b5ec8cf50-89430503.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/11/properties/Property-e799000000000554000b5ec8cf50-89430503.jpg",
                             "Facade"
                     )
             )
@@ -218,21 +218,21 @@ class HousePhotoDataSource {
             listOfPhoto5.add(
                     HousePhoto(
                             5L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-b68c00000000011d0003554b9f71-18713782.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-b68c00000000011d0003554b9f71-18713782.jpg",
                             "Kitchen"
                     )
             )
             listOfPhoto5.add(
                     HousePhoto(
                             51L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/6/properties/Property-b68c00000000011d0007554b9f71-18713782.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/6/properties/Property-b68c00000000011d0007554b9f71-18713782.jpg",
                             "Terrace"
                     )
             )
             listOfPhoto5.add(
                     HousePhoto(
                             52L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/2/properties/Property-b68c00000000011d0004554b9f71-18713782.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/2/properties/Property-b68c00000000011d0004554b9f71-18713782.jpg",
                             "Facade"
                     )
             )
@@ -248,28 +248,28 @@ class HousePhotoDataSource {
             listOfPhoto6.add(
                     HousePhoto(
                             6L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-537600000000049900015d64ea56-77166163.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-537600000000049900015d64ea56-77166163.jpg",
                             "Facade"
                     )
             )
             listOfPhoto6.add(
                     HousePhoto(
                             61L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/4/properties/Property-537600000000049900035d64e93a-77166163.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/4/properties/Property-537600000000049900035d64e93a-77166163.jpg",
                             "Swimming pool"
                     )
             )
             listOfPhoto6.add(
                     HousePhoto(
                             62L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-537600000000049900045d64e93a-77166163.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-537600000000049900045d64e93a-77166163.jpg",
                             "Living room"
                     )
             )
             listOfPhoto6.add(
                     HousePhoto(
                             43L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/6/properties/Property-537600000000049900055d64e93a-77166163.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/6/properties/Property-537600000000049900055d64e93a-77166163.jpg",
                             "Office"
                     )
             )
@@ -285,42 +285,42 @@ class HousePhotoDataSource {
             listOfPhoto7.add(
                     HousePhoto(
                             7L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/08/1/properties/Property-0824a142bb3c7a06fe680fc2d4fc1840-94891005.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/1/properties/Property-0824a142bb3c7a06fe680fc2d4fc1840-94891005.jpg",
                             "Living room"
                     )
             )
             listOfPhoto7.add(
                     HousePhoto(
                             71L,
-                            Uri.parse( "https://pic.le-cdn.com/thumbs/1024x768/08/7/properties/Property-bf6e860a639e4e8c05652cf22fc57f91-94891005.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/7/properties/Property-bf6e860a639e4e8c05652cf22fc57f91-94891005.jpg",
                             "Kitchen"
                     )
             )
             listOfPhoto7.add(
                     HousePhoto(
                             72L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/08/10/properties/Property-61d7f040c12ff4dc47f96ea4279cdf4b-94891005.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/10/properties/Property-61d7f040c12ff4dc47f96ea4279cdf4b-94891005.jpg",
                             "Bedroom"
                     )
             )
             listOfPhoto7.add(
                     HousePhoto(
                             73L,
-                            Uri.parse( "https://pic.le-cdn.com/thumbs/1024x768/08/11/properties/Property-c5c91761f476af80cf704ef3969cb327-94891005.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/11/properties/Property-c5c91761f476af80cf704ef3969cb327-94891005.jpg",
                             "Dressing room"
                     )
             )
             listOfPhoto7.add(
                     HousePhoto(
                             74L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/08/12/properties/Property-12a70d1009b7f17b1d4ed394f5025c9c-94891005.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/12/properties/Property-12a70d1009b7f17b1d4ed394f5025c9c-94891005.jpg",
                             "Bathroom",
                     )
             )
             listOfPhoto7.add(
                     HousePhoto(
                             75L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/08/13/properties/Property-0a3fb3d49faf6fcf0b3fdf7bde0d1538-94891005.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/13/properties/Property-0a3fb3d49faf6fcf0b3fdf7bde0d1538-94891005.jpg",
                             "Bedroom"
                     )
             )
@@ -336,28 +336,28 @@ class HousePhotoDataSource {
             listOfPhoto8.add(
                     HousePhoto(
                             8L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/4/properties/Property-0b8e00000000055500035eca19cc-89493003.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/4/properties/Property-0b8e00000000055500035eca19cc-89493003.jpg",
                             "Living room"
                     )
             )
             listOfPhoto8.add(
                     HousePhoto(
                             81L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-0b8e00000000055500045eca19cc-89493003.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-0b8e00000000055500045eca19cc-89493003.jpg",
                             "Bathroom"
                     )
             )
             listOfPhoto8.add(
                     HousePhoto(
                             82L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/11/properties/Property-0b8e000000000555000b5eca19cc-89493003.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/11/properties/Property-0b8e000000000555000b5eca19cc-89493003.jpg",
                             "Living room"
                     )
             )
             listOfPhoto8.add(
                     HousePhoto(
                             83L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/04/12/properties/Property-0b8e000000000555000c5eca19cc-89493003.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/12/properties/Property-0b8e000000000555000c5eca19cc-89493003.jpg",
                             "Kitchen"
                     )
             )
@@ -373,35 +373,35 @@ class HousePhotoDataSource {
             listOfPhoto9.add(
                     HousePhoto(
                             9L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/794/6/properties/Property-7c963a464e52f0a0eeb1b6e7eb447a94-92568645.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/794/6/properties/Property-7c963a464e52f0a0eeb1b6e7eb447a94-92568645.jpg",
                             "Living room"
                     )
             )
             listOfPhoto9.add(
                     HousePhoto(
                             91L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/794/9/properties/Property-69b030422e7b5797b5d1ed2d7a7a4cad-92568645.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/794/9/properties/Property-69b030422e7b5797b5d1ed2d7a7a4cad-92568645.jpg",
                             "Kitchen"
                     )
             )
             listOfPhoto9.add(
                     HousePhoto(
                             92L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/794/12/properties/Property-2b587c7469ad28097641ae30e0d02db8-92568645.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/794/12/properties/Property-2b587c7469ad28097641ae30e0d02db8-92568645.jpg",
                             "Pool room"
                     )
             )
             listOfPhoto9.add(
                     HousePhoto(
                             93L,
-                            Uri.parse( "https://pic.le-cdn.com/thumbs/1024x768/794/1/properties/Property-a92ad10fdfa6bba3173f3ac55b845dc0-92568645.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/794/1/properties/Property-a92ad10fdfa6bba3173f3ac55b845dc0-92568645.jpg",
                             "Terrace"
                     )
             )
             listOfPhoto9.add(
                     HousePhoto(
                             94L,
-                            Uri.parse("https://pic.le-cdn.com/thumbs/1024x768/794/5/properties/Property-b7c7018a1e441818b518c45486d79716-92568645.jpg"),
+                            "https://pic.le-cdn.com/thumbs/1024x768/794/5/properties/Property-b7c7018a1e441818b518c45486d79716-92568645.jpg",
                             "Hall"
                     )
             )

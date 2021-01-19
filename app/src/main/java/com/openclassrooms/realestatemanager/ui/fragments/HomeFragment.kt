@@ -65,9 +65,9 @@ class HomeFragment : Fragment() {
         val factory = ViewModelFactory(agentRepository, houseRepository, housePhotoRepository)
         mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
-        //mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
-        //    houseAdapter.setData(house)
-        //})
+        mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
+            houseAdapter.setData(house)
+        })
     }
 
     //----------------------------------------------------------------------------------------------

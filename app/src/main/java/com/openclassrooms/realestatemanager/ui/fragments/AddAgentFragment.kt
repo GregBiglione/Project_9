@@ -136,13 +136,8 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun applyGalleryPhoto(uriPhoto: Uri?) {
         agentPhoto.setImageURI(uriPhoto)
-        //val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
-        //val mimeType = "image/jpg"
-        //val displayName = "agent.jpg"
         val bitmap = imageConverters.uriToBitmap(uriPhoto, requireContext())
-        //savePhoto.saveBitmap(requireContext(), bitmap, format, mimeType, displayName)
         val tempUri: Uri? = savePhoto.getImageUri(requireContext(), bitmap)
-        //val finalFile = File(savePhoto.getRealPathFromUri(requireContext(), tempUri))
         photoFromStorage = tempUri
     }
 
@@ -151,12 +146,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun applyCameraPhoto(bitmapPhoto: Bitmap) {
         agentPhoto.setImageBitmap(bitmapPhoto)
-        //val format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
-        //val mimeType = "image/jpg"
-        //val displayName = "agent.jpg"
-        //savePhoto.saveBitmap(requireContext(), bitmapPhoto, format, mimeType, displayName)
         val tempUri: Uri? = savePhoto.getImageUri(requireContext(), bitmapPhoto)
-        //val finalFile = File(savePhoto.getRealPathFromUri(requireContext(), tempUri))
         photoFromStorage = tempUri
     }
 
@@ -171,12 +161,12 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     //----------------------------------------------------------------------------------------------
 
     private fun formatPhoneNumber(){
-        agentPhone.addTextChangedListener(textWatcher)
+        agentPhone.addTextChangedListener(phoneWatcher)
     }
 
     //------------------- Text watcher -------------------------------------------------------------
 
-    private val textWatcher = object : TextWatcher{
+    private val phoneWatcher = object : TextWatcher{
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}

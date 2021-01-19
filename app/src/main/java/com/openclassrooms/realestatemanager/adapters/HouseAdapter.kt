@@ -23,9 +23,16 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
     override fun onBindViewHolder(holder: HouseViewHolder, position: Int) {
         val currentHouse = houseList[position]
 
-        Glide.with(holder.houseImage.context)
-                .load(currentHouse.housePhotoList?.get(0)?.photo)
-                .into(holder.houseImage)
+        if (currentHouse.housePhotoList != null) {
+            Glide.with(holder.houseImage.context)
+                    .load(/*currentHouse.housePhotoList?.get(0)?.photo*/currentHouse.housePhotoList!![0].photo)
+                    .into(holder.houseImage)
+        }
+        else{
+            Glide.with(holder.houseImage.context)
+                    .load(R.drawable.ic_baseline_photo_48)
+                    .into(holder.houseImage)
+        }
         holder.houseType.text = currentHouse.typeOfHouse
         holder.houseNeighborhood.text = currentHouse.neighborhood
         holder.housePrice.text = currentHouse.price.toString()
