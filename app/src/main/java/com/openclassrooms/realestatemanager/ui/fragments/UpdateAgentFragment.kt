@@ -202,7 +202,7 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private fun autoFillUpdateChamps(){
         //val photo: String = args.currentAgent.agentPhoto.toString()  // String --> Uri fail
         //agentUpdatedPhoto.setImageURI(Uri.parse(photo))
-        agentUpdatedPhoto.setImageURI(args.currentAgent.agentPhoto) // Uri fail
+        agentUpdatedPhoto.setImageURI(Uri.parse(args.currentAgent.agentPhoto)) // Uri fail
         //agentUpdatedPhoto.setBackgroundColor(R.color.colorAccent) // Color test ok
         agentUpdatedFirstName.setText(args.currentAgent.firstName)
         agentUpdatedName.setText(args.currentAgent.name)
@@ -230,7 +230,8 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
         if (inputCheck(updatedFirstName, updatedName, updatedPhone, updatedEmail)){
             //------------------- Create updated agent ---------------------------------------------
-            val updatedAgent = Agent(args.currentAgent.id, photoFromStorage, updatedFirstName, updatedName, updatedPhone, updatedEmail)
+            val updatedAgent = Agent(args.currentAgent.id, photoFromStorage.toString(), updatedFirstName,
+                    updatedName, updatedPhone, updatedEmail)
             //------------------- Update agent -----------------------------------------------------
             mainViewModel.updateAgent(updatedAgent)
             activity?.showSuccessToast("Agent updated", Toast.LENGTH_SHORT, true)

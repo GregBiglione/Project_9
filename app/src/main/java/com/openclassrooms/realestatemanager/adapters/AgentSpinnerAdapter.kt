@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.adapters
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,7 @@ class AgentSpinnerAdapter(context: Context): ArrayAdapter<Agent>(context, 0) {
         val view = LayoutInflater.from(context).inflate(R.layout.spinner_agent_item, parent, false)
 
         if (agent != null) {
-            view.spinner_agent_item_image.setImageURI(agent.agentPhoto)
+            view.spinner_agent_item_image.setImageURI(Uri.parse(agent.agentPhoto))
         }
         view.spinner_agent_item_first_name.text = agent?.firstName
         view.spinner_agent_item_name.text = agent?.name

@@ -259,7 +259,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
                 agentEmail.error = getString(R.string.enter_email)
             }
             else{
-                addAgent(agent = Agent(null, /*photo*/photoFromStorage, firstName, name, phone, email))
+                addAgent(agent = Agent(null, /*photoFromStorage*/ photoFromStorage.toString(), firstName, name, phone, email))
                 clearChamps()
             }
         }
