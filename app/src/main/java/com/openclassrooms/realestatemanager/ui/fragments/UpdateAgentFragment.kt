@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build

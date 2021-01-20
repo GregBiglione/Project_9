@@ -39,7 +39,6 @@ class AgentAdapter: RecyclerView.Adapter<AgentAdapter.AgentViewHolder>() {
         holder.agentEmail.text = currentAgent.email
 
         holder.updateButton.setOnClickListener {
-            //holder.updateButton.findNavController().navigate(R.id.nav_update_agent)
             val action = AddAgentFragmentDirections.actionNavAddAgentToNavUpdateAgent3(currentAgent)
             holder.updateButton.findNavController().navigate(action)
         }

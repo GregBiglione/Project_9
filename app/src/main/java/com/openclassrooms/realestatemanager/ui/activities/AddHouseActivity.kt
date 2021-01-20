@@ -3,12 +3,9 @@ package com.openclassrooms.realestatemanager.ui.activities
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi

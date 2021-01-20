@@ -52,14 +52,6 @@ class MainActivity : AppCompatActivity(){
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
-            R.id.action_add ->{
-                KToasty.success(this, "Click on  item " + item.title, Toast.LENGTH_SHORT, true).show()
-                true
-            }
-            R.id.action_update ->{
-                KToasty.success(this, "Click on  item " + item.title, Toast.LENGTH_SHORT, true).show()
-                true
-            }
             R.id.action_search ->{
                 KToasty.success(this, "Click on  item " + item.title, Toast.LENGTH_SHORT, true).show()
                 true

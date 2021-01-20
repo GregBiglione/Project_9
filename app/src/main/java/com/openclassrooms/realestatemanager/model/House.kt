@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(foreignKeys = [ForeignKey(entity = Agent::class,
             parentColumns = ["id"],
             childColumns = ["agentId"])])
-data class House (
+data class House(
         @PrimaryKey(autoGenerate = true)
         var id: Long? = null,
         @TypeConverters(ListConverters::class)

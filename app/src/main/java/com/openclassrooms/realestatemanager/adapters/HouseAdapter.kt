@@ -5,10 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.House
+import com.openclassrooms.realestatemanager.ui.fragments.HomeFragmentDirections
 
 class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
 
@@ -36,11 +39,17 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
         holder.houseType.text = currentHouse.typeOfHouse
         holder.houseNeighborhood.text = currentHouse.neighborhood
         holder.housePrice.text = currentHouse.price.toString()
+
+        holder.houseConstraintLayout.setOnClickListener {
+            val action = HomeFragmentDirections.actionNavHomeToDetailedHouseFragment(currentHouse)
+            holder.houseConstraintLayout.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount() = houseList.size
 
     class HouseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        val houseConstraintLayout: ConstraintLayout = itemView.findViewById(R.id.house_constraint_lyt)
         val houseImage: ImageView = itemView.findViewById(R.id.house_first_image)
         val houseType: TextView = itemView.findViewById(R.id.house_type)
         val houseNeighborhood: TextView = itemView.findViewById(R.id.house_neighborhood)

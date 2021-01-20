@@ -14,7 +14,6 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HouseAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
-import com.openclassrooms.realestatemanager.model.HouseDataSource
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository

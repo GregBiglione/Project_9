@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_detailedHouseFragment"
+            app:destination="@id/detailedHouseFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_add_agent"
@@ -38,6 +42,18 @@
         <action
             android:id="@+id/action_nav_update_agent_to_nav_add_agent3"
             app:destination="@id/nav_add_agent" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailedHouseFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.DetailedHouseFragment"
+        android:label="@string/detailed_house"
+        tools:layout="@layout/fragment_detailed_house">
+        <action
+            android:id="@+id/action_detailedHouseFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+        <argument
+            android:name="currentHouse"
+            app:argType="com.openclassrooms.realestatemanager.model.House" />
     </fragment>
 
 </navigation>

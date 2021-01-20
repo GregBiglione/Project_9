@@ -8,6 +8,27 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="detailedHouseFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="14" />
+                            <option name="y" value="342" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_detailedHouseFragment_to_nav_home">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="nav_add_agent">
                     <value>
                       <LayoutPositions>
@@ -34,18 +55,13 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-280" />
-                            <option name="y" value="165" />
+                            <option name="x" value="-275" />
+                            <option name="y" value="338" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_nav_home_to_nav_add_agent">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_nav_home_to_nav_setting">
+                            <entry key="action_nav_home_to_detailedHouseFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -60,8 +76,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="7" />
-                            <option name="y" value="338" />
+                            <option name="x" value="469" />
+                            <option name="y" value="19" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -84,18 +100,6 @@
                               </value>
                             </entry>
                           </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="settingsFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-447" />
-                            <option name="y" value="1" />
-                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
