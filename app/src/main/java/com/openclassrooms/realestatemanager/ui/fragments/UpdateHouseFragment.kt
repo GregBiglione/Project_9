@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
@@ -23,6 +24,7 @@ import com.openclassrooms.realestatemanager.adapters.UpdateHousePhotoAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
@@ -36,6 +38,7 @@ import org.greenrobot.eventbus.Subscribe
 
 class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
+    private val args by navArgs<UpdateHouseFragmentArgs>()
     private lateinit var housePhotoRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var housePhotoImageView: ImageView
@@ -89,6 +92,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         housePhotoRecyclerView = view.findViewById(R.id.update_add_house_photo_rv)
         configureHousePhotoRecyclerView()
         clickOnAddHousePhotoButton()
+        //------------------- Auto recycler view with existing photos ------------------------------
+        //fillUpdateHouseChamps()
         return view
     }
 
@@ -134,7 +139,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //------------------- Click on add house photo button ------------------------------------------
 
     private fun clickOnAddHousePhotoButton(){
-        //addHousePhotoButton = findViewById(R.id.add_house_add_photo_button)
         addHousePhotoButton.setOnClickListener { addHousePhotoInRecyclerView() }
     }
 
@@ -147,9 +151,10 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //----------------------------------------------------------------------------------------------
 
     private fun configureHousePhotoRecyclerView(){
-        //housePhotoRecyclerView = findViewById(R.id.add_house_photo_rv)
         housePhotoRecyclerView.adapter = housePhotoAdapter
         housePhotoRecyclerView.layoutManager = LinearLayoutManager(activity)
+        //------------------- Add already selected house photo in recyclerview ---------------------
+        fillExistingHousePhotos()
     }
 
     private fun addHousePhotoInRecyclerView(){
@@ -196,10 +201,18 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     }
 
     //----------------------------------------------------------------------------------------------
-    //------------------- Fill detail house champs -------------------------------------------------
+    //------------------- Fill details house champs ------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    private fun fillUpdateHouseChamps(){
+    //------------------- Fill house photo champs --------------------------------------------------
 
+    private fun fillExistingHousePhotos(){
+        val existingHousePhotosList: ArrayList<HousePhoto> = args.currentHouse.housePhotoList!!
+        if (existingHousePhotosList.isNotEmpty()) {
+            for (e in existingHousePhotosList){
+                housePhotoList.add(e)
+                housePhotoAdapter.notifyDataSetChanged()
+            }
+        }
     }
 }
