@@ -41,6 +41,28 @@
             style="@style/price_style"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/house_linear_lyt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="end"
+        style="@style/agent_item_l_lyt_style">
+
+        <ImageButton
+            android:id="@+id/house_item_update_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:gravity="end"/>
+
+    </LinearLayout>
+
     <View
         android:id="@+id/house_hr"
         app:layout_constraintStart_toStartOf="parent"
