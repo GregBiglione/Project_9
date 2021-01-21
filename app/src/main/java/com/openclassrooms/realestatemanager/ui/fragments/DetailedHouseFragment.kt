@@ -86,6 +86,8 @@ class DetailedHouseFragment : Fragment() {
         //    detailSale.text = args.currentHouse.saleDate.toString()
         //}
 
+        //119)
+
     }
 
 }
