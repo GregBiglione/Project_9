@@ -137,7 +137,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/update__house_price"
+                    android:id="@+id/update_house_price"
                     android:hint="@string/price"
                     android:inputType="number"
                     style="@style/add_house_input_with_icon_style"
@@ -248,7 +248,6 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText

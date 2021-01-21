@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,7 @@ import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
+import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -59,6 +61,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var houseBathRoomsEditText: TextInputEditText
     private lateinit var houseBedRoomsEditText: TextInputEditText
     private lateinit var houseEntryDate: TextInputEditText
+    private lateinit var houseSaleDateLyt: TextInputLayout
     private lateinit var houseSaleDate: TextInputEditText
     //------------------- Spinner ------------------------------------------------------------------
     private lateinit var houseTypeSpinner: Spinner
@@ -76,11 +79,15 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var imageConverters: ImageConverters
     private var photoFromStorage: Uri? = null
     private lateinit var housePhotoDescriptionInRecyclerView: String
+    //------------------- Time converter -----------------------------------------------------------
+    private lateinit var timeConverters: TimeConverters
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_update_house, container, false)
+        //------------------- TimeConverters -------------------------------------------------------
+        timeConverters = TimeConverters()
         //------------------- Photo image view -----------------------------------------------------
         housePhotoImageView = view.findViewById(R.id.update_add_house_photo)
         imageConverters = ImageConverters()
@@ -92,8 +99,19 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         housePhotoRecyclerView = view.findViewById(R.id.update_add_house_photo_rv)
         configureHousePhotoRecyclerView()
         clickOnAddHousePhotoButton()
-        //------------------- Auto recycler view with existing photos ------------------------------
-        //fillUpdateHouseChamps()
+        //------------------- EditTexts ------------------------------------------------------------
+        houseDescriptionEditText = view.findViewById(R.id.update_house_description)
+        houseAddressEditText = view.findViewById(R.id.update_house_address)
+        housePriceEditText = view.findViewById(R.id.update_house_price)
+        houseSurfaceEditText = view.findViewById(R.id.update_house_surface)
+        houseRoomsEditText = view.findViewById(R.id.update_house_number_of_rooms)
+        houseBathRoomsEditText = view.findViewById(R.id.update_house_number_of_bathrooms)
+        houseBedRoomsEditText = view.findViewById(R.id.update_house_number_of_bedrooms)
+        houseEntryDate = view.findViewById(R.id.update_house_entry_date)
+        houseSaleDateLyt = view.findViewById(R.id.update_house_sale_date_input)
+        houseSaleDate = view.findViewById(R.id.update_house_sale_date)
+        fillEditTexts()
+        //showSaleDate()
         return view
     }
 
@@ -215,4 +233,26 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
             }
         }
     }
+
+    //------------------- Fill EditTexts champs ----------------------------------------------------
+
+    private fun fillEditTexts(){
+        houseDescriptionEditText.setText(args.currentHouse.description)
+        houseAddressEditText.setText(args.currentHouse.address)
+        housePriceEditText.setText(args.currentHouse.price.toString())
+        houseSurfaceEditText.setText(args.currentHouse.surface.toString())
+        houseRoomsEditText.setText(args.currentHouse.numberOfRooms.toString())
+        houseBathRoomsEditText.setText(args.currentHouse.numberOfBathRooms.toString())
+        houseEntryDate.setText(args.currentHouse.entryDate?.let { timeConverters.convertLongToTime(it) })
+        if (args.currentHouse.saleDate != null) {
+            houseSaleDate.setText(args.currentHouse.saleDate?.let { timeConverters.convertLongToTime(it) })
+        }
+    }
+
+    //private fun showSaleDate(){
+    //    if (args.currentHouse.saleDate != null) {
+    //        houseSaleDate.setText(args.currentHouse.saleDate?.let { timeConverters.convertLongToTime(it) })
+    //        houseSaleDateInputLyt.visibility = View.VISIBLE
+    //    }
+    //}
 }
