@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/update_add_house_photo_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/image_style"
+        android:contentDescription="@string/house_image" />
+
+    <LinearLayout
+        android:id="@+id/update_add_house_photo_linear_lyt"
+        app:layout_constraintStart_toEndOf="@id/update_add_house_photo_image"
+        app:layout_constraintTop_toTopOf="@id/update_add_house_photo_image"
+        app:layout_constraintBottom_toBottomOf="@id/update_add_house_photo_image"
+        style="@style/house_linear_lyt_style">
+
+        <TextView
+            android:id="@+id/update_add_house_photo_description"
+            app:layout_constraintStart_toEndOf="@+id/house_first_image"
+            app:layout_constraintTop_toTopOf="@id/house_first_image"
+            android:text="@string/photo_description"
+            style="@style/type_style"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/update_add_house_photo_linear_btn_lyt"
+        style="@style/agent_item_l_lyt_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/update_add_house_photo_linear_lyt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/update_add_house_photo_linear_lyt"
+        app:layout_constraintTop_toTopOf="@id/update_add_house_photo_linear_lyt">
+
+        <ImageButton
+            android:id="@+id/update_add_house_photo_update_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:background="@null"
+            android:gravity="end"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/update_add_house_photo_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:background="@null"
+            android:gravity="end"
+            android:src="@drawable/ic_baseline_delete_24" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
