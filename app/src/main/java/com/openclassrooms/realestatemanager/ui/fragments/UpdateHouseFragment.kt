@@ -13,12 +13,15 @@ import android.widget.ImageView
 import android.widget.Spinner
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
+import com.openclassrooms.realestatemanager.adapters.UpdateHousePhotoAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
+import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
@@ -28,14 +31,16 @@ import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
     private lateinit var housePhotoRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var housePhotoImageView: ImageView
-    //private var housePhotoList = generateHousePhotoList()
-    //private var housePhotoAdapter = HousePhotoAdapter(housePhotoList)
+    private var housePhotoList = generateHousePhotoList()
+    private var housePhotoAdapter = UpdateHousePhotoAdapter(housePhotoList)
     private lateinit var housePhotoDescriptionEditText: TextInputEditText
     //------------------- Button -------------------------------------------------------------------
     private lateinit var addHousePhotoButton: Button
@@ -78,6 +83,12 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         imageConverters = ImageConverters()
         savePhoto = SavePhoto()
         clickOnAddHouseImageView()
+        //------------------- Photo recycler view --------------------------------------------------
+        addHousePhotoButton = view.findViewById(R.id.update_add_house_add_photo_button)
+        housePhotoDescriptionEditText = view.findViewById(R.id.update_add_house_photo_description_et)
+        housePhotoRecyclerView = view.findViewById(R.id.update_add_house_photo_rv)
+        configureHousePhotoRecyclerView()
+        clickOnAddHousePhotoButton()
         return view
     }
 
@@ -122,26 +133,67 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     //------------------- Click on add house photo button ------------------------------------------
 
-    //private fun clickOnAddHousePhotoButton(){
-    //    addHousePhotoButton = findViewById(R.id.add_house_add_photo_button)
-    //    addHousePhotoButton.setOnClickListener { addHousePhotoInRecyclerView() }
-    //}
+    private fun clickOnAddHousePhotoButton(){
+        //addHousePhotoButton = findViewById(R.id.add_house_add_photo_button)
+        addHousePhotoButton.setOnClickListener { addHousePhotoInRecyclerView() }
+    }
 
-    //private fun generateHousePhotoList(): ArrayList<HousePhoto>{
-    //    return ArrayList()
-    //}
+    private fun generateHousePhotoList(): ArrayList<HousePhoto>{
+        return ArrayList()
+    }
 
-    //private fun addHousePhotoInRecyclerView(){
-//
-    //    val housePhotoDescription: String = housePhotoDescriptionEditText.text.toString().trim()
-//
-    //    val newHousePhoto = HousePhoto(null, photoFromStorage.toString(), housePhotoDescription)
-//
-    //    housePhotoList.add(newHousePhoto)
-    //    housePhotoDescriptionInRecyclerView = housePhotoDescription
-    //    housePhotoAdapter.notifyDataSetChanged()
-    //    clearChamps()
-    //}
+    //----------------------------------------------------------------------------------------------
+    //------------------- Configure house photo recyclerview ---------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun configureHousePhotoRecyclerView(){
+        //housePhotoRecyclerView = findViewById(R.id.add_house_photo_rv)
+        housePhotoRecyclerView.adapter = housePhotoAdapter
+        housePhotoRecyclerView.layoutManager = LinearLayoutManager(activity)
+    }
+
+    private fun addHousePhotoInRecyclerView(){
+
+        val housePhotoDescription: String = housePhotoDescriptionEditText.text.toString().trim()
+
+        val newHousePhoto = HousePhoto(null, photoFromStorage.toString(), housePhotoDescription)
+
+        housePhotoList.add(newHousePhoto)
+        housePhotoDescriptionInRecyclerView = housePhotoDescription
+        housePhotoAdapter.notifyDataSetChanged()
+        clearChamps()
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Clear champs -------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun clearChamps(){
+        if (housePhotoDescriptionEditText.text != null){
+            housePhotoDescriptionEditText.setText("")
+            housePhotoImageView.setImageResource(R.drawable.ic_baseline_add_a_photo_24)
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Remove house photo from recyclerview--------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    @Subscribe
+    fun onDeleteHousePhoto(event: DeleteHousePhotoEvent) {
+        housePhotoList.remove(event.housePhoto)
+        housePhotoAdapter.notifyDataSetChanged()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
 
     //----------------------------------------------------------------------------------------------
     //------------------- Fill detail house champs -------------------------------------------------
