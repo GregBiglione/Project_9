@@ -19,6 +19,7 @@
     <string name="house_price">$50,000,000</string>
     <string name="house_image">property_image</string>
     <string name="detailed_house">Detailed house</string>
+    <string name="update_house">Update house</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

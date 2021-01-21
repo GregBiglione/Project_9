@@ -55,13 +55,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-275" />
-                            <option name="y" value="338" />
+                            <option name="x" value="-248" />
+                            <option name="y" value="483" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_nav_home_to_detailedHouseFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_nav_home_to_updateHouseFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -95,6 +100,27 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_nav_update_agent_to_nav_add_agent3">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="updateHouseFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="14" />
+                            <option name="y" value="626" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_updateHouseFragment_to_nav_home">
                               <value>
                                 <LayoutPositions />
                               </value>

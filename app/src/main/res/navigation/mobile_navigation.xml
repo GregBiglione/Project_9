@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_nav_home_to_detailedHouseFragment"
             app:destination="@id/detailedHouseFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_updateHouseFragment"
+            app:destination="@id/updateHouseFragment" />
     </fragment>
 
     <fragment
@@ -50,6 +53,18 @@
         tools:layout="@layout/fragment_detailed_house">
         <action
             android:id="@+id/action_detailedHouseFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+        <argument
+            android:name="currentHouse"
+            app:argType="com.openclassrooms.realestatemanager.model.House" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateHouseFragment"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.UpdateHouseFragment"
+        android:label="@string/update_house"
+        tools:layout="@layout/fragment_update_house" >
+        <action
+            android:id="@+id/action_updateHouseFragment_to_nav_home"
             app:destination="@id/nav_home" />
         <argument
             android:name="currentHouse"

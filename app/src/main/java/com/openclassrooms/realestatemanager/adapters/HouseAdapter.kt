@@ -41,8 +41,13 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
         holder.housePrice.text = currentHouse.price.toString()
 
         holder.houseConstraintLayout.setOnClickListener {
-            val action = HomeFragmentDirections.actionNavHomeToDetailedHouseFragment(currentHouse)
-            holder.houseConstraintLayout.findNavController().navigate(action)
+            val actionDetail = HomeFragmentDirections.actionNavHomeToDetailedHouseFragment(currentHouse)
+            holder.houseConstraintLayout.findNavController().navigate(actionDetail)
+        }
+
+        holder.updateHouseButton.setOnClickListener {
+            val actionUpdate = HomeFragmentDirections.actionNavHomeToUpdateHouseFragment(currentHouse)
+            holder.updateHouseButton.findNavController().navigate(actionUpdate)
         }
     }
 
@@ -54,6 +59,7 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
         val houseType: TextView = itemView.findViewById(R.id.house_type)
         val houseNeighborhood: TextView = itemView.findViewById(R.id.house_neighborhood)
         val housePrice: TextView = itemView.findViewById(R.id.house_price)
+        val updateHouseButton: ImageView = itemView.findViewById(R.id.house_item_update_button)
     }
 
     fun setData(house: List<House>){
