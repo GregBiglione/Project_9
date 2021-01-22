@@ -62,8 +62,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var houseSaleDateLyt: LinearLayout
     private lateinit var houseSaleDate: TextInputEditText
     //------------------- Spinner ------------------------------------------------------------------
-    private lateinit var houseTypeSpinner: Spinner
-    private lateinit var neighborSpinner: Spinner
     private lateinit var statusSpinner: Spinner
     private lateinit var agentsSpinner: Spinner
     private var selectedAgentId: Long = 0
@@ -79,8 +77,12 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var housePhotoDescriptionInRecyclerView: String
     //------------------- Time converter -----------------------------------------------------------
     private lateinit var timeConverters: TimeConverters
-    //------------------- adapters -----------------------------------------------------------------
+    //------------------- House type spinner -------------------------------------------------------
+    private lateinit var houseTypeSpinner: Spinner
     private lateinit var houseTypeAdapter: ArrayAdapter<String>
+    //------------------- Neighborhood spinner -----------------------------------------------------
+    private lateinit var neighborhoodSpinner: Spinner
+    private lateinit var neighborhoodAdapter: ArrayAdapter<String>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -110,14 +112,18 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         houseEntryDate = view.findViewById(R.id.update_house_entry_date)
         houseSaleDateLyt = view.findViewById(R.id.update_sale_date_lyt)
         houseSaleDate = view.findViewById(R.id.update_house_sale_date)
-        //------------------- Spinners -------------------------------------------------------------
+        //------------------- House type spinner ---------------------------------------------------
         houseTypeSpinner = view.findViewById(R.id.update_add_house_type_spinner)
-        //------------------- Adapters -------------------------------------------------------------
         val houseType = resources.getStringArray(R.array.house_type)
         houseTypeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, houseType)
+        //------------------- Neighborhood spinner -------------------------------------------------
+        neighborhoodSpinner = view.findViewById(R.id.update_add_house_neighborhood_spinner)
+        val neighborhood = resources.getStringArray(R.array.house_neighborhood)
+        neighborhoodAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, neighborhood)
         fillEditTexts()
         showSaleDate()
         typeSpinner()
+        neighborhoodSpinner()
         return view
     }
 
@@ -267,18 +273,40 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     private fun typeSpinner(){
         if (houseTypeSpinner != null){
-            val typeHouseSelected: String = args.currentHouse.typeOfHouse.toString().trim() //<--
+            val typeHouseSelected: String = args.currentHouse.typeOfHouse.toString().trim()
             houseTypeSpinner.adapter = houseTypeAdapter
             houseTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     //------------------- Fill house type already selected -------------------------
-                    val intSelected: Int = houseTypeAdapter.getPosition(typeHouseSelected)
-                    houseTypeSpinner.setSelection(intSelected)
+                    val intSelectedType: Int = houseTypeAdapter.getPosition(typeHouseSelected)
+                    houseTypeSpinner.setSelection(intSelectedType)
                     activity?.showSuccessToast("Type selected: $typeHouseSelected", Toast.LENGTH_SHORT)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
+            }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Neighborhood spinner ----------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun neighborhoodSpinner(){
+        //ArrayIndexOutOfBoundsException
+        if (neighborhoodSpinner != null){
+            val neighborhoodSelected: String = args.currentHouse.neighborhood.toString().trim()
+            neighborhoodSpinner.adapter = neighborhoodAdapter
+            neighborhoodSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    //------------------- Fill neighborhood already selected -------------------------
+                    val intSelectedNeighborhood: Int = neighborhoodAdapter.getPosition(neighborhoodSelected)
+                    neighborhoodSpinner.setSelection(intSelectedNeighborhood)
+                    activity?.showSuccessToast("Neighborhood selected: $neighborhoodSelected", Toast.LENGTH_SHORT)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
     }

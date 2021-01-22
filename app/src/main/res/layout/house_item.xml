@@ -31,6 +31,8 @@
             app:layout_constraintStart_toEndOf="@id/house_first_image"
             app:layout_constraintTop_toBottomOf="@id/house_first_image"
             android:text="@string/house_neighborhood"
+            android:ellipsize="end"
+            android:lines="1"
             style="@style/neighborhood_style"/>
 
         <TextView
