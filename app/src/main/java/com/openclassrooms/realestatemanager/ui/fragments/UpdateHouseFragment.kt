@@ -8,16 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Spinner
+import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
@@ -51,8 +50,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //------------------- Button -------------------------------------------------------------------
     private lateinit var addHousePhotoButton: Button
     private lateinit var updateHouseButton: Button
-    //------------------- Text input layout --------------------------------------------------------
-    //private lateinit var houseSaleDateInputLyt: TextInputLayout
     //------------------- Edit text ----------------------------------------------------------------
     private lateinit var houseDescriptionEditText: TextInputEditText
     private lateinit var houseAddressEditText: TextInputEditText
@@ -82,6 +79,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var housePhotoDescriptionInRecyclerView: String
     //------------------- Time converter -----------------------------------------------------------
     private lateinit var timeConverters: TimeConverters
+    //------------------- adapters -----------------------------------------------------------------
+    private lateinit var houseTypeAdapter: ArrayAdapter<String>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -109,12 +108,16 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         houseBathRoomsEditText = view.findViewById(R.id.update_house_number_of_bathrooms)
         houseBedRoomsEditText = view.findViewById(R.id.update_house_number_of_bedrooms)
         houseEntryDate = view.findViewById(R.id.update_house_entry_date)
-        //houseSaleDateLyt = view.findViewById(R.id.update_house_sale_date_input)
-        //houseSaleDateInputLyt = view.findViewById(R.id.update_house_sale_date_input)
         houseSaleDateLyt = view.findViewById(R.id.update_sale_date_lyt)
         houseSaleDate = view.findViewById(R.id.update_house_sale_date)
+        //------------------- Spinners -------------------------------------------------------------
+        houseTypeSpinner = view.findViewById(R.id.update_add_house_type_spinner)
+        //------------------- Adapters -------------------------------------------------------------
+        val houseType = resources.getStringArray(R.array.house_type)
+        houseTypeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, houseType)
         fillEditTexts()
         showSaleDate()
+        typeSpinner()
         return view
     }
 
@@ -255,6 +258,28 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         if (args.currentHouse.saleDate != null) {
             houseSaleDate.setText(args.currentHouse.saleDate?.let { timeConverters.convertLongToTime(it) })
             houseSaleDateLyt.visibility = View.VISIBLE
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- House type spinner ------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun typeSpinner(){
+        if (houseTypeSpinner != null){
+            val typeHouseSelected: String = args.currentHouse.typeOfHouse.toString().trim() //<--
+            houseTypeSpinner.adapter = houseTypeAdapter
+            houseTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    //------------------- Fill house type already selected -------------------------
+                    val intSelected: Int = houseTypeAdapter.getPosition(typeHouseSelected)
+                    houseTypeSpinner.setSelection(intSelected)
+                    activity?.showSuccessToast("Type selected: $typeHouseSelected", Toast.LENGTH_SHORT)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
         }
     }
 }

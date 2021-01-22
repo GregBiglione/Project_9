@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.Agent
 import kotlinx.android.synthetic.main.spinner_agent_item.view.*
@@ -27,7 +28,9 @@ class AgentSpinnerAdapter(context: Context): ArrayAdapter<Agent>(context, 0) {
         if (agent != null) {
             view.spinner_agent_item_image.setImageURI(Uri.parse(agent.agentPhoto))
         }
-        view.spinner_agent_item_first_name.text = agent?.firstName
+        Glide.with(parent.context)
+                .load(agent?.agentPhoto)
+                .into(view.spinner_agent_item_image)
         view.spinner_agent_item_name.text = agent?.name
         view.spinner_agent_item_email.text = agent?.email
         view.spinner_agent_item_phone.text = agent?.phoneNumber
