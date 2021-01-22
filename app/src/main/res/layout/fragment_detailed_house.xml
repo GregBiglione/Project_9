@@ -10,7 +10,6 @@
        android:id="@+id/detail_main_lyt"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:layout_margin="15dp"
        android:orientation="vertical">
 
        <ImageView
@@ -18,220 +17,182 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"/>
 
-       <TextView
-           android:id="@+id/detail_description_title"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/description"
-           style="@style/detailed_house_title"/>
-
-       <TextView
-           android:id="@+id/detail_description"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="@string/large_text"
-           style="@style/detailed_house_text"/>
-
        <LinearLayout
-           android:id="@+id/detail_triple_lyt"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:orientation="vertical">
+           android:orientation="vertical"
+           android:layout_margin="15dp">
 
-           <LinearLayout
-               android:id="@+id/detail_info_lyt"
+           <TextView
+               android:id="@+id/detail_description_title"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_marginTop="10dp"
+               android:text="@string/description"
+               style="@style/detailed_house_title"/>
+
+           <TextView
+               android:id="@+id/detail_description"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="@string/large_text"
+               style="@style/detailed_house_text"/>
+
+           <LinearLayout
+               android:id="@+id/detail_triple_lyt"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
                android:orientation="vertical">
 
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/surface"
-                   app:drawableStartCompat="@drawable/ic_baseline_settings_overscan_24"
-                   style="@style/detailed_house_title"/>
-
                <LinearLayout
+                   android:id="@+id/detail_info_lyt"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:orientation="horizontal">
+                   android:layout_marginTop="10dp"
+                   android:orientation="vertical">
 
                    <TextView
-                       android:id="@+id/detail_surface"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="@string/surface"
+                       app:drawableStartCompat="@drawable/ic_baseline_settings_overscan_24"
+                       style="@style/detailed_house_title"/>
+
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal">
+
+                       <TextView
+                           android:id="@+id/detail_surface"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="@string/surface"
+                           style="@style/detailed_house_text"/>
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="@string/m2"
+                           style="@style/detailed_house_text"/>
+                   </LinearLayout>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="@string/number_of_rooms"
+                       app:drawableStartCompat="@drawable/ic_baseline_home_24"
+                       style="@style/detailed_house_title"/>
+
+                   <TextView
+                       android:id="@+id/detail_rooms"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="@string/number_of_rooms"
                        style="@style/detailed_house_text"/>
 
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:text="@string/m2"
+                       android:layout_marginTop="10dp"
+                       android:text="@string/number_of_bathrooms"
+                       app:drawableStartCompat="@drawable/ic_baseline_hot_tub_24"
+                       style="@style/detailed_house_title"/>
+
+                   <TextView
+                       android:id="@+id/detail_bathrooms"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="@string/number_of_bathrooms"
                        style="@style/detailed_house_text"/>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="@string/number_of_bedrooms"
+                       app:drawableStartCompat="@drawable/ic_baseline_bed_24"
+                       style="@style/detailed_house_title"/>
+
+                   <TextView
+                       android:id="@+id/detail_bedrooms"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="@string/number_of_bedrooms"
+                       style="@style/detailed_house_text"/>
+
                </LinearLayout>
 
-               <TextView
+               <LinearLayout
+                   android:id="@+id/detail_address_lyt"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="10dp"
-                   android:text="@string/number_of_rooms"
-                   app:drawableStartCompat="@drawable/ic_baseline_home_24"
-                   style="@style/detailed_house_title"/>
+                   android:orientation="vertical">
 
-               <TextView
-                   android:id="@+id/detail_rooms"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:text="@string/number_of_rooms"
-                   style="@style/detailed_house_text"/>
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="@string/neighborhood"
+                       app:drawableStartCompat="@drawable/ic_baseline_map_24"
+                       style="@style/detailed_house_title"/>
 
-               <TextView
+                   <TextView
+                       android:id="@+id/detail_neighborhood"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="@string/neighborhood"
+                       style="@style/detailed_house_text"/>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="@string/address"
+                       app:drawableStartCompat="@drawable/ic_baseline_location_on_24"
+                       style="@style/detailed_house_title"/>
+
+                   <TextView
+                       android:id="@+id/detail_address"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="@string/address"
+                       style="@style/detailed_house_text"/>
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:id="@+id/detail_map_lyt"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_marginTop="10dp"
-                   android:text="@string/number_of_bathrooms"
-                   app:drawableStartCompat="@drawable/ic_baseline_hot_tub_24"
-                   style="@style/detailed_house_title"/>
+                   android:orientation="vertical">
 
-               <TextView
-                   android:id="@+id/detail_bathrooms"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:text="@string/number_of_bathrooms"
-                   style="@style/detailed_house_text"/>
+                   <!-- Add map here -->
 
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="10dp"
-                   android:text="@string/number_of_bedrooms"
-                   app:drawableStartCompat="@drawable/ic_baseline_bed_24"
-                   style="@style/detailed_house_title"/>
-
-               <TextView
-                   android:id="@+id/detail_bedrooms"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:text="@string/number_of_bedrooms"
-                   style="@style/detailed_house_text"/>
-
+               </LinearLayout>
            </LinearLayout>
 
-           <LinearLayout
-               android:id="@+id/detail_address_lyt"
+           <TextView
+               android:id="@+id/detail_points_of_interests_title"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/points_of_interests"
+               app:drawableStartCompat="@drawable/ic_baseline_near_me_24"
+               style="@style/detailed_house_title"/>
+
+           <TextView
+               android:id="@+id/detail_points_of_interests"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="@string/points_of_interests"
+               style="@style/detailed_house_text"/>
+
+           <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_marginTop="10dp"
-               android:orientation="vertical">
-
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/neighborhood"
-                   app:drawableStartCompat="@drawable/ic_baseline_map_24"
-                   style="@style/detailed_house_title"/>
-
-               <TextView
-                   android:id="@+id/detail_neighborhood"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:text="@string/neighborhood"
-                   style="@style/detailed_house_text"/>
-
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/address"
-                   app:drawableStartCompat="@drawable/ic_baseline_location_on_24"
-                   style="@style/detailed_house_title"/>
-
-               <TextView
-                   android:id="@+id/detail_address"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:text="@string/address"
-                   style="@style/detailed_house_text"/>
-
-           </LinearLayout>
-
-           <LinearLayout
-               android:id="@+id/detail_map_lyt"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:orientation="vertical">
-
-               <!-- Add map here -->
-
-           </LinearLayout>
-       </LinearLayout>
-
-       <TextView
-           android:id="@+id/detail_points_of_interests_title"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/points_of_interests"
-           app:drawableStartCompat="@drawable/ic_baseline_near_me_24"
-           style="@style/detailed_house_title"/>
-
-       <TextView
-           android:id="@+id/detail_points_of_interests"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="@string/points_of_interests"
-           style="@style/detailed_house_text"/>
-
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="10dp"
-           android:text="@string/price"
-           app:drawableStartCompat="@drawable/ic_baseline_attach_money_24"
-           style="@style/detailed_house_title"/>
-
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal">
-
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="@string/dollars"
-               style="@style/detailed_house_text"/>
-
-           <TextView
-               android:id="@+id/detail_price"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
                android:text="@string/price"
-               style="@style/detailed_house_text"/>
-
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="@string/euros"
-               style="@style/detailed_house_text"/>
-       </LinearLayout>
-
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/agent_in_charge"
-           app:drawableStartCompat="@drawable/ic_baseline_agent_24"
-           style="@style/detailed_house_title"/>
-
-       <TextView
-           android:id="@+id/detail_agent"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="@string/agent_in_charge"
-           style="@style/detailed_house_text"/>
-
-       <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:orientation="vertical">
+               app:drawableStartCompat="@drawable/ic_baseline_attach_money_24"
+               style="@style/detailed_house_title"/>
 
            <LinearLayout
                android:layout_width="match_parent"
@@ -241,43 +202,91 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:textStyle="bold"
-                   android:text="@string/published_date"
+                   android:text="@string/dollars"
                    style="@style/detailed_house_text"/>
 
                <TextView
-                   android:id="@+id/detail_entry_date"
+                   android:id="@+id/detail_price"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:layout_marginTop="10dp"
-                   android:text="@string/published_date"
+                   android:text="@string/price"
                    style="@style/detailed_house_text"/>
-           </LinearLayout>
-
-           <LinearLayout
-               android:id="@+id/detail_sold_lyt"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:visibility="gone">
 
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:textStyle="bold"
-                   android:text="@string/sold_on"
-                   style="@style/detailed_house_text"/>
-
-               <TextView
-                   android:id="@+id/detail_sale_date"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="10dp"
-                   android:text="@string/sold_on"
+                   android:text="@string/euros"
                    style="@style/detailed_house_text"/>
            </LinearLayout>
 
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/agent_in_charge"
+               app:drawableStartCompat="@drawable/ic_baseline_agent_24"
+               style="@style/detailed_house_title"/>
+
+           <TextView
+               android:id="@+id/detail_agent"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="@string/agent_in_charge"
+               style="@style/detailed_house_text"/>
+
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textStyle="bold"
+                       android:text="@string/published_date"
+                       style="@style/detailed_house_text"/>
+
+                   <TextView
+                       android:id="@+id/detail_entry_date"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="@string/published_date"
+                       style="@style/detailed_house_text"/>
+               </LinearLayout>
+
+               <LinearLayout
+                   android:id="@+id/detail_sold_lyt"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:visibility="gone">
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textStyle="bold"
+                       android:text="@string/sold_on"
+                       style="@style/detailed_house_text"/>
+
+                   <TextView
+                       android:id="@+id/detail_sale_date"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="10dp"
+                       android:text="@string/sold_on"
+                       style="@style/detailed_house_text"/>
+               </LinearLayout>
+
+           </LinearLayout>
+
        </LinearLayout>
+
+
    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

@@ -240,6 +240,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/entry_date"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/update_house_entry_date_input"
                 android:layout_width="match_parent"
@@ -253,29 +262,47 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_entry_date"
                     android:inputType="date"
-                    style="@style/agent_first_name_style"/>
+                    style="@style/agent_first_name_style"
+                    android:drawableStart="@drawable/ic_baseline_calendar_today_24"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/update_house_sale_date_input"
+            <LinearLayout
+                android:id="@+id/update_sale_date_lyt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/update_house_sale_date"
-                    android:hint="@string/sale_date"
-                    android:inputType="date"
-                    android:focusable="false"
-                    style="@style/agent_first_name_style"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sold_date"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/update_house_sale_date_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/update_house_sale_date"
+                        android:hint="@string/sale_date"
+                        android:inputType="date"
+                        android:focusable="false"
+                        android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+                        style="@style/agent_first_name_style"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
@@ -197,12 +198,10 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //------------------- Auto fill update champs --------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    //@SuppressLint("ResourceAsColor")
     private fun autoFillUpdateChamps(){
-        //val photo: String = args.currentAgent.agentPhoto.toString()  // String --> Uri fail
-        //agentUpdatedPhoto.setImageURI(Uri.parse(photo))
-        agentUpdatedPhoto.setImageURI(Uri.parse(args.currentAgent.agentPhoto)) // Uri fail
-        //agentUpdatedPhoto.setBackgroundColor(R.color.colorAccent) // Color test ok
+        Glide.with(requireContext())
+                .load(args.currentAgent.agentPhoto)
+                .into(agentUpdatedPhoto)
         agentUpdatedFirstName.setText(args.currentAgent.firstName)
         agentUpdatedName.setText(args.currentAgent.name)
         agentUpdatedPhone.setText(args.currentAgent.phoneNumber)

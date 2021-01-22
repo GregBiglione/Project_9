@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.utils.UriConverters
@@ -30,9 +32,9 @@ class DetailedHouseFragment : Fragment() {
     private lateinit var detailPrice: TextView
     private lateinit var detailAgent: TextView
     private lateinit var detailEntryDate: TextView
-    private lateinit var detailSale: TextView
-    //------------------- Invisible layout ---------------------------------------------------------
-    private lateinit var detailSoldDateLyt: LinearLayout
+    private lateinit var detailSaleDate: TextView
+    //------------------- Text input layout --------------------------------------------------------
+    private lateinit var houseSaleDateInputLyt: LinearLayout
     //------------------- Time converter -----------------------------------------------------------
     private lateinit var timeConverters: TimeConverters
 
@@ -55,10 +57,11 @@ class DetailedHouseFragment : Fragment() {
         detailPrice = view.findViewById(R.id.detail_price)
         detailAgent = view.findViewById(R.id.detail_agent)
         detailEntryDate = view.findViewById(R.id.detail_entry_date)
-        detailSale = view.findViewById(R.id.detail_sale_date)
-        detailSoldDateLyt = view.findViewById(R.id.detail_sold_lyt)
+        houseSaleDateInputLyt = view.findViewById(R.id.detail_sold_lyt)
+        detailSaleDate = view.findViewById(R.id.detail_sale_date)
         timeConverters = TimeConverters()
         fillDetailHouseChamps()
+        showSaleDate()
         return view
     }
 
@@ -68,7 +71,9 @@ class DetailedHouseFragment : Fragment() {
 
     private fun fillDetailHouseChamps(){
         if (args.currentHouse.housePhotoList?.isNotEmpty() == true) {
-            detailPhoto.setImageURI(Uri.parse(args.currentHouse.housePhotoList!![0].photo))
+            Glide.with(requireContext())
+                    .load(args.currentHouse.housePhotoList!![0].photo)
+                    .into(detailPhoto)
         }
         detailDescription.text = args.currentHouse.description
         detailSurface.text = args.currentHouse.surface.toString()
@@ -80,14 +85,17 @@ class DetailedHouseFragment : Fragment() {
         detailPointOfInterests.text = args.currentHouse.proximityPointsOfInterest
         detailPrice.text = args.currentHouse.price.toString()
         detailAgent.text = args.currentHouse.agentId.toString()
-        detailEntryDate.text = args.currentHouse.entryDate?.let { timeConverters.convertLongToTime(it) }
-        //if (args.currentHouse.saleDate != null) {
-        //    detailSoldDateLyt.isVisible = true
-        //    detailSale.text = args.currentHouse.saleDate.toString()
-        //}
+        args.currentHouse.entryDate?.let {
+            detailEntryDate.text = timeConverters.convertLongToTime(it) }
+    }
 
-        //119)
+    //------------------- Show sale date id exists -------------------------------------------------
 
+    private fun showSaleDate(){
+        if (args.currentHouse.saleDate != null) {
+            detailSaleDate.text = args.currentHouse.saleDate?.let { timeConverters.convertLongToTime(it) }
+            houseSaleDateInputLyt.visibility = View.VISIBLE
+        }
     }
 
 }

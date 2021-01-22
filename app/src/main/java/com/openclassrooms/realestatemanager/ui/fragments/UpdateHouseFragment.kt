@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
@@ -51,7 +52,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var addHousePhotoButton: Button
     private lateinit var updateHouseButton: Button
     //------------------- Text input layout --------------------------------------------------------
-    private lateinit var houseSaleDateInputLyt: TextInputLayout
+    //private lateinit var houseSaleDateInputLyt: TextInputLayout
     //------------------- Edit text ----------------------------------------------------------------
     private lateinit var houseDescriptionEditText: TextInputEditText
     private lateinit var houseAddressEditText: TextInputEditText
@@ -61,7 +62,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var houseBathRoomsEditText: TextInputEditText
     private lateinit var houseBedRoomsEditText: TextInputEditText
     private lateinit var houseEntryDate: TextInputEditText
-    private lateinit var houseSaleDateLyt: TextInputLayout
+    private lateinit var houseSaleDateLyt: LinearLayout
     private lateinit var houseSaleDate: TextInputEditText
     //------------------- Spinner ------------------------------------------------------------------
     private lateinit var houseTypeSpinner: Spinner
@@ -108,10 +109,12 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         houseBathRoomsEditText = view.findViewById(R.id.update_house_number_of_bathrooms)
         houseBedRoomsEditText = view.findViewById(R.id.update_house_number_of_bedrooms)
         houseEntryDate = view.findViewById(R.id.update_house_entry_date)
-        houseSaleDateLyt = view.findViewById(R.id.update_house_sale_date_input)
+        //houseSaleDateLyt = view.findViewById(R.id.update_house_sale_date_input)
+        //houseSaleDateInputLyt = view.findViewById(R.id.update_house_sale_date_input)
+        houseSaleDateLyt = view.findViewById(R.id.update_sale_date_lyt)
         houseSaleDate = view.findViewById(R.id.update_house_sale_date)
         fillEditTexts()
-        //showSaleDate()
+        showSaleDate()
         return view
     }
 
@@ -244,15 +247,14 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         houseRoomsEditText.setText(args.currentHouse.numberOfRooms.toString())
         houseBathRoomsEditText.setText(args.currentHouse.numberOfBathRooms.toString())
         houseEntryDate.setText(args.currentHouse.entryDate?.let { timeConverters.convertLongToTime(it) })
-        if (args.currentHouse.saleDate != null) {
-            houseSaleDate.setText(args.currentHouse.saleDate?.let { timeConverters.convertLongToTime(it) })
-        }
     }
 
-    //private fun showSaleDate(){
-    //    if (args.currentHouse.saleDate != null) {
-    //        houseSaleDate.setText(args.currentHouse.saleDate?.let { timeConverters.convertLongToTime(it) })
-    //        houseSaleDateInputLyt.visibility = View.VISIBLE
-    //    }
-    //}
+    //------------------- Show sale date id exists -------------------------------------------------
+
+    private fun showSaleDate(){
+        if (args.currentHouse.saleDate != null) {
+            houseSaleDate.setText(args.currentHouse.saleDate?.let { timeConverters.convertLongToTime(it) })
+            houseSaleDateLyt.visibility = View.VISIBLE
+        }
+    }
 }

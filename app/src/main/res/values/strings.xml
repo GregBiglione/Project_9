@@ -350,5 +350,7 @@
     <string name="m2">m2</string>
     <string name="dollars">$</string>
     <string name="euros">€</string>
+    <string name="sold_date">Sold date</string>
+    <string name="entry_date">Entry date</string>
 
 </resources>
