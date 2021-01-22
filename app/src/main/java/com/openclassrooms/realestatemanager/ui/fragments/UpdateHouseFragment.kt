@@ -62,7 +62,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var houseSaleDateLyt: LinearLayout
     private lateinit var houseSaleDate: TextInputEditText
     //------------------- Spinner ------------------------------------------------------------------
-    private lateinit var statusSpinner: Spinner
+    //private lateinit var statusSpinner: Spinner
     private lateinit var agentsSpinner: Spinner
     private var selectedAgentId: Long = 0
     //------------------- Checkbox -----------------------------------------------------------------
@@ -83,6 +83,10 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //------------------- Neighborhood spinner -----------------------------------------------------
     private lateinit var neighborhoodSpinner: Spinner
     private lateinit var neighborhoodAdapter: ArrayAdapter<String>
+    //------------------- Status spinner -----------------------------------------------------------
+    private lateinit var statusSpinner: Spinner
+    private lateinit var statusAdapter: ArrayAdapter<String>
+    //private lateinit var houseSaleDateInputLyt: LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -120,10 +124,15 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         neighborhoodSpinner = view.findViewById(R.id.update_add_house_neighborhood_spinner)
         val neighborhood = resources.getStringArray(R.array.house_neighborhood)
         neighborhoodAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, neighborhood)
+        //------------------- Status spinner -------------------------------------------------------
+        statusSpinner = view.findViewById(R.id.update_house_status_spinner)
+        val houseStatus = resources.getStringArray(R.array.house_status_array)
+        statusAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, houseStatus)
         fillEditTexts()
         showSaleDate()
         typeSpinner()
         neighborhoodSpinner()
+        statusSpinner()
         return view
     }
 
@@ -273,14 +282,14 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     private fun typeSpinner(){
         if (houseTypeSpinner != null){
-            val typeHouseSelected: String = args.currentHouse.typeOfHouse.toString().trim()
             houseTypeSpinner.adapter = houseTypeAdapter
+
+            //------------------- Fill house type already selected -------------------------
+            fillType()
+
             houseTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    //------------------- Fill house type already selected -------------------------
-                    val intSelectedType: Int = houseTypeAdapter.getPosition(typeHouseSelected)
-                    houseTypeSpinner.setSelection(intSelectedType)
-                    activity?.showSuccessToast("Type selected: $typeHouseSelected", Toast.LENGTH_SHORT)
+                    val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -289,25 +298,76 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         }
     }
 
+    //------------------- Fill Type ----------------------------------------------------------------
+
+    private fun fillType(){
+        val houseTypeAlreadySelected: String = args.currentHouse.typeOfHouse.toString().trim()
+        val intSelectedType: Int = houseTypeAdapter.getPosition(houseTypeAlreadySelected)
+        houseTypeSpinner.setSelection(intSelectedType)
+    }
+
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Neighborhood spinner ----------------------------------------
     //----------------------------------------------------------------------------------------------
 
     private fun neighborhoodSpinner(){
-        //ArrayIndexOutOfBoundsException
         if (neighborhoodSpinner != null){
-            val neighborhoodSelected: String = args.currentHouse.neighborhood.toString().trim()
             neighborhoodSpinner.adapter = neighborhoodAdapter
+
+            //------------------- Fill neighborhood already selected -------------------------------
+            fillNeighborhood()
+
             neighborhoodSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    //------------------- Fill neighborhood already selected -------------------------
-                    val intSelectedNeighborhood: Int = neighborhoodAdapter.getPosition(neighborhoodSelected)
-                    neighborhoodSpinner.setSelection(intSelectedNeighborhood)
-                    activity?.showSuccessToast("Neighborhood selected: $neighborhoodSelected", Toast.LENGTH_SHORT)
+                    val neighborhoodSelected: String = neighborhoodSpinner.selectedItem.toString().trim()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
+    }
+
+    //------------------- Fill neighborhood --------------------------------------------------------
+
+    private fun fillNeighborhood(){
+        val neighborhoodSelected: String = args.currentHouse.neighborhood.toString().trim()
+        val intSelectedNeighborhood: Int = neighborhoodAdapter.getPosition(neighborhoodSelected)
+        neighborhoodSpinner.setSelection(intSelectedNeighborhood)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Status spinner ----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun statusSpinner(){
+        if (statusSpinner != null){
+            statusSpinner.adapter = statusAdapter
+
+            //------------------- Fill already selected status -------------------------------------
+            fillStatus()
+
+            statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val statusSelected: String = statusSpinner.selectedItem.toString().trim()
+
+                    if (statusSelected == getString(R.string.sold)){
+                        houseSaleDateLyt.visibility = View.VISIBLE
+                    }
+                    else{
+                        houseSaleDateLyt.visibility = View.GONE
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
+    }
+
+    //------------------- Fill status --------------------------------------------------------------
+
+    private fun fillStatus(){
+        val alreadySelectedStatus: String = args.currentHouse.available.toString().trim()
+        val intSelectedStatus: Int = statusAdapter.getPosition(alreadySelectedStatus)
+        statusSpinner.setSelection(intSelectedStatus)
     }
 }
