@@ -31,6 +31,7 @@ class UpdateAgentSpinnerAdapter(context: Context): ArrayAdapter<Agent>(context, 
         Glide.with(parent.context)
                 .load(agent?.agentPhoto)
                 .into(view.spinner_agent_item_image)
+        view.spinner_agent_item_first_name.text = agent?.firstName
         view.spinner_agent_item_name.text = agent?.name
         view.spinner_agent_item_email.text = agent?.email
         view.spinner_agent_item_phone.text = agent?.phoneNumber

@@ -17,14 +17,17 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
+import com.droidman.ktoasty.showWarningToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
 import com.openclassrooms.realestatemanager.adapters.UpdateHousePhotoAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
@@ -35,6 +38,7 @@ import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
+import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
@@ -61,10 +65,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var houseEntryDate: TextInputEditText
     private lateinit var houseSaleDateLyt: LinearLayout
     private lateinit var houseSaleDate: TextInputEditText
-    //------------------- Spinner ------------------------------------------------------------------
-    //private lateinit var statusSpinner: Spinner
-    private lateinit var agentsSpinner: Spinner
-    private var selectedAgentId: Long = 0
     //------------------- Checkbox -----------------------------------------------------------------
     private lateinit var pointsOfInterests: TextInputEditText
     private lateinit var listOfPointsOfInterests: Array<String?>
@@ -86,12 +86,16 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //------------------- Status spinner -----------------------------------------------------------
     private lateinit var statusSpinner: Spinner
     private lateinit var statusAdapter: ArrayAdapter<String>
-    //private lateinit var houseSaleDateInputLyt: LinearLayout
+    //------------------- Agent spinner ------------------------------------------------------------
+    private lateinit var agentsSpinner: Spinner
+    private lateinit var agentAdapter: ArrayAdapter<Agent>
+    private var selectedAgentId: Long = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_update_house, container, false)
+        configureViewModel()
         //------------------- TimeConverters -------------------------------------------------------
         timeConverters = TimeConverters()
         //------------------- Photo image view -----------------------------------------------------
@@ -128,11 +132,15 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         statusSpinner = view.findViewById(R.id.update_house_status_spinner)
         val houseStatus = resources.getStringArray(R.array.house_status_array)
         statusAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, houseStatus)
+        //------------------- Agent spinner ------------------------------------------------------------
+        agentsSpinner = view.findViewById<Spinner>(R.id.update_house_agent_spinner)
+        agentAdapter = AgentSpinnerAdapter(requireContext())
         fillEditTexts()
         showSaleDate()
         typeSpinner()
         neighborhoodSpinner()
         statusSpinner()
+        agentsSpinner()
         return view
     }
 
@@ -369,5 +377,63 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         val alreadySelectedStatus: String = args.currentHouse.available.toString().trim()
         val intSelectedStatus: Int = statusAdapter.getPosition(alreadySelectedStatus)
         statusSpinner.setSelection(intSelectedStatus)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Configure ViewModel -----------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun configureViewModel(){
+        val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
+        val propertyDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
+        val housePhotoDao = RealEstateManagerDatabase.getInstance(requireContext()).housePhotoDao
+        val agentRepository = AgentRepository(agentDao)
+        val propertyRepository = HouseRepository(propertyDao)
+        val housePhotoRepository = HousePhotoRepository(housePhotoDao)
+        val factory = ViewModelFactory(agentRepository, propertyRepository, housePhotoRepository)
+        mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Agents spinner ----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun agentsSpinner(){
+
+        if (agentsSpinner != null){
+            mainViewModel.allAgents.observe(requireActivity(), androidx.lifecycle.Observer { agent ->
+                agent.forEach {
+                    agentAdapter.add(it)
+                }
+            })
+            agentsSpinner.adapter = agentAdapter
+
+            //------------------- Fill already selected agent --------------------------------------
+            fillAgent()
+
+            agentsSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                    val selectedObject = agentsSpinner.selectedItem as Agent
+                    selectedAgentId = selectedObject.id!!
+                    activity?.showSuccessToast("Status: $selectedAgentId", Toast.LENGTH_SHORT)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
+    }
+
+    //------------------- Fill selected agent ------------------------------------------------------
+
+    private fun fillAgent(){
+        mainViewModel.allAgents.observe(requireActivity(), androidx.lifecycle.Observer {
+            for (a in it){
+                // Depending of house selected agent selected is not the good one if agentId = 2 agent selected = #3, id agentId = 3 agent selected = #4
+                val alreadySelectedIAgentId = args.currentHouse.agentId
+                val agentIdToInt: Int = alreadySelectedIAgentId!!.toInt() - 1
+                agentsSpinner.setSelection(agentIdToInt)
+            }
+        })
     }
 }

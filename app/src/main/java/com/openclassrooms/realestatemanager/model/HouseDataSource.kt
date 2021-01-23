@@ -141,7 +141,7 @@ class HouseDataSource {
                             "Metro, Restaurant, Hospital, Shops, Park",
                             1588945194,
                             null,
-                            4
+                            4L
                     )
             )
             listOfHouse.add(
