@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -144,6 +146,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         //-------------------------------- Entry & sale date ---------------------------------------
         houseEntryDate = view.findViewById(R.id.update_house_entry_date)
         houseSaleDate = view.findViewById(R.id.update_house_sale_date)
+        //-------------------------------- Checkbox poi --------------------------------------------
+        pointsOfInterests = view.findViewById(R.id.update_house_points_of_interests)
         fillEditTexts()
         showSaleDate()
         typeSpinner()
@@ -151,6 +155,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         statusSpinner()
         entryDate()
         saleDate()
+        clickOnPointsOfInterestsEditText()
         agentsSpinner()
         return view
     }
@@ -283,7 +288,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         houseSurfaceEditText.setText(args.currentHouse.surface.toString())
         houseRoomsEditText.setText(args.currentHouse.numberOfRooms.toString())
         houseBathRoomsEditText.setText(args.currentHouse.numberOfBathRooms.toString())
-        //houseEntryDate.setText(Utils.convertUsDateToFrenchDate(args.currentHouse.entryDate))
+        //------------------- Fill selected poi ----------------------------------------------------
+        pointsOfInterests.setText(args.currentHouse.proximityPointsOfInterest.toString())
     }
 
     //------------------- Show sale date id exists -------------------------------------------------
@@ -474,6 +480,65 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         //else{
         //    houseSaleDate.setText("$month/$day/$year")
         //}
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Points of interest checkbox ---------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun clickOnPointsOfInterestsEditText(){
+        pointsOfInterests.setOnClickListener {
+            pointsOfInterestsCheckBox()
+        }
+    }
+
+    //-------------------------------- Dialog box multi choices checkbox ---------------------------
+    private fun pointsOfInterestsCheckBox(){
+        listOfPointsOfInterests = resources.getStringArray(R.array.points_of_interests_array)
+        checkedPointsOfInterests = BooleanArray(listOfPointsOfInterests.size)
+
+        pointsOfInterests.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle(R.string.points_of_interests)
+            builder.setMultiChoiceItems(listOfPointsOfInterests, checkedPointsOfInterests,
+                    DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
+                        if (isChecked) {
+                            if (!poi.contains(which)) {
+                                poi.add(which)
+                            }
+                        } else {
+                            poi.remove(which)
+                        }
+                    })
+            //-------------------------------- Behavior if you cancel the selection ----------------
+            builder.setCancelable(false)
+            //-------------------------------- Positive button -------------------------------------
+            builder.setPositiveButton(R.string.add, DialogInterface.OnClickListener { dialog, which ->
+                var item: String = " "
+                for (i in poi.indices) {
+                    item += listOfPointsOfInterests[poi[i]]
+
+                    if (i != poi.size - 1) {
+                        item = item + ", "
+                    }
+                }
+                pointsOfInterests.setText(item) // use event if moved in DialogFragment()
+            })
+            //-------------------------------- Negative button -------------------------------------
+            builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, which ->
+                dialog.dismiss()
+            })
+            //-------------------------------- Neutral button --------------------------------------
+            builder.setNeutralButton(R.string.clear, DialogInterface.OnClickListener { dialog, which ->
+                for (i in checkedPointsOfInterests.indices) {
+                    checkedPointsOfInterests[i] = false
+                    poi.clear()
+                    pointsOfInterests.setText("")
+                }
+            })
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+        }
     }
 
     //----------------------------------------------------------------------------------------------
