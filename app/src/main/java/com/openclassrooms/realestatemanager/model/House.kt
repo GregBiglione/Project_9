@@ -25,7 +25,7 @@ data class House(
         var description: String?,
         var available: String?,
         var proximityPointsOfInterest: String?,
-        var entryDate: Long?,
+        var entryDate: Long,
         var saleDate: Long?,
         @ColumnInfo(name = "agentId", index = true)
         var agentId: Long?

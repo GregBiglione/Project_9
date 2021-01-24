@@ -44,18 +44,10 @@ public class Utils {
     //-------------------------------- Convert date YYYY/mm/dd to dd/mm/YYYY -----------------------
     //----------------------------------------------------------------------------------------------
 
-    public static String convertUsDateToFrenchDate(){
-        String todayDate = getTodayDate();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY/mm/dd");
-        Date testDate = null;
-        try {
-            testDate = simpleDateFormat.parse(todayDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat converter = new SimpleDateFormat("dd/mm/YYYY");
-        String frenchDate = converter.format(testDate);
-        return frenchDate;
+    public static String convertUsDateToFrenchDate(long dateInLong){
+        Date date = new Date(dateInLong);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/mm/YYYY");
+        return simpleDateFormat.format(date);
     }
 
     /**

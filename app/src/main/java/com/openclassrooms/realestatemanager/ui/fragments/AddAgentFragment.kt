@@ -126,8 +126,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
 
     private fun showPhotoChoiceDialogBox(){
         val photoChoiceDialog = PhotoChoiceDialog(this, this)
-        //fragmentManager?.let { photoChoiceDialog.show(it, "Photo choice dialog box") }
-        photoChoiceDialog.show(requireFragmentManager(), "Photo choice dialog box")
+        photoChoiceDialog.show(parentFragmentManager, "Photo choice dialog box")
         photoChoiceDialog.setTargetFragment(this, 1)
     }
 

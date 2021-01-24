@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.utils.TimeConverters
-import com.openclassrooms.realestatemanager.utils.UriConverters
+import com.openclassrooms.realestatemanager.utils.Utils
 
 class DetailedHouseFragment : Fragment() {
 
@@ -85,16 +82,38 @@ class DetailedHouseFragment : Fragment() {
         detailPointOfInterests.text = args.currentHouse.proximityPointsOfInterest
         detailPrice.text = args.currentHouse.price.toString()
         detailAgent.text = args.currentHouse.agentId.toString()
-        args.currentHouse.entryDate?.let {
-            detailEntryDate.text = timeConverters.convertLongToTime(it) }
+        entryDate()
+        saleDate()
     }
 
     //------------------- Show sale date id exists -------------------------------------------------
 
     private fun showSaleDate(){
         if (args.currentHouse.saleDate != null) {
-            detailSaleDate.text = args.currentHouse.saleDate?.let { timeConverters.convertLongToTime(it) }
             houseSaleDateInputLyt.visibility = View.VISIBLE
+
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Set entry date ----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun entryDate(){
+        val entryDate = args.currentHouse.entryDate
+        val entryFrenchDate = Utils.convertUsDateToFrenchDate(entryDate)
+        detailEntryDate.text = entryFrenchDate
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Set sold date -----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun saleDate(){
+        val saleDate = args.currentHouse.saleDate
+        if (saleDate != null) {
+            val saleFrenchDate = Utils.convertUsDateToFrenchDate(saleDate)
+            detailSaleDate.text = saleFrenchDate
         }
     }
 

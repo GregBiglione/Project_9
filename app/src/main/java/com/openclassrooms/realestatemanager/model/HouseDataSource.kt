@@ -25,7 +25,7 @@ class HouseDataSource {
                                     "Four floors of the tower are devoted to state-of-the-art amenities: a huge fitness center, the beautifully appointed Water Club, unique childrens amenities, and the West Street Observatory, a spectacular 64th floor outdoor entertainment space with seemingly endless views of New York City and beyond. penthouse.",
                             "Available",
                             "Sea, Shops, Park",
-                            1597844394,
+                            1597788000000,
                             null,
                             5L
                     )
@@ -59,7 +59,7 @@ class HouseDataSource {
                                     "\n",
                             "Available",
                             "Metro, Shops, Park",
-                            1603204794,
+                            1603144800000,
                             null,
                             2L
                     )
@@ -85,7 +85,7 @@ class HouseDataSource {
                                     "Central Park will offer the most elevated residences in New York City. The towers vast footprint offered the unique opportunity to create the most gracious layouts and exceptional floor plans. The definitive aspect of living in Central Park Tower is the extraordinary views. The building was designed from the inside out to maximize these incomparable panoramas.",
                             "Available",
                             "Sea, Shops, Park, School",
-                            1589539194,
+                            1589493600000,
                             null,
                             2L
                     )
@@ -113,7 +113,7 @@ class HouseDataSource {
                                     "Translated with www.DeepL.com/Translator (free version)",
                             "Available",
                             "Metro, Shops, Park, School, Hospital",
-                            1590251994,
+                            1590184800000,
                             null,
                             3L
                     )
@@ -139,7 +139,7 @@ class HouseDataSource {
                                     "IN VIDEO shoots for MAJOR AND PRINCIPAL fashion brands, the purchase of this special home means that you will be buying a property that you can't find anywhere else in the world. You'll be buying a truly unique piece OF ART, ONE OF MANHATTAN'S CERTIFIED TREASURES and in the historic neighborhood of one of the most famous and sought-after neighborhoods in the world.",
                             "Available",
                             "Metro, Restaurant, Hospital, Shops, Park",
-                            1588945194,
+                            1607295600000,
                             null,
                             4L
                     )
@@ -163,7 +163,7 @@ class HouseDataSource {
                                     "Hammam basketball court. Walking distance to an upscale outdoor shopping mall Walking distance to a private preschool to grade 12 Exterior Smart Corinthian Stone House House with interior and exterior security Crestron System Built for the latest generations",
                             "Available",
                             "Swimming pool, Sea, Park",
-                            1597846674,
+                            1607468400000,
                             null,
                             1L
                     )
@@ -189,8 +189,8 @@ class HouseDataSource {
                                     "This property is in pristine condition and has thru-the-wall air conditioning. Pet friendly building. Flip tax: 3% by purchaser. Built in 1907, 901 Lexington Avenue was designed by George Mott Pollard, the renowned architect of the Hotel des Artistes. In addition to a full-time doorman/elevator man, there is a live-in superintendent. The building has a bike room, a laundry and private storage bins for tenants in the basement.",
                             "Sold",
                             "Metro, Shops, Park",
-                            1599661734,
-                            1608214974,
+                            1607641200000,
+                            1608159600000,
                             5L
                     )
             )
@@ -212,7 +212,7 @@ class HouseDataSource {
                                     "West 53 combines world-class service and unique privileges with architectural distinction. The suite of in-house services and amenities include a 24-hour doorman and concierge, porter services, elevator starter, and 65-foot lap pool, squash court, golf simulator, private screening room, and a double height lounge with private dining room overlooking Central Park. Residents will also receive an exclusive Benefactor Membership to The Museum of Modern Art downstairs.",
                             "Available",
                             "Metro, Shops, Park, School",
-                            1590330954,
+                            1608332400000,
                             null,
                             4L
                     )
@@ -240,7 +240,7 @@ class HouseDataSource {
                                     "There is a large closet and storage space throughout the apartment. Included in this offer is a separate studio apartment on the third floor, perfect for staff or guests or as a private home office, and it also includes an individual wine storage unit. 515 Park Avenue is one of Manhattan's most sought-after condominiums and is perfectly positioned at the corner of Park Avenue and 60th Street.",
                             "Available",
                             "Metro, Shops, Park",
-                            1595339154,
+                            1608505200000,
                             null,
                             5L
                     )

@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -30,6 +31,7 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.model.HousePhoto
+import com.openclassrooms.realestatemanager.picker.DatePickerFragment
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
@@ -37,10 +39,14 @@ import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
 import com.openclassrooms.realestatemanager.utils.TimeConverters
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
@@ -135,11 +141,16 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         //------------------- Agent spinner ------------------------------------------------------------
         agentsSpinner = view.findViewById<Spinner>(R.id.update_house_agent_spinner)
         agentAdapter = AgentSpinnerAdapter(requireContext())
+        //-------------------------------- Entry & sale date ---------------------------------------
+        houseEntryDate = view.findViewById(R.id.update_house_entry_date)
+        houseSaleDate = view.findViewById(R.id.update_house_sale_date)
         fillEditTexts()
         showSaleDate()
         typeSpinner()
         neighborhoodSpinner()
         statusSpinner()
+        entryDate()
+        saleDate()
         agentsSpinner()
         return view
     }
@@ -156,7 +167,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     private fun showPhotoChoiceDialogBox(){
         val photoChoiceDialog = PhotoChoiceDialog(this, this)
-        photoChoiceDialog.show(requireFragmentManager(), "Photo choice dialog box")
+        photoChoiceDialog.show(parentFragmentManager, "Photo choice dialog box")
         photoChoiceDialog.setTargetFragment(this, 2)
     }
 
@@ -272,14 +283,14 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         houseSurfaceEditText.setText(args.currentHouse.surface.toString())
         houseRoomsEditText.setText(args.currentHouse.numberOfRooms.toString())
         houseBathRoomsEditText.setText(args.currentHouse.numberOfBathRooms.toString())
-        houseEntryDate.setText(args.currentHouse.entryDate?.let { timeConverters.convertLongToTime(it) })
+        //houseEntryDate.setText(Utils.convertUsDateToFrenchDate(args.currentHouse.entryDate))
     }
 
     //------------------- Show sale date id exists -------------------------------------------------
 
     private fun showSaleDate(){
         if (args.currentHouse.saleDate != null) {
-            houseSaleDate.setText(args.currentHouse.saleDate?.let { timeConverters.convertLongToTime(it) })
+            houseSaleDate.setText(Utils.convertUsDateToFrenchDate(args.currentHouse.saleDate!!))
             houseSaleDateLyt.visibility = View.VISIBLE
         }
     }
@@ -306,7 +317,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         }
     }
 
-    //------------------- Fill Type ----------------------------------------------------------------
+    //------------------- Fill type ----------------------------------------------------------------
 
     private fun fillType(){
         val houseTypeAlreadySelected: String = args.currentHouse.typeOfHouse.toString().trim()
@@ -377,6 +388,92 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         val alreadySelectedStatus: String = args.currentHouse.available.toString().trim()
         val intSelectedStatus: Int = statusAdapter.getPosition(alreadySelectedStatus)
         statusSpinner.setSelection(intSelectedStatus)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Set entry date ----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun entryDate(){
+        houseEntryDate.setOnClickListener { showDatePickerDialog()}
+        val entryDate = args.currentHouse.entryDate
+        val entryFrenchDate = Utils.convertUsDateToFrenchDate(entryDate)
+        houseEntryDate.setText(entryFrenchDate)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Set sold date -----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun saleDate(){
+        houseSaleDate.setOnClickListener { showDatePickerDialog()}
+        val saleDate = args.currentHouse.saleDate
+        val saleFrenchDate = saleDate?.let { Utils.convertUsDateToFrenchDate(it) }
+        houseSaleDate.setText(saleFrenchDate)
+    }
+
+    private fun showDatePickerDialog() {
+        val datePicker = DatePickerFragment{ year, month, day -> onDateSelected(year, month, day) }
+        datePicker.show(parentFragmentManager, "Date picker")
+    }
+
+    //private lateinit var dateEditText: TextInputEditText
+    @SuppressLint("SetTextI18n")
+    private fun onDateSelected(year: Int, month: Int, day: Int){
+        houseEntryDate.setText("$month/$day/$year")
+        houseSaleDate.setText("$month/$day/$year")
+
+        //---------------------- test 5
+        //when(TextInputEditText.generateViewId()){
+        //    houseEntryDate.id ->{
+        //        activity?.showSuccessToast("Entry date clicked", Toast.LENGTH_SHORT)
+        //    }
+        //}
+
+        //---------------------- test 3
+        //when(dateEditText.id){
+        //    R.id.update_house_entry_date -> {
+        //        houseEntryDate.isClickable
+        //        houseEntryDate.setText("$month/$day/$year")
+        //    }
+        //    R.id.update_house_sale_date -> {
+        //        houseSaleDate.isClickable
+        //        houseSaleDate.setText("$month/$day/$year")
+        //    }
+        //}
+
+        //---------------------- test 1
+        //if (houseEntryDate.isClickable){
+        //    houseEntryDate.setText("$day/$month/$year")
+        //}
+        //else if(houseSaleDate.isClickable){
+        //    houseSaleDate.setText("$month/$day/$year")
+        //}
+
+        //---------------------- test 2
+        //when(EditText.generateViewId()){
+        //    R.id.update_house_entry_date -> {
+        //        //houseEntryDate.setText("$month/$day/$year")
+        //        if (houseEntryDate.isSelected){
+        //            houseEntryDate.setText("$month/$day/$year")
+        //        }
+        //    }
+        //    R.id.update_house_sale_date -> {
+        //        houseSaleDate.setText("$month/$day/$year")
+        //    }
+        //}
+
+        //houseSaleDate.setText("$month/$day/$year")
+        //houseEntryDate.setOnClickListener { houseEntryDate.setText("$month/$day/$year") }
+        //houseSaleDate.setOnClickListener { houseSaleDate.setText("$month/$day/$year") }
+
+
+        //if (houseEntryDate.isSelected){
+        //    houseEntryDate.setText("$month/$day/$year")
+        //}
+        //else{
+        //    houseSaleDate.setText("$month/$day/$year")
+        //}
     }
 
     //----------------------------------------------------------------------------------------------

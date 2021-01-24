@@ -262,6 +262,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_entry_date"
                     android:inputType="date"
+                    android:focusable="false"
                     style="@style/agent_first_name_style"
                     android:drawableStart="@drawable/ic_baseline_calendar_today_24"/>
 

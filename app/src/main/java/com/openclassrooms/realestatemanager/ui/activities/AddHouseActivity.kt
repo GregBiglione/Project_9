@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.graphics.Bitmap
@@ -33,14 +34,11 @@ import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
-import com.openclassrooms.realestatemanager.utils.TimeConverters
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.house_item.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import java.io.File
-import java.io.FileInputStream
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -66,8 +64,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private lateinit var houseRoomsEditText: TextInputEditText
     private lateinit var houseBathRoomsEditText: TextInputEditText
     private lateinit var houseBedRoomsEditText: TextInputEditText
-    private lateinit var houseEntryDate: TextInputEditText
-    private lateinit var houseSaleDate: TextInputEditText
+    private lateinit var houseEntryDateEditText: TextInputEditText
+    private lateinit var houseSaleDateEditText: TextInputEditText
     //------------------- Spinner ------------------------------------------------------------------
     private lateinit var houseTypeSpinner: Spinner
     private lateinit var neighborSpinner: Spinner
@@ -84,6 +82,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private lateinit var imageConverters: ImageConverters
     private var photoFromStorage: Uri? = null
     private lateinit var housePhotoDescriptionInRecyclerView: String
+    //------------------------ test
+    private var entryDate: String = ""
 
     private val TAG = "AddHouseActivity"
 
@@ -142,10 +142,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         val housePhotoRepository = HousePhotoRepository(housePhotoDao)
         val factory = ViewModelFactory(agentRepository, propertyRepository, housePhotoRepository)
         mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
-        //------------------- Get house photos from room db ----------------------------------------------
-        //mainViewModel.allHousePhotos.observe(this, { housePhoto ->
-        //    housePhotoAdapter.setData(housePhoto)
-        //})
     }
 
     //----------------------------------------------------------------------------------------------
@@ -186,73 +182,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //------------------- Convert price 15000000 to 15,000,000 -------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    //private fun formatPrice(){
-    //    housePriceEditText.addTextChangedListener(priceWatcher)
-    //}
-
-    //------------------- Price watcher -------------------------------------------------------------
-
-    //private val priceWatcher = object : TextWatcher {
-    //    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-    //    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-//
-    //    override fun afterTextChanged(s: Editable?) {
-//
-    //        //------------------- StringBuilder to hold all digits of the edit text ----------------
-    //        val digits = StringBuilder()
-    //        //------------------- StringBuilder to hold price --------------------------------------
-    //        val priceDigits = StringBuilder()
-    //        //------------------- Get characters from teh edit text --------------------------------
-    //        val chars: CharArray = housePriceEditText.text.toString().toCharArray()
-    //        //------------------- Get each digit with a for loop -----------------------------------
-    //        for (x in chars.indices){
-    //            //------------------- Add digit into digits StringBuilder --------------------------
-    //            digits.append(chars[x])
-    //        }
-//
-    //        //------------------- Add period between digit's phone number --------------------------
-    //        if (digits.toString().length >= 4){
-    //            //------------------- Thousands ----------------------------------------------------
-    //            var thousands = String()
-    //            thousands += digits.toString().substring(0,1) + "," + digits.toString().substring(1, 4) //--> 1,234
-    //            priceDigits.append(thousands)
-    //            //hundred thousands
-    //            if (digits.toString().length > 5){
-    //                var tenThousands = String()
-    //                tenThousands += digits.toString().substring(0,1) + "" + digits.toString().substring(0,1) + "," + digits.toString().substring(2, 5)
-    //                // hundredThousands += digits.toString().substring(4, 5) + "," --> 1,,234,
-    //                // hundredThousands += digits.toString().substring(4, 5) --> 1,,234
-    //                // hundredThousands += digits.toString().substring(1, 5) --> 1,,23,234
-    //                //hundredThousands += digits.toString().substring(2) --> 1,,232345
-    //                // hundredThousands += digits.toString().substring(0,2) + "," + digits.toString().substring(2, 5) --> 1,,231,,234
-    //                // hundredThousands += digits.toString().substring(0,2) + digits.toString().substring(2, 5) --> 1,,231,234
-    //                //  hundredThousands += digits.toString().substring(0,2) --> 1,,231,
-    //                // hundredThousands += digits.toString().substring(0,5) --> 1,,231,234
-    //                // hundredThousands += digits.toString().substring(3,5) --> 1,,2334
-    //                //hundredThousands += digits.toString().substring(2,5) --> 1,,23234
-    //                // hundredThousands += "a" + digits.toString().substring(3,5) --> 1,,23a34
-    //                // hundredThousands += digits.toString().substring(0,2) + "a" + digits.toString().substring(2,5) --> 1,,231,a234
-    //                priceDigits.append(hundredThousands)
-    //            }
-    //            ////millions
-    //            //else{
-    //            //    priceDigits.append(digits.toString().substring(3))
-    //            //}
-    //            //------------------- Remove watcher if not we'll have an ∞ loop -------------------
-    //            housePriceEditText.removeTextChangedListener(this)
-    //            //------------------- Set the new text into the EditText ---------------------------
-    //            housePriceEditText.setText(priceDigits.toString())
-    //            //------------------- Bring the cursor to the end of input -------------------------
-    //            housePriceEditText.setSelection(housePriceEditText.text.toString().length)
-    //            //------------------- Bring back the watcher and go on listening to change events --
-    //            housePriceEditText.addTextChangedListener(this)
-    //        }
-    //        else{
-    //            return
-    //        }
-    //    }
-    //}
 
     //----------------------------------------------------------------------------------------------
     //------------------- Add house photo in recyclerview ------------------------------------------
@@ -391,10 +320,15 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //----------------------------------------------------------------------------------------------
 
     private fun todayDate(){
-        houseEntryDate = findViewById(R.id.add_house_entry_date)
-        val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd") //Check if ok when passing data
-        val currentDate: String = simpleDateFormat.format(Date())
-        houseEntryDate.setText(currentDate)
+        houseEntryDateEditText = findViewById(R.id.add_house_entry_date)
+        //val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd") //Check if ok when passing data
+        //val currentDate: String = simpleDateFormat.format(Date())
+        //val simpleDateFormat = Utils.getTodayDate()
+        //val currentDate: String = simpleDateFormat.format(Date())
+        //houseEntryDate.setText(currentDate)
+        val todayDate = Utils.getTodayDate()
+        //houseEntryDate.setText(todayDate)
+        //entryDate = todayDate
     }
 
     //----------------------------------------------------------------------------------------------
@@ -402,8 +336,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //----------------------------------------------------------------------------------------------
 
     private fun saleDate(){
-        houseSaleDate = findViewById(R.id.add_house_sale_date)
-        houseSaleDate.setOnClickListener { showDatePickerDialog()}
+        houseSaleDateEditText = findViewById(R.id.add_house_sale_date)
+        houseSaleDateEditText.setOnClickListener { showDatePickerDialog()}
     }
 
     private fun showDatePickerDialog() {
@@ -411,8 +345,9 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         datePicker.show(supportFragmentManager, "Date picker")
     }
 
+    @SuppressLint("SetTextI18n")
     private fun onDateSelected(year: Int, month: Int, day: Int){
-        houseSaleDate.setText("$month/$day/$year")
+        houseSaleDateEditText.setText("$day/$month/$year")
     }
 
 
@@ -528,6 +463,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
         var houseDescription = ""
         var houseAddress = ""
+        //var entryDate = ""
+        var saleDate = ""
         var pointsOfInterestsSelected = ""
 
         if (housePhotoRecyclerView.isNotEmpty()){
@@ -567,17 +504,26 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         }
 
         val statusSelected: String = statusSpinner.selectedItem.toString().trim()
-        val entryDate: Long = System.currentTimeMillis()
+        val entryDate: Long = System.currentTimeMillis() //<-----------------------------------------------
+        //val entryDateTest: String = Utils.getTodayDate()
+        //val entryDateLong: Long = entryDateTest.toLong()
+        //val frenchDate = Utils.convertUsDateToFrenchDate(entryDateLong)
+        //if (!houseSaleDateEditText.text.isNullOrEmpty()){
+        //    saleDate = houseSaleDateEditText.text.toString()
+        //}
+
+
 
         if (!pointsOfInterests.text.isNullOrEmpty()){
             pointsOfInterestsSelected = pointsOfInterests.text.toString().trim()
         }
 
+
         addHousePhoto(housePhotoList = HousePhoto(null, photoFromStorage.toString(), housePhotoDescriptionInRecyclerView))
 
-        addHouse(house = House(/*id*/null, housePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
-                houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate,
-                null, selectedAgentId))
+        addHouse(house = House(null, housePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice,
+                houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected,
+                entryDate.toLong(), /*saleDate.toLong()*/null, selectedAgentId))
     }
 
     private fun addHouse(house: House){
