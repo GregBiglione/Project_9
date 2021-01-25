@@ -233,12 +233,14 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"/>
 
             <Spinner
                 android:id="@+id/add_house_status_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/add_house_entry_date_input"

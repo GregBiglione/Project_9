@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +15,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.view.get
+import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +49,7 @@ import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.lang.NumberFormatException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -98,6 +102,27 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var agentsSpinner: Spinner
     private lateinit var agentAdapter: ArrayAdapter<Agent>
     private var selectedAgentId: Long = 0
+    //------------------ Test
+    //private var upHousePhoto: HousePhoto = null
+    //private var upHousePhotoDescription: String = ""
+//
+    //private var upType: String = "type"
+    //private var upDescription: String = "desc"
+    //private var upNeighborhood = "neigh"
+    //private var upAddress = "address"
+    //private var upPrice: Int = 0
+    //private var upSurface: Int = 0
+    //private var upRooms: Int = 0
+    //private var upBathrooms: Int = 0
+    //private var upBedrooms: Int = 0
+//
+    //private var upStatus: String = "satus"
+//
+    //private var upEntryDate: Long = 0
+    //private var upSaleDate: Long = 0
+//
+    //private var upPoi: String = "poi"
+    //private var upAgentId: Long = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -148,6 +173,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         houseSaleDate = view.findViewById(R.id.update_house_sale_date)
         //-------------------------------- Checkbox poi --------------------------------------------
         pointsOfInterests = view.findViewById(R.id.update_house_points_of_interests)
+        //-------------------------------- Update button -------------------------------------------
+        updateHouseButton = view.findViewById(R.id.update_house_button)
         fillEditTexts()
         showSaleDate()
         typeSpinner()
@@ -157,6 +184,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         saleDate()
         clickOnPointsOfInterestsEditText()
         agentsSpinner()
+        clickOnUpdateHouseButton()
         return view
     }
 
@@ -230,6 +258,9 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         housePhotoDescriptionInRecyclerView = housePhotoDescription
         housePhotoAdapter.notifyDataSetChanged()
         clearChamps()
+        //if (housePhotoList.isNotEmpty()) {
+        //    upHousePhotoDescription = housePhotoDescription
+        //}
     }
 
     //----------------------------------------------------------------------------------------------
@@ -285,6 +316,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         houseDescriptionEditText.setText(args.currentHouse.description)
         houseAddressEditText.setText(args.currentHouse.address)
         housePriceEditText.setText(args.currentHouse.price.toString())
+        //upPrice = Integer.parseInt(housePriceEditText.text.toString())
         houseSurfaceEditText.setText(args.currentHouse.surface.toString())
         houseRoomsEditText.setText(args.currentHouse.numberOfRooms.toString())
         houseBathRoomsEditText.setText(args.currentHouse.numberOfBathRooms.toString())
@@ -315,6 +347,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
             houseTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
+                    //upType = typeHouseSelected
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -345,6 +378,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
             neighborhoodSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val neighborhoodSelected: String = neighborhoodSpinner.selectedItem.toString().trim()
+                    //upNeighborhood = neighborhoodSelected
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -374,6 +408,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
             statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val statusSelected: String = statusSpinner.selectedItem.toString().trim()
+                    //upStatus = statusSelected
 
                     if (statusSelected == getString(R.string.sold)){
                         houseSaleDateLyt.visibility = View.VISIBLE
@@ -405,6 +440,11 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         val entryDate = args.currentHouse.entryDate
         val entryFrenchDate = Utils.convertUsDateToFrenchDate(entryDate)
         houseEntryDate.setText(entryFrenchDate)
+        //try {
+        //    upEntryDate = houseEntryDate.text.toString().toLong()
+        //} catch (e: NumberFormatException) {
+        //    e.printStackTrace()
+        //}
     }
 
     //----------------------------------------------------------------------------------------------
@@ -416,6 +456,11 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         val saleDate = args.currentHouse.saleDate
         val saleFrenchDate = saleDate?.let { Utils.convertUsDateToFrenchDate(it) }
         houseSaleDate.setText(saleFrenchDate)
+        //try {
+        //    upSaleDate = houseSaleDate.text.toString().toLong()
+        //} catch (e: NumberFormatException) {
+        //    e.printStackTrace()
+        //}
     }
 
     private fun showDatePickerDialog() {
@@ -426,60 +471,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //private lateinit var dateEditText: TextInputEditText
     @SuppressLint("SetTextI18n")
     private fun onDateSelected(year: Int, month: Int, day: Int){
-        houseEntryDate.setText("$month/$day/$year")
         houseSaleDate.setText("$month/$day/$year")
-
-        //---------------------- test 5
-        //when(TextInputEditText.generateViewId()){
-        //    houseEntryDate.id ->{
-        //        activity?.showSuccessToast("Entry date clicked", Toast.LENGTH_SHORT)
-        //    }
-        //}
-
-        //---------------------- test 3
-        //when(dateEditText.id){
-        //    R.id.update_house_entry_date -> {
-        //        houseEntryDate.isClickable
-        //        houseEntryDate.setText("$month/$day/$year")
-        //    }
-        //    R.id.update_house_sale_date -> {
-        //        houseSaleDate.isClickable
-        //        houseSaleDate.setText("$month/$day/$year")
-        //    }
-        //}
-
-        //---------------------- test 1
-        //if (houseEntryDate.isClickable){
-        //    houseEntryDate.setText("$day/$month/$year")
-        //}
-        //else if(houseSaleDate.isClickable){
-        //    houseSaleDate.setText("$month/$day/$year")
-        //}
-
-        //---------------------- test 2
-        //when(EditText.generateViewId()){
-        //    R.id.update_house_entry_date -> {
-        //        //houseEntryDate.setText("$month/$day/$year")
-        //        if (houseEntryDate.isSelected){
-        //            houseEntryDate.setText("$month/$day/$year")
-        //        }
-        //    }
-        //    R.id.update_house_sale_date -> {
-        //        houseSaleDate.setText("$month/$day/$year")
-        //    }
-        //}
-
-        //houseSaleDate.setText("$month/$day/$year")
-        //houseEntryDate.setOnClickListener { houseEntryDate.setText("$month/$day/$year") }
-        //houseSaleDate.setOnClickListener { houseSaleDate.setText("$month/$day/$year") }
-
-
-        //if (houseEntryDate.isSelected){
-        //    houseEntryDate.setText("$month/$day/$year")
-        //}
-        //else{
-        //    houseSaleDate.setText("$month/$day/$year")
-        //}
     }
 
     //----------------------------------------------------------------------------------------------
@@ -578,6 +570,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
                     val selectedObject = agentsSpinner.selectedItem as Agent
                     selectedAgentId = selectedObject.id!!
+                    //upAgentId = selectedAgentId
                     activity?.showSuccessToast("Status: $selectedAgentId", Toast.LENGTH_SHORT)
                 }
 
@@ -597,5 +590,133 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
                 agentsSpinner.setSelection(agentIdToInt)
             }
         })
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Update house in room db -------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //------------------- Click on update button ---------------------------------------------------
+
+    private fun clickOnUpdateHouseButton(){
+        updateHouseButton.setOnClickListener {
+            saveUpdateHouse()
+        }
+    }
+
+    //------------------- Update house -------------------------------------------------------------
+
+    private fun saveUpdateHouse(){
+
+        //-------------------------------------- 3333333333333333333 -------------------------------
+        val housePhotoDescriptionInRecyclerView = ""
+
+        updateExistingHousePhotoList(housePhotoList = HousePhoto(null, photoFromStorage.toString(), housePhotoDescriptionInRecyclerView))
+
+        //updateHousePhoto(housePhotoList = HousePhoto(null, photoFromStorage.toString(), housePhotoDescriptionInRecyclerView))
+
+        //-------------------------------------- 1111111111111111111 -------------------------------
+        //val housePhotoDescriptionInRecyclerView = null
+        //var housePrice = 0
+        //var houseSurface = 0
+        //var houseRooms = 0
+        //var houseBathRooms = 0
+        //var houseBedRooms = 0
+//
+        //var houseDescription = ""
+        //var houseAddress = ""
+        ////var entryDate = ""
+        //var saleDate = ""
+        //var pointsOfInterestsSelected = ""
+//
+        ////if (housePhotoRecyclerView.isNotEmpty()){
+        ////    housePhotoDescriptionInRecyclerView
+        ////}
+//
+        //val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
+//
+        //if (!houseDescriptionEditText.text.isNullOrEmpty()){
+        //    houseDescription = houseDescriptionEditText.text.toString().trim()
+        //}
+//
+        //val neighborhoodSelected: String = neighborhoodSpinner.selectedItem.toString().trim()
+//
+        //if (!houseAddressEditText.text.isNullOrEmpty()){
+        //    houseAddress = houseAddressEditText.text.toString().trim()
+        //}
+//
+        //if (!housePriceEditText.text.isNullOrEmpty()){
+        //    housePrice = Integer.parseInt(housePriceEditText.text.toString())
+        //}
+//
+        //if (!houseSurfaceEditText.text.isNullOrEmpty()){
+        //    houseSurface = Integer.parseInt(houseSurfaceEditText.text.toString())
+        //}
+//
+        //if (!houseRoomsEditText.text.isNullOrEmpty()){
+        //    houseRooms = Integer.parseInt(houseRoomsEditText.text.toString())
+        //}
+//
+        //if (!houseBathRoomsEditText.text.isNullOrEmpty()){
+        //    houseBathRooms = Integer.parseInt(houseBathRoomsEditText.text.toString())
+        //}
+//
+        //if (!houseBedRoomsEditText.text.isNullOrEmpty()){
+        //    houseBedRooms = Integer.parseInt(houseBedRoomsEditText.text.toString())
+        //}
+//
+        //val statusSelected: String = statusSpinner.selectedItem.toString().trim()
+        //val entryDate: Long = System.currentTimeMillis()
+
+        //type ok
+
+        //--------------------------- 22222222222222222222222 --------------------------------------
+        //try {
+        //    upDescription = houseDescriptionEditText.text.toString()
+        //    // neighborhood ok
+        //    upAddress = houseAddressEditText.text.toString()
+        //    //upPrice = Integer.parseInt(housePriceEditText.text.toString())
+        //    upSurface = Integer.parseInt(houseSurfaceEditText.text.toString())
+        //    upRooms = Integer.parseInt(houseRoomsEditText.text.toString())
+        //    upBathrooms = Integer.parseInt(houseBathRoomsEditText.text.toString())
+        //    upBedrooms =  Integer.parseInt(houseBedRoomsEditText.text.toString())
+        //    upPoi = pointsOfInterests.text.toString()
+        //} catch (e: Exception) {
+        //    e.printStackTrace()
+        //}
+        //status ok
+        //entry date ok
+        //sale date ok
+        // poi ok
+        //agentId ok
+
+        //---------------------------------------- test 2 pas de crash mais pas d'update
+        //updateHousePhoto(housePhotoList = HousePhoto(null, photoFromStorage.toString(), upHousePhotoDescription))
+//
+        //updateHouse(house = House(null, housePhotoList, upType, upNeighborhood, upAddress, upPrice, upSurface, upRooms, upBathrooms, upBedrooms,
+        //upDescription, upStatus, upPoi, upEntryDate, upSaleDate, upAgentId))
+
+
+        //---------------------------------------- test 1 crash
+        //updateHousePhoto(housePhotoList = HousePhoto(null, photoFromStorage.toString(), housePhotoDescriptionInRecyclerView))
+
+        //updateHouse(house = House(null, housePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice, houseSurface,
+        //        houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected, entryDate ,
+        //        null, selectedAgentId))
+    }
+
+    //private fun updateHouse(house: House){
+    //    mainViewModel.updateHouse(house)
+    //    activity?.showSuccessToast("House updated with success ", Toast.LENGTH_SHORT, true)
+    //    findNavController().navigate(R.id.nav_home)
+    //}
+
+    //private fun updateHousePhoto(housePhotoList: HousePhoto){
+    //    mainViewModel.updateHousePhoto(housePhotoList)
+    //}
+
+    private fun updateExistingHousePhotoList(housePhotoList: HousePhoto){
+        mainViewModel.createHousePhoto(housePhotoList)
+        activity?.showSuccessToast("Size HousePhoto = $housePhotoList.si", Toast.LENGTH_SHORT, true)
     }
 }

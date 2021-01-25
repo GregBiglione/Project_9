@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.ui.activities
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -27,7 +28,6 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.model.HousePhoto
-import com.openclassrooms.realestatemanager.picker.DatePickerFragment
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
@@ -36,9 +36,11 @@ import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.house_item.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.lang.NumberFormatException
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -82,8 +84,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private lateinit var imageConverters: ImageConverters
     private var photoFromStorage: Uri? = null
     private lateinit var housePhotoDescriptionInRecyclerView: String
-    //------------------------ test
-    private var entryDate: String = ""
 
     private val TAG = "AddHouseActivity"
 
@@ -112,7 +112,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         neighborhoodSpinner()
         statusSpinner()
         todayDate()
-        saleDate()
+        //saleDate()
         clickOnPointsOfInterestsEditText()
         agentsSpinner()
         //formatPrice()
@@ -335,20 +335,20 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //-------------------------------- Set sold date -----------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    private fun saleDate(){
-        houseSaleDateEditText = findViewById(R.id.add_house_sale_date)
-        houseSaleDateEditText.setOnClickListener { showDatePickerDialog()}
-    }
-
-    private fun showDatePickerDialog() {
-        val datePicker = DatePickerFragment{ year, month, day -> onDateSelected(year, month, day) }
-        datePicker.show(supportFragmentManager, "Date picker")
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun onDateSelected(year: Int, month: Int, day: Int){
-        houseSaleDateEditText.setText("$day/$month/$year")
-    }
+    //private fun saleDate(){
+    //    houseSaleDateEditText = findViewById(R.id.add_house_sale_date)
+    //    houseSaleDateEditText.setOnClickListener { showDatePickerDialog()}
+    //}
+//
+    //private fun showDatePickerDialog() {
+    //    val datePicker = DatePickerFragment{ year, month, day -> onDateSelected(year, month, day) }
+    //    datePicker.show(supportFragmentManager, "Date picker")
+    //}
+//
+    //@SuppressLint("SetTextI18n")
+    //private fun onDateSelected(year: Int, month: Int, day: Int){
+    //    houseSaleDateEditText.setText("$day/$month/$year")
+    //}
 
 
     //----------------------------------------------------------------------------------------------
@@ -452,6 +452,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun saveHouse(){
 
         val housePhotoDescriptionInRecyclerView = ""
@@ -463,13 +464,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
         var houseDescription = ""
         var houseAddress = ""
-        //var entryDate = ""
-        var saleDate = ""
+        //var longEntryDate = 0
         var pointsOfInterestsSelected = ""
-
-        if (housePhotoRecyclerView.isNotEmpty()){
-            //housePhotoAdapter.setData(housePhotoList)
-        }
 
         val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
 
@@ -505,34 +501,57 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
         val statusSelected: String = statusSpinner.selectedItem.toString().trim()
         val entryDate: Long = System.currentTimeMillis() //<-----------------------------------------------
+
+
+        // --------------------- test date
+        //val longEntryDate: Long
+        //val entryDate: String = Utils.getTodayDate()
+        //val format = SimpleDateFormat("dd-MM-yyyy")
+        //val date: Date = format.parse(entryDate)
+        //longEntryDate = date.time
+
         //val entryDateTest: String = Utils.getTodayDate()
         //val entryDateLong: Long = entryDateTest.toLong()
         //val frenchDate = Utils.convertUsDateToFrenchDate(entryDateLong)
         //if (!houseSaleDateEditText.text.isNullOrEmpty()){
         //    saleDate = houseSaleDateEditText.text.toString()
         //}
-
-
+        //val entryDate: String = Utils.getTodayDate()
+        //val format = SimpleDateFormat("dd-MM-yyyy")
+        //try {
+        //    val date: Date = format.parse(entryDate)
+        //    val startDate = date.time
+        //    longEntryDate = startDate
+        //} catch (e: ParseException) {
+        //    e.printStackTrace()
+        //}
 
         if (!pointsOfInterests.text.isNullOrEmpty()){
             pointsOfInterestsSelected = pointsOfInterests.text.toString().trim()
         }
 
-
         addHousePhoto(housePhotoList = HousePhoto(null, photoFromStorage.toString(), housePhotoDescriptionInRecyclerView))
 
         addHouse(house = House(null, housePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice,
                 houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected,
-                entryDate.toLong(), /*saleDate.toLong()*/null, selectedAgentId))
+                entryDate/*longEntryDate*/, null, selectedAgentId))
     }
 
     private fun addHouse(house: House){
         mainViewModel.createHouse(house)
         showSuccessToast("House added with success ", Toast.LENGTH_SHORT, true)
         // Notification instead of KToasty
+        //------------------- Back to main activity after add house --------------------------------
+        goBackToMainActivity()
+
     }
 
     private fun addHousePhoto(housePhotoList: HousePhoto){
         mainViewModel.createHousePhoto(housePhotoList)
+    }
+
+    private fun goBackToMainActivity(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }
