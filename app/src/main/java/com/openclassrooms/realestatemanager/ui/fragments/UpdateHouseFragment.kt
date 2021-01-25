@@ -47,8 +47,9 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var housePhotoRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var housePhotoImageView: ImageView
-    private var housePhotoList = generateHousePhotoList()
-    private var housePhotoAdapter = UpdateHousePhotoAdapter(housePhotoList)
+    private var newHousePhotoList = generateHousePhotoList()
+    private var oldHousePhotoList = generateHousePhotoList()
+    private var housePhotoAdapter = UpdateHousePhotoAdapter(oldHousePhotoList)
     private lateinit var housePhotoDescriptionEditText: TextInputEditText
     //------------------- Button -------------------------------------------------------------------
     private lateinit var addHousePhotoButton: Button
@@ -238,16 +239,13 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private fun addHousePhotoInRecyclerView(){
 
         val housePhotoDescription: String = housePhotoDescriptionEditText.text.toString().trim()
-
         val newHousePhoto = HousePhoto(null, photoFromStorage.toString(), housePhotoDescription)
 
-        housePhotoList.add(newHousePhoto)
+        newHousePhotoList.add(newHousePhoto)
+        oldHousePhotoList.addAll(newHousePhotoList)
         housePhotoDescriptionInRecyclerView = housePhotoDescription
         housePhotoAdapter.notifyDataSetChanged()
         clearChamps()
-        //if (housePhotoList.isNotEmpty()) {
-        //    upHousePhotoDescription = housePhotoDescription
-        //}
     }
 
     //----------------------------------------------------------------------------------------------
@@ -267,7 +265,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     @Subscribe
     fun onDeleteHousePhoto(event: DeleteHousePhotoEvent) {
-        housePhotoList.remove(event.housePhoto)
+        oldHousePhotoList.remove(event.housePhoto)
         mainViewModel.deleteHousePhoto(event.housePhoto)
         housePhotoAdapter.notifyDataSetChanged()
     }
@@ -292,7 +290,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         val existingHousePhotosList: ArrayList<HousePhoto> = args.currentHouse.housePhotoList!!
         if (existingHousePhotosList.isNotEmpty()) {
             for (e in existingHousePhotosList){
-                housePhotoList.add(e)
+                oldHousePhotoList.add(e)
                 housePhotoAdapter.notifyDataSetChanged()
             }
         }
