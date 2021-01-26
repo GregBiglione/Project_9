@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -30,6 +31,7 @@ import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
@@ -258,7 +260,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
                 agentEmail.error = getString(R.string.enter_email)
             }
             else{
-                addAgent(agent = Agent(null, /*photoFromStorage*/ photoFromStorage.toString(), firstName, name, phone, email))
+                addAgent(agent = Agent(null, photoFromStorage.toString(), firstName, name, phone, email))
                 clearChamps()
             }
         }
@@ -267,6 +269,8 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     private fun addAgent(agent: Agent) {
         mainViewModel.createAgent(agent)
         activity?.showSuccessToast("Welcome " + agent.firstName, Toast.LENGTH_SHORT, true)
+        val intent = Intent(context, MainActivity::class.java)
+        startActivity(intent)
         closeKeyboard(agentEmail)
 
     }

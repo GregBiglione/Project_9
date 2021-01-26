@@ -476,7 +476,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
         addHouse(house = House(null, housePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice,
                 houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected,
-                entryDate/*longEntryDate*/, null, selectedAgentId))
+                entryDate, null, selectedAgentId))
     }
 
     private fun addHouse(house: House){
