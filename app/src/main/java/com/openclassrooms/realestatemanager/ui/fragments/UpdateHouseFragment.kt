@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.droidman.ktoasty.showErrorToast
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
@@ -41,10 +42,6 @@ import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
@@ -436,11 +433,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         val entryDate = args.currentHouse.entryDate
         val entryFrenchDate = Utils.convertUsDateToFrenchDate(entryDate)
         houseEntryDate.setText(entryFrenchDate)
-        //try {
-        //    upEntryDate = houseEntryDate.text.toString().toLong()
-        //} catch (e: NumberFormatException) {
-        //    e.printStackTrace()
-        //}
     }
 
     //----------------------------------------------------------------------------------------------
@@ -449,18 +441,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     private fun saleDate(){
         houseSaleDateEditText.setOnClickListener { showDatePickerDialog()}
-        val saleDate = args.currentHouse.saleDate
-
-        val saleFrenchDate = saleDate?.let { Utils.convertUsDateToFrenchDate(it) }
-        houseSaleDateEditText.setText(saleFrenchDate)
-        //if (saleFrenchDate != null) {
-        //    saleHouseDate = saleFrenchDate
-        //}
-        //try {
-        //    upSaleDate = houseSaleDate.text.toString().toLong()
-        //} catch (e: NumberFormatException) {
-        //    e.printStackTrace()
-        //}
     }
 
     private fun showDatePickerDialog() {
@@ -608,17 +588,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private fun saveUpdateHouse(){
 
         //------------------------------------------------------------------------------------------
-        //-------------------------------- Update house photo list ---------------------------------
-        //------------------------------------------------------------------------------------------
-
-        for (p in oldHousePhotoList){
-            housePhotoIdFromList = p.id
-            housePhotoFromList = p.photo.toString()
-            housePhotoDescriptionFromList = p.photoDescription
-            updateHousePhoto(housePhotoList = HousePhoto(housePhotoIdFromList, housePhotoFromList, housePhotoDescriptionFromList))
-        }
-
-        //------------------------------------------------------------------------------------------
         //-------------------------------- Update house --------------------------------------------
         //------------------------------------------------------------------------------------------
 
@@ -669,13 +638,28 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         val entryDate = timeConverters.convertDateToLong(houseEntryDate.text.toString())
 
         val statusSelectedId: Int = statusSpinner.selectedItemId.toInt()
-        if (/*houseSaleDateEditText.text.isNullOrEmpty()*/statusSelectedId == 1){
-            saleHouseDate = timeConverters.convertDateToLong(houseBedRoomsEditText.text.toString())
+        val saleDate: String = houseSaleDateEditText.text.toString().trim()
+        if (statusSelectedId == 1 && saleDate.isEmpty()){
+            houseSaleDateEditText.error = "Enter a sale date"
+            activity?.showErrorToast("Sale date can't be empty", Toast.LENGTH_SHORT, true)
         }
+        else{
 
-        updateHouse(house = House(houseId, oldHousePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice,
-                houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected,
-                entryDate, /*saleHouseDate.toLong()*//*saleDateLong*/saleHouseDate, selectedAgentId))
+            //------------------------------------------------------------------------------------------
+            //-------------------------------- Update house photo list ---------------------------------
+            //------------------------------------------------------------------------------------------
+
+            for (p in oldHousePhotoList){
+                housePhotoIdFromList = p.id
+                housePhotoFromList = p.photo.toString()
+                housePhotoDescriptionFromList = p.photoDescription
+                updateHousePhoto(housePhotoList = HousePhoto(housePhotoIdFromList, housePhotoFromList, housePhotoDescriptionFromList))
+            }
+
+            updateHouse(house = House(houseId, oldHousePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice,
+                    houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected,
+                    entryDate, /*saleHouseDate.toLong()*//*saleDateLong*/saleHouseDate, selectedAgentId))
+        }
     }
 
     private fun updateHouse(house: House){
