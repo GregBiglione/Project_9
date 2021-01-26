@@ -470,7 +470,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     @SuppressLint("SetTextI18n")
     private fun onDateSelected(year: Int, month: Int, day: Int){
-        houseSaleDateEditText.setText("$month/$day/$year")
+        houseSaleDateEditText.setText("$day/$month/$year")
     }
 
     //----------------------------------------------------------------------------------------------
@@ -667,7 +667,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         val statusSelected: String = statusSpinner.selectedItem.toString().trim()
         val pointsOfInterestsSelected = pointsOfInterests.text.toString().trim()
         val entryDate = timeConverters.convertDateToLong(houseEntryDate.text.toString())
-        //val saleDate: Long
 
         val statusSelectedId: Int = statusSpinner.selectedItemId.toInt()
         if (/*houseSaleDateEditText.text.isNullOrEmpty()*/statusSelectedId == 1){
@@ -676,7 +675,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
         updateHouse(house = House(houseId, oldHousePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice,
                 houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected,
-                /*entryDate.toLong()*//*dateLong*/entryDate, /*saleHouseDate.toLong()*//*saleDateLong*/saleHouseDate, selectedAgentId))
+                entryDate, /*saleHouseDate.toLong()*//*saleDateLong*/saleHouseDate, selectedAgentId))
     }
 
     private fun updateHouse(house: House){

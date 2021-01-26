@@ -33,6 +33,7 @@ import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
+import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
@@ -77,8 +78,9 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private lateinit var imageConverters: ImageConverters
     private var photoFromStorage: Uri? = null
     private lateinit var housePhotoDescriptionInRecyclerView: String
-
-    private val TAG = "AddHouseActivity"
+    //------------------- Time converter -----------------------------------------------------------
+    private lateinit var timeConverters: TimeConverters
+    private var entryDate: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +100,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         clickOnAddHouseImageView()
         configureViewModel()
         configureHousePhotoRecyclerView()
+        timeConverters = TimeConverters()
         imageConverters = ImageConverters()
         savePhoto = SavePhoto()
         clickOnAddHousePhotoButton()
@@ -192,7 +195,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private fun addHousePhotoInRecyclerView(){
 
         val housePhotoDescription: String = housePhotoDescriptionEditText.text.toString().trim()
-
         val newHousePhoto = HousePhoto(null, photoFromStorage.toString(), housePhotoDescription)
 
         housePhotoList.add(newHousePhoto)
@@ -312,35 +314,10 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
     private fun todayDate(){
         houseEntryDateEditText = findViewById(R.id.add_house_entry_date)
-        //val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd") //Check if ok when passing data
-        //val currentDate: String = simpleDateFormat.format(Date())
-        //val simpleDateFormat = Utils.getTodayDate()
-        //val currentDate: String = simpleDateFormat.format(Date())
-        //houseEntryDate.setText(currentDate)
         val todayDate = Utils.getTodayDate()
-        //houseEntryDate.setText(todayDate)
-        //entryDate = todayDate
+        val entryDateLong = timeConverters.convertDateToLong(todayDate)
+        entryDate = entryDateLong
     }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Set sold date -----------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    //private fun saleDate(){
-    //    houseSaleDateEditText = findViewById(R.id.add_house_sale_date)
-    //    houseSaleDateEditText.setOnClickListener { showDatePickerDialog()}
-    //}
-//
-    //private fun showDatePickerDialog() {
-    //    val datePicker = DatePickerFragment{ year, month, day -> onDateSelected(year, month, day) }
-    //    datePicker.show(supportFragmentManager, "Date picker")
-    //}
-//
-    //@SuppressLint("SetTextI18n")
-    //private fun onDateSelected(year: Int, month: Int, day: Int){
-    //    houseSaleDateEditText.setText("$day/$month/$year")
-    //}
-
 
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Points of interest checkbox ---------------------------------
@@ -455,7 +432,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
         var houseDescription = ""
         var houseAddress = ""
-        //var longEntryDate = 0
         var pointsOfInterestsSelected = ""
 
         val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
@@ -491,31 +467,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         }
 
         val statusSelected: String = statusSpinner.selectedItem.toString().trim()
-        val entryDate: Long = System.currentTimeMillis() //<-----------------------------------------------
-
-
-        // --------------------- test date
-        //val longEntryDate: Long
-        //val entryDate: String = Utils.getTodayDate()
-        //val format = SimpleDateFormat("dd-MM-yyyy")
-        //val date: Date = format.parse(entryDate)
-        //longEntryDate = date.time
-
-        //val entryDateTest: String = Utils.getTodayDate()
-        //val entryDateLong: Long = entryDateTest.toLong()
-        //val frenchDate = Utils.convertUsDateToFrenchDate(entryDateLong)
-        //if (!houseSaleDateEditText.text.isNullOrEmpty()){
-        //    saleDate = houseSaleDateEditText.text.toString()
-        //}
-        //val entryDate: String = Utils.getTodayDate()
-        //val format = SimpleDateFormat("dd-MM-yyyy")
-        //try {
-        //    val date: Date = format.parse(entryDate)
-        //    val startDate = date.time
-        //    longEntryDate = startDate
-        //} catch (e: ParseException) {
-        //    e.printStackTrace()
-        //}
 
         if (!pointsOfInterests.text.isNullOrEmpty()){
             pointsOfInterestsSelected = pointsOfInterests.text.toString().trim()
