@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -90,7 +91,12 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var agentsSpinner: Spinner
     private lateinit var agentAdapter: ArrayAdapter<Agent>
     private var selectedAgentId: Long = 0
-    //------------------ Test
+    //------------------- House photo list elements ------------------------------------------------
+    private var housePhotoIdFromList: Long? = null
+    private var housePhotoFromList: String = ""
+    private var housePhotoDescriptionFromList: String = ""
+
+    //------------------- Test update house --------------------------------------------------------
     //private var upHousePhoto: HousePhoto = null
     //private var upHousePhotoDescription: String = ""
 //
@@ -265,8 +271,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     @Subscribe
     fun onDeleteHousePhoto(event: DeleteHousePhotoEvent) {
-        oldHousePhotoList.remove(event.housePhoto)
         mainViewModel.deleteHousePhoto(event.housePhoto)
+        oldHousePhotoList.remove(event.housePhoto)
         housePhotoAdapter.notifyDataSetChanged()
     }
 
@@ -454,7 +460,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         datePicker.show(parentFragmentManager, "Date picker")
     }
 
-    //private lateinit var dateEditText: TextInputEditText
     @SuppressLint("SetTextI18n")
     private fun onDateSelected(year: Int, month: Int, day: Int){
         houseSaleDate.setText("$month/$day/$year")
@@ -557,7 +562,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
                     val selectedObject = agentsSpinner.selectedItem as Agent
                     selectedAgentId = selectedObject.id!!
                     //upAgentId = selectedAgentId
-                    activity?.showSuccessToast("Status: $selectedAgentId", Toast.LENGTH_SHORT)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -570,7 +574,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private fun fillAgent(){
         mainViewModel.allAgents.observe(requireActivity(), androidx.lifecycle.Observer {
             for (a in it){
-                // Depending of house selected agent selected is not the good one if agentId = 2 agent selected = #3, id agentId = 3 agent selected = #4
+                // Depending of house selected agent selected is not the good one if agentId = 2 agent selected = #3, id agentId = 3
+                // agent selected = #4 so alreadySelectedIAgentId!!.toInt() - 1
                 val alreadySelectedIAgentId = args.currentHouse.agentId
                 val agentIdToInt: Int = alreadySelectedIAgentId!!.toInt() - 1
                 agentsSpinner.setSelection(agentIdToInt)
@@ -594,12 +599,15 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     private fun saveUpdateHouse(){
 
-        //-------------------------------------- 3333333333333333333 -------------------------------
-        val housePhotoDescriptionInRecyclerView = ""
+        //------------------- Update house photo list ----------------------------------------------
+        for (p in oldHousePhotoList){
+            housePhotoIdFromList = p.id
+            housePhotoFromList = p.photo.toString()
+            housePhotoDescriptionFromList = p.photoDescription
+            updateHousePhoto(housePhotoList = HousePhoto(housePhotoIdFromList, housePhotoFromList, housePhotoDescriptionFromList))
+        }
 
-        updateExistingHousePhotoList(housePhotoList = HousePhoto(null, photoFromStorage.toString(), housePhotoDescriptionInRecyclerView))
 
-        //updateHousePhoto(housePhotoList = HousePhoto(null, photoFromStorage.toString(), housePhotoDescriptionInRecyclerView))
 
         //-------------------------------------- 1111111111111111111 -------------------------------
         //val housePhotoDescriptionInRecyclerView = null
@@ -697,12 +705,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //    findNavController().navigate(R.id.nav_home)
     //}
 
-    //private fun updateHousePhoto(housePhotoList: HousePhoto){
-    //    mainViewModel.updateHousePhoto(housePhotoList)
-    //}
-
-    private fun updateExistingHousePhotoList(housePhotoList: HousePhoto){
-        mainViewModel.createHousePhoto(housePhotoList)
-        activity?.showSuccessToast("Size HousePhoto = $housePhotoList.si", Toast.LENGTH_SHORT, true)
+    private fun updateHousePhoto(housePhotoList: HousePhoto){
+        mainViewModel.updateHousePhoto(housePhotoList)
+        activity?.showSuccessToast("Size HousePhoto = $housePhotoList", Toast.LENGTH_SHORT, true)
     }
 }
