@@ -4,20 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.utils.Utils
 
+
 class DetailedHouseFragment : Fragment() {
 
     private val args by navArgs<DetailedHouseFragmentArgs>()
-    private lateinit var detailPhoto: ImageView
     private lateinit var detailDescription: TextView
     private lateinit var detailSurface: TextView
     private lateinit var detailRooms: TextView
@@ -34,7 +35,9 @@ class DetailedHouseFragment : Fragment() {
     private lateinit var houseSaleDateInputLyt: LinearLayout
     //------------------- Time converter -----------------------------------------------------------
     private lateinit var timeConverters: TimeConverters
-
+    //------------------- Image slider -------------------------------------------------------------
+    private lateinit var imageSlider: ImageSlider
+    private val imageList = ArrayList<SlideModel>()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -42,7 +45,7 @@ class DetailedHouseFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detailed_house, container, false)
-        detailPhoto = view.findViewById(R.id.detail_photo)
+        imageSlider = view.findViewById(R.id.detail_slider)
         detailDescription = view.findViewById(R.id.detail_description)
         detailSurface = view.findViewById(R.id.detail_surface)
         detailRooms = view.findViewById(R.id.detail_rooms)
@@ -57,9 +60,29 @@ class DetailedHouseFragment : Fragment() {
         houseSaleDateInputLyt = view.findViewById(R.id.detail_sold_lyt)
         detailSaleDate = view.findViewById(R.id.detail_sale_date)
         timeConverters = TimeConverters()
+        fillCarousel()
         fillDetailHouseChamps()
         showSaleDate()
         return view
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Fill image slider with photos --------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun fillCarousel(){
+        if (args.currentHouse.housePhotoList?.isNotEmpty() == true) {
+            for (p in args.currentHouse.housePhotoList!!){
+                val photos = p.photo
+                val description = p.photoDescription
+
+                imageList.add(SlideModel(photos, description))
+                imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+            }
+        }
+        else{
+            imageSlider.visibility = View.GONE
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -67,11 +90,6 @@ class DetailedHouseFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun fillDetailHouseChamps(){
-        if (args.currentHouse.housePhotoList?.isNotEmpty() == true) {
-            Glide.with(requireContext())
-                    .load(args.currentHouse.housePhotoList!![0].photo)
-                    .into(detailPhoto)
-        }
         detailDescription.text = args.currentHouse.description
         detailSurface.text = args.currentHouse.surface.toString()
         detailRooms.text = args.currentHouse.numberOfRooms.toString()

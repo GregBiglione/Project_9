@@ -141,7 +141,6 @@
                     android:hint="@string/price"
                     android:inputType="number"
                     style="@style/add_house_input_with_icon_style"
-                    android:drawableStart="@drawable/ic_baseline_attach_money_24"
                     android:nextFocusDown="@+id/agent_name"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -161,7 +160,7 @@
                     android:hint="@string/surface"
                     android:inputType="number"
                     style="@style/add_house_input_with_icon_style"
-                    android:drawableStart="@drawable/ic_outline_crop_free_24"
+                    android:drawableStart="@drawable/ic_baseline_settings_overscan_24"
                     android:nextFocusDown="@+id/agent_name"/>
 
             </com.google.android.material.textfield.TextInputLayout>

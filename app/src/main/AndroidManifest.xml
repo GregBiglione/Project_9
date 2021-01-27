@@ -37,10 +37,10 @@
             </intent-filter>
         </service>
 
-        <provider
+        <!--<provider
             android:authorities="com.openclassrooms.realestatemanager.provider"
             android:name=".provider.HouseContentProvider"
-            android:exported="true"/>
+            android:exported="true"/>-->
     </application>
 
 </manifest>

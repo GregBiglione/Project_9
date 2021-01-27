@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -16,6 +17,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.droidman.ktoasty.KToasty
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.ui.fragments.DetailedHouseFragment
+import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 
 class MainActivity : AppCompatActivity(){
 
@@ -71,7 +74,7 @@ class MainActivity : AppCompatActivity(){
     //----------------------------------------------------------------------------------------------
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    fun changeMoneyIcon(item: MenuItem?){
+    fun changeCurrencyIcon(item: MenuItem?){
         val dollar: Int = R.drawable.ic_baseline_dollar_white_24
         val euro: Int = R.drawable.ic_baseline_euro_white_24
 

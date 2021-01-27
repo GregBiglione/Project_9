@@ -37,8 +37,6 @@
 
         <TextView
             android:id="@+id/house_price"
-            app:layout_constraintStart_toEndOf="@id/house_first_image"
-            app:layout_constraintTop_toBottomOf="@id/house_neighborhood"
             android:text="@string/house_price"
             style="@style/price_style"/>
     </LinearLayout>

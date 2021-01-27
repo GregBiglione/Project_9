@@ -27,6 +27,7 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.model.HousePhoto
+import com.openclassrooms.realestatemanager.notification.MyFirebaseMessagingService
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
@@ -81,6 +82,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //------------------- Time converter -----------------------------------------------------------
     private lateinit var timeConverters: TimeConverters
     private var entryDate: Long = 0
+    //------------------- Notification -------------------------------------------------------------
+    private lateinit var myFirebaseMessagingService: MyFirebaseMessagingService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +114,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         clickOnPointsOfInterestsEditText()
         agentsSpinner()
         clickOnAddHouse()
+        myFirebaseMessagingService = MyFirebaseMessagingService()
     }
 
     //----------------------------------------------------------------------------------------------
@@ -485,7 +489,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         // Notification instead of KToasty
         //------------------- Back to main activity after add house --------------------------------
         goBackToMainActivity()
-
     }
 
     private fun addHousePhoto(housePhotoList: HousePhoto){
@@ -495,5 +498,9 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private fun goBackToMainActivity(){
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun sendNotificationAfterAdd(){
+        myFirebaseMessagingService.sendVisualNotification(getString(R.string.house_notification_msg_after_add_house))
     }
 }

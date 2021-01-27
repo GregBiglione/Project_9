@@ -7,7 +7,7 @@
         android:orderInCategory="100"
         android:title="@string/action_money"
         android:icon="@drawable/ic_baseline_dollar_white_24"
-        android:onClick="changeMoneyIcon"
+        android:onClick="changeCurrencyIcon"
         app:showAsAction="ifRoom" />
 
     <item

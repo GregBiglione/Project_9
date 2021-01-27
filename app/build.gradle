@@ -115,4 +115,7 @@ dependencies {
 
     //----------------------------- Easy Permissions -----------------------------------------------
     implementation 'pub.devrel:easypermissions:3.0.0'
+
+    //----------------------------- Denzcoskun Image slide -----------------------------------------
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 }

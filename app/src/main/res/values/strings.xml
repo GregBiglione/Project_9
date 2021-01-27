@@ -353,5 +353,6 @@
     <string name="sold_date">Sold date</string>
     <string name="entry_date">Entry date</string>
     <string name="action_money">Money</string>
+    <string name="house_notification_msg_after_add_house">House added with success</string>
 
 </resources>
