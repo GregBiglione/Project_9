@@ -30,13 +30,14 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_photo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_add_house_photo_description_et"
                     android:hint="@string/photo_description"
                     android:inputType="text"
-                    style="@style/agent_first_name_style"
+                    style="@style/add_house_input_with_icon_style"
+                    android:drawableStart="@drawable/ic_baseline_edit_24"
                     android:nextFocusDown="@+id/agent_name"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -80,14 +81,15 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_type_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_description"
                     android:hint="@string/description"
                     android:inputType="textMultiLine"
                     android:maxLines="20"
-                    style="@style/agent_first_name_style"
+                    style="@style/add_house_input_with_icon_style"
+                    android:drawableStart="@drawable/ic_baseline_edit_24"
                     android:nextFocusDown="@+id/add_house_neighborhood_spinner"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -114,13 +116,13 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_neighborhood_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_address"
                     android:hint="@string/address"
                     android:inputType="text"
-                    style="@style/agent_first_name_style"
+                    style="@style/add_house_input_with_icon_style"
                     android:drawableStart="@drawable/ic_baseline_location_on_24"
                     android:nextFocusDown="@+id/agent_name"/>
 
@@ -134,14 +136,14 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_address_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_price"
                     android:hint="@string/price"
                     android:inputType="number"
                     style="@style/add_house_input_with_icon_style"
-                    android:drawableStart="@drawable/ic_baseline_dollar_black_24"
+                    android:drawableStart="@drawable/ic_baseline_attach_money_24"
                     android:nextFocusDown="@+id/agent_name"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -154,7 +156,7 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_price_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_surface"
@@ -174,7 +176,7 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_surface_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_number_of_rooms"
@@ -194,7 +196,7 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_number_of_rooms_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_number_of_bathrooms"
@@ -214,7 +216,7 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_number_of_bathrooms"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_number_of_bedrooms"
@@ -257,13 +259,13 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_entry_date"
                     android:inputType="date"
                     android:focusable="false"
-                    style="@style/agent_first_name_style"
+                    style="@style/add_house_input_with_icon_style"
                     android:drawableStart="@drawable/ic_baseline_calendar_today_24"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -292,15 +294,15 @@
                     app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/update_house_sale_date"
                         android:hint="@string/sale_date"
                         android:inputType="date"
                         android:focusable="false"
-                        android:drawableStart="@drawable/ic_baseline_calendar_today_24"
-                        style="@style/agent_first_name_style"/>
+                        style="@style/add_house_input_with_icon_style"
+                        android:drawableStart="@drawable/ic_baseline_calendar_today_24" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -321,14 +323,15 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_points_of_interests"
                     android:hint="@string/points_of_interests"
                     android:inputType="textMultiLine"
                     android:focusable="false"
-                    style="@style/agent_first_name_style" />
+                    style="@style/add_house_input_with_icon_style"
+                    android:drawableStart="@drawable/ic_baseline_near_me_24"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

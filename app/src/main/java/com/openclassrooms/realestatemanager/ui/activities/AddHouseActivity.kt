@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -83,11 +84,12 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private lateinit var timeConverters: TimeConverters
     private var entryDate: Long = 0
     //------------------- Notification -------------------------------------------------------------
-    private lateinit var myFirebaseMessagingService: MyFirebaseMessagingService
+    //private lateinit var myFirebaseMessagingService: MyFirebaseMessagingService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
+        //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         housePhotoImageView = findViewById(R.id.add_house_photo)
         housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
         agentsSpinner = findViewById(R.id.add_house_agent_spinner)
@@ -114,7 +116,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         clickOnPointsOfInterestsEditText()
         agentsSpinner()
         clickOnAddHouse()
-        myFirebaseMessagingService = MyFirebaseMessagingService()
+        //myFirebaseMessagingService = MyFirebaseMessagingService()
     }
 
     //----------------------------------------------------------------------------------------------
@@ -501,6 +503,18 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     }
 
     private fun sendNotificationAfterAdd(){
-        myFirebaseMessagingService.sendVisualNotification(getString(R.string.house_notification_msg_after_add_house))
+        //myFirebaseMessagingService.sendVisualNotification(getString(R.string.house_notification_msg_after_add_house))
     }
+
+    //----------------------------------------------------------------------------------------------
+    //--------------------------------Back button to Main activity ---------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    //    if (item.itemId == android.R.id.home) {
+    //        finish()
+    //        return true
+    //    }
+    //    return super.onOptionsItemSelected(item)
+    //}
 }
