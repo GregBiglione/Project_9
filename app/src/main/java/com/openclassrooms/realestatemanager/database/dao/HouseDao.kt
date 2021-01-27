@@ -22,12 +22,12 @@ interface HouseDao {
 
     //------------------- Cursor handled by content provider ---------------------------------------
 
-    @Query("SELECT * FROM house")
-    fun getAllHousesWithCursor(): Cursor?
-
-    @Query("SELECT * FROM house WHERE id = :id")
-    fun getHouseWithCursor(id: Long): Cursor?
-
-    @Update
-    fun updateHouseWithCursor(house: House): Cursor?
+    //@Query("SELECT * FROM house")
+    //fun getAllHousesWithCursor(): Cursor?
+//
+    //@Query("SELECT * FROM house WHERE id = :id")
+    //fun getHouseWithCursor(id: Long): Cursor?
+//
+    //@Update
+    //fun updateHouseWithCursor(house: House): Cursor?
 }

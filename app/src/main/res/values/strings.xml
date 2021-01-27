@@ -352,5 +352,6 @@
     <string name="euros">€</string>
     <string name="sold_date">Sold date</string>
     <string name="entry_date">Entry date</string>
+    <string name="action_money">Money</string>
 
 </resources>

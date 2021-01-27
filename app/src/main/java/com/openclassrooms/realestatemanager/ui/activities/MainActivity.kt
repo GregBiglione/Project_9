@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
-import android.graphics.Bitmap
-import android.net.Uri
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -17,7 +16,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.droidman.ktoasty.KToasty
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 
 class MainActivity : AppCompatActivity(){
 
@@ -52,8 +50,11 @@ class MainActivity : AppCompatActivity(){
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
-            R.id.action_search ->{
+            R.id.action_search -> {
                 KToasty.success(this, "Click on  item " + item.title, Toast.LENGTH_SHORT, true).show()
+                true
+            }
+            R.id.action_money -> {
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -63,5 +64,22 @@ class MainActivity : AppCompatActivity(){
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Change icon $ to € ------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    fun changeMoneyIcon(item: MenuItem?){
+        val dollar: Int = R.drawable.ic_baseline_dollar_white_24
+        val euro: Int = R.drawable.ic_baseline_euro_white_24
+
+        if (item!!.icon.constantState!! == resources.getDrawable(dollar, null).constantState){
+            item.setIcon(euro)
+        }
+        else{
+            item.setIcon(dollar)
+        }
     }
 }
