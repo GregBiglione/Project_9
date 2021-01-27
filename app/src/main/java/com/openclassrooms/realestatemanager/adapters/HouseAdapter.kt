@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragmentDirections
+import com.openclassrooms.realestatemanager.utils.Utils
 
 class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
 
@@ -23,6 +25,7 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
         return HouseViewHolder(itemView)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: HouseViewHolder, position: Int) {
         val currentHouse = houseList[position]
 
@@ -38,7 +41,14 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
         }
         holder.houseType.text = currentHouse.typeOfHouse
         holder.houseNeighborhood.text = currentHouse.neighborhood
-        holder.housePrice.text = currentHouse.price.toString()
+        holder.housePrice.text = "$" + currentHouse.price.toString()
+
+        //if (){
+        //    holder.housePrice.text =  "$" + currentHouse.price.toString()
+        //}
+        //else{
+        //    holder.housePrice.text = currentHouse.price?.let { Utils.convertDollarToEuro(it) }.toString() + "€"
+        //}
 
         holder.houseConstraintLayout.setOnClickListener {
             val actionDetail = HomeFragmentDirections.actionNavHomeToDetailedHouseFragment(currentHouse)

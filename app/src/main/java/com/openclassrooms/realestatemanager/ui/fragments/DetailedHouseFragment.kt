@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -89,6 +90,7 @@ class DetailedHouseFragment : Fragment() {
     //------------------- Fill detail house champs -------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
+    @SuppressLint("SetTextI18n")
     private fun fillDetailHouseChamps(){
         detailDescription.text = args.currentHouse.description
         detailSurface.text = args.currentHouse.surface.toString()
@@ -98,7 +100,7 @@ class DetailedHouseFragment : Fragment() {
         detailNeighborhood.text = args.currentHouse.neighborhood
         detailAddress.text = args.currentHouse.address
         detailPointOfInterests.text = args.currentHouse.proximityPointsOfInterest
-        detailPrice.text = args.currentHouse.price.toString()
+        detailPrice.text = "$" + args.currentHouse.price.toString()
         detailAgent.text = args.currentHouse.agentId.toString()
         entryDate()
         saleDate()

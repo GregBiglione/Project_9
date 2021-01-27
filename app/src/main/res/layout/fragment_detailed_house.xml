@@ -198,30 +198,12 @@
                app:drawableStartCompat="@drawable/ic_baseline_attach_money_24"
                style="@style/detailed_house_title"/>
 
-           <LinearLayout
+           <TextView
+               android:id="@+id/detail_price"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:orientation="horizontal">
-
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/dollars"
-                   style="@style/detailed_house_text"/>
-
-               <TextView
-                   android:id="@+id/detail_price"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:text="@string/price"
-                   style="@style/detailed_house_text"/>
-
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/euros"
-                   style="@style/detailed_house_text"/>
-           </LinearLayout>
+               android:text="@string/price"
+               style="@style/detailed_house_text"/>
 
            <TextView
                android:layout_width="wrap_content"

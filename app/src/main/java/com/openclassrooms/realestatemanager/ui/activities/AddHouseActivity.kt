@@ -89,7 +89,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
-        //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         housePhotoImageView = findViewById(R.id.add_house_photo)
         housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
         agentsSpinner = findViewById(R.id.add_house_agent_spinner)
@@ -510,11 +510,11 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //--------------------------------Back button to Main activity ---------------------------------
     //----------------------------------------------------------------------------------------------
 
-    //override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    //    if (item.itemId == android.R.id.home) {
-    //        finish()
-    //        return true
-    //    }
-    //    return super.onOptionsItemSelected(item)
-    //}
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }
