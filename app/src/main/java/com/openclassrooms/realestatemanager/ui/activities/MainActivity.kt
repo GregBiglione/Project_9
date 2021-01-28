@@ -17,8 +17,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.droidman.ktoasty.KToasty
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.ui.fragments.DetailedHouseFragment
-import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 
 class MainActivity : AppCompatActivity(){
 
@@ -55,6 +53,7 @@ class MainActivity : AppCompatActivity(){
         return when(item?.itemId){
             R.id.action_search -> {
                 KToasty.success(this, "Click on  item " + item.title, Toast.LENGTH_SHORT, true).show()
+                goToSearchFragment()
                 true
             }
             R.id.action_money -> {
@@ -85,4 +84,17 @@ class MainActivity : AppCompatActivity(){
             item.setIcon(dollar)
         }
     }
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Change icon $ to € ------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Go to search fragment ---------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun goToSearchFragment() {
+        val intent = Intent(this, SearchActivity::class.java)
+        startActivity(intent)
+    }
+
 }

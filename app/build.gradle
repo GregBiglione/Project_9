@@ -118,4 +118,8 @@ dependencies {
 
     //----------------------------- Denzcoskun Image slide -----------------------------------------
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+
+    //----------------------------- Range seek bar -------------------------------------------------
+    implementation 'com.github.MohammedAlaaMorsi:RangeSeekBar:1.0.6'
+
 }

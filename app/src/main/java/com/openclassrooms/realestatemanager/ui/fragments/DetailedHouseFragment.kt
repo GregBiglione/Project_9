@@ -2,11 +2,10 @@ package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -16,12 +15,12 @@ import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.droidman.ktoasty.KToasty
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
@@ -79,6 +78,7 @@ class DetailedHouseFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detailed_house, container, false)
+        setHasOptionsMenu(true)
         imageSlider = view.findViewById(R.id.detail_slider)
         detailDescription = view.findViewById(R.id.detail_description)
         detailSurface = view.findViewById(R.id.detail_surface)
@@ -209,7 +209,7 @@ class DetailedHouseFragment : Fragment() {
         }
     }
 
-    //------------------- Show sale date id exists -------------------------------------------------
+    //------------------- Show sale date if exists -------------------------------------------------
 
     private fun showSaleDate(){
         if (args.currentHouse.saleDate != null) {

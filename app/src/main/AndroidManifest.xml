@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activities.AddHouseActivity"></activity>
+        <activity android:name=".ui.activities.SearchActivity"></activity>
+        <activity android:name=".ui.activities.AddHouseActivity" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_main"
@@ -26,9 +27,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Notification -->
+        </activity> <!-- Notification -->
         <service
             android:name=".notification.MyFirebaseMessagingService"
             android:exported="false">
@@ -36,11 +35,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <!--<provider
-            android:authorities="com.openclassrooms.realestatemanager.provider"
-            android:name=".provider.HouseContentProvider"
-            android:exported="true"/>-->
     </application>
 
 </manifest>

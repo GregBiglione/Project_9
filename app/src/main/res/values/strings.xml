@@ -314,6 +314,7 @@
     <string name="add_photo">Add photo</string>
     <string name="enter_photo_description">Add a description to add a photo</string>
     <string name="update_photo">Update photo</string>
+    <string name="search_entry_date">Select an entry date</string>
     <string name="sale_date">Select a sale date</string>
     <string name="sold">Sold</string>
     <string name="published_date">Published on:</string>
@@ -354,5 +355,9 @@
     <string name="entry_date">Entry date</string>
     <string name="action_money">Money</string>
     <string name="house_notification_msg_after_add_house">House added with success</string>
+    <string name="search_photos_title">Number of photos</string>
+    <string name="search_type_of_house_title">Type of house</string>
+    <string name="search_neighborhood_title">Neighborhood</string>
+    <string name="available">Available</string>
 
 </resources>
