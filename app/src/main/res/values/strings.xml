@@ -347,7 +347,7 @@
     <string name="camera_permission_message">We need your permission to access the camera</string>
     <string name="gallery_permission">Access gallery granted</string>
     <string name="gallery_permission_message">We need your permission to access the gallery</string>
-    <string name="m2">m2</string>
+    <string name="m2">m<sup><small>2</small></sup></string>
     <string name="dollars">$</string>
     <string name="euros">€</string>
     <string name="sold_date">Sold date</string>

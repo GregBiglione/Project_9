@@ -141,4 +141,8 @@
         <item name="android:layout_marginTop">10dp</item>
     </style>
 
+    <style name="detailed_house_card_view">
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
 </resources>

@@ -84,7 +84,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private lateinit var timeConverters: TimeConverters
     private var entryDate: Long = 0
     //------------------- Notification -------------------------------------------------------------
-    //private lateinit var myFirebaseMessagingService: MyFirebaseMessagingService
+    private lateinit var myFirebaseMessagingService: MyFirebaseMessagingService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,7 +116,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         clickOnPointsOfInterestsEditText()
         agentsSpinner()
         clickOnAddHouse()
-        //myFirebaseMessagingService = MyFirebaseMessagingService()
+        myFirebaseMessagingService = MyFirebaseMessagingService()
     }
 
     //----------------------------------------------------------------------------------------------
