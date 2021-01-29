@@ -359,5 +359,6 @@
     <string name="search_type_of_house_title">Type of house</string>
     <string name="search_neighborhood_title">Neighborhood</string>
     <string name="available">Available</string>
+    <string name="search">Search</string>
 
 </resources>
