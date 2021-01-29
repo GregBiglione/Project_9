@@ -450,7 +450,23 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     @SuppressLint("SetTextI18n")
     private fun onDateSelected(year: Int, month: Int, day: Int){
-        houseSaleDateEditText.setText("$day/$month/$year")
+        var dayOfWeek = ""
+        val monthOfYear = month + 1
+        var monthString = ""
+
+        dayOfWeek = if (day < 10){
+            "0$day"
+        }
+        else{
+            day.toString()
+        }
+        monthString = if (monthOfYear < 10){
+            "0$monthOfYear"
+        }
+        else{
+            monthOfYear.toString()
+        }
+        houseSaleDateEditText.setText("$dayOfWeek/$monthString/$year")
     }
 
     //----------------------------------------------------------------------------------------------
