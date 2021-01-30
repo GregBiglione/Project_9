@@ -161,7 +161,7 @@ class DetailedHouseFragment : Fragment() {
             activity?.showWarningToast("Boolean is $currencyBoolean dans Detailed fragment", Toast.LENGTH_SHORT, true)
         }
         entryDate()
-        saleDate()
+        //saleDate()
     }
 
 
@@ -229,6 +229,7 @@ class DetailedHouseFragment : Fragment() {
 
     private fun showSaleDate(){
         if (args.currentHouse.saleDate != null) {
+            saleDate()
             houseSaleDateInputLyt.visibility = View.VISIBLE
 
         }
@@ -251,7 +252,8 @@ class DetailedHouseFragment : Fragment() {
     private fun saleDate(){
         val saleDate = args.currentHouse.saleDate
         if (saleDate != null) {
-            val saleFrenchDate = Utils.convertUsDateToFrenchDate(saleDate)
+            //val saleFrenchDate = Utils.convertUsDateToFrenchDate(saleDate)
+            val saleFrenchDate = timeConverters.convertLongToTime(saleDate)
             detailSaleDate.text = saleFrenchDate
         }
     }

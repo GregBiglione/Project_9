@@ -321,7 +321,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
     private fun showSaleDate(){
         if (args.currentHouse.saleDate != null) {
-            houseSaleDateEditText.setText(Utils.convertUsDateToFrenchDate(args.currentHouse.saleDate!!))
+            //houseSaleDateEditText.setText(Utils.convertUsDateToFrenchDate(args.currentHouse.saleDate!!))
+            houseSaleDateEditText.setText(timeConverters.convertLongToTime(args.currentHouse.saleDate!!))
             houseSaleDateLyt.visibility = View.VISIBLE
         }
     }
@@ -654,6 +655,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
         val statusSelectedId: Int = statusSpinner.selectedItemId.toInt()
         val saleDate: String = houseSaleDateEditText.text.toString().trim()
+        saleHouseDate = timeConverters.convertDateToLong(saleDate)
         if (statusSelectedId == 1 && saleDate.isEmpty()){
             houseSaleDateEditText.error = "Enter a sale date"
             activity?.showErrorToast("Sale date can't be empty", Toast.LENGTH_SHORT, true)

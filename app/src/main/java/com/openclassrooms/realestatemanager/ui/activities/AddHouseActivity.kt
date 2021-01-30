@@ -53,6 +53,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     //------------------- Button -------------------------------------------------------------------
     private lateinit var addHousePhotoButton: Button
     private lateinit var addHouseButton: Button
+    private lateinit var clearButton: Button
     //------------------- Text input layout --------------------------------------------------------
     private lateinit var houseSaleDateInputLyt: TextInputLayout
     //------------------- Edit text ----------------------------------------------------------------
@@ -116,6 +117,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         clickOnPointsOfInterestsEditText()
         agentsSpinner()
         clickOnAddHouse()
+        clickOnClear()
         myFirebaseMessagingService = MyFirebaseMessagingService()
     }
 
@@ -507,7 +509,30 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     }
 
     //----------------------------------------------------------------------------------------------
-    //--------------------------------Back button to Main activity ---------------------------------
+    //-------------------------------- Clear champs ------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //------------------- Click on clear button ----------------------------------------------------
+
+    private fun clickOnClear(){
+        clearButton = findViewById(R.id.add_house_delete_button)
+        clearButton.setOnClickListener {
+            clearAllChamps()
+        }
+    }
+
+    private fun clearAllChamps() {
+        houseDescriptionEditText.setText("")
+        houseAddressEditText.setText("")
+        housePriceEditText.setText("")
+        houseSurfaceEditText.setText("")
+        houseRoomsEditText.setText("")
+        houseBathRoomsEditText.setText("")
+        houseBedRoomsEditText.setText("")
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Back button to Main activity --------------------------------
     //----------------------------------------------------------------------------------------------
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
