@@ -2,29 +2,39 @@ package com.openclassrooms.realestatemanager.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.droidman.ktoasty.KToasty
+import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 
 class MainActivity : AppCompatActivity(){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private var isCurrencyChanged: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //-------------------------------- Menu ----------------------------------------------------
+        configureMainActivityViewModel()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -72,6 +82,7 @@ class MainActivity : AppCompatActivity(){
     //-------------------------------- Change icon $ to € ------------------------------------------
     //----------------------------------------------------------------------------------------------
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("UseCompatLoadingForDrawables")
     fun changeCurrencyIcon(item: MenuItem?){
         val dollar: Int = R.drawable.ic_baseline_dollar_white_24
@@ -79,14 +90,32 @@ class MainActivity : AppCompatActivity(){
 
         if (item!!.icon.constantState!! == resources.getDrawable(dollar, null).constantState){
             item.setIcon(euro)
+            mainActivityViewModel.clickDollarsToEuros()
+            showSuccessToast("Currency with live data is € & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
         }
         else{
             item.setIcon(dollar)
+            mainActivityViewModel.clickEurosToDollars()
+            showSuccessToast("Currency with live data is $ & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
         }
     }
+
     //----------------------------------------------------------------------------------------------
-    //-------------------------------- Change icon $ to € ------------------------------------------
+    //-------------------------------- Configure MainActivityViewModel -----------------------------
     //----------------------------------------------------------------------------------------------
+
+    private fun configureMainActivityViewModel(){
+        mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        mainActivityViewModel.isClickedCurrency().observe(this, Observer {
+            isCurrencyChanged = it
+        })
+    }
+
+    //-------------------------------- Get live data boolean value ---------------------------------
+
+    fun booleanOnCurrencyClick(): Boolean{
+        return isCurrencyChanged
+    }
 
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Go to search fragment ---------------------------------------

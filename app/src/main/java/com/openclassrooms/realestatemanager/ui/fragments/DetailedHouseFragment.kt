@@ -2,7 +2,9 @@ package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -15,7 +17,8 @@ import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.droidman.ktoasty.KToasty
+import com.droidman.ktoasty.showSuccessToast
+import com.droidman.ktoasty.showWarningToast
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
@@ -24,6 +27,7 @@ import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
@@ -71,6 +75,8 @@ class DetailedHouseFragment : Fragment() {
     private lateinit var agentRecyclerView: RecyclerView
     private lateinit var agentAdapter: AgentAdapter
     private var agentList: List<Agent> = emptyList()
+    private lateinit var mainActivity: MainActivity
+    private var currencyBoolean: Boolean = false
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -102,6 +108,8 @@ class DetailedHouseFragment : Fragment() {
         agentEmail = view.findViewById(R.id.detail_agent_item_email)
         //------------------- Recycler view --------------------------------------------------------
         agentRecyclerView = view.findViewById(R.id.detail_agent_recycler_view)
+        mainActivity = MainActivity()
+        currencyBoolean = mainActivity.booleanOnCurrencyClick()
         fillCarousel()
         fillDetailHouseChamps()
         showSaleDate()
@@ -143,7 +151,15 @@ class DetailedHouseFragment : Fragment() {
         detailNeighborhood.text = args.currentHouse.neighborhood
         detailAddress.text = args.currentHouse.address
         detailPointOfInterests.text = args.currentHouse.proximityPointsOfInterest
-        detailPrice.text = "$" + args.currentHouse.price.toString()
+        //detailPrice.text = "$" + args.currentHouse.price.toString()
+        if (currencyBoolean){
+            detailPrice.text = "$" + args.currentHouse.price.toString()
+            activity?.showWarningToast("Boolean is $currencyBoolean dans Detailed fragment", Toast.LENGTH_SHORT, true)
+        }
+        else{
+            detailPrice.text = "!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+            activity?.showWarningToast("Boolean is $currencyBoolean dans Detailed fragment", Toast.LENGTH_SHORT, true)
+        }
         entryDate()
         saleDate()
     }

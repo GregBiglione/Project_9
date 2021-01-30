@@ -1,23 +1,31 @@
 package com.openclassrooms.realestatemanager.adapters
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.House
+import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragmentDirections
 import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 
 class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
-
+    //HouseAdapter/*(private var mainActivity: MainActivity, private var currencyBoolean: Boolean)*/
     private var houseList = emptyList<House>()
+
+    //private var mainActivity = MainActivity()
+    //private var currencyBoolean = mainActivity.booleanOnCurrencyClick()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HouseViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -41,13 +49,15 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
         }
         holder.houseType.text = currentHouse.typeOfHouse
         holder.houseNeighborhood.text = currentHouse.neighborhood
-        holder.housePrice.text = "$" + currentHouse.price.toString()
+        //holder.housePrice.text = "$" + currentHouse.price.toString()
 
-        //if (){
-        //    holder.housePrice.text =  "$" + currentHouse.price.toString()
+        //if (currencyBoolean ){
+        //    //holder.housePrice.text =  "$" + currentHouse.price.toString()
+        //    holder.housePrice.text = currentHouse.price?.let { Utils.convertDollarToEuro(it) }.toString() + "€"
         //}
         //else{
-        //    holder.housePrice.text = currentHouse.price?.let { Utils.convertDollarToEuro(it) }.toString() + "€"
+        //    //holder.housePrice.text = currentHouse.price?.let { Utils.convertDollarToEuro(it) }.toString() + "€"
+        //    holder.housePrice.text =  "$" + currentHouse.price.toString()
         //}
 
         holder.houseConstraintLayout.setOnClickListener {

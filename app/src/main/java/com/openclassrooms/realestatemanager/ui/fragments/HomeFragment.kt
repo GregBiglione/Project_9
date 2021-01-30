@@ -18,6 +18,7 @@ import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
+import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
@@ -25,6 +26,10 @@ class HomeFragment : Fragment() {
     private lateinit var houseRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var houseAdapter: HouseAdapter
+
+    //------------------------ test
+    private lateinit var mainActivity: MainActivity
+    private var currencyBoolean: Boolean = false
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -35,6 +40,8 @@ class HomeFragment : Fragment() {
         houseRecyclerView = root.findViewById(R.id.house_recycler_view)
         val fab: FloatingActionButton = root.findViewById(R.id.add_house_fab)
         fab.setOnClickListener { goToAddActivity() }
+        mainActivity = MainActivity()
+        currencyBoolean = mainActivity.booleanOnCurrencyClick()
         configureViewModel()
         configurePropertyRecyclerView()
         return root
@@ -45,7 +52,7 @@ class HomeFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun configurePropertyRecyclerView(){
-        houseAdapter = HouseAdapter()
+        houseAdapter = HouseAdapter(/*mainActivity, currencyBoolean*/)
         houseRecyclerView.adapter = houseAdapter
         houseRecyclerView.layoutManager = LinearLayoutManager(activity)
     }

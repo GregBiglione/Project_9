@@ -145,4 +145,25 @@
         <item name="android:layout_marginTop">10dp</item>
     </style>
 
+    <!-- Search house fragment -->
+    <style name="search_hr_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/image_view_border_gray</item>
+    </style>
+
+    <style name="search_title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="search_margin">
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+    </style>
+
 </resources>
