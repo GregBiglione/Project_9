@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.SearchActivity"
-    android:layout_margin="15dp">
+    tools:context=".ui.activities.SearchActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,7 +12,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,13 +26,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/search_photos_title"
-                style="@style/detailed_house_title"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                style="@style/search_title"
                 app:drawableStartCompat="@drawable/ic_baseline_image_24" />
 
             <com.mohammedalaa.seekbar.DoubleValueSeekBarView
                 android:id="@+id/search_photos_double_range_seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_photos_title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -54,34 +59,36 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_photos_double_range_seek_bar"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/house_hr_style"/>
+                style="@style/search_hr_style"/>
 
             <TextView
                 android:id="@+id/search_type_of_house_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_hr1"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/search_type_of_house_title"
-                style="@style/detailed_house_title"/>
+                style="@style/search_title"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/search_type_of_house_ti_ly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_type_of_house_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/search_type_of_house_et"
-                    android:hint="@string/type_of_house"
-                    android:inputType="textMultiLine"
-                    android:focusable="false"
-                    style="@style/add_house_input_with_icon_style" />
+                <Spinner
+                    android:id="@+id/search_type_status_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,17 +97,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_type_of_house_ti_ly"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/house_hr_style"/>
+                style="@style/search_hr_style"/>
 
             <TextView
                 android:id="@+id/search_neighborhood_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_hr2"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/search_neighborhood_title"
-                style="@style/detailed_house_title"
+                style="@style/search_title"
                 app:drawableStartCompat="@drawable/ic_baseline_map_24" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -108,17 +117,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_neighborhood_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/search_neighborhood_et"
-                    android:hint="@string/neighborhood"
-                    android:inputType="textMultiLine"
-                    android:focusable="false"
-                    style="@style/add_house_input_with_icon_style" />
+                <Spinner
+                    android:id="@+id/search_neighborhood_status_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,23 +136,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_neighborhood_ti_ly"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/house_hr_style"/>
+                style="@style/search_hr_style"/>
 
             <TextView
                 android:id="@+id/search_price_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_neighborhood_ti_ly"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/price"
-                style="@style/detailed_house_title"
+                style="@style/search_title"
                 app:drawableStartCompat="@drawable/ic_baseline_attach_money_24" />
 
             <com.mohammedalaa.seekbar.RangeSeekBarView
                 android:id="@+id/search_range_seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:barHeight="15dp"
                 app:baseColor="@color/image_view_border_gray"
                 app:circleFillColor="@color/colorPrimaryDark"
@@ -165,23 +178,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_range_seek_bar"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/house_hr_style"/>
+                style="@style/search_hr_style"/>
 
             <TextView
                 android:id="@+id/search_surface_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_hr4"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/surface"
-                style="@style/detailed_house_title"
+                style="@style/search_title"
                 app:drawableStartCompat="@drawable/ic_baseline_settings_overscan_24" />
 
             <com.mohammedalaa.seekbar.DoubleValueSeekBarView
                 android:id="@+id/search_surface_double_range_seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_surface_title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -204,23 +221,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_surface_double_range_seek_bar"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/house_hr_style"/>
+                style="@style/search_hr_style"/>
 
             <TextView
                 android:id="@+id/search_rooms_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_hr5"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/number_of_rooms"
-                style="@style/detailed_house_title"
+                style="@style/search_title"
                 app:drawableStartCompat="@drawable/ic_baseline_home_24" />
 
             <com.mohammedalaa.seekbar.DoubleValueSeekBarView
                 android:id="@+id/search_rooms_double_range_seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_rooms_title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -243,23 +264,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_rooms_double_range_seek_bar"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/house_hr_style"/>
+                style="@style/search_hr_style"/>
 
             <TextView
                 android:id="@+id/search_bathrooms_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_hr6"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/number_of_bathrooms"
-                style="@style/detailed_house_title"
+                style="@style/search_title"
                 app:drawableStartCompat="@drawable/ic_baseline_hot_tub_24" />
 
             <com.mohammedalaa.seekbar.DoubleValueSeekBarView
                 android:id="@+id/search_bathrooms_double_range_seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_bathrooms_title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -282,23 +307,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_bathrooms_double_range_seek_bar"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/house_hr_style"/>
+                style="@style/search_hr_style"/>
 
             <TextView
                 android:id="@+id/search_bedrooms_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_hr7"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/number_of_bathrooms"
-                style="@style/detailed_house_title"
+                style="@style/search_title"
                 app:drawableStartCompat="@drawable/ic_baseline_hot_tub_24" />
 
             <com.mohammedalaa.seekbar.DoubleValueSeekBarView
                 android:id="@+id/search_bedrooms_double_range_seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_bedrooms_title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -321,42 +350,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_bedrooms_double_range_seek_bar"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/house_hr_style"/>
+                style="@style/search_hr_style"/>
 
             <TextView
                 android:id="@+id/search_status_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_hr8"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/status"
-                style="@style/detailed_house_title" />
+                style="@style/search_title" />
 
-            <CheckBox
-                android:id="@+id/checkbox_available"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/search_status_spinner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_status_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/available"
-                style="@style/agent_item_style"/>
-
-            <CheckBox
-                android:id="@+id/checkbox_sold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkbox_available"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/sold"
-                style="@style/agent_item_style"/>
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"/>
 
             <View
                 android:id="@+id/search_hr9"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkbox_sold"
+                app:layout_constraintTop_toBottomOf="@+id/search_status_spinner"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="@style/house_hr_style"/>
 
@@ -364,17 +382,21 @@
                 android:id="@+id/search_poi_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_hr9"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/points_of_interests"
-                style="@style/detailed_house_title"
+                style="@style/search_title"
                 app:drawableStartCompat="@drawable/ic_baseline_near_me_24" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/search_poi_ti_ly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_poi_title"
@@ -395,12 +417,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_poi_ti_ly"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/house_hr_style"/>
+                style="@style/search_hr_style"/>
 
             <LinearLayout
                 android:id="@+id/search_sates_lyt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:orientation="horizontal"
                 android:baselineAligned="false">
 
@@ -443,6 +467,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -481,7 +507,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_sates_lyt"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/house_hr_style"/>
+                style="@style/search_hr_style"/>
 
             <TextView
                 android:id="@+id/search_agent_title"
@@ -491,90 +517,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/search_hr10"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/agent_in_charge"
-                style="@style/detailed_house_title"
+                style="@style/search_title"
                 app:drawableStartCompat="@drawable/ic_baseline_agent_24"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/search_card_view"
+            <Spinner
+                android:id="@+id/search_agent_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                app:cardCornerRadius="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_agent_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                style="@style/detailed_house_card_view">
-
-                <RelativeLayout
-                    android:id="@+id/search_agent_item_relative_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="6dp">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/search_agent_item_image"
-                        style="@style/agent_item_image_style"/>
-
-                    <LinearLayout
-                        android:id="@+id/search_item_tv_lyt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_alignTop="@+id/search_agent_item_image"
-                        android:layout_toEndOf="@+id/search_agent_item_image"
-                        android:layout_alignBottom="@+id/search_agent_item_image">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            style="@style/agent_item_l_lyt_style">
-
-                            <TextView
-                                android:id="@+id/search_agent_item_first_name"
-                                android:text="@string/first_name"
-                                style="@style/agent_item_style"/>
-
-                            <TextView
-                                android:id="@+id/search_agent_item_name"
-                                android:text="@string/name"
-                                android:layout_marginStart="5dp"
-                                style="@style/agent_item_style"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            style="@style/agent_item_l_lyt_style">
-
-                            <TextView
-                                android:id="@+id/search_agent_item_phone"
-                                android:text="@string/phone"
-                                style="@style/agent_item_style"
-                                app:drawableStartCompat="@drawable/ic_baseline_phone_24"
-                                android:drawablePadding="5dp"
-                                android:gravity="start"/>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/search_agent_item_email"
-                            android:text="@string/mail"
-                            app:drawableStartCompat="@drawable/ic_baseline_email_24"
-                            android:drawablePadding="5dp"
-                            style="@style/agent_item_style"/>
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_card_view"
+                app:layout_constraintTop_toBottomOf="@+id/search_agent_spinner"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <Button

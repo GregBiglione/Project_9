@@ -240,7 +240,7 @@ class DetailedHouseFragment : Fragment() {
 
     private fun entryDate(){
         val entryDate = args.currentHouse.entryDate
-        val entryFrenchDate = Utils.convertUsDateToFrenchDate(entryDate)
+        val entryFrenchDate = timeConverters.convertLongToTime(entryDate)
         detailEntryDate.text = entryFrenchDate
     }
 

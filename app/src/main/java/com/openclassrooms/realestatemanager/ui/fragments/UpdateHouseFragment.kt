@@ -429,9 +429,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //----------------------------------------------------------------------------------------------
 
     private fun entryDate(){
-        houseEntryDate.setOnClickListener { showDatePickerDialog()}
         val entryDate = args.currentHouse.entryDate
-        val entryFrenchDate = Utils.convertUsDateToFrenchDate(entryDate)
+        val entryFrenchDate = timeConverters.convertLongToTime(entryDate)
         houseEntryDate.setText(entryFrenchDate)
     }
 

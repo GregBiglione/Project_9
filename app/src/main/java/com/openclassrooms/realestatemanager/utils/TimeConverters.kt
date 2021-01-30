@@ -9,7 +9,7 @@ class TimeConverters {
     @SuppressLint("SimpleDateFormat")
     fun convertLongToTime(time: Long): String {
         val date = Date(time)
-        val format = SimpleDateFormat("yyyy.MM.dd")
+        val format = SimpleDateFormat("dd/MM/yyyy")
         return format.format(date)
     }
 
