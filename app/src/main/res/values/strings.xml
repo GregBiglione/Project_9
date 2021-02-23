@@ -359,5 +359,6 @@
     <string name="search_neighborhood_title">Neighborhood</string>
     <string name="available">Available</string>
     <string name="search">Search</string>
+    <string name="action_refresh">Refresh</string>
 
 </resources>

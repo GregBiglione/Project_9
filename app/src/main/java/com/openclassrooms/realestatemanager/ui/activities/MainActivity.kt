@@ -61,6 +61,10 @@ class MainActivity : AppCompatActivity(){
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
+            R.id.action_refresh -> {
+                KToasty.success(this, "Click on  item " + item.title, Toast.LENGTH_SHORT, true).show()
+                true
+            }
             R.id.action_search -> {
                 KToasty.success(this, "Click on  item " + item.title, Toast.LENGTH_SHORT, true).show()
                 goToSearchFragment()
@@ -130,13 +134,13 @@ class MainActivity : AppCompatActivity(){
     //-------------------------------- Get search intent data --------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    fun getSearchIntentData(): Long{
-        var agentIdFiltered: Long = 0
-        if (intent != null) {
-            val agentId = intent.extras!!.get("agentId")
-            agentIdFiltered = agentId as Long
-
-        }
-        return agentIdFiltered
-    }
+    //fun getSearchIntentData(): Long{
+    //    var agentIdFiltered: Long = 0
+    //    if (intent != null) {
+    //        val agentId = intent.extras!!.get("agentId")
+    //        agentIdFiltered = agentId as Long
+//
+    //    }
+    //    return agentIdFiltered
+    //}
 }

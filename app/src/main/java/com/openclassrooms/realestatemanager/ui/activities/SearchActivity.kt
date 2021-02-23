@@ -14,6 +14,7 @@ import com.droidman.ktoasty.showSuccessToast
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
+import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
@@ -24,6 +25,7 @@ import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var injection: Injection
     //------------------- Button -------------------------------------------------------------------
     private lateinit var searchButton: Button
     //------------------- Spinner ------------------------------------------------------------------
@@ -49,14 +51,9 @@ class SearchActivity : AppCompatActivity() {
     //--------------------------------------------------------------------------------
 
     private fun configureViewModel(){
-        val agentDao = RealEstateManagerDatabase.getInstance(applicationContext).agentDao
-        val propertyDao = RealEstateManagerDatabase.getInstance(applicationContext).houseDao
-        val housePhotoDao = RealEstateManagerDatabase.getInstance(applicationContext).housePhotoDao
-        val agentRepository = AgentRepository(agentDao)
-        val propertyRepository = HouseRepository(propertyDao)
-        val housePhotoRepository = HousePhotoRepository(housePhotoDao)
-        val factory = ViewModelFactory(agentRepository, propertyRepository, housePhotoRepository)
-        mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        injection = Injection()
+        val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(this)
+        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
     }
 
     //----------------------------------------------------------------------------------------------

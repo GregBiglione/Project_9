@@ -24,13 +24,10 @@ import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
-import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteAgentEvent
+import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.repositories.AgentRepository
-import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
-import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
@@ -47,6 +44,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     private lateinit var agentPhoto: CircleImageView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var agentAdapter: AgentAdapter
+    private lateinit var injection: Injection
     //------------------- Agent input --------------------------------------------------------------
     private lateinit var agentFirstName: TextInputEditText
     private lateinit var agentName: TextInputEditText
@@ -67,6 +65,7 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     ): View? {
         val root = inflater.inflate(R.layout.fragment_add_agent, container, false)
         agentRecyclerView = root.findViewById(R.id.add_agent_recycler_view)
+        injection = Injection()
         agentPhoto = root.findViewById(R.id.agent_photo)
         agentFirstName = root.findViewById(R.id.agent_first_name)
         agentName = root.findViewById(R.id.agent_name)
@@ -100,14 +99,8 @@ class AddAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, PhotoCho
     //----------------------------------------------------------------------------------------------
 
     private fun configureViewModel(){
-        val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
-        val propertyDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
-        val housePhotoDao = RealEstateManagerDatabase.getInstance(requireContext()).housePhotoDao
-        val agentRepository = AgentRepository(agentDao)
-        val propertyRepository = HouseRepository(propertyDao)
-        val housePhotoRepository = HousePhotoRepository(housePhotoDao)
-        val factory = ViewModelFactory(agentRepository, propertyRepository, housePhotoRepository)
-        mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
+        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         //------------------- Get agents from room db ----------------------------------------------
         mainViewModel.allAgents.observe(viewLifecycleOwner, { agent ->
             agentAdapter.setData(agent)

@@ -22,6 +22,7 @@ import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
+import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
@@ -43,6 +44,7 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var agentUpdatedEmail: TextInputEditText
     private lateinit var updateButton: Button
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var injection: Injection
     //------------------- Uri to bitmap Conversion -------------------------------------------------
     private lateinit var savePhoto: SavePhoto
     private lateinit var imageConverters: ImageConverters
@@ -58,6 +60,7 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         agentUpdatedPhone = view.findViewById(R.id.update_agent_phone)
         agentUpdatedEmail = view.findViewById(R.id.update_agent_email)
         updateButton = view.findViewById(R.id.update_agent_update_button)
+        injection = Injection()
         configureViewModel()
         imageConverters = ImageConverters()
         savePhoto = SavePhoto()
@@ -73,14 +76,8 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //----------------------------------------------------------------------------------------------
 
     private fun configureViewModel(){
-        val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
-        val houseDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
-        val housePhotoDao = RealEstateManagerDatabase.getInstance(requireContext()).housePhotoDao
-        val agentRepository = AgentRepository(agentDao)
-        val houseRepository = HouseRepository(houseDao)
-        val housePhotoRepository = HousePhotoRepository(housePhotoDao)
-        val factory = ViewModelFactory(agentRepository, houseRepository, housePhotoRepository)
-        mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
+        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
     }
 
     //----------------------------------------------------------------------------------------------

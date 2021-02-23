@@ -12,11 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HouseAdapter
-import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
+import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
-import com.openclassrooms.realestatemanager.repositories.AgentRepository
-import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
-import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
@@ -30,6 +27,10 @@ class HomeFragment : Fragment() {
     //------------------------ test
     private lateinit var mainActivity: MainActivity
     //private var currencyBoolean: Boolean = false
+    // 1)
+    //private val house: ArrayList<House> = ArrayList<House>()
+    //private val adapter: HouseAdapter = HouseAdapter()
+    private lateinit var injection: Injection
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -41,9 +42,19 @@ class HomeFragment : Fragment() {
         val fab: FloatingActionButton = root.findViewById(R.id.add_house_fab)
         fab.setOnClickListener { goToAddActivity() }
         mainActivity = MainActivity()
+        injection = Injection()
         //currencyBoolean = mainActivity.booleanOnCurrencyClick()
+        // 4)
         configureViewModel()
         configurePropertyRecyclerView()
+        // 5)
+        //houseAdapter = HouseAdapter()
+        //houseAdapter.setData(house)
+        //houseRecyclerView = root.findViewById(R.id.house_recycler_view)
+        //houseRecyclerView.layoutManager = LinearLayoutManager(activity)
+        //houseRecyclerView.adapter = houseAdapter
+
+
         return root
     }
 
@@ -51,6 +62,14 @@ class HomeFragment : Fragment() {
     //------------------- Configure recyclerview ---------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
+    // 6)
+    private fun configureHouseRecyclerView(){
+        //mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        //------------------- Get houses from room db ----------------------------------------------
+        //mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
+        //    houseAdapter.setData(house)
+        //})
+    }
     private fun configurePropertyRecyclerView(){
         houseAdapter = HouseAdapter(/*mainActivity, currencyBoolean*/)
         houseRecyclerView.adapter = houseAdapter
@@ -61,22 +80,31 @@ class HomeFragment : Fragment() {
     //------------------- Configure ViewModel ------------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
+    // 3)
     private fun configureViewModel(){
-        val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
-        val houseDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
-        val housePhotoDao = RealEstateManagerDatabase.getInstance(requireContext()).housePhotoDao
-        val agentRepository = AgentRepository(agentDao)
-        val houseRepository = HouseRepository(houseDao)
-        val housePhotoRepository = HousePhotoRepository(housePhotoDao)
-        val factory = ViewModelFactory(agentRepository, houseRepository, housePhotoRepository)
-        mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
+        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
         mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
             houseAdapter.setData(house)
         })
-        //-------------------------      TEST             --------------------------------------------------------------------------------------------
-        mainViewModel.getAllHousesFiltered(mainActivity.getSearchIntentData())
     }
+    //private fun configureViewModel(){
+    //    val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
+    //    val houseDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
+    //    val housePhotoDao = RealEstateManagerDatabase.getInstance(requireContext()).housePhotoDao
+    //    val agentRepository = AgentRepository(agentDao)
+    //    val houseRepository = HouseRepository(houseDao)
+    //    val housePhotoRepository = HousePhotoRepository(housePhotoDao)
+    //    val factory = ViewModelFactory(agentRepository, houseRepository, housePhotoRepository)
+    //    mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+    //    //------------------- Get houses from room db ----------------------------------------------
+    //    mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
+    //        houseAdapter.setData(house)
+    //    })
+    //    //-------------------------      TEST             --------------------------------------------------------------------------------------------
+    //    //mainViewModel.getAllHousesFiltered(mainActivity.getSearchIntentData())
+    //}
 
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Go to add house activity ------------------------------------

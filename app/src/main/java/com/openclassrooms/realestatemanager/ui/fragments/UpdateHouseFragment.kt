@@ -26,6 +26,7 @@ import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.adapters.UpdateHousePhotoAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
+import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.House
@@ -48,6 +49,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private val args by navArgs<UpdateHouseFragmentArgs>()
     private lateinit var housePhotoRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var injection: Injection
     private lateinit var housePhotoImageView: ImageView
     private var newHousePhotoList = generateHousePhotoList()
     private var oldHousePhotoList = generateHousePhotoList()
@@ -533,14 +535,9 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //----------------------------------------------------------------------------------------------
 
     private fun configureViewModel(){
-        val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
-        val propertyDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
-        val housePhotoDao = RealEstateManagerDatabase.getInstance(requireContext()).housePhotoDao
-        val agentRepository = AgentRepository(agentDao)
-        val propertyRepository = HouseRepository(propertyDao)
-        val housePhotoRepository = HousePhotoRepository(housePhotoDao)
-        val factory = ViewModelFactory(agentRepository, propertyRepository, housePhotoRepository)
-        mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        injection = Injection()
+        val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
+        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
     }
 
     //----------------------------------------------------------------------------------------------
