@@ -30,7 +30,8 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_photo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_add_house_photo_description_et"
@@ -81,7 +82,8 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_type_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_description"
@@ -116,7 +118,8 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_neighborhood_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_address"
@@ -136,7 +139,8 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_address_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_price"
@@ -156,7 +160,8 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_price_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_surface"
@@ -176,7 +181,8 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_surface_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_number_of_rooms"
@@ -196,7 +202,8 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_number_of_rooms_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_number_of_bathrooms"
@@ -216,7 +223,8 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_number_of_bathrooms"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_number_of_bedrooms"
@@ -259,7 +267,8 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_entry_date"
@@ -294,7 +303,8 @@
                     app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/hint_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/update_house_sale_date"
@@ -323,7 +333,8 @@
                 app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/update_house_points_of_interests"

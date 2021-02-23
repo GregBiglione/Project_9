@@ -401,7 +401,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_poi_title"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/search_poi_ti_et"
@@ -450,7 +451,8 @@
                         app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/hint_color">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/search_entry_et"
@@ -487,7 +489,8 @@
                         app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/hint_color">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/search_sale_et"

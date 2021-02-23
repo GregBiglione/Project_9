@@ -35,6 +35,8 @@ class MainViewModel(private val agentRepository: AgentRepository,
 
     fun updateHouse(house: House) = viewModelScope.launch(Dispatchers.IO) {  houseRepository.updateHouse(house) }
 
+    fun getAllHousesFiltered(agentId: Long) = viewModelScope.launch(Dispatchers.IO) { houseRepository.getAllHousesFiltered(agentId) }
+
     //------------------- HousePhotos --------------------------------------------------------------
     fun getHousePhoto(id: Long) = viewModelScope.launch(Dispatchers.IO) { housePhotoRepository.getHousePhoto(id) }
 

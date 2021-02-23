@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Text input Edit Text hint color -->
+    <style name="hint_color">
+        <item name="android:textColorHint">@color/colorPrimary</item>
+    </style>
+
     <!--//////////////////////////////////// N Size /////////////////////////////////////////////-->
 
     <!-- Home Fragment -->

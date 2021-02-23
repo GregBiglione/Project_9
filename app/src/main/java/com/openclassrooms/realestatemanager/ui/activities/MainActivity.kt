@@ -126,4 +126,17 @@ class MainActivity : AppCompatActivity(){
         startActivity(intent)
     }
 
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Get search intent data --------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    fun getSearchIntentData(): Long{
+        var agentIdFiltered: Long = 0
+        if (intent != null) {
+            val agentId = intent.extras!!.get("agentId")
+            agentIdFiltered = agentId as Long
+
+        }
+        return agentIdFiltered
+    }
 }

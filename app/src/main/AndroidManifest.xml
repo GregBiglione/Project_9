@@ -35,6 +35,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <!--<provider
+            android:authorities="com.openclassrooms.realestatemanager.provider"
+            android:name=".provider.HouseContentProvider"
+            android:exported="true"/>-->
+
     </application>
 
 </manifest>

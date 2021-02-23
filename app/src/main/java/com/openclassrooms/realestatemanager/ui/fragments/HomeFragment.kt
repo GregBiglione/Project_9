@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
 
     //------------------------ test
     private lateinit var mainActivity: MainActivity
-    private var currencyBoolean: Boolean = false
+    //private var currencyBoolean: Boolean = false
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
         val fab: FloatingActionButton = root.findViewById(R.id.add_house_fab)
         fab.setOnClickListener { goToAddActivity() }
         mainActivity = MainActivity()
-        currencyBoolean = mainActivity.booleanOnCurrencyClick()
+        //currencyBoolean = mainActivity.booleanOnCurrencyClick()
         configureViewModel()
         configurePropertyRecyclerView()
         return root
@@ -74,6 +74,8 @@ class HomeFragment : Fragment() {
         mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
             houseAdapter.setData(house)
         })
+        //-------------------------      TEST             --------------------------------------------------------------------------------------------
+        mainViewModel.getAllHousesFiltered(mainActivity.getSearchIntentData())
     }
 
     //----------------------------------------------------------------------------------------------

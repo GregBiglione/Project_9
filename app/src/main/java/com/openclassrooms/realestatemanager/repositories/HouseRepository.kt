@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.repositories
 
+import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.database.dao.HouseDao
 import com.openclassrooms.realestatemanager.model.House
 
@@ -17,5 +18,9 @@ class HouseRepository(private val houseDao: HouseDao) {
 
     fun updateHouse(house: House){
         houseDao.updateHouse(house)
+    }
+
+    fun getAllHousesFiltered(agentId: Long){
+        houseDao.getAllHousesFiltered(agentId)
     }
 }

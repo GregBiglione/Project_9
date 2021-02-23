@@ -53,7 +53,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         //----------------------------- Build a Notification object --------------------------------
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.ic_baseline_hot_tub_24)
+                .setSmallIcon(R.drawable.real_estate_manager_logo)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText("House added in database")
                 .setAutoCancel(true)

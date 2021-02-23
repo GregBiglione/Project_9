@@ -20,6 +20,9 @@ interface HouseDao {
     @Update
     fun updateHouse(house: House)
 
+    @Query("SELECT * FROM house WHERE agentId = :agentId")
+    fun getAllHousesFiltered(agentId: Long): LiveData<List<House>>
+
     //------------------- Cursor handled by content provider ---------------------------------------
 
     //@Query("SELECT * FROM house")
