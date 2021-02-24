@@ -1,24 +1,18 @@
 package com.openclassrooms.realestatemanager.adapters
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.House
-import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragmentDirections
-import com.openclassrooms.realestatemanager.utils.Utils
-import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 
 class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
     //HouseAdapter/*(private var mainActivity: MainActivity, private var currencyBoolean: Boolean)*/
@@ -69,6 +63,12 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
             val actionUpdate = HomeFragmentDirections.actionNavHomeToUpdateHouseFragment(currentHouse)
             holder.updateHouseButton.findNavController().navigate(actionUpdate)
         }
+
+        //------------------------------------------------------------------------------------------
+        //-------------------------------- Data for filter house -----------------------------------
+        //------------------------------------------------------------------------------------------
+
+        val agentId: Long = currentHouse.agentId!!
     }
 
     override fun getItemCount() = houseList.size
@@ -84,6 +84,11 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
 
     fun setData(house: List<House>){
         this.houseList = house
+        notifyDataSetChanged()
+    }
+
+    fun filterData(house: List<House>) {
+        this.houseList = house // <---
         notifyDataSetChanged()
     }
 }

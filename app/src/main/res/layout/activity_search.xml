@@ -86,7 +86,7 @@
                 android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <Spinner
-                    android:id="@+id/search_type_status_spinner"
+                    android:id="@+id/search_type_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -159,12 +159,12 @@
                 android:layout_marginEnd="15dp"
                 app:barHeight="15dp"
                 app:baseColor="@color/image_view_border_gray"
-                app:circleFillColor="@color/colorPrimaryDark"
+                app:circleFillColor="@color/colorPrimary"
                 app:circleRadius="15dp"
                 app:circleTextColor="@color/white"
                 app:circleTextSize="@dimen/value_bar_circleTextSize"
                 app:currentValue="5000000"
-                app:fillColor="@color/colorPrimary"
+                app:fillColor="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -318,9 +318,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_hr7"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/number_of_bathrooms"
+                android:text="@string/number_of_bedrooms"
                 style="@style/search_title"
-                app:drawableStartCompat="@drawable/ic_baseline_hot_tub_24" />
+                app:drawableStartCompat="@drawable/ic_baseline_bed_24" />
 
             <com.mohammedalaa.seekbar.DoubleValueSeekBarView
                 android:id="@+id/search_bedrooms_double_range_seek_bar"
@@ -543,6 +543,12 @@
                     app:cornerRadius="20dp"
                     style="@style/agent_item_btn_style"/>
             </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </FrameLayout>
 
         </LinearLayout>
 

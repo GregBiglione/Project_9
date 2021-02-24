@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -14,6 +16,7 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HouseAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
@@ -22,14 +25,17 @@ class HomeFragment : Fragment() {
 
     private lateinit var houseRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var houseAdapter: HouseAdapter
+    //private lateinit var houseAdapter: HouseAdapter
+    //------------------- Data from Search Activity ------------------------------------------------
+    private lateinit var typeFilter: String
+    private var agentIdFilter: Long? = 0
 
     //------------------------ test
     private lateinit var mainActivity: MainActivity
     //private var currencyBoolean: Boolean = false
     // 1)
-    //private val house: ArrayList<House> = ArrayList<House>()
-    //private val adapter: HouseAdapter = HouseAdapter()
+    private val house: ArrayList<House> = ArrayList()
+    private val houseAdapter: HouseAdapter = HouseAdapter()
     private lateinit var injection: Injection
 
     override fun onCreateView(
@@ -46,15 +52,13 @@ class HomeFragment : Fragment() {
         //currencyBoolean = mainActivity.booleanOnCurrencyClick()
         // 4)
         configureViewModel()
-        configurePropertyRecyclerView()
+
         // 5)
-        //houseAdapter = HouseAdapter()
-        //houseAdapter.setData(house)
-        //houseRecyclerView = root.findViewById(R.id.house_recycler_view)
-        //houseRecyclerView.layoutManager = LinearLayoutManager(activity)
-        //houseRecyclerView.adapter = houseAdapter
+        houseAdapter.setData(house)
 
-
+        configureHouseRecyclerView()
+        houseRecyclerView.layoutManager = LinearLayoutManager(activity)
+        houseRecyclerView.adapter = houseAdapter
         return root
     }
 
@@ -64,16 +68,29 @@ class HomeFragment : Fragment() {
 
     // 6)
     private fun configureHouseRecyclerView(){
-        //mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
-        //mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
-        //    houseAdapter.setData(house)
-        //})
+        mainViewModel.allHouses.observe(viewLifecycleOwner, { h ->
+            //houseAdapter.setData(h)
+            house.clear()
+            house.addAll(h)
+            filterHouses()
+
+        })
     }
-    private fun configurePropertyRecyclerView(){
-        houseAdapter = HouseAdapter(/*mainActivity, currencyBoolean*/)
-        houseRecyclerView.adapter = houseAdapter
-        houseRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Filter houses ------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun filterHouses(){
+        val bundle = arguments
+        if (bundle != null){
+            typeFilter = bundle.getString("typeFilter").toString()
+            agentIdFilter = bundle.getLong("agentIdFilter")
+            mainViewModel.getAllHousesFiltered(agentIdFilter!!)
+        }
+        houseAdapter.filterData(house) //<-- ????? filter doesn't works, may be problem comes from filterData in HouseAdapter
     }
 
     //----------------------------------------------------------------------------------------------
@@ -84,27 +101,7 @@ class HomeFragment : Fragment() {
     private fun configureViewModel(){
         val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
         mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        //------------------- Get houses from room db ----------------------------------------------
-        mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
-            houseAdapter.setData(house)
-        })
     }
-    //private fun configureViewModel(){
-    //    val agentDao = RealEstateManagerDatabase.getInstance(requireContext()).agentDao
-    //    val houseDao = RealEstateManagerDatabase.getInstance(requireContext()).houseDao
-    //    val housePhotoDao = RealEstateManagerDatabase.getInstance(requireContext()).housePhotoDao
-    //    val agentRepository = AgentRepository(agentDao)
-    //    val houseRepository = HouseRepository(houseDao)
-    //    val housePhotoRepository = HousePhotoRepository(housePhotoDao)
-    //    val factory = ViewModelFactory(agentRepository, houseRepository, housePhotoRepository)
-    //    mainViewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
-    //    //------------------- Get houses from room db ----------------------------------------------
-    //    mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
-    //        houseAdapter.setData(house)
-    //    })
-    //    //-------------------------      TEST             --------------------------------------------------------------------------------------------
-    //    //mainViewModel.getAllHousesFiltered(mainActivity.getSearchIntentData())
-    //}
 
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Go to add house activity ------------------------------------

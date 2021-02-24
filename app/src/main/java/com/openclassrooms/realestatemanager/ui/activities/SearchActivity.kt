@@ -5,10 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.Button
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.droidman.ktoasty.showSuccessToast
 import com.openclassrooms.realestatemanager.R
@@ -20,6 +19,7 @@ import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class SearchActivity : AppCompatActivity() {
@@ -33,15 +33,24 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var neighborSpinner: Spinner
     private lateinit var statusSpinner: Spinner
     private lateinit var agentsSpinner: Spinner
+    private lateinit var selectedType: String
     private var selectedAgentId: Long = 0
+
+
+    private lateinit var homeFragment: HomeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        //val fragmentManager: FragmentManager = supportFragmentManager
+        //val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        homeFragment = HomeFragment()
         configureViewModel()
         clickOnSearchButton()
         //------------------- Spinner --------------------------------------------------------------
+        houseTypeSpinner = findViewById(R.id.search_type_spinner)
+        typeSpinner()
         agentsSpinner = findViewById(R.id.search_agent_spinner)
         agentsSpinner()
     }
@@ -54,6 +63,29 @@ class SearchActivity : AppCompatActivity() {
         injection = Injection()
         val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(this)
         mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- House type spinner ------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun typeSpinner(){
+        val houseType = resources.getStringArray(R.array.house_type)
+        val houseTypeSpinner = findViewById<Spinner>(R.id.search_type_spinner)
+        if (houseTypeSpinner != null){
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, houseType)
+            houseTypeSpinner.adapter = adapter
+
+            houseTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
+                    selectedType = typeHouseSelected
+                    showSuccessToast("Type selected: $typeHouseSelected", Toast.LENGTH_SHORT)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -105,8 +137,16 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun goBackToMainActivity(){
+        val bundle = Bundle()
+        bundle.putString("typeFilter", selectedType)
+        bundle.putLong("agentIdFilter", selectedAgentId)
+
+        homeFragment.arguments = bundle
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.frameLayout, homeFragment).commit()
+
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("agentId", selectedAgentId)
         startActivity(intent)
     }
 
