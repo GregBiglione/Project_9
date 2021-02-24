@@ -125,7 +125,7 @@
                 android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <Spinner
-                    android:id="@+id/search_neighborhood_status_spinner"
+                    android:id="@+id/search_neighborhood_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

@@ -33,6 +33,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var neighborSpinner: Spinner
     private lateinit var statusSpinner: Spinner
     private lateinit var agentsSpinner: Spinner
+    private lateinit var selectedNeighborhood: String
     private lateinit var selectedType: String
     private var selectedAgentId: Long = 0
 
@@ -51,6 +52,8 @@ class SearchActivity : AppCompatActivity() {
         //------------------- Spinner --------------------------------------------------------------
         houseTypeSpinner = findViewById(R.id.search_type_spinner)
         typeSpinner()
+        neighborSpinner = findViewById(R.id.search_neighborhood_spinner)
+        neighborhoodSpinner()
         agentsSpinner = findViewById(R.id.search_agent_spinner)
         agentsSpinner()
     }
@@ -81,6 +84,30 @@ class SearchActivity : AppCompatActivity() {
                     val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
                     selectedType = typeHouseSelected
                     showSuccessToast("Type selected: $typeHouseSelected", Toast.LENGTH_SHORT)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Neighborhood spinner ----------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun neighborhoodSpinner(){
+        neighborSpinner = findViewById(R.id.search_neighborhood_spinner)
+        val neighborhood = resources.getStringArray(R.array.house_neighborhood)
+        val neighborSpinner = findViewById<Spinner>(R.id.search_neighborhood_spinner)
+        if (neighborSpinner != null){
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, neighborhood)
+            neighborSpinner.adapter = adapter
+
+            neighborSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val neighborhoodSelected: String = neighborSpinner.selectedItem.toString().trim()
+                    selectedNeighborhood = neighborhoodSelected
+                    showSuccessToast("Neighborhood selected: $neighborhoodSelected", Toast.LENGTH_SHORT)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -139,6 +166,7 @@ class SearchActivity : AppCompatActivity() {
     private fun goBackToMainActivity(){
         val bundle = Bundle()
         bundle.putString("typeFilter", selectedType)
+        bundle.putString("neighborhoodFilter", selectedNeighborhood)
         bundle.putLong("agentIdFilter", selectedAgentId)
 
         homeFragment.arguments = bundle

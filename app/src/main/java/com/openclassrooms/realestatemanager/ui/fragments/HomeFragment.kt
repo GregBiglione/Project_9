@@ -28,6 +28,7 @@ class HomeFragment : Fragment() {
     //private lateinit var houseAdapter: HouseAdapter
     //------------------- Data from Search Activity ------------------------------------------------
     private lateinit var typeFilter: String
+    private lateinit var neighborhoodFilter: String
     private var agentIdFilter: Long? = 0
 
     //------------------------ test
@@ -87,6 +88,7 @@ class HomeFragment : Fragment() {
         val bundle = arguments
         if (bundle != null){
             typeFilter = bundle.getString("typeFilter").toString()
+            neighborhoodFilter = bundle.getString("neighborhoodFilter").toString()
             agentIdFilter = bundle.getLong("agentIdFilter")
             mainViewModel.getAllHousesFiltered(agentIdFilter!!)
         }
