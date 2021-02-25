@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.droidman.ktoasty.showSuccessToast
+import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
@@ -35,7 +36,10 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var agentsSpinner: Spinner
     private lateinit var selectedNeighborhood: String
     private lateinit var selectedType: String
+    private lateinit var selectedStatus: String
     private var selectedAgentId: Long = 0
+    private lateinit var soldDateTitle: TextView
+    private lateinit var soldDateLyt: TextInputLayout
 
 
     private lateinit var homeFragment: HomeFragment
@@ -54,8 +58,13 @@ class SearchActivity : AppCompatActivity() {
         typeSpinner()
         neighborSpinner = findViewById(R.id.search_neighborhood_spinner)
         neighborhoodSpinner()
+        statusSpinner = findViewById(R.id.search_status_spinner)
+        statusSpinner()
         agentsSpinner = findViewById(R.id.search_agent_spinner)
         agentsSpinner()
+        //------------------- Sold date ------------------------------------------------------------
+        soldDateTitle = findViewById(R.id.search_sold_title)
+        soldDateLyt = findViewById(R.id.search_sale_date_ti_ly)
     }
 
     //--------------------------------------------------------------------------------
@@ -116,6 +125,38 @@ class SearchActivity : AppCompatActivity() {
     }
 
     //----------------------------------------------------------------------------------------------
+    //-------------------------------- Status spinner ----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun statusSpinner(){
+        val houseStatus = resources.getStringArray(R.array.house_status_array)
+        statusSpinner = findViewById(R.id.search_status_spinner)
+        if (statusSpinner != null){
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, houseStatus)
+            statusSpinner.adapter = adapter
+
+            statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val statusSelected: String = statusSpinner.selectedItem.toString().trim()
+                    selectedStatus = statusSelected
+                    showSuccessToast("Status: $statusSelected", Toast.LENGTH_SHORT)
+                    //houseSaleDateInputLyt = findViewById(R.id.add_house_sale_date_input)
+                    if (statusSelected == getString(R.string.sold)){
+                        soldDateTitle.visibility = View.VISIBLE
+                        soldDateLyt.visibility = View.VISIBLE
+                    }
+                    else{
+                        soldDateTitle.visibility = View.GONE
+                        soldDateLyt.visibility = View.GONE
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
     //-------------------------------- Agents spinner ----------------------------------------------
     //----------------------------------------------------------------------------------------------
 
@@ -167,6 +208,7 @@ class SearchActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString("typeFilter", selectedType)
         bundle.putString("neighborhoodFilter", selectedNeighborhood)
+        bundle.putString("statusFilter", selectedStatus)
         bundle.putLong("agentIdFilter", selectedAgentId)
 
         homeFragment.arguments = bundle

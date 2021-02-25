@@ -29,6 +29,7 @@ class HomeFragment : Fragment() {
     //------------------- Data from Search Activity ------------------------------------------------
     private lateinit var typeFilter: String
     private lateinit var neighborhoodFilter: String
+    private lateinit var statusFilter: String
     private var agentIdFilter: Long? = 0
 
     //------------------------ test
@@ -89,10 +90,12 @@ class HomeFragment : Fragment() {
         if (bundle != null){
             typeFilter = bundle.getString("typeFilter").toString()
             neighborhoodFilter = bundle.getString("neighborhoodFilter").toString()
+            statusFilter = bundle.getString("statusFilter").toString()
             agentIdFilter = bundle.getLong("agentIdFilter")
             mainViewModel.getAllHousesFiltered(agentIdFilter!!)
         }
-        houseAdapter.filterData(house) //<-- ????? filter doesn't works, may be problem comes from filterData in HouseAdapter
+        houseAdapter.filterData(house) //<-- ????? filter doesn't works, may be problem comes from filterData in HouseAdapter because the full list is load again,
+        // Find a way to filter the list
     }
 
     //----------------------------------------------------------------------------------------------
