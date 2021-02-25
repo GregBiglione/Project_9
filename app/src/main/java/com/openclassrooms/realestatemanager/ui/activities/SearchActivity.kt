@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -40,6 +42,12 @@ class SearchActivity : AppCompatActivity() {
     private var selectedAgentId: Long = 0
     private lateinit var soldDateTitle: TextView
     private lateinit var soldDateLyt: TextInputLayout
+    //------------------- Checkbox -----------------------------------------------------------------
+    private lateinit var pointsOfInterests: TextInputEditText
+    private lateinit var listOfPointsOfInterests: Array<String?>
+    private lateinit var checkedPointsOfInterests: BooleanArray
+    private var poi: ArrayList<Int> = ArrayList()
+    private lateinit var selectedPoi: String
     //------------------- Date picker --------------------------------------------------------------
     private lateinit var entryDate: TextInputEditText
     private lateinit var saleDate: TextInputEditText
@@ -79,7 +87,9 @@ class SearchActivity : AppCompatActivity() {
         choseSaleDate()
         //------------------- Time converter -------------------------------------------------------
         timeConverters = TimeConverters()
-        //convertDateStringToLong()
+        //-------------------------------- Checkbox poi --------------------------------------------
+        pointsOfInterests = findViewById(R.id.search_poi_ti_et)
+        pointsOfInterestsCheckBox()
     }
 
     //--------------------------------------------------------------------------------
@@ -168,6 +178,60 @@ class SearchActivity : AppCompatActivity() {
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Poi multi checkbox spinner ----------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun pointsOfInterestsCheckBox(){
+        listOfPointsOfInterests = resources.getStringArray(R.array.points_of_interests_array)
+        checkedPointsOfInterests = BooleanArray(listOfPointsOfInterests.size)
+
+        pointsOfInterests.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(R.string.points_of_interests)
+            builder.setMultiChoiceItems(listOfPointsOfInterests, checkedPointsOfInterests,
+                    DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
+                        if (isChecked) {
+                            if (!poi.contains(which)) {
+                                poi.add(which)
+                            }
+                        } else {
+                            poi.remove(which)
+                        }
+                    })
+            //-------------------------------- Behavior if you cancel the selection ----------------
+            builder.setCancelable(false)
+            //-------------------------------- Positive button -------------------------------------
+            builder.setPositiveButton(R.string.add, DialogInterface.OnClickListener { dialog, which ->
+                var item: String = " "
+                for (i in poi.indices) {
+                    item += listOfPointsOfInterests[poi[i]]
+
+                    if (i != poi.size - 1) {
+                        item = item + ", "
+                    }
+                }
+                pointsOfInterests.setText(item) // use event if moved in DialogFragment() ??
+                selectedPoi = pointsOfInterests.text.toString().trim()
+
+            })
+            //-------------------------------- Negative button -------------------------------------
+            builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, which ->
+                dialog.dismiss()
+            })
+            //-------------------------------- Neutral button --------------------------------------
+            builder.setNeutralButton(R.string.clear, DialogInterface.OnClickListener { dialog, which ->
+                for (i in checkedPointsOfInterests.indices) {
+                    checkedPointsOfInterests[i] = false
+                    poi.clear()
+                    pointsOfInterests.setText("")
+                }
+            })
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
         }
     }
 
@@ -304,6 +368,7 @@ class SearchActivity : AppCompatActivity() {
         bundle.putString("typeFilter", selectedType)
         bundle.putString("neighborhoodFilter", selectedNeighborhood)
         bundle.putString("statusFilter", selectedStatus)
+        bundle.putString("poiFilter", selectedPoi)
         bundle.putLong("entryDateFilter", selectedEntryDate)
         bundle.putLong("saleDateFilter", selectedSaleDate)
         bundle.putLong("agentIdFilter", selectedAgentId)
