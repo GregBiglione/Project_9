@@ -1,26 +1,26 @@
 package com.openclassrooms.realestatemanager.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.droidman.ktoasty.showSuccessToast
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
-import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.repositories.AgentRepository
-import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
-import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.picker.SearchDatePickerFragment
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
+import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class SearchActivity : AppCompatActivity() {
@@ -40,6 +40,14 @@ class SearchActivity : AppCompatActivity() {
     private var selectedAgentId: Long = 0
     private lateinit var soldDateTitle: TextView
     private lateinit var soldDateLyt: TextInputLayout
+    //------------------- Date picker --------------------------------------------------------------
+    private lateinit var entryDate: TextInputEditText
+    private lateinit var saleDate: TextInputEditText
+    //------------------- Time converter -----------------------------------------------------------
+    private lateinit var timeConverters: TimeConverters
+    private var selectedEntryDate: Long = 0
+    private var selectedSaleDate: Long = 0
+
 
 
     private lateinit var homeFragment: HomeFragment
@@ -65,6 +73,13 @@ class SearchActivity : AppCompatActivity() {
         //------------------- Sold date ------------------------------------------------------------
         soldDateTitle = findViewById(R.id.search_sold_title)
         soldDateLyt = findViewById(R.id.search_sale_date_ti_ly)
+        entryDate = findViewById(R.id.search_entry_et)
+        chooseEntryDate()
+        saleDate = findViewById(R.id.search_sale_et)
+        choseSaleDate()
+        //------------------- Time converter -------------------------------------------------------
+        timeConverters = TimeConverters()
+        //convertDateStringToLong()
     }
 
     //--------------------------------------------------------------------------------
@@ -140,7 +155,7 @@ class SearchActivity : AppCompatActivity() {
                     val statusSelected: String = statusSpinner.selectedItem.toString().trim()
                     selectedStatus = statusSelected
                     showSuccessToast("Status: $statusSelected", Toast.LENGTH_SHORT)
-                    //houseSaleDateInputLyt = findViewById(R.id.add_house_sale_date_input)
+
                     if (statusSelected == getString(R.string.sold)){
                         soldDateTitle.visibility = View.VISIBLE
                         soldDateLyt.visibility = View.VISIBLE
@@ -154,6 +169,82 @@ class SearchActivity : AppCompatActivity() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Set entry & sold date ---------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun chooseEntryDate(){
+        entryDate.setOnClickListener { showEntryPickerDialogEntryDate() }
+    }
+
+    private fun choseSaleDate(){
+        saleDate.setOnClickListener { showSalePickerDialogEntryDate() }
+    }
+
+    private fun showEntryPickerDialogEntryDate() {
+        val datePicker = SearchDatePickerFragment{ day, month, year -> onEntryDateSelected( day, month, year)}
+        datePicker.show(supportFragmentManager, "Date picker")
+    }
+
+    private fun showSalePickerDialogEntryDate() {
+        val datePicker = SearchDatePickerFragment{ day, month, year -> onSaleDateSelected( day, month, year)}
+        datePicker.show(supportFragmentManager, "Date picker")
+    }
+
+    //-------------------------------- Set entry date ----------------------------------------------
+
+    @SuppressLint("SetTextI18n")
+    private fun onEntryDateSelected(day: Int, month: Int, year: Int){
+        var dayOfWeek = ""
+        val monthOfYear = month + 1
+        var monthString = ""
+
+        dayOfWeek = if (day < 10){
+            "0$day"
+        }
+        else{
+            day.toString()
+        }
+        monthString = if (monthOfYear < 10){
+            "0$monthOfYear"
+        }
+        else{
+            monthOfYear.toString()
+        }
+
+        entryDate.setText("$dayOfWeek/$monthString/$year")
+        val entryDateString: String = entryDate.text.toString().trim()
+        val entryDateLong: Long = timeConverters.convertDateToLong(entryDateString)
+        selectedEntryDate = entryDateLong
+    }
+
+    //-------------------------------- Set sale date -----------------------------------------------
+
+    @SuppressLint("SetTextI18n")
+    private fun onSaleDateSelected(day: Int, month: Int, year: Int){
+        var dayOfWeek = ""
+        val monthOfYear = month + 1
+        var monthString = ""
+
+        dayOfWeek = if (day < 10){
+            "0$day"
+        }
+        else{
+            day.toString()
+        }
+        monthString = if (monthOfYear < 10){
+            "0$monthOfYear"
+        }
+        else{
+            monthOfYear.toString()
+        }
+
+        saleDate.setText("$dayOfWeek/$monthString/$year").toString()
+        val saleDateString: String = saleDate.text.toString().trim()
+        val saleDateLong: Long = timeConverters.convertDateToLong(saleDateString)
+        selectedSaleDate = saleDateLong
     }
 
     //----------------------------------------------------------------------------------------------
@@ -204,18 +295,31 @@ class SearchActivity : AppCompatActivity() {
         goBackToMainActivity()
     }
 
-    private fun goBackToMainActivity(){
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Filter data -------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun filterHouses(){
         val bundle = Bundle()
         bundle.putString("typeFilter", selectedType)
         bundle.putString("neighborhoodFilter", selectedNeighborhood)
         bundle.putString("statusFilter", selectedStatus)
+        bundle.putLong("entryDateFilter", selectedEntryDate)
+        bundle.putLong("saleDateFilter", selectedSaleDate)
         bundle.putLong("agentIdFilter", selectedAgentId)
 
         homeFragment.arguments = bundle
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.frameLayout, homeFragment).commit()
+    }
 
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Back to to Main activity after filter -----------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun goBackToMainActivity(){
+        filterHouses()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
