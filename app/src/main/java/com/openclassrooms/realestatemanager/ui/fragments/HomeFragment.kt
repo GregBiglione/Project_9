@@ -88,10 +88,10 @@ class HomeFragment : Fragment() {
     private fun filterHouses(){
         val bundle = arguments
         if (bundle != null){
-            typeFilter = bundle.getString("typeFilter").toString()
-            neighborhoodFilter = bundle.getString("neighborhoodFilter").toString()
-            statusFilter = bundle.getString("statusFilter").toString()
-            agentIdFilter = bundle.getLong("agentIdFilter")
+            //typeFilter = bundle.getString("typeFilter").toString()
+            //neighborhoodFilter = bundle.getString("neighborhoodFilter").toString()
+            //statusFilter = bundle.getString("statusFilter").toString()
+            //agentIdFilter = bundle.getLong("agentIdFilter")
             mainViewModel.getAllHousesFiltered(agentIdFilter!!)
         }
         houseAdapter.filterData(house) //<-- ????? filter doesn't works, may be problem comes from filterData in HouseAdapter because the full list is load again,

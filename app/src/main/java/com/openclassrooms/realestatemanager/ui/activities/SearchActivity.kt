@@ -15,11 +15,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.mohammedalaa.seekbar.DoubleValueSeekBarView
+import com.mohammedalaa.seekbar.RangeSeekBarView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
+import com.openclassrooms.realestatemanager.model.House
+import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.picker.SearchDatePickerFragment
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 import com.openclassrooms.realestatemanager.utils.TimeConverters
@@ -47,7 +51,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var listOfPointsOfInterests: Array<String?>
     private lateinit var checkedPointsOfInterests: BooleanArray
     private var poi: ArrayList<Int> = ArrayList()
-    private lateinit var selectedPoi: String
+    private var selectedPoi: String = ""
     //------------------- Date picker --------------------------------------------------------------
     private lateinit var entryDate: TextInputEditText
     private lateinit var saleDate: TextInputEditText
@@ -55,8 +59,14 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var timeConverters: TimeConverters
     private var selectedEntryDate: Long = 0
     private var selectedSaleDate: Long = 0
-
-
+    //------------------- Simple seek bar ----------------------------------------------------------
+    private lateinit var priceSeekBar: RangeSeekBarView
+    //------------------- Double seek bar ----------------------------------------------------------
+    private lateinit var photoSeekBar: DoubleValueSeekBarView
+    private lateinit var surfaceSeekBar: DoubleValueSeekBarView
+    private lateinit var roomsSeekBar: DoubleValueSeekBarView
+    private lateinit var bathroomsSeekBar: DoubleValueSeekBarView
+    private lateinit var bedroomsSeekBar: DoubleValueSeekBarView
 
     private lateinit var homeFragment: HomeFragment
 
@@ -90,6 +100,14 @@ class SearchActivity : AppCompatActivity() {
         //-------------------------------- Checkbox poi --------------------------------------------
         pointsOfInterests = findViewById(R.id.search_poi_ti_et)
         pointsOfInterestsCheckBox()
+        //------------------- Simple seek bar ------------------------------------------------------
+        priceSeekBar = findViewById(R.id.search_price_range_seek_bar)
+        //------------------- Double seek bar ------------------------------------------------------
+        photoSeekBar = findViewById(R.id.search_photos_double_range_seek_bar)
+        surfaceSeekBar = findViewById(R.id.search_surface_double_range_seek_bar)
+        roomsSeekBar = findViewById(R.id.search_rooms_double_range_seek_bar)
+        bathroomsSeekBar = findViewById(R.id.search_bathrooms_double_range_seek_bar)
+        bedroomsSeekBar = findViewById(R.id.search_bedrooms_double_range_seek_bar)
     }
 
     //--------------------------------------------------------------------------------
@@ -363,15 +381,62 @@ class SearchActivity : AppCompatActivity() {
     //-------------------------------- Filter data -------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
+    //private fun generateHousePhotoList(): ArrayList<HousePhoto>{
+    //    return ArrayList()
+    //}
+
+    private fun configureHouseRecyclerView(){
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        //------------------- Get houses from room db ----------------------------------------------
+        mainViewModel.allHousePhotos.observe(this, { h ->
+            //houseAdapter.setData(h)
+            //house.clear()
+            //house.addAll(h)
+            //filterHouses()
+
+        })
+    }
+
     private fun filterHouses(){
+        //var filterHousePhotoList = generateHousePhotoList()
+        //var filterMinPhotos: Int = photoSeekBar.currentMinValue
+        //var filterMaxPhotos: Int = photoSeekBar.currentMaxValue
+
+        //if (filterHousePhotoList.size => filterMinPhotos && filterHousePhotoList.size =< filterMaxPhotos){
+        //    return filterHousePhotoList
+        //}
+        //var filterSurface: Int
+        //var filterMinSurface: Int = surfaceSeekBar.currentMinValue
+        //var filterMaxSurface: Int = surfaceSeekBar.currentMaxValue
+
+
+        val filterPrice: Int = priceSeekBar.currentValue
+
         val bundle = Bundle()
-        bundle.putString("typeFilter", selectedType)
-        bundle.putString("neighborhoodFilter", selectedNeighborhood)
-        bundle.putString("statusFilter", selectedStatus)
-        bundle.putString("poiFilter", selectedPoi)
-        bundle.putLong("entryDateFilter", selectedEntryDate)
-        bundle.putLong("saleDateFilter", selectedSaleDate)
-        bundle.putLong("agentIdFilter", selectedAgentId)
+        bundle.putSerializable("filterHouse", House(null, null, selectedType, selectedNeighborhood, null,
+                filterPrice, null, null, null, null, null, selectedStatus,
+                selectedPoi, selectedEntryDate, selectedSaleDate, selectedAgentId))
+        //bundle.putInt("minPhotosFilter", photoSeekBar.currentMinValue)
+        //bundle.putInt("maxPhotosFilter", photoSeekBar.currentMaxValue)
+        //bundle.putString("typeFilter", selectedType)
+        //bundle.putString("neighborhoodFilter", selectedNeighborhood)
+        //bundle.putInt("priceFilter", priceSeekBar.currentValue)
+        //bundle.putInt("minSurfaceFilter", surfaceSeekBar.currentMinValue)
+        //bundle.putInt("maxSurfaceFilter", surfaceSeekBar.currentMaxValue)
+        //bundle.putInt("minRoomsFilter", roomsSeekBar.currentMinValue)
+        //bundle.putInt("maxRoomFilter", roomsSeekBar.currentMaxValue)
+//
+        //bundle.putInt("minBathroomFilter", bathroomsSeekBar.currentMinValue)
+        //bundle.putInt("maxBathroomFilter", bathroomsSeekBar.currentMaxValue)
+//
+        //bundle.putInt("minBedroomsFilter", bedroomsSeekBar.currentMinValue)
+        //bundle.putInt("maxBedroomsFilter", bedroomsSeekBar.currentMaxValue)
+//
+        //bundle.putString("statusFilter", selectedStatus)
+        //bundle.putString("poiFilter", selectedPoi)
+        //bundle.putLong("entryDateFilter", selectedEntryDate)
+        //bundle.putLong("saleDateFilter", selectedSaleDate)
+        //bundle.putLong("agentIdFilter", selectedAgentId)
 
         homeFragment.arguments = bundle
         val fragmentManager: FragmentManager = supportFragmentManager

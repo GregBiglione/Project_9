@@ -152,7 +152,7 @@
                 app:drawableStartCompat="@drawable/ic_baseline_attach_money_24" />
 
             <com.mohammedalaa.seekbar.RangeSeekBarView
-                android:id="@+id/search_range_seek_bar"
+                android:id="@+id/search_price_range_seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"

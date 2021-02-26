@@ -6,6 +6,7 @@ import android.os.Parcelable
 import androidx.room.*
 import com.openclassrooms.realestatemanager.utils.ListConverters
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 
 @Parcelize
@@ -32,7 +33,7 @@ data class House(
         var saleDate: Long?,
         @ColumnInfo(name = "agentId", index = true)
         var agentId: Long?
-): Parcelable
+): Parcelable, Serializable
 //{
 //
 //        //-------------------------------- Utils ---------------------------------------------------
