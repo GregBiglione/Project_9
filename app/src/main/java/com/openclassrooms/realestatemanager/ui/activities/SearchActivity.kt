@@ -27,11 +27,13 @@ import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.picker.SearchDatePickerFragment
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 import com.openclassrooms.realestatemanager.utils.TimeConverters
+import com.openclassrooms.realestatemanager.viewmodel.FilterMainViewModel
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var filterMainViewModel: FilterMainViewModel
     private lateinit var injection: Injection
     //------------------- Button -------------------------------------------------------------------
     private lateinit var searchButton: Button
@@ -110,9 +112,9 @@ class SearchActivity : AppCompatActivity() {
         bedroomsSeekBar = findViewById(R.id.search_bedrooms_double_range_seek_bar)
     }
 
-    //--------------------------------------------------------------------------------
-    //------------------- Configure ViewModel ----------------------------------------
-    //--------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Configure ViewModel -----------------------------------------
+    //----------------------------------------------------------------------------------------------
 
     private fun configureViewModel(){
         injection = Injection()
@@ -378,24 +380,19 @@ class SearchActivity : AppCompatActivity() {
     }
 
     //----------------------------------------------------------------------------------------------
-    //-------------------------------- Filter data -------------------------------------------------
+    //-------------------------------- Configure FilterViewModel -----------------------------------
     //----------------------------------------------------------------------------------------------
 
-    //private fun generateHousePhotoList(): ArrayList<HousePhoto>{
-    //    return ArrayList()
-    //}
-
-    private fun configureHouseRecyclerView(){
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        //------------------- Get houses from room db ----------------------------------------------
-        mainViewModel.allHousePhotos.observe(this, { h ->
-            //houseAdapter.setData(h)
-            //house.clear()
-            //house.addAll(h)
-            //filterHouses()
-
-        })
+    private fun configureFilterViewModel(){
+        injection = Injection()
+        val viewModelFactory: ViewModelFactory = injection.provideFilterViewModelFactory(this)
+        filterMainViewModel = ViewModelProvider(this, viewModelFactory).get(FilterMainViewModel::class.java)
+        filterMainViewModel.getAllHousesFiltered(selectedAgentId)
     }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Filter data -------------------------------------------------
+    //----------------------------------------------------------------------------------------------
 
     private fun filterHouses(){
         //var filterHousePhotoList = generateHousePhotoList()
@@ -436,7 +433,7 @@ class SearchActivity : AppCompatActivity() {
         //bundle.putString("poiFilter", selectedPoi)
         //bundle.putLong("entryDateFilter", selectedEntryDate)
         //bundle.putLong("saleDateFilter", selectedSaleDate)
-        //bundle.putLong("agentIdFilter", selectedAgentId)
+        bundle.putLong("agentIdFilter", selectedAgentId)
 
         homeFragment.arguments = bundle
         val fragmentManager: FragmentManager = supportFragmentManager

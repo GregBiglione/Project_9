@@ -87,8 +87,8 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun filterData(house: List<House>) {
-        this.houseList = house // <---
-        notifyDataSetChanged()
-    }
+    //fun filterData(house: List<House>) {
+    //    this.houseList = house // <--- Don't put the full list
+    //    notifyDataSetChanged()
+    //}
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.viewmodel.FilterMainViewModel
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class ViewModelFactory(private val agentRepository: AgentRepository,
@@ -13,6 +14,9 @@ class ViewModelFactory(private val agentRepository: AgentRepository,
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)){
             return MainViewModel(agentRepository, houseRepository, housePhotoRepository) as T
+        }
+        if (modelClass.isAssignableFrom(FilterMainViewModel::class.java)){
+            return FilterMainViewModel(agentRepository, houseRepository, housePhotoRepository) as T
         }
         throw IllegalArgumentException("Unknown View Model class")
     }

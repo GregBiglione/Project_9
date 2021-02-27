@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.droidman.ktoasty.showSuccessToast
+import com.droidman.ktoasty.showWarningToast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HouseAdapter
@@ -19,12 +22,14 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
+import com.openclassrooms.realestatemanager.viewmodel.FilterMainViewModel
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var houseRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var filterMainViewModel: FilterMainViewModel
     //private lateinit var houseAdapter: HouseAdapter
     //------------------- Data from Search Activity ------------------------------------------------
     private lateinit var typeFilter: String
@@ -73,7 +78,7 @@ class HomeFragment : Fragment() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
         mainViewModel.allHouses.observe(viewLifecycleOwner, { h ->
-            //houseAdapter.setData(h)
+            houseAdapter.setData(h)
             house.clear()
             house.addAll(h)
             filterHouses()
@@ -88,13 +93,21 @@ class HomeFragment : Fragment() {
     private fun filterHouses(){
         val bundle = arguments
         if (bundle != null){
+            agentIdFilter = bundle.getLong("agentIdFilter")
+
+            val viewModelFactory: ViewModelFactory = injection.provideFilterViewModelFactory(requireContext())
+            filterMainViewModel = ViewModelProvider(this, viewModelFactory).get(FilterMainViewModel::class.java)
+            filterMainViewModel.getAllHousesFiltered(agentIdFilter!!)
+
+            houseAdapter.setData(house)
+            activity?.showWarningToast("Filter applied with agent id =$agentIdFilter", Toast.LENGTH_SHORT, true)
             //typeFilter = bundle.getString("typeFilter").toString()
             //neighborhoodFilter = bundle.getString("neighborhoodFilter").toString()
             //statusFilter = bundle.getString("statusFilter").toString()
             //agentIdFilter = bundle.getLong("agentIdFilter")
-            mainViewModel.getAllHousesFiltered(agentIdFilter!!)
+            //mainViewModel.getAllHousesFiltered(agentIdFilter!!)
         }
-        houseAdapter.filterData(house) //<-- ????? filter doesn't works, may be problem comes from filterData in HouseAdapter because the full list is load again,
+        //houseAdapter.filterData(house) //<-- ????? filter doesn't works, may be problem comes from filterData in HouseAdapter because the full list is load again,
         // Find a way to filter the list
     }
 

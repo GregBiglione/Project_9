@@ -360,5 +360,15 @@
     <string name="available">Available</string>
     <string name="search">Search</string>
     <string name="action_refresh">Refresh</string>
+    <string name="credit_simulator">Credit simulator</string>
+    <string name="simulator_house_price">House price</string>
+    <string name="simulator_contribution">Contribution</string>
+    <string name="simulator_borrowed_amount">Borrowed amount</string>
+    <string name="simulator_rate">Rate</string>
+    <string name="simulator_monthly_payment">Monthly payment</string>
+    <string name="simulator_total_cost">Total cost</string>
+    <string name="simulator_total_interests">Total interests</string>
+    <string name="rate">%</string>
+    <string name="simulate">Simulate</string>
 
 </resources>

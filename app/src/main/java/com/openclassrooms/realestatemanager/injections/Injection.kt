@@ -5,6 +5,7 @@ import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDataba
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.viewmodel.FilterMainViewModel
 
 class Injection {
 
@@ -24,6 +25,13 @@ class Injection {
     }
 
     fun provideViewModelFactory(context: Context): ViewModelFactory {
+        val agentRepository: AgentRepository = provideAgentRepository(context)
+        val houseRepository: HouseRepository = provideHouseRepository(context)
+        val housePhotoRepository: HousePhotoRepository = provideHousePhotoRepository(context)
+        return ViewModelFactory(agentRepository, houseRepository, housePhotoRepository)
+    }
+
+    fun provideFilterViewModelFactory(context: Context): ViewModelFactory {
         val agentRepository: AgentRepository = provideAgentRepository(context)
         val houseRepository: HouseRepository = provideHouseRepository(context)
         val housePhotoRepository: HousePhotoRepository = provideHousePhotoRepository(context)
