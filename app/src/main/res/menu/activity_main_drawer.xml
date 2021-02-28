@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_baseline_person_add_24"
             android:title="@string/menu_add_agent" />
         <item
+            android:id="@+id/nav_credit_simulator"
+            android:icon="@drawable/ic_baseline_calculate_24"
+            android:title="@string/credit_simulator" />
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_baseline_settings_24"
             android:title="@string/menu_settings" />

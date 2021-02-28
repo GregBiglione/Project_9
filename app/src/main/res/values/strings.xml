@@ -370,5 +370,10 @@
     <string name="simulator_total_interests">Total interests</string>
     <string name="rate">%</string>
     <string name="simulate">Simulate</string>
+    <string name="simulator_price_with_contribution">Price with contribution</string>
+    <string name="number_of_months">Number of months</string>
+    <string name="simulator_error_rate">Set a rate</string>
+    <string name="simulator_error_price">Set a price</string>
+    <string name="simulator_error_months">Set number of months</string>
 
 </resources>
