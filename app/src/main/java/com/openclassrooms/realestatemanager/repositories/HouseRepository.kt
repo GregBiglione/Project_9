@@ -20,7 +20,20 @@ class HouseRepository(private val houseDao: HouseDao) {
         houseDao.updateHouse(house)
     }
 
-    fun getAllHousesFiltered(agentId: Long){
-        houseDao.getAllHousesFiltered(agentId)
+    fun getAllHousesFiltered(minHousePhotoNumber: Int, maxHousePhotoNumber: Int,
+                             type: String,
+                             neighborhood: String,
+                             minPrice: Int, maxPrice: Int,
+                             minSurface: Int, maxSurface: Int,
+                             minRooms: Int, maxRooms: Int,
+                             minBathrooms: Int, maxBathrooms: Int,
+                             minBedrooms: Int, maxBedrooms: Int,
+                             status: String,
+                             poi: String?,
+                             entryDate: Long?, saleDate: Long?,
+                             agentId: Long): LiveData<List<House>> {
+        return houseDao.getAllHousesFiltered(minHousePhotoNumber, maxHousePhotoNumber, type, neighborhood, minPrice, maxPrice,
+                minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, status,
+                poi, entryDate, saleDate, agentId)
     }
 }

@@ -19,18 +19,18 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HouseAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.model.FilteredHouse
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
-import com.openclassrooms.realestatemanager.viewmodel.FilterMainViewModel
+//import com.openclassrooms.realestatemanager.viewmodel.FilterMainViewModel
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var houseRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var filterMainViewModel: FilterMainViewModel
-    //private lateinit var houseAdapter: HouseAdapter
+    private lateinit var injection: Injection
     //------------------- Data from Search Activity ------------------------------------------------
     private lateinit var typeFilter: String
     private lateinit var neighborhoodFilter: String
@@ -39,11 +39,12 @@ class HomeFragment : Fragment() {
 
     //------------------------ test
     private lateinit var mainActivity: MainActivity
-    //private var currencyBoolean: Boolean = false
+    private var currencyBoolean: Boolean = false
     // 1)
     private val house: ArrayList<House> = ArrayList()
+    private var filteredHouse: ArrayList<FilteredHouse> = ArrayList()
+    //private val houseAdapter: HouseAdapter = HouseAdapter(currencyBoolean)
     private val houseAdapter: HouseAdapter = HouseAdapter()
-    private lateinit var injection: Injection
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -59,13 +60,12 @@ class HomeFragment : Fragment() {
         //currencyBoolean = mainActivity.booleanOnCurrencyClick()
         // 4)
         configureViewModel()
-
-        // 5)
-        houseAdapter.setData(house)
+        //houseAdapter.setData(house)
 
         configureHouseRecyclerView()
         houseRecyclerView.layoutManager = LinearLayoutManager(activity)
         houseRecyclerView.adapter = houseAdapter
+        //houseAdapter.setData(house)
         return root
     }
 
@@ -78,11 +78,10 @@ class HomeFragment : Fragment() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
         mainViewModel.allHouses.observe(viewLifecycleOwner, { h ->
-            houseAdapter.setData(h)
+            houseAdapter.setData(h) // suppr when filterHouses will work
             house.clear()
             house.addAll(h)
             filterHouses()
-
         })
     }
 
@@ -92,23 +91,40 @@ class HomeFragment : Fragment() {
 
     private fun filterHouses(){
         val bundle = arguments
+
         if (bundle != null){
-            agentIdFilter = bundle.getLong("agentIdFilter")
-
-            val viewModelFactory: ViewModelFactory = injection.provideFilterViewModelFactory(requireContext())
-            filterMainViewModel = ViewModelProvider(this, viewModelFactory).get(FilterMainViewModel::class.java)
-            filterMainViewModel.getAllHousesFiltered(agentIdFilter!!)
-
-            houseAdapter.setData(house)
-            activity?.showWarningToast("Filter applied with agent id =$agentIdFilter", Toast.LENGTH_SHORT, true)
-            //typeFilter = bundle.getString("typeFilter").toString()
-            //neighborhoodFilter = bundle.getString("neighborhoodFilter").toString()
-            //statusFilter = bundle.getString("statusFilter").toString()
-            //agentIdFilter = bundle.getLong("agentIdFilter")
-            //mainViewModel.getAllHousesFiltered(agentIdFilter!!)
+            var filter = bundle.getSerializable("filteredHouse")
+            //val minPhotos = bundle.getInt("minPhotos")
+            //val maxPhotos = bundle.getInt("maxPhotos")
+            //val type = bundle.getString("type")
+            //val selectedNeighborhood = bundle.getString("neighborhood")
+            //val minPrice =  bundle.getInt("minPrice")
+            //val maxPrice = bundle.getInt("maxPrice")
+            //val minSurface = bundle.getInt("minSurface")
+            //val maxSurface = bundle.getInt("maxSurface")
+            //val minRooms = bundle.getInt("minRooms")
+            //val maxRooms =  bundle.getInt("maxRooms")
+            //val minBathrooms = bundle.getInt("minBathrooms")
+            //val maxBathrooms = bundle.getInt("maxBathrooms")
+            //val minBedrooms = bundle.getInt("minBedrooms")
+            //val maxBedrooms = bundle.getInt("maxBedrooms")
+            //val selectedStatus = bundle.getString("status")
+            //val selectedPoi = bundle.getString("poi")
+            //val selectedEntryDate = bundle.getLong("entryDate")
+            //val selectedSaleDate = bundle.getLong("saleDate")
+            //val selectedAgentId = bundle.getLong("agentId")
+            val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
+            mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+            //mainViewModel.getAllHousesFiltered(filter as ArrayList<FilteredHouse>)
+            //mainViewModel.getAllHousesFiltered(/*minPhotos, maxPhotos, type!!, selectedNeighborhood!!, minPrice, maxPrice,
+            //minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus!!,
+            //selectedPoi, selectedEntryDate, selectedSaleDate, selectedAgentId*/)
+            //        .observe(viewLifecycleOwner, { f ->
+            //            house.clear()
+            //            house.addAll(f)
+            //            houseAdapter.setData(house)
+            //        })
         }
-        //houseAdapter.filterData(house) //<-- ????? filter doesn't works, may be problem comes from filterData in HouseAdapter because the full list is load again,
-        // Find a way to filter the list
     }
 
     //----------------------------------------------------------------------------------------------

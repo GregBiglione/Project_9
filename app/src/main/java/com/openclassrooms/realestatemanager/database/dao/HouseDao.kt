@@ -20,8 +20,19 @@ interface HouseDao {
     @Update
     fun updateHouse(house: House)
 
-    @Query("SELECT * FROM house WHERE agentId = :agentId")
-    fun getAllHousesFiltered(agentId: Long): LiveData<List<House>>
+    @Query("SELECT * FROM house WHERE housePhotoList BETWEEN :minHousePhotoNumber AND :maxHousePhotoNumber OR typeOfHouse = :type OR neighborhood = :neighborhood OR price BETWEEN :minPrice AND :maxPrice OR surface BETWEEN :minSurface AND :maxSurface OR numberOfRooms BETWEEN :minRooms AND :maxRooms OR numberOfBathRooms BETWEEN :minBathrooms AND :maxBathrooms OR numberOfBedRooms BETWEEN :minBedrooms AND :maxBedrooms OR available = :status OR proximityPointsOfInterest = :poi OR entryDate = :entryDate OR saleDate = :saleDate OR agentId = :agentId")
+    fun getAllHousesFiltered(minHousePhotoNumber: Int, maxHousePhotoNumber: Int,
+                             type: String,
+                             neighborhood: String,
+                             minPrice: Int, maxPrice: Int,
+                             minSurface: Int, maxSurface: Int,
+                             minRooms: Int, maxRooms: Int,
+                             minBathrooms: Int, maxBathrooms: Int,
+                             minBedrooms: Int, maxBedrooms: Int,
+                             status: String,
+                             poi: String?,
+                             entryDate: Long?, saleDate: Long?,
+                             agentId: Long): LiveData<List<House>>
 
     //------------------- Cursor handled by content provider ---------------------------------------
 

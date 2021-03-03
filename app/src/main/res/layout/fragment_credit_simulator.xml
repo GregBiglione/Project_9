@@ -39,6 +39,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/simulator_price_euros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/euros"
@@ -46,6 +47,7 @@
             android:visibility="gone"/>
 
         <TextView
+            android:id="@+id/simulator_price_dollars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dollars"
@@ -85,6 +87,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/simulator_contribution_euros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/euros"
@@ -92,6 +95,7 @@
             android:visibility="gone"/>
 
         <TextView
+            android:id="@+id/simulator_contribution_dollars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dollars"
@@ -132,6 +136,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/simulator_borrowed_amount_euros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/euros"
@@ -139,6 +144,7 @@
             android:visibility="gone"/>
 
         <TextView
+            android:id="@+id/simulator_borrowed_amount_dollars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dollars"
@@ -252,6 +258,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/simulator_monthly_payment_euros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/euros"
@@ -259,6 +266,7 @@
             android:visibility="gone"/>
 
         <TextView
+            android:id="@+id/simulator_monthly_payment_dollars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dollars"
@@ -299,6 +307,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/simulator_total_cost_euros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/euros"
@@ -306,6 +315,7 @@
             android:visibility="gone"/>
 
         <TextView
+            android:id="@+id/simulator_total_cost_dollars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dollars"
@@ -346,6 +356,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/simulator_total_interests_euros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/euros"
@@ -353,6 +364,7 @@
             android:visibility="gone"/>
 
         <TextView
+            android:id="@+id/simulator_total_interests_dollars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dollars"

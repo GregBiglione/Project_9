@@ -16,24 +16,20 @@ import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mohammedalaa.seekbar.DoubleValueSeekBarView
-import com.mohammedalaa.seekbar.RangeSeekBarView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.model.House
-import com.openclassrooms.realestatemanager.model.HousePhoto
+import com.openclassrooms.realestatemanager.model.FilteredHouse
 import com.openclassrooms.realestatemanager.picker.SearchDatePickerFragment
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 import com.openclassrooms.realestatemanager.utils.TimeConverters
-import com.openclassrooms.realestatemanager.viewmodel.FilterMainViewModel
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var filterMainViewModel: FilterMainViewModel
     private lateinit var injection: Injection
     //------------------- Button -------------------------------------------------------------------
     private lateinit var searchButton: Button
@@ -61,9 +57,8 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var timeConverters: TimeConverters
     private var selectedEntryDate: Long = 0
     private var selectedSaleDate: Long = 0
-    //------------------- Simple seek bar ----------------------------------------------------------
-    private lateinit var priceSeekBar: RangeSeekBarView
     //------------------- Double seek bar ----------------------------------------------------------
+    private lateinit var priceSeekBar: DoubleValueSeekBarView
     private lateinit var photoSeekBar: DoubleValueSeekBarView
     private lateinit var surfaceSeekBar: DoubleValueSeekBarView
     private lateinit var roomsSeekBar: DoubleValueSeekBarView
@@ -76,9 +71,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        //val fragmentManager: FragmentManager = supportFragmentManager
-        //val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        homeFragment = HomeFragment()
         configureViewModel()
         clickOnSearchButton()
         //------------------- Spinner --------------------------------------------------------------
@@ -102,9 +94,8 @@ class SearchActivity : AppCompatActivity() {
         //-------------------------------- Checkbox poi --------------------------------------------
         pointsOfInterests = findViewById(R.id.search_poi_ti_et)
         pointsOfInterestsCheckBox()
-        //------------------- Simple seek bar ------------------------------------------------------
-        priceSeekBar = findViewById(R.id.search_price_range_seek_bar)
         //------------------- Double seek bar ------------------------------------------------------
+        priceSeekBar = findViewById(R.id.search_price_range_seek_bar)
         photoSeekBar = findViewById(R.id.search_photos_double_range_seek_bar)
         surfaceSeekBar = findViewById(R.id.search_surface_double_range_seek_bar)
         roomsSeekBar = findViewById(R.id.search_rooms_double_range_seek_bar)
@@ -359,7 +350,6 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Launch search -----------------------------------------------
     //----------------------------------------------------------------------------------------------
@@ -374,20 +364,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun searchHouses() {
-        mainViewModel.getAllHousesFiltered(selectedAgentId)
-        //------------------- Back to main activity after search house -----------------------------
         goBackToMainActivity()
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Configure FilterViewModel -----------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun configureFilterViewModel(){
-        injection = Injection()
-        val viewModelFactory: ViewModelFactory = injection.provideFilterViewModelFactory(this)
-        filterMainViewModel = ViewModelProvider(this, viewModelFactory).get(FilterMainViewModel::class.java)
-        filterMainViewModel.getAllHousesFiltered(selectedAgentId)
     }
 
     //----------------------------------------------------------------------------------------------
@@ -395,46 +372,43 @@ class SearchActivity : AppCompatActivity() {
     //----------------------------------------------------------------------------------------------
 
     private fun filterHouses(){
-        //var filterHousePhotoList = generateHousePhotoList()
-        //var filterMinPhotos: Int = photoSeekBar.currentMinValue
-        //var filterMaxPhotos: Int = photoSeekBar.currentMaxValue
-
-        //if (filterHousePhotoList.size => filterMinPhotos && filterHousePhotoList.size =< filterMaxPhotos){
-        //    return filterHousePhotoList
-        //}
-        //var filterSurface: Int
-        //var filterMinSurface: Int = surfaceSeekBar.currentMinValue
-        //var filterMaxSurface: Int = surfaceSeekBar.currentMaxValue
-
-
-        val filterPrice: Int = priceSeekBar.currentValue
+        val minPhotos = photoSeekBar.currentMinValue
+        val maxPhotos = photoSeekBar.currentMaxValue
+        val minPrice = priceSeekBar.currentMinValue * 10000
+        val maxPrice = priceSeekBar.currentMaxValue * 10000
+        val minSurface = surfaceSeekBar.currentMinValue
+        val maxSurface = surfaceSeekBar.currentMaxValue
+        val minRooms = roomsSeekBar.currentMinValue
+        val maxRooms = roomsSeekBar.currentMaxValue
+        val minBathrooms = bathroomsSeekBar.currentMinValue
+        val maxBathrooms = bathroomsSeekBar.currentMaxValue
+        val minBedrooms = bedroomsSeekBar.currentMinValue
+        val maxBedrooms = bedroomsSeekBar.currentMaxValue
 
         val bundle = Bundle()
-        bundle.putSerializable("filterHouse", House(null, null, selectedType, selectedNeighborhood, null,
-                filterPrice, null, null, null, null, null, selectedStatus,
-                selectedPoi, selectedEntryDate, selectedSaleDate, selectedAgentId))
-        //bundle.putInt("minPhotosFilter", photoSeekBar.currentMinValue)
-        //bundle.putInt("maxPhotosFilter", photoSeekBar.currentMaxValue)
-        //bundle.putString("typeFilter", selectedType)
-        //bundle.putString("neighborhoodFilter", selectedNeighborhood)
-        //bundle.putInt("priceFilter", priceSeekBar.currentValue)
-        //bundle.putInt("minSurfaceFilter", surfaceSeekBar.currentMinValue)
-        //bundle.putInt("maxSurfaceFilter", surfaceSeekBar.currentMaxValue)
-        //bundle.putInt("minRoomsFilter", roomsSeekBar.currentMinValue)
-        //bundle.putInt("maxRoomFilter", roomsSeekBar.currentMaxValue)
-//
-        //bundle.putInt("minBathroomFilter", bathroomsSeekBar.currentMinValue)
-        //bundle.putInt("maxBathroomFilter", bathroomsSeekBar.currentMaxValue)
-//
-        //bundle.putInt("minBedroomsFilter", bedroomsSeekBar.currentMinValue)
-        //bundle.putInt("maxBedroomsFilter", bedroomsSeekBar.currentMaxValue)
-//
-        //bundle.putString("statusFilter", selectedStatus)
-        //bundle.putString("poiFilter", selectedPoi)
-        //bundle.putLong("entryDateFilter", selectedEntryDate)
-        //bundle.putLong("saleDateFilter", selectedSaleDate)
-        bundle.putLong("agentIdFilter", selectedAgentId)
-
+        bundle.putSerializable("filteredHouse", FilteredHouse(minPhotos, maxPhotos, selectedType, selectedNeighborhood, minPrice, maxPrice,
+        minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi,
+        selectedEntryDate, selectedSaleDate, selectedAgentId))
+        //bundle.putInt("minPhotos", minPhotos)
+        //bundle.putInt("maxPhotos", maxPhotos)
+        //bundle.putString("type", selectedType)
+        //bundle.putString("neighborhood", selectedNeighborhood)
+        //bundle.putInt("minPrice", minPrice)
+        //bundle.putInt("maxPrice", maxPrice)
+        //bundle.putInt("minSurface", minSurface)
+        //bundle.putInt("maxSurface", maxSurface)
+        //bundle.putInt("minRooms", minRooms)
+        //bundle.putInt("maxRooms", maxRooms)
+        //bundle.putInt("minBathrooms", minBathrooms)
+        //bundle.putInt("maxBathrooms", maxBathrooms)
+        //bundle.putInt("minBedrooms", minBedrooms)
+        //bundle.putInt("maxBedrooms", maxBedrooms)
+        //bundle.putString("status", selectedStatus)
+        //bundle.putString("poi", selectedPoi)
+        //bundle.putLong("entryDate", selectedEntryDate)
+        //bundle.putLong("saleDate", selectedSaleDate)
+        //bundle.putLong("agentId", selectedAgentId)
+        homeFragment = HomeFragment()
         homeFragment.arguments = bundle
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()

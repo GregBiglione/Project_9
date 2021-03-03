@@ -35,7 +35,21 @@ class MainViewModel(private val agentRepository: AgentRepository,
 
     fun updateHouse(house: House) = viewModelScope.launch(Dispatchers.IO) {  houseRepository.updateHouse(house) }
 
-    fun getAllHousesFiltered(agentId: Long) = viewModelScope.launch(Dispatchers.IO) { houseRepository.getAllHousesFiltered(agentId) }
+    fun getAllHousesFiltered(minHousePhotoNumber: Int, maxHousePhotoNumber: Int,
+                             type: String,
+                             neighborhood: String,
+                             minPrice: Int, maxPrice: Int,
+                             minSurface: Int, maxSurface: Int,
+                             minRooms: Int, maxRooms: Int,
+                             minBathrooms: Int, maxBathrooms: Int,
+                             minBedrooms: Int, maxBedrooms: Int,
+                             status: String,
+                             poi: String?,
+                             entryDate: Long?, saleDate: Long?,
+                             agentId: Long) =
+            houseRepository.getAllHousesFiltered(minHousePhotoNumber, maxHousePhotoNumber, type, neighborhood, minPrice, maxPrice,
+                    minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, status,
+                    poi, entryDate, saleDate, agentId)
 
     //------------------- HousePhotos --------------------------------------------------------------
     fun getHousePhoto(id: Long) = viewModelScope.launch(Dispatchers.IO) { housePhotoRepository.getHousePhoto(id) }

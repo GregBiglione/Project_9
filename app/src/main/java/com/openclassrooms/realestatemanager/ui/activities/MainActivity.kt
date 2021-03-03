@@ -11,6 +11,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -19,9 +21,13 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.droidman.ktoasty.KToasty
+import com.droidman.ktoasty.showErrorToast
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.ui.fragments.CreditSimulatorFragment
+import com.openclassrooms.realestatemanager.ui.fragments.DetailedHouseFragment
+import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 
 class MainActivity : AppCompatActivity(){
@@ -29,6 +35,10 @@ class MainActivity : AppCompatActivity(){
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
+
+    private lateinit var homeFragment: HomeFragment
+    private lateinit var creditSimulatorFragment: CreditSimulatorFragment
+    private lateinit var detailedHouseFragment: DetailedHouseFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,11 +106,14 @@ class MainActivity : AppCompatActivity(){
             item.setIcon(euro)
             mainActivityViewModel.clickDollarsToEuros()
             showSuccessToast("Currency with live data is € & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
+            sendBooleanValueToFragments()
+
         }
         else{
             item.setIcon(dollar)
             mainActivityViewModel.clickEurosToDollars()
-            showSuccessToast("Currency with live data is $ & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
+            showErrorToast("Currency with live data is $ & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
+            sendBooleanValueToFragments()
         }
     }
 
@@ -111,7 +124,7 @@ class MainActivity : AppCompatActivity(){
     private fun configureMainActivityViewModel(){
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.isClickedCurrency().observe(this, Observer {
-            isCurrencyChanged = it
+            isCurrencyChanged = it // is true or false on click ok
         })
     }
 
@@ -119,6 +132,29 @@ class MainActivity : AppCompatActivity(){
 
     fun booleanOnCurrencyClick(): Boolean{
         return isCurrencyChanged
+    }
+
+    //-------------------------------- Send boolean value to different fragments -------------------
+
+    private fun sendBooleanValueToFragments(){
+        val bundle = Bundle()
+        bundle.putBoolean("currencyBoolean", isCurrencyChanged)
+        homeFragment = HomeFragment()
+        creditSimulatorFragment = CreditSimulatorFragment()
+        detailedHouseFragment = DetailedHouseFragment()
+        creditSimulatorFragment.arguments = bundle
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+
+        if (homeFragment.isVisible){
+            fragmentTransaction.add(R.id.fragmentContainerMain, homeFragment).commit()
+        }
+        if (creditSimulatorFragment.isVisible){
+            fragmentTransaction.add(R.id.fragmentContainerMain, creditSimulatorFragment).commit()
+        }
+        if (detailedHouseFragment.isVisible){
+            fragmentTransaction.add(R.id.fragmentContainerMain, detailedHouseFragment).commit()
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -129,18 +165,4 @@ class MainActivity : AppCompatActivity(){
         val intent = Intent(this, SearchActivity::class.java)
         startActivity(intent)
     }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Get search intent data --------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    //fun getSearchIntentData(): Long{
-    //    var agentIdFiltered: Long = 0
-    //    if (intent != null) {
-    //        val agentId = intent.extras!!.get("agentId")
-    //        agentIdFiltered = agentId as Long
-//
-    //    }
-    //    return agentIdFiltered
-    //}
 }

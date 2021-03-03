@@ -17,17 +17,13 @@ import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.droidman.ktoasty.showErrorToast
 import com.droidman.ktoasty.showSuccessToast
-import com.droidman.ktoasty.showWarningToast
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
-import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.repositories.AgentRepository
-import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
-import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.utils.Utils
@@ -155,16 +151,56 @@ class DetailedHouseFragment : Fragment() {
         detailAddress.text = args.currentHouse.address
         detailPointOfInterests.text = args.currentHouse.proximityPointsOfInterest
         //detailPrice.text = "$" + args.currentHouse.price.toString()
-        if (currencyBoolean){
-            detailPrice.text = "$" + args.currentHouse.price.toString()
-            activity?.showWarningToast("Boolean is $currencyBoolean dans Detailed fragment", Toast.LENGTH_SHORT, true)
-        }
-        else{
-            detailPrice.text = "!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-            activity?.showWarningToast("Boolean is $currencyBoolean dans Detailed fragment", Toast.LENGTH_SHORT, true)
-        }
+        //if (currencyBoolean){
+        //    detailPrice.text = "$" + args.currentHouse.price.toString()
+        //    activity?.showWarningToast("Boolean is $currencyBoolean dans Detailed fragment", Toast.LENGTH_SHORT, true)
+        //}
+        //else{
+        //    detailPrice.text = "!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        //    activity?.showWarningToast("Boolean is $currencyBoolean dans Detailed fragment", Toast.LENGTH_SHORT, true)
+        //}
+        switchPrice()
         entryDate()
         //saleDate()
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Switch price -------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun switchPrice(){
+        val bundle = arguments
+        if (bundle != null) {
+            val booleanOnClick = bundle.getBoolean("currencyBoolean")
+            currencyBoolean = booleanOnClick
+
+            when(currencyBoolean){
+                true -> {
+                    activity?.showSuccessToast("Boolean case 1 in detail fragment is $currencyBoolean", Toast.LENGTH_SHORT, true)
+                    showEurosPrice()
+                }
+                false -> {
+                    activity?.showErrorToast("Boolean case 2 in detail fragment is $currencyBoolean", Toast.LENGTH_SHORT, true)
+                    showDollarsPrice()
+                }
+            }
+        }
+    }
+
+    //------------------- Price in € ---------------------------------------------------------------
+
+    @SuppressLint("SetTextI18n")
+    private fun showEurosPrice(){
+        val euros = args.currentHouse.price?.let { Utils.convertDollarToEuro(it) }
+        detailPrice.text = "$euros€"
+    }
+
+    //------------------- Price in $ ---------------------------------------------------------------
+
+    @SuppressLint("SetTextI18n")
+    private fun showDollarsPrice(){
+        val dollars = args.currentHouse.price
+        detailPrice.text = "$$dollars"
     }
 
 

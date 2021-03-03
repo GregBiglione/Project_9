@@ -11,15 +11,15 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.model.FilteredHouse
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragmentDirections
+import com.openclassrooms.realestatemanager.utils.Utils
 
-class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
+class HouseAdapter/*(private var currencyBoolean: Boolean)*/: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
     //HouseAdapter/*(private var mainActivity: MainActivity, private var currencyBoolean: Boolean)*/
     private var houseList = emptyList<House>()
-
-    //private var mainActivity = MainActivity()
-    //private var currencyBoolean = mainActivity.booleanOnCurrencyClick()
+    private var filteredHouseList = emptyList<FilteredHouse>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HouseViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -45,13 +45,16 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
         holder.houseNeighborhood.text = currentHouse.neighborhood
         //holder.housePrice.text = "$" + currentHouse.price.toString()
 
-        //if (currencyBoolean ){
-        //    //holder.housePrice.text =  "$" + currentHouse.price.toString()
-        //    holder.housePrice.text = currentHouse.price?.let { Utils.convertDollarToEuro(it) }.toString() + "€"
-        //}
-        //else{
-        //    //holder.housePrice.text = currentHouse.price?.let { Utils.convertDollarToEuro(it) }.toString() + "€"
-        //    holder.housePrice.text =  "$" + currentHouse.price.toString()
+        //when(currencyBoolean){
+        //    true -> {
+        //        val dollarsPrice = currentHouse.price
+        //        var eurosPrice = dollarsPrice?.let { Utils.convertDollarToEuro(it) }
+        //        holder.housePrice.text = "$eurosPrice€"
+        //    }
+//
+        //    false -> {
+        //        holder.housePrice.text = "$$currentHouse.price"
+        //    }
         //}
 
         holder.houseConstraintLayout.setOnClickListener {
@@ -63,12 +66,6 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
             val actionUpdate = HomeFragmentDirections.actionNavHomeToUpdateHouseFragment(currentHouse)
             holder.updateHouseButton.findNavController().navigate(actionUpdate)
         }
-
-        //------------------------------------------------------------------------------------------
-        //-------------------------------- Data for filter house -----------------------------------
-        //------------------------------------------------------------------------------------------
-
-        val agentId: Long = currentHouse.agentId!!
     }
 
     override fun getItemCount() = houseList.size
@@ -87,8 +84,8 @@ class HouseAdapter: RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
         notifyDataSetChanged()
     }
 
-    //fun filterData(house: List<House>) {
-    //    this.houseList = house // <--- Don't put the full list
-    //    notifyDataSetChanged()
-    //}
+    fun filterData(filteredHouse: List<FilteredHouse>) {
+        this.filteredHouseList = filteredHouse
+        notifyDataSetChanged()
+    }
 }
