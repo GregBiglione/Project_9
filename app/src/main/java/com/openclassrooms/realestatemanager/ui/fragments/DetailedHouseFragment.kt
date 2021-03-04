@@ -176,11 +176,11 @@ class DetailedHouseFragment : Fragment() {
 
             when(currencyBoolean){
                 true -> {
-                    activity?.showSuccessToast("Boolean case 1 in detail fragment is $currencyBoolean", Toast.LENGTH_SHORT, true)
+                    activity?.showSuccessToast("Boolean case 1 (DetailFrag) in detail fragment is $currencyBoolean", Toast.LENGTH_SHORT, true)
                     showEurosPrice()
                 }
                 false -> {
-                    activity?.showErrorToast("Boolean case 2 in detail fragment is $currencyBoolean", Toast.LENGTH_SHORT, true)
+                    activity?.showErrorToast("Boolean case 2 (DetailFrag) in detail fragment is $currencyBoolean", Toast.LENGTH_SHORT, true)
                     showDollarsPrice()
                 }
             }

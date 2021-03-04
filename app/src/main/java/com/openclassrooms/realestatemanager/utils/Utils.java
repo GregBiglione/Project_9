@@ -1,12 +1,18 @@
 package com.openclassrooms.realestatemanager.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+
+import com.openclassrooms.realestatemanager.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Philippe on 21/02/2018.
@@ -59,5 +65,19 @@ public class Utils {
     public static Boolean isInternetAvailable(Context context){
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         return wifi.isWifiEnabled();
+    }
+
+    public static Boolean isInternetAvailableNew(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        if (networkInfo.isConnected()){
+            Toasty.success(context, R.string.wifi_available, Toasty.LENGTH_SHORT).show();
+            return true;
+        }
+        else{
+            Toasty.error(context, R.string.wifi_unavailable, Toasty.LENGTH_SHORT).show();
+            return false;
+        }
     }
 }

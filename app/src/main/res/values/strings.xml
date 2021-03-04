@@ -376,5 +376,7 @@
     <string name="simulator_error_price">Set a price</string>
     <string name="simulator_error_months">Set number of months</string>
     <string name="price_special">Price (x 10000)</string>
+    <string name="wifi_available">Wifi available</string>
+    <string name="wifi_unavailable">Wifi unavailable</string>
 
 </resources>

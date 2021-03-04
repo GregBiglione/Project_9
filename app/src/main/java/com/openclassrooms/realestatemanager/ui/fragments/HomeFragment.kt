@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
     private var currencyBoolean: Boolean = false
     // 1)
     private val house: ArrayList<House> = ArrayList()
-    private var filteredHouse: ArrayList<FilteredHouse> = ArrayList()
+    var filteredHouse: ArrayList<FilteredHouse> = ArrayList()
     //private val houseAdapter: HouseAdapter = HouseAdapter(currencyBoolean)
     private val houseAdapter: HouseAdapter = HouseAdapter()
 
@@ -57,8 +57,7 @@ class HomeFragment : Fragment() {
         fab.setOnClickListener { goToAddActivity() }
         mainActivity = MainActivity()
         injection = Injection()
-        //currencyBoolean = mainActivity.booleanOnCurrencyClick()
-        // 4)
+
         configureViewModel()
         //houseAdapter.setData(house)
 
@@ -73,7 +72,6 @@ class HomeFragment : Fragment() {
     //------------------- Configure recyclerview ---------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    // 6)
     private fun configureHouseRecyclerView(){
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
@@ -93,37 +91,38 @@ class HomeFragment : Fragment() {
         val bundle = arguments
 
         if (bundle != null){
-            var filter = bundle.getSerializable("filteredHouse")
-            //val minPhotos = bundle.getInt("minPhotos")
-            //val maxPhotos = bundle.getInt("maxPhotos")
-            //val type = bundle.getString("type")
-            //val selectedNeighborhood = bundle.getString("neighborhood")
-            //val minPrice =  bundle.getInt("minPrice")
-            //val maxPrice = bundle.getInt("maxPrice")
-            //val minSurface = bundle.getInt("minSurface")
-            //val maxSurface = bundle.getInt("maxSurface")
-            //val minRooms = bundle.getInt("minRooms")
-            //val maxRooms =  bundle.getInt("maxRooms")
-            //val minBathrooms = bundle.getInt("minBathrooms")
-            //val maxBathrooms = bundle.getInt("maxBathrooms")
-            //val minBedrooms = bundle.getInt("minBedrooms")
-            //val maxBedrooms = bundle.getInt("maxBedrooms")
-            //val selectedStatus = bundle.getString("status")
-            //val selectedPoi = bundle.getString("poi")
-            //val selectedEntryDate = bundle.getLong("entryDate")
-            //val selectedSaleDate = bundle.getLong("saleDate")
-            //val selectedAgentId = bundle.getLong("agentId")
+            //var filter = bundle.getSerializable("filteredHouse")
+            val minPhotos = bundle.getInt("minPhotos")
+            val maxPhotos = bundle.getInt("maxPhotos")
+            val type = bundle.getString("type")
+            val selectedNeighborhood = bundle.getString("neighborhood")
+            val minPrice =  bundle.getInt("minPrice")
+            val maxPrice = bundle.getInt("maxPrice")
+            val minSurface = bundle.getInt("minSurface")
+            val maxSurface = bundle.getInt("maxSurface")
+            val minRooms = bundle.getInt("minRooms")
+            val maxRooms =  bundle.getInt("maxRooms")
+            val minBathrooms = bundle.getInt("minBathrooms")
+            val maxBathrooms = bundle.getInt("maxBathrooms")
+            val minBedrooms = bundle.getInt("minBedrooms")
+            val maxBedrooms = bundle.getInt("maxBedrooms")
+            val selectedStatus = bundle.getString("status")
+            val selectedPoi = bundle.getString("poi")
+            val selectedEntryDate = bundle.getLong("entryDate")
+            val selectedSaleDate = bundle.getLong("saleDate")
+            val selectedAgentId = bundle.getLong("agentId")
             val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
             mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-            //mainViewModel.getAllHousesFiltered(filter as ArrayList<FilteredHouse>)
-            //mainViewModel.getAllHousesFiltered(/*minPhotos, maxPhotos, type!!, selectedNeighborhood!!, minPrice, maxPrice,
-            //minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus!!,
-            //selectedPoi, selectedEntryDate, selectedSaleDate, selectedAgentId*/)
-            //        .observe(viewLifecycleOwner, { f ->
-            //            house.clear()
-            //            house.addAll(f)
-            //            houseAdapter.setData(house)
-            //        })
+            //mainViewModel.getAllHousesFiltered()
+            mainViewModel.getAllHousesFiltered(minPhotos, maxPhotos, type!!, selectedNeighborhood!!, minPrice, maxPrice,
+            minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus!!,
+            selectedPoi, selectedEntryDate, selectedSaleDate, selectedAgentId)
+                    .observe(viewLifecycleOwner, { f ->
+                        house.clear()
+                        house.addAll(f)
+                        //houseAdapter.setData(house)
+                        houseAdapter.filterData(filteredHouse)
+                    })
         }
     }
 

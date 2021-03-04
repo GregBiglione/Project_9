@@ -88,6 +88,9 @@ dependencies {
     //----------------------------- KToasty --------------------------------------------------------
     implementation 'com.github.shubhamvashisht:KToasty:1.0'
 
+    //----------------------------- Toasty ---------------------------------------------------------
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
+
     //----------------------------- Circle Image View ----------------------------------------------
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 

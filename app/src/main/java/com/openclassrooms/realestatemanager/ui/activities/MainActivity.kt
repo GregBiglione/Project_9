@@ -105,14 +105,14 @@ class MainActivity : AppCompatActivity(){
         if (item!!.icon.constantState!! == resources.getDrawable(dollar, null).constantState){
             item.setIcon(euro)
             mainActivityViewModel.clickDollarsToEuros()
-            showSuccessToast("Currency with live data is € & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
+            showSuccessToast("Currency with live data is € (MainActivity) & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
             sendBooleanValueToFragments()
 
         }
         else{
             item.setIcon(dollar)
             mainActivityViewModel.clickEurosToDollars()
-            showErrorToast("Currency with live data is $ & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
+            showErrorToast("Currency with live data is $ (MainActivity) & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
             sendBooleanValueToFragments()
         }
     }
@@ -145,16 +145,16 @@ class MainActivity : AppCompatActivity(){
         creditSimulatorFragment.arguments = bundle
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-
-        if (homeFragment.isVisible){
-            fragmentTransaction.add(R.id.fragmentContainerMain, homeFragment).commit()
-        }
-        if (creditSimulatorFragment.isVisible){
-            fragmentTransaction.add(R.id.fragmentContainerMain, creditSimulatorFragment).commit()
-        }
-        if (detailedHouseFragment.isVisible){
-            fragmentTransaction.add(R.id.fragmentContainerMain, detailedHouseFragment).commit()
-        }
+        fragmentTransaction.add(R.id.fragmentContainerMain, creditSimulatorFragment).commit()
+        //if (homeFragment.isVisible){
+        //    fragmentTransaction.add(R.id.fragmentContainerMain, homeFragment).commit()
+        //}
+        //if (creditSimulatorFragment.isVisible){
+        //    fragmentTransaction.add(R.id.fragmentContainerMain, creditSimulatorFragment).commit()
+        //}
+        //if (detailedHouseFragment.isVisible){
+        //    fragmentTransaction.add(R.id.fragmentContainerMain, detailedHouseFragment).commit()
+        //}
     }
 
     //----------------------------------------------------------------------------------------------
