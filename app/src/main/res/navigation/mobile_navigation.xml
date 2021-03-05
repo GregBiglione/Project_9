@@ -76,5 +76,9 @@
             android:name="currentHouse"
             app:argType="com.openclassrooms.realestatemanager.model.House" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_map"
+        android:name="com.openclassrooms.realestatemanager.ui.fragments.MapFragment"
+        android:label="@string/Map" />
 
 </navigation>

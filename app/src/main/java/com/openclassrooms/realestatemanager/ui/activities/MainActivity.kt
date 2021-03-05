@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -23,11 +24,14 @@ import androidx.navigation.ui.setupWithNavController
 import com.droidman.ktoasty.KToasty
 import com.droidman.ktoasty.showErrorToast
 import com.droidman.ktoasty.showSuccessToast
+import com.google.android.material.bottomnavigation.BottomNavigationMenu
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ui.fragments.CreditSimulatorFragment
 import com.openclassrooms.realestatemanager.ui.fragments.DetailedHouseFragment
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
+import com.openclassrooms.realestatemanager.ui.fragments.MapFragment
 import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 
 class MainActivity : AppCompatActivity(){
@@ -36,9 +40,12 @@ class MainActivity : AppCompatActivity(){
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
 
-    private lateinit var homeFragment: HomeFragment
+    //private lateinit var homeFragment: HomeFragment
+    //private lateinit var mapFragment: MapFragment
     private lateinit var creditSimulatorFragment: CreditSimulatorFragment
     private lateinit var detailedHouseFragment: DetailedHouseFragment
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +57,17 @@ class MainActivity : AppCompatActivity(){
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+        /*val navController*/ navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
                 R.id.nav_home, R.id.nav_add_agent, R.id.nav_settings), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        //homeFragment = HomeFragment()
+        //mapFragment = MapFragment()
+        creditSimulatorFragment = CreditSimulatorFragment()
+        navigationBottomMenu()
     }
 
     //----------------------------------------------------------------------------------------------
@@ -107,7 +118,6 @@ class MainActivity : AppCompatActivity(){
             mainActivityViewModel.clickDollarsToEuros()
             showSuccessToast("Currency with live data is € (MainActivity) & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
             sendBooleanValueToFragments()
-
         }
         else{
             item.setIcon(dollar)
@@ -124,7 +134,7 @@ class MainActivity : AppCompatActivity(){
     private fun configureMainActivityViewModel(){
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.isClickedCurrency().observe(this, Observer {
-            isCurrencyChanged = it // is true or false on click ok
+            isCurrencyChanged = it
         })
     }
 
@@ -139,22 +149,13 @@ class MainActivity : AppCompatActivity(){
     private fun sendBooleanValueToFragments(){
         val bundle = Bundle()
         bundle.putBoolean("currencyBoolean", isCurrencyChanged)
-        homeFragment = HomeFragment()
+        //homeFragment = HomeFragment()
         creditSimulatorFragment = CreditSimulatorFragment()
-        detailedHouseFragment = DetailedHouseFragment()
+        //detailedHouseFragment = DetailedHouseFragment()
         creditSimulatorFragment.arguments = bundle
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragmentContainerMain, creditSimulatorFragment).commit()
-        //if (homeFragment.isVisible){
-        //    fragmentTransaction.add(R.id.fragmentContainerMain, homeFragment).commit()
-        //}
-        //if (creditSimulatorFragment.isVisible){
-        //    fragmentTransaction.add(R.id.fragmentContainerMain, creditSimulatorFragment).commit()
-        //}
-        //if (detailedHouseFragment.isVisible){
-        //    fragmentTransaction.add(R.id.fragmentContainerMain, detailedHouseFragment).commit()
-        //}
     }
 
     //----------------------------------------------------------------------------------------------
@@ -165,4 +166,26 @@ class MainActivity : AppCompatActivity(){
         val intent = Intent(this, SearchActivity::class.java)
         startActivity(intent)
     }
+
+    //----------------------------------------------------------------------------------------------
+    //----------------------------- Bottom Navigation Menu -----------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun navigationBottomMenu() {
+        bottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener)
+    }
+
+    private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.nav_home -> {
+                navController.navigate(R.id.nav_home)
+            }
+            R.id.nav_map -> {
+                navController.navigate(R.id.nav_map)
+            }
+        }
+        true
+    }
+
 }

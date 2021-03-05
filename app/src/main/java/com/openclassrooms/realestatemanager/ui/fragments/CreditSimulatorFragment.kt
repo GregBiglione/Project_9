@@ -40,8 +40,8 @@ class CreditSimulatorFragment: Fragment() {
     private var totalCost: Double = 0.0
     private var interests: Double = 0.0
 
-    private lateinit var mainActivity: MainActivity
-    private var currencyBoolean: Boolean = false
+    //private lateinit var mainActivity: MainActivity
+    //private var currencyBoolean: Boolean = false
     private lateinit var eurosIconPrice: TextView
     private lateinit var dollarsIconPrice: TextView
     private lateinit var eurosIconContribution: TextView
@@ -58,7 +58,7 @@ class CreditSimulatorFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_credit_simulator, container, false)
-        mainActivity = MainActivity()
+        //mainActivity = MainActivity()
         priceEt = root.findViewById(R.id.simulator_house_price_et)
         contributionEt = root.findViewById(R.id.simulator_contribution_et)
         borrowedAmountEt = root.findViewById(R.id.simulator_borrowed_amount_et)
@@ -240,17 +240,15 @@ class CreditSimulatorFragment: Fragment() {
     private fun switchCurrencyIcon(){
         val bundle = arguments
         if (bundle != null) {
-            val booleanOnClick = bundle.getBoolean("currencyBoolean")
-            currencyBoolean = booleanOnClick
 
-            when(currencyBoolean){
+            when(val booleanOnClick = bundle.getBoolean("currencyBoolean")){
                 true -> {
-                    activity?.showSuccessToast("Boolean case 1 is $currencyBoolean", Toast.LENGTH_SHORT, true)
+                    activity?.showSuccessToast("Boolean case 1 (CreditFrag) is $booleanOnClick", Toast.LENGTH_SHORT, true)
                     showEuroIcon()
                     showEurosPrice()
                 }
                 false -> {
-                    activity?.showErrorToast("Boolean case 2 is $currencyBoolean", Toast.LENGTH_SHORT, true)
+                    activity?.showErrorToast("Boolean case 2 (CreditFrag) is $booleanOnClick", Toast.LENGTH_SHORT, true)
                     showDollarIcon()
                     showDollarsPrice()
                 }
@@ -262,7 +260,7 @@ class CreditSimulatorFragment: Fragment() {
     //-------------------------------- Show € icon -------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    private fun showEuroIcon(){
+     private fun showEuroIcon(){
         eurosIconPrice.visibility = View.VISIBLE
         eurosIconPrice.visibility = View.VISIBLE
         eurosIconContribution.visibility = View.VISIBLE

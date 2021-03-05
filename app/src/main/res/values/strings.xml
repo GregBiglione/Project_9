@@ -378,5 +378,7 @@
     <string name="price_special">Price (x 10000)</string>
     <string name="wifi_available">Wifi available</string>
     <string name="wifi_unavailable">Wifi unavailable</string>
+    <string name="menu_map">Map</string>
+    <string name="Map">Map</string>
 
 </resources>
