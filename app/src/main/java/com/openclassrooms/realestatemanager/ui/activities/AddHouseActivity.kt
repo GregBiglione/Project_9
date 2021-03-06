@@ -8,12 +8,13 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,17 +24,14 @@ import com.google.android.material.textfield.TextInputLayout
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
-import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
+import com.openclassrooms.realestatemanager.geocodinglocation.GeoCodingLocation
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.notification.MyFirebaseMessagingService
-import com.openclassrooms.realestatemanager.repositories.AgentRepository
-import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
-import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
@@ -68,6 +66,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private lateinit var houseBathRoomsEditText: TextInputEditText
     private lateinit var houseBedRoomsEditText: TextInputEditText
     private lateinit var houseEntryDateEditText: TextInputEditText
+    private lateinit var houseLatLngEditText: TextInputEditText
     //------------------- Spinner ------------------------------------------------------------------
     private lateinit var houseTypeSpinner: Spinner
     private lateinit var neighborSpinner: Spinner
@@ -89,6 +88,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private var entryDate: Long = 0
     //------------------- Notification -------------------------------------------------------------
     private lateinit var myFirebaseMessagingService: MyFirebaseMessagingService
+    //------------------- Adresse for lat/lng ------------------------------------------------------
+    private var address = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +102,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         houseTypeSpinner = findViewById(R.id.add_house_type_spinner)
         houseDescriptionEditText = findViewById(R.id.add_house_description)
         houseAddressEditText = findViewById(R.id.add_house_address)
+        houseLatLngEditText = findViewById(R.id.add_house_latLng)
         housePriceEditText = findViewById(R.id.add_house_price)
         houseSurfaceEditText = findViewById(R.id.add_house_surface)
         houseRoomsEditText = findViewById(R.id.add_house_number_of_rooms)
@@ -450,6 +452,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
         if (!houseAddressEditText.text.isNullOrEmpty()){
             houseAddress = houseAddressEditText.text.toString().trim()
+            address = houseAddress
         }
 
         if (!housePriceEditText.text.isNullOrEmpty()){
@@ -490,7 +493,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         showSuccessToast("House added with success ", Toast.LENGTH_SHORT, true)
         // Notification instead of KToasty
         //------------------- Back to main activity after add house --------------------------------
-        goBackToMainActivity()
+        //goBackToMainActivity()
+        getLatLng()
     }
 
     private fun addHousePhoto(housePhotoList: HousePhoto){
@@ -527,6 +531,31 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         houseRoomsEditText.setText("")
         houseBathRoomsEditText.setText("")
         houseBedRoomsEditText.setText("")
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Get Lat/lng from address ------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun getLatLng(){
+        val locationAddress = GeoCodingLocation()
+        locationAddress.getAddressFromLocation(address, applicationContext, GeoCoderHandler(this))
+    }
+
+    companion object{
+        private class GeoCoderHandler(private val addHouseActivity: AddHouseActivity): Handler(){
+            override fun handleMessage(message: Message){
+                val locationAddress: String?
+                locationAddress = when(message.what){
+                    1 -> {
+                        val bundle = message.data
+                        bundle.getString("coordinates")
+                    }
+                    else -> null
+                }
+                addHouseActivity.houseLatLngEditText.setText(locationAddress)
+            }
+        }
     }
 
     //----------------------------------------------------------------------------------------------
