@@ -1,7 +1,5 @@
 package com.openclassrooms.realestatemanager.model
 
-import android.content.ClipData.Item
-import android.content.ContentValues
 import android.os.Parcelable
 import androidx.room.*
 import com.openclassrooms.realestatemanager.utils.ListConverters

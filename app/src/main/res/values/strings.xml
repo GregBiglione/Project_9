@@ -380,6 +380,7 @@
     <string name="wifi_unavailable">Wifi unavailable</string>
     <string name="menu_map">Map</string>
     <string name="Map">Map</string>
-    <string name="latLng">Latitude and longitude</string><string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
 
 </resources>

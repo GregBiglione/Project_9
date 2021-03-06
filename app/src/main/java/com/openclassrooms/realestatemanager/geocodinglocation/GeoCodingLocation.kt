@@ -18,15 +18,13 @@ class GeoCodingLocation {
             override fun run() {
                 val geoCoder = Geocoder(context, Locale.getDefault())
                 var result: String? = null
-
                 try {
                     val addressList = geoCoder.getFromLocationName(locationAddress, 1)
                     if (addressList != null && addressList.size > 0){
                         val address = addressList[0] as Address
-                        val sb = StringBuilder()
-                        sb.append(address.latitude).toString()
-                        sb.append(address.longitude).toString()
-                        result = sb.toString()
+                        val lat = address.latitude.toString()
+                        val lng = address.longitude.toString()
+                        result = "$lat $lng"
                     }
                 } catch (e: IOException) {
                     Log.e(TAG, "Unable to connect to GeoCoder", e)

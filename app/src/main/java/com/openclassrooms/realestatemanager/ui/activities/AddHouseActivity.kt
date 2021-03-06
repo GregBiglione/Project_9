@@ -66,7 +66,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private lateinit var houseBathRoomsEditText: TextInputEditText
     private lateinit var houseBedRoomsEditText: TextInputEditText
     private lateinit var houseEntryDateEditText: TextInputEditText
-    private lateinit var houseLatLngEditText: TextInputEditText
+    private lateinit var houseLatEditText: TextInputEditText
+    private lateinit var houseLngEditText: TextInputEditText
     //------------------- Spinner ------------------------------------------------------------------
     private lateinit var houseTypeSpinner: Spinner
     private lateinit var neighborSpinner: Spinner
@@ -102,7 +103,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         houseTypeSpinner = findViewById(R.id.add_house_type_spinner)
         houseDescriptionEditText = findViewById(R.id.add_house_description)
         houseAddressEditText = findViewById(R.id.add_house_address)
-        houseLatLngEditText = findViewById(R.id.add_house_latLng)
+        houseLatEditText = findViewById(R.id.add_house_lat)
+        houseLngEditText = findViewById(R.id.add_house_lng)
         housePriceEditText = findViewById(R.id.add_house_price)
         houseSurfaceEditText = findViewById(R.id.add_house_surface)
         houseRoomsEditText = findViewById(R.id.add_house_number_of_rooms)
@@ -553,7 +555,11 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
                     }
                     else -> null
                 }
-                addHouseActivity.houseLatLngEditText.setText(locationAddress)
+                val separated: List<String> = locationAddress!!.split(" ")
+                val addressLat = separated[0]
+                val addressLng = separated[1]
+                addHouseActivity.houseLatEditText.setText(addressLat)
+                addHouseActivity.houseLngEditText.setText(addressLng)
             }
         }
     }
