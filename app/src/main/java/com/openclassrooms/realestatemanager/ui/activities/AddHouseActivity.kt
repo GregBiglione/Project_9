@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
@@ -89,13 +90,19 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private var entryDate: Long = 0
     //------------------- Notification -------------------------------------------------------------
     private lateinit var myFirebaseMessagingService: MyFirebaseMessagingService
-    //------------------- Adresse for lat/lng ------------------------------------------------------
+    //------------------- Address for lat/lng ------------------------------------------------------
     private var address = ""
+    private var lat = ""
+    private var lng = ""
+    private lateinit var addHouseActivity: AddHouseActivity
+    private lateinit var geoCoderHandler: GeoCoderHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        addHouseActivity = AddHouseActivity()
+        geoCoderHandler = GeoCoderHandler(addHouseActivity)
         housePhotoImageView = findViewById(R.id.add_house_photo)
         housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
         agentsSpinner = findViewById(R.id.add_house_agent_spinner)
@@ -123,6 +130,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         todayDate()
         clickOnPointsOfInterestsEditText()
         agentsSpinner()
+        //getLatLng()
         clickOnAddHouse()
         clickOnClear()
         myFirebaseMessagingService = MyFirebaseMessagingService()
@@ -426,6 +434,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private fun clickOnAddHouse(){
         addHouseButton = findViewById(R.id.add_house_add_button)
         addHouseButton.setOnClickListener {
+            getLatLng()
             saveHouse()
         }
     }
@@ -445,6 +454,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         var pointsOfInterestsSelected = ""
 
         val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
+        //var lat1 = ""
+        //var lng1 = ""
 
         if (!houseDescriptionEditText.text.isNullOrEmpty()){
             houseDescription = houseDescriptionEditText.text.toString().trim()
@@ -455,6 +466,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         if (!houseAddressEditText.text.isNullOrEmpty()){
             houseAddress = houseAddressEditText.text.toString().trim()
             address = houseAddress
+            //latTest
+            lat
         }
 
         if (!housePriceEditText.text.isNullOrEmpty()){
@@ -485,7 +498,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
         addHousePhoto(housePhotoList = HousePhoto(null, photoFromStorage.toString(), housePhotoDescriptionInRecyclerView))
 
-        addHouse(house = House(null, housePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice,
+        addHouse(house = House(null, housePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, 28.12412, 5.2354 /*lat.toDouble(), lng.toDouble()*/, housePrice,
                 houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected,
                 entryDate, null, selectedAgentId))
     }
@@ -496,7 +509,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         // Notification instead of KToasty
         //------------------- Back to main activity after add house --------------------------------
         //goBackToMainActivity()
-        getLatLng()
+        //getLatLng()
     }
 
     private fun addHousePhoto(housePhotoList: HousePhoto){
@@ -544,8 +557,11 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         locationAddress.getAddressFromLocation(address, applicationContext, GeoCoderHandler(this))
     }
 
-    companion object{
-        private class GeoCoderHandler(private val addHouseActivity: AddHouseActivity): Handler(){
+    companion object {
+
+        var latTest = ""
+
+        open class GeoCoderHandler(private val addHouseActivity: AddHouseActivity): Handler(){
             override fun handleMessage(message: Message){
                 val locationAddress: String?
                 locationAddress = when(message.what){
@@ -555,11 +571,19 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
                     }
                     else -> null
                 }
-                val separated: List<String> = locationAddress!!.split(" ")
-                val addressLat = separated[0]
-                val addressLng = separated[1]
-                addHouseActivity.houseLatEditText.setText(addressLat)
-                addHouseActivity.houseLngEditText.setText(addressLng)
+
+                if (locationAddress != null) {
+                    val separated: List<String> = locationAddress.split(" ")
+                    val addressLat = separated[0]
+                    val addressLng = separated[1]
+                    addHouseActivity.houseLatEditText.setText(addressLat)
+                    addHouseActivity.houseLngEditText.setText(addressLng)
+
+                    val houseLat = addHouseActivity.houseLatEditText.text.toString().trim()
+                    //latTest = houseLat
+                    addHouseActivity.lat = houseLat
+                    var houseLng = addHouseActivity.houseLngEditText.text.toString().trim()
+                }
             }
         }
     }

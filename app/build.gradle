@@ -23,9 +23,15 @@ android {
         }
     }
     buildTypes {
+        debug{
+            buildConfigField 'String', "ApiKey", MAPS_API_KEY
+            resValue 'string', "ApiKey", MAPS_API_KEY
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "ApiKey", MAPS_API_KEY
+            resValue 'string', "ApiKey", MAPS_API_KEY
         }
     }
 
@@ -125,4 +131,6 @@ dependencies {
     //----------------------------- Range seek bar -------------------------------------------------
     implementation 'com.github.MohammedAlaaMorsi:RangeSeekBar:1.0.6'
 
+    //----------------------------- Google Maps ----------------------------------------------------
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }

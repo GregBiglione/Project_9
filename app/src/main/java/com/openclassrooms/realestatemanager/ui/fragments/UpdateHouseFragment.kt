@@ -7,6 +7,8 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +28,7 @@ import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.adapters.UpdateHousePhotoAdapter
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
+import com.openclassrooms.realestatemanager.geocodinglocation.GeoCodingLocation
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
@@ -35,6 +38,7 @@ import com.openclassrooms.realestatemanager.picker.DatePickerFragment
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
 import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
 import com.openclassrooms.realestatemanager.repositories.HouseRepository
+import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
@@ -69,6 +73,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private lateinit var houseEntryDate: TextInputEditText
     private lateinit var houseSaleDateLyt: LinearLayout
     private lateinit var houseSaleDateEditText: TextInputEditText
+    private lateinit var houseLatEditText: TextInputEditText
+    private lateinit var houseLngEditText: TextInputEditText
     //------------------- Checkbox -----------------------------------------------------------------
     private lateinit var pointsOfInterests: TextInputEditText
     private lateinit var listOfPointsOfInterests: Array<String?>
@@ -100,27 +106,11 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private var housePhotoDescriptionFromList: String = ""
     //------------------- House photo list elements ------------------------------------------------
     private var saleHouseDate: Long = 0
-    //------------------- Test update house --------------------------------------------------------
-    //private var upHousePhoto: HousePhoto = null
-    //private var upHousePhotoDescription: String = ""
-//
-    //private var upType: String = "type"
-    //private var upDescription: String = "desc"
-    //private var upNeighborhood = "neigh"
-    //private var upAddress = "address"
-    //private var upPrice: Int = 0
-    //private var upSurface: Int = 0
-    //private var upRooms: Int = 0
-    //private var upBathrooms: Int = 0
-    //private var upBedrooms: Int = 0
-//
-    //private var upStatus: String = "satus"
-//
-    //private var upEntryDate: Long = 0
-    //private var upSaleDate: Long = 0
-//
-    //private var upPoi: String = "poi"
-    //private var upAgentId: Long = 0
+    //------------------- Address for lat/lng ------------------------------------------------------
+    private var address = ""
+    private var lat = ""
+    private var lng = ""
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -150,6 +140,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         houseBedRoomsEditText = view.findViewById(R.id.update_house_number_of_bedrooms)
         houseEntryDate = view.findViewById(R.id.update_house_entry_date)
         houseSaleDateLyt = view.findViewById(R.id.update_sale_date_lyt)
+        houseLatEditText = view.findViewById(R.id.update_house_lat)
+        houseLngEditText = view.findViewById(R.id.update_house_lng)
         //------------------- House type spinner ---------------------------------------------------
         houseTypeSpinner = view.findViewById(R.id.update_add_house_type_spinner)
         val houseType = resources.getStringArray(R.array.house_type)
@@ -624,6 +616,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
         if (!houseAddressEditText.text.isNullOrEmpty()){
             houseAddress = houseAddressEditText.text.toString().trim()
+            lat = houseLatEditText.text.toString().trim()
+            lng = houseLngEditText.text.toString().trim()
         }
 
         if (!housePriceEditText.text.isNullOrEmpty()){
@@ -670,20 +664,50 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
                 updateHousePhoto(housePhotoList = HousePhoto(housePhotoIdFromList, housePhotoFromList, housePhotoDescriptionFromList))
             }
 
-            updateHouse(house = House(houseId, oldHousePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, housePrice,
-                    houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected, pointsOfInterestsSelected,
-                    entryDate, /*saleHouseDate.toLong()*//*saleDateLong*/saleHouseDate, selectedAgentId))
+            updateHouse(house = House(houseId, oldHousePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, lat.toDouble(),
+                    lng.toDouble(), housePrice, houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected,
+                    pointsOfInterestsSelected, entryDate, saleHouseDate, selectedAgentId))
         }
     }
 
     private fun updateHouse(house: House){
+        getLatLng()
         mainViewModel.updateHouse(house)
         activity?.showSuccessToast("House updated with success ", Toast.LENGTH_SHORT, true)
-        findNavController().navigate(R.id.nav_home)
+        //findNavController().navigate(R.id.nav_home)
     }
 
     private fun updateHousePhoto(housePhotoList: HousePhoto){
         mainViewModel.updateHousePhoto(housePhotoList)
         activity?.showSuccessToast("Size HousePhoto = $housePhotoList", Toast.LENGTH_SHORT, true)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Get Lat/lng from address ------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun getLatLng(){
+        val locationAddress = GeoCodingLocation()
+        locationAddress.getAddressFromLocation(address, requireContext(), GeoCoderHandler(this))
+    }
+
+    companion object{
+        private class GeoCoderHandler(private val updateHouseFragment: UpdateHouseFragment): Handler(){
+            override fun handleMessage(message: Message){
+                val locationAddress: String?
+                locationAddress = when(message.what){
+                    1 -> {
+                        val bundle = message.data
+                        bundle.getString("coordinates")
+                    }
+                    else -> null
+                }
+                val separated: List<String> = locationAddress!!.split(" ")
+                val addressLat = separated[0]
+                val addressLng = separated[1]
+                updateHouseFragment.houseLatEditText.setText(addressLat)
+                updateHouseFragment.houseLngEditText.setText(addressLng)
+            }
+        }
     }
 }
