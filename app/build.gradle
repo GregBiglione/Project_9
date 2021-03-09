@@ -133,4 +133,7 @@ dependencies {
 
     //----------------------------- Google Maps ----------------------------------------------------
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    //----------------------------- Easy Permissions -----------------------------------------------
+    implementation 'com.vmadalin:easypermissions-ktx:0.1.0'
 }
