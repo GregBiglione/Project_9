@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +10,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.droidman.ktoasty.showSuccessToast
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -28,10 +33,17 @@ class MapFragment: Fragment() {
         const val INTERNET = Manifest.permission.INTERNET
         const val LOCATION_PERMISSION_REQUEST_CODE = 21
     }
+    //-------------------------------- Last known location -----------------------------------------
+    private lateinit var gps: FloatingActionButton
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        val view = inflater.inflate(R.layout.fragment_map, container, false)
+        createLocationService()
+        gps = view.findViewById(R.id.gps)
+        customFocus()
+        return view
     }
 
     //----------------------------------------------------------------------------------------------
@@ -39,11 +51,8 @@ class MapFragment: Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private val callback = OnMapReadyCallback { googleMap ->
-        val milan = LatLng(45.4637, 9.1905)
         map = googleMap
-        googleMap.addMarker(MarkerOptions().position(milan).title("Marker in Milan"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(milan))
-        zoomOnLocation()
+        lastKnownLocation()
         checkPermissions()
     }
 
@@ -75,11 +84,39 @@ class MapFragment: Fragment() {
         val perms = arrayOf(ACCESS_FINE_LOCATION, INTERNET)
 
         if (EasyPermissions.hasPermissions(requireContext(), *perms)){
-            activity?.showSuccessToast("Location granted", Toast.LENGTH_SHORT, true)
+            activity?.showSuccessToast(getString(R.string.location_granted), Toast.LENGTH_SHORT, true)
         }
         else{
-            EasyPermissions.requestPermissions(this,getString(R.string.permissions_message),
-                    LOCATION_PERMISSION_REQUEST_CODE, *perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.permissions_message),
+                    LOCATION_PERMISSION_REQUEST_CODE, *perms)
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Center position on last known location ----------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun customFocus() {
+        gps.setOnClickListener { lastKnownLocation() }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Get lastKnown location --------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //-------------------------------- Location service --------------------------------------------
+
+    private fun createLocationService() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun lastKnownLocation(){
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            val littleItaly = LatLng(location!!.latitude, location.longitude)
+            map!!.addMarker(MarkerOptions().position(littleItaly))
+            map!!.moveCamera(CameraUpdateFactory.newLatLng(littleItaly))
+            zoomOnLocation()
         }
     }
 }
