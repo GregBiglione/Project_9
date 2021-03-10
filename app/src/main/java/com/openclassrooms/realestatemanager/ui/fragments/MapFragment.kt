@@ -24,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -63,8 +64,10 @@ class MapFragment: Fragment() {
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
-        lastKnownLocation()
-        checkPermissions()
+        if (Utils.isInternetAvailableNew(requireContext())) {
+            lastKnownLocation()
+            checkPermissions()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -148,13 +151,23 @@ class MapFragment: Fragment() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
         mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
-            for (h in house){
+            for (h in house) {
                 val houseLat = h.lat
                 val houseLng = h.lng
                 val houseLocation = LatLng(houseLat!!, houseLng!!)
-                map!!.addMarker(MarkerOptions()
-                        .position(houseLocation)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
+                val status = h.available
+
+                if (status == "Available") {
+                    val availableMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_available)
+                    map!!.addMarker(MarkerOptions()
+                            .position(houseLocation)
+                            .icon(availableMarker))
+                } else {
+                    val soldMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_sold)
+                    map!!.addMarker(MarkerOptions()
+                            .position(houseLocation)
+                            .icon(soldMarker))
+                }
             }
         })
     }

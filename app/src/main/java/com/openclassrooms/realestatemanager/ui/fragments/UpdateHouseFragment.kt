@@ -664,8 +664,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
                 updateHousePhoto(housePhotoList = HousePhoto(housePhotoIdFromList, housePhotoFromList, housePhotoDescriptionFromList))
             }
 
-            updateHouse(house = House(houseId, oldHousePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, lat.toDouble(),
-                    lng.toDouble(), housePrice, houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected,
+            updateHouse(house = House(houseId, oldHousePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, 28.12412, 5.2354/*lat.toDouble(),
+                    lng.toDouble()*/, housePrice, houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected,
                     pointsOfInterestsSelected, entryDate, saleHouseDate, selectedAgentId))
         }
     }
