@@ -11,10 +11,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.droidman.ktoasty.showSuccessToast
+import com.droidman.ktoasty.showWarningToast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -45,6 +47,7 @@ class MapFragment: Fragment() {
     //-------------------------------- View Model --------------------------------------------------
     private lateinit var mainViewModel: MainViewModel
     private lateinit var injection: Injection
+    private var houseLatLng: LatLng? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -155,6 +158,7 @@ class MapFragment: Fragment() {
                 val houseLat = h.lat
                 val houseLng = h.lng
                 val houseLocation = LatLng(houseLat!!, houseLng!!)
+                houseLatLng = houseLocation
                 val status = h.available
 
                 if (status == "Available") {
@@ -162,13 +166,36 @@ class MapFragment: Fragment() {
                     map!!.addMarker(MarkerOptions()
                             .position(houseLocation)
                             .icon(availableMarker))
+                    clickOnMarker()
                 } else {
                     val soldMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_sold)
                     map!!.addMarker(MarkerOptions()
                             .position(houseLocation)
                             .icon(soldMarker))
+                    clickOnMarker()
                 }
             }
+        })
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Click on marker ---------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun clickOnMarker(){
+        map?.setOnMarkerClickListener(OnMarkerClickListener { marker ->
+            val markerLatLng = marker.position
+            activity?.showSuccessToast("Marker position: $markerLatLng \nHouse position: $houseLatLng", Toast.LENGTH_SHORT, true)
+
+            if (houseLatLng?.equals(markerLatLng)!!){
+                val detailedHouseFragment = DetailedHouseFragment()
+                val fragmentManager = requireActivity().supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.main_constraint_layout, detailedHouseFragment)
+                        .addToBackStack(null)
+                        .commit()
+            }
+            false
         })
     }
 }

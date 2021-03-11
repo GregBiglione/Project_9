@@ -671,7 +671,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     }
 
     private fun updateHouse(house: House){
-        getLatLng()
+        //getLatLng()
         mainViewModel.updateHouse(house)
         activity?.showSuccessToast("House updated with success ", Toast.LENGTH_SHORT, true)
         //findNavController().navigate(R.id.nav_home)
@@ -686,10 +686,10 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     //-------------------------------- Get Lat/lng from address ------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    private fun getLatLng(){
-        val locationAddress = GeoCodingLocation()
-        locationAddress.getAddressFromLocation(address, requireContext(), GeoCoderHandler(this))
-    }
+    //private fun getLatLng(){
+    //    val locationAddress = GeoCodingLocation()
+    //    locationAddress.getAddressFromLocation(address, requireContext(), GeoCoderHandler(this))
+    //}
 
     companion object{
         private class GeoCoderHandler(private val updateHouseFragment: UpdateHouseFragment): Handler(){
