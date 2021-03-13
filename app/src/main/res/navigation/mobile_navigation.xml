@@ -10,6 +10,9 @@
         android:name="com.openclassrooms.realestatemanager.ui.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
+        <argument
+            android:name="type"
+            app:argType="string" />
         <action
             android:id="@+id/action_nav_home_to_detailedHouseFragment"
             app:destination="@id/detailedHouseFragment" />

@@ -364,7 +364,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun searchHouses() {
-        goBackToMainActivity()
+        filterHouses()
     }
 
     //----------------------------------------------------------------------------------------------
@@ -385,43 +385,29 @@ class SearchActivity : AppCompatActivity() {
         val minBedrooms = bedroomsSeekBar.currentMinValue
         val maxBedrooms = bedroomsSeekBar.currentMaxValue
 
-        val bundle = Bundle()
+        val intent = Intent(this, MainActivity::class.java)
         //bundle.putSerializable("filteredHouse", FilteredHouse(minPhotos, maxPhotos, selectedType, selectedNeighborhood, minPrice, maxPrice,
         //minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi,
         //selectedEntryDate, selectedSaleDate, selectedAgentId))
-        bundle.putInt("minPhotos", minPhotos)
-        bundle.putInt("maxPhotos", maxPhotos)
-        bundle.putString("type", selectedType)
-        bundle.putString("neighborhood", selectedNeighborhood)
-        bundle.putInt("minPrice", minPrice)
-        bundle.putInt("maxPrice", maxPrice)
-        bundle.putInt("minSurface", minSurface)
-        bundle.putInt("maxSurface", maxSurface)
-        bundle.putInt("minRooms", minRooms)
-        bundle.putInt("maxRooms", maxRooms)
-        bundle.putInt("minBathrooms", minBathrooms)
-        bundle.putInt("maxBathrooms", maxBathrooms)
-        bundle.putInt("minBedrooms", minBedrooms)
-        bundle.putInt("maxBedrooms", maxBedrooms)
-        bundle.putString("status", selectedStatus)
-        bundle.putString("poi", selectedPoi)
-        bundle.putLong("entryDate", selectedEntryDate)
-        bundle.putLong("saleDate", selectedSaleDate)
-        bundle.putLong("agentId", selectedAgentId)
-        homeFragment = HomeFragment()
-        homeFragment.arguments = bundle
-        val fragmentManager: FragmentManager = supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.frameLayout, homeFragment).commit()
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Back to to Main activity after filter -----------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun goBackToMainActivity(){
-        filterHouses()
-        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("minPhotos", minPhotos)
+        intent.putExtra("maxPhotos", maxPhotos)
+        intent.putExtra("type", selectedType)
+        intent.putExtra("neighborhood", selectedNeighborhood)
+        intent.putExtra("minPrice", minPrice)
+        intent.putExtra("maxPrice", maxPrice)
+        intent.putExtra("minSurface", minSurface)
+        intent.putExtra("maxSurface", maxSurface)
+        intent.putExtra("minRooms", minRooms)
+        intent.putExtra("maxRooms", maxRooms)
+        intent.putExtra("minBathrooms", minBathrooms)
+        intent.putExtra("maxBathrooms", maxBathrooms)
+        intent.putExtra("minBedrooms", minBedrooms)
+        intent.putExtra("maxBedrooms", maxBedrooms)
+        intent.putExtra("status", selectedStatus)
+        intent.putExtra("poi", selectedPoi)
+        intent.putExtra("entryDate", selectedEntryDate)
+        intent.putExtra("saleDate", selectedSaleDate)
+        intent.putExtra("agentId", selectedAgentId)
         startActivity(intent)
     }
 

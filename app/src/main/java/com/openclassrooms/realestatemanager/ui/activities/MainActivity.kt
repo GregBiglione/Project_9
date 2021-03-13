@@ -11,8 +11,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -24,14 +22,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.droidman.ktoasty.KToasty
 import com.droidman.ktoasty.showErrorToast
 import com.droidman.ktoasty.showSuccessToast
-import com.google.android.material.bottomnavigation.BottomNavigationMenu
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.ui.fragments.CreditSimulatorFragment
-import com.openclassrooms.realestatemanager.ui.fragments.DetailedHouseFragment
-import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
-import com.openclassrooms.realestatemanager.ui.fragments.MapFragment
 import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 
 class MainActivity : AppCompatActivity(){
@@ -39,11 +32,6 @@ class MainActivity : AppCompatActivity(){
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
-
-    //private lateinit var homeFragment: HomeFragment
-    //private lateinit var mapFragment: MapFragment
-    private lateinit var creditSimulatorFragment: CreditSimulatorFragment
-    private lateinit var detailedHouseFragment: DetailedHouseFragment
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var navController: NavController
 
@@ -64,9 +52,13 @@ class MainActivity : AppCompatActivity(){
                 R.id.nav_home, R.id.nav_add_agent, R.id.nav_settings), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        //homeFragment = HomeFragment()
-        //mapFragment = MapFragment()
-        creditSimulatorFragment = CreditSimulatorFragment()
+
+        //if (intent.hasExtra("type")){
+        //    val bundle = Bundle()
+        //    bundle.putString("type", intent.getStringExtra("type"))
+        //    navController.navigate(R.id.nav_home, bundle)
+        //}
+        filteredHouses()
         navigationBottomMenu()
     }
 
@@ -116,14 +108,10 @@ class MainActivity : AppCompatActivity(){
         if (item!!.icon.constantState!! == resources.getDrawable(dollar, null).constantState){
             item.setIcon(euro)
             mainActivityViewModel.clickDollarsToEuros()
-            showSuccessToast("Currency with live data is € (MainActivity) & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
-            sendBooleanValueToFragments()
         }
         else{
             item.setIcon(dollar)
             mainActivityViewModel.clickEurosToDollars()
-            showErrorToast("Currency with live data is $ (MainActivity) & boolean is: $isCurrencyChanged", Toast.LENGTH_SHORT)
-            sendBooleanValueToFragments()
         }
     }
 
@@ -144,20 +132,6 @@ class MainActivity : AppCompatActivity(){
         return isCurrencyChanged
     }
 
-    //-------------------------------- Send boolean value to different fragments -------------------
-
-    private fun sendBooleanValueToFragments(){
-        val bundle = Bundle()
-        bundle.putBoolean("currencyBoolean", isCurrencyChanged)
-        //homeFragment = HomeFragment()
-        creditSimulatorFragment = CreditSimulatorFragment()
-        //detailedHouseFragment = DetailedHouseFragment()
-        creditSimulatorFragment.arguments = bundle
-        val fragmentManager: FragmentManager = supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.fragmentContainerMain, creditSimulatorFragment).commit()
-    }
-
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Go to search fragment ---------------------------------------
     //----------------------------------------------------------------------------------------------
@@ -165,6 +139,18 @@ class MainActivity : AppCompatActivity(){
     private fun goToSearchFragment() {
         val intent = Intent(this, SearchActivity::class.java)
         startActivity(intent)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Filtered house data -----------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun filteredHouses(){
+        if (intent.hasExtra("type")){
+            val bundle = Bundle()
+            bundle.putString("type", intent.getStringExtra("type"))
+            navController.navigate(R.id.nav_home, bundle)
+        }
     }
 
     //----------------------------------------------------------------------------------------------

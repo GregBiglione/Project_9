@@ -34,7 +34,7 @@ public class Utils {
     //-------------------------------- Convert € to $ ----------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    public static int convertEuroToDollar(int euros){ return (int) Math.round(euros * 1.186); }
+    public static int convertEuroToDollar(int euros){ return (int) Math.round(euros * 1.23152709); }
 
     /**
      * Conversion de la date d'aujourd'hui en un format plus approprié

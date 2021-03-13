@@ -10,12 +10,15 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.droidman.ktoasty.showErrorToast
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 import java.text.DecimalFormat
 
 class CreditSimulatorFragment: Fragment() {
@@ -55,10 +58,18 @@ class CreditSimulatorFragment: Fragment() {
     private lateinit var dollarsIconTotalCost: TextView
     private lateinit var eurosIconTotalInterests: TextView
     private lateinit var dollarsIconTotalInterests: TextView
+    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private var isCurrencyChanged: Boolean = false
+    //------------------- Price conversion ---------------------------------------------------------
+    private var eurosHousePrice = 0.0
+    private var eurosContribution = 0.0
+    private var eurosBorrowedAmount = 0.0
+    private var eurosMonthlyPayment = 0.0
+    private var eurosTotalCost = 0.0
+    private var eurosTotalInterests = 0.0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_credit_simulator, container, false)
-        //mainActivity = MainActivity()
         priceEt = root.findViewById(R.id.simulator_house_price_et)
         contributionEt = root.findViewById(R.id.simulator_contribution_et)
         borrowedAmountEt = root.findViewById(R.id.simulator_borrowed_amount_et)
@@ -83,7 +94,8 @@ class CreditSimulatorFragment: Fragment() {
         dollarsIconTotalCost = root.findViewById(R.id.simulator_total_cost_dollars)
         eurosIconTotalInterests = root.findViewById(R.id.simulator_total_interests_euros)
         dollarsIconTotalInterests = root.findViewById(R.id.simulator_total_interests_dollars)
-        //switchCurrencyIcon()
+        mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        configureMainActivityViewModel()
         return root
     }
 
@@ -219,7 +231,7 @@ class CreditSimulatorFragment: Fragment() {
     private fun clickOnClear(){
         clearButton.setOnClickListener {
             clearChamps()
-            eurosIconPrice.visibility = View.VISIBLE
+            //eurosIconPrice.visibility = View.VISIBLE
         }
     }
 
@@ -232,26 +244,29 @@ class CreditSimulatorFragment: Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    override fun onResume() {
-        super.onResume()
-        switchCurrencyIcon()
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Configure MainActivityViewModel -----------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun configureMainActivityViewModel(){
+        mainActivityViewModel.isClickedCurrency().observe(requireActivity(), Observer {
+            isCurrencyChanged = it
+            switchCurrencyIcon()
+        })
     }
 
     private fun switchCurrencyIcon(){
-        val bundle = arguments
-        if (bundle != null) {
 
-            when(val booleanOnClick = bundle.getBoolean("currencyBoolean")){
-                true -> {
-                    activity?.showSuccessToast("Boolean case 1 (CreditFrag) is $booleanOnClick", Toast.LENGTH_SHORT, true)
-                    showEuroIcon()
-                    showEurosPrice()
-                }
-                false -> {
-                    activity?.showErrorToast("Boolean case 2 (CreditFrag) is $booleanOnClick", Toast.LENGTH_SHORT, true)
-                    showDollarIcon()
-                    showDollarsPrice()
-                }
+        when(isCurrencyChanged){
+            true -> {
+                activity?.showSuccessToast("Boolean case 1 (CreditFrag) is", Toast.LENGTH_SHORT, true)
+                showEuroIcon()
+                showEurosPrice()
+            }
+            false -> {
+                activity?.showErrorToast("Boolean case 2 (CreditFrag) is", Toast.LENGTH_SHORT, true)
+                showDollarIcon()
+                showDollarsPrice()
             }
         }
     }
@@ -305,19 +320,25 @@ class CreditSimulatorFragment: Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun showEurosPrice(){
-        val eurosHousePrice = Utils.convertDollarToEuro(price.toInt())
-        val eurosContribution = Utils.convertDollarToEuro(contribution!!.toInt())
-        val eurosBorrowedAmount = Utils.convertDollarToEuro(priceWithContribution.toInt())
-        val eurosMonthlyPayment = Utils.convertDollarToEuro(monthPayment.toInt())
-        val eurosTotalCost = Utils.convertDollarToEuro(totalCost.toInt())
-        val eurosTotalInterests = Utils.convertDollarToEuro(interests.toInt())
+        val theEurosHousePrice = Utils.convertDollarToEuro(price.toInt()).toDouble()
+        eurosHousePrice = theEurosHousePrice
+        val theEurosContribution = Utils.convertDollarToEuro(contribution!!.toInt()).toDouble()
+        eurosContribution = theEurosContribution
+        val theEurosBorrowedAmount = Utils.convertDollarToEuro(priceWithContribution.toInt()).toDouble()
+        eurosBorrowedAmount = theEurosBorrowedAmount
+        val theEurosMonthlyPayment = Utils.convertDollarToEuro(monthPayment.toInt()).toDouble()
+        eurosMonthlyPayment = theEurosMonthlyPayment
+        val theEurosTotalCost = Utils.convertDollarToEuro(totalCost.toInt()).toDouble()
+        eurosTotalCost = theEurosTotalCost
+        val theEurosTotalInterests = Utils.convertDollarToEuro(interests.toInt()).toDouble()
+        eurosTotalInterests = theEurosTotalInterests
 
-        priceEt.setText(eurosHousePrice.toDouble().toString())
-        contributionEt.setText(eurosContribution.toDouble().toString())
-        borrowedAmountEt.setText(eurosBorrowedAmount.toDouble().toString())
-        monthlyPaymentEt.setText(eurosMonthlyPayment.toDouble().toString())
-        totalCostEt.setText(eurosTotalCost.toDouble().toString())
-        totalInterestsEt.setText(eurosTotalInterests.toDouble().toString())
+        priceEt.setText(eurosHousePrice.toString())
+        contributionEt.setText(eurosContribution.toString())
+        borrowedAmountEt.setText(eurosBorrowedAmount.toString())
+        monthlyPaymentEt.setText(eurosMonthlyPayment.toString())
+        totalCostEt.setText(eurosTotalCost.toString())
+        totalInterestsEt.setText(eurosTotalInterests.toString())
     }
 
     //----------------------------------------------------------------------------------------------
@@ -325,11 +346,18 @@ class CreditSimulatorFragment: Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun showDollarsPrice(){
-        priceEt.setText(price.toString())
-        contributionEt.setText(contribution!!.toString())
-        borrowedAmountEt.setText(borrowedAmountEt.toString())
-        monthlyPaymentEt.setText(monthPayment.toString())
-        totalCostEt.setText(totalCost.toString())
-        totalInterestsEt.setText(interests.toString())
+        val dollarsHousePrice = Utils.convertEuroToDollar(eurosHousePrice.toInt())
+        val dollarsContribution = Utils.convertEuroToDollar(eurosContribution.toInt())
+        val dollarsBorrowedAmount = Utils.convertEuroToDollar(eurosBorrowedAmount.toInt())
+        val dollarsMonthlyPayment = Utils.convertEuroToDollar(eurosMonthlyPayment.toInt())
+        val dollarsTotalCost = Utils.convertEuroToDollar(eurosTotalCost.toInt())
+        val dollarsTotalInterests = Utils.convertEuroToDollar(eurosTotalInterests.toInt())
+
+        priceEt.setText(dollarsHousePrice.toString())
+        contributionEt.setText(dollarsContribution.toString())
+        borrowedAmountEt.setText(dollarsBorrowedAmount.toString())
+        monthlyPaymentEt.setText(dollarsMonthlyPayment.toString())
+        totalCostEt.setText(dollarsTotalCost.toString())
+        totalInterestsEt.setText(dollarsTotalInterests.toString())
     }
 }

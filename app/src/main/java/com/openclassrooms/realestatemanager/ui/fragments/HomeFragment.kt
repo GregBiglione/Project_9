@@ -57,14 +57,10 @@ class HomeFragment : Fragment() {
         fab.setOnClickListener { goToAddActivity() }
         mainActivity = MainActivity()
         injection = Injection()
-
         configureViewModel()
-        //houseAdapter.setData(house)
-
         configureHouseRecyclerView()
         houseRecyclerView.layoutManager = LinearLayoutManager(activity)
         houseRecyclerView.adapter = houseAdapter
-        //houseAdapter.setData(house)
         return root
     }
 
@@ -76,7 +72,7 @@ class HomeFragment : Fragment() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
         mainViewModel.allHouses.observe(viewLifecycleOwner, { h ->
-            houseAdapter.setData(h) // suppr when filterHouses will work
+            houseAdapter.setData(h)
             house.clear()
             house.addAll(h)
             filterHouses()
@@ -114,15 +110,16 @@ class HomeFragment : Fragment() {
             val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
             mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
             //mainViewModel.getAllHousesFiltered()
-            mainViewModel.getAllHousesFiltered(minPhotos, maxPhotos, type!!, selectedNeighborhood!!, minPrice, maxPrice,
-            minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus!!,
-            selectedPoi, selectedEntryDate, selectedSaleDate, selectedAgentId)
-                    .observe(viewLifecycleOwner, { f ->
-                        house.clear()
-                        house.addAll(f)
-                        //houseAdapter.setData(house)
-                        houseAdapter.filterData(filteredHouse)
-                    })
+            if (type != null) {
+                mainViewModel.getAllHousesFiltered(/*minPhotos, maxPhotos,*/ type/*, selectedNeighborhood!!, minPrice, maxPrice,
+                minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus!!,
+                selectedPoi, selectedEntryDate, selectedSaleDate, selectedAgentId*/)
+                        .observe(viewLifecycleOwner, { f ->
+                            house.clear()
+                            house.addAll(f)
+                            houseAdapter.setData(house)
+                        })
+            }
         }
     }
 
