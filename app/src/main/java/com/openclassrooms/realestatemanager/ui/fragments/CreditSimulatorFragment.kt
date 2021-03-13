@@ -16,7 +16,6 @@ import com.droidman.ktoasty.showErrorToast
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 import java.text.DecimalFormat
@@ -43,8 +42,6 @@ class CreditSimulatorFragment: Fragment() {
     private var totalCost: Double = 0.0
     private var interests: Double = 0.0
 
-    //private lateinit var mainActivity: MainActivity
-    //private var currencyBoolean: Boolean = false
     private lateinit var eurosIconPrice: TextView
     private lateinit var dollarsIconPrice: TextView
     private lateinit var eurosIconContribution: TextView

@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,8 +17,6 @@ import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.droidman.ktoasty.showErrorToast
-import com.droidman.ktoasty.showSuccessToast
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
@@ -27,6 +25,7 @@ import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -74,7 +73,8 @@ class DetailedHouseFragment : Fragment() {
     private lateinit var agentAdapter: AgentAdapter
     private var agentList: List<Agent> = emptyList()
     private lateinit var mainActivity: MainActivity
-    private var currencyBoolean: Boolean = false
+    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private var isCurrencyChanged: Boolean = false
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -108,12 +108,14 @@ class DetailedHouseFragment : Fragment() {
         agentRecyclerView = view.findViewById(R.id.detail_agent_recycler_view)
         injection = Injection()
         mainActivity = MainActivity()
-        currencyBoolean = mainActivity.booleanOnCurrencyClick()
         fillCarousel()
         fillDetailHouseChamps()
         showSaleDate()
         configureViewModel()
         configureAgentRecyclerView()
+        //------------------- Currency view model --------------------------------------------------
+        mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        configureMainActivityViewModel()
         return view
     }
 
@@ -150,18 +152,19 @@ class DetailedHouseFragment : Fragment() {
         detailNeighborhood.text = args.currentHouse.neighborhood
         detailAddress.text = args.currentHouse.address
         detailPointOfInterests.text = args.currentHouse.proximityPointsOfInterest
-        //detailPrice.text = "$" + args.currentHouse.price.toString()
-        //if (currencyBoolean){
-        //    detailPrice.text = "$" + args.currentHouse.price.toString()
-        //    activity?.showWarningToast("Boolean is $currencyBoolean dans Detailed fragment", Toast.LENGTH_SHORT, true)
-        //}
-        //else{
-        //    detailPrice.text = "!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        //    activity?.showWarningToast("Boolean is $currencyBoolean dans Detailed fragment", Toast.LENGTH_SHORT, true)
-        //}
         switchPrice()
         entryDate()
-        //saleDate()
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Configure MainActivityViewModel -----------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun configureMainActivityViewModel(){
+        mainActivityViewModel.isClickedCurrency().observe(requireActivity(), Observer {
+            isCurrencyChanged = it
+            switchPrice()
+        })
     }
 
     //----------------------------------------------------------------------------------------------
@@ -169,20 +172,13 @@ class DetailedHouseFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun switchPrice(){
-        val bundle = arguments
-        if (bundle != null) {
-            val booleanOnClick = bundle.getBoolean("currencyBoolean")
-            currencyBoolean = booleanOnClick
 
-            when(currencyBoolean){
-                true -> {
-                    activity?.showSuccessToast("Boolean case 1 (DetailFrag) in detail fragment is $currencyBoolean", Toast.LENGTH_SHORT, true)
-                    showEurosPrice()
-                }
-                false -> {
-                    activity?.showErrorToast("Boolean case 2 (DetailFrag) in detail fragment is $currencyBoolean", Toast.LENGTH_SHORT, true)
-                    showDollarsPrice()
-                }
+        when(isCurrencyChanged){
+            true -> {
+                showEurosPrice()
+            }
+            false -> {
+                showDollarsPrice()
             }
         }
     }
@@ -202,7 +198,6 @@ class DetailedHouseFragment : Fragment() {
         val dollars = args.currentHouse.price
         detailPrice.text = "$$dollars"
     }
-
 
     //----------------------------------------------------------------------------------------------
     //------------------- Configure agent recyclerview ---------------------------------------------
@@ -285,7 +280,6 @@ class DetailedHouseFragment : Fragment() {
     private fun saleDate(){
         val saleDate = args.currentHouse.saleDate
         if (saleDate != null) {
-            //val saleFrenchDate = Utils.convertUsDateToFrenchDate(saleDate)
             val saleFrenchDate = timeConverters.convertLongToTime(saleDate)
             detailSaleDate.text = saleFrenchDate
         }
