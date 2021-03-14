@@ -9,8 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
@@ -26,6 +24,7 @@ import com.openclassrooms.realestatemanager.picker.SearchDatePickerFragment
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
+import kotlin.math.min
 
 class SearchActivity : AppCompatActivity() {
 
@@ -259,12 +258,12 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showEntryPickerDialogEntryDate() {
-        val datePicker = SearchDatePickerFragment{ day, month, year -> onEntryDateSelected( day, month, year)}
+        val datePicker = SearchDatePickerFragment{ day, month, year -> onEntryDateSelected(day, month, year)}
         datePicker.show(supportFragmentManager, "Date picker")
     }
 
     private fun showSalePickerDialogEntryDate() {
-        val datePicker = SearchDatePickerFragment{ day, month, year -> onSaleDateSelected( day, month, year)}
+        val datePicker = SearchDatePickerFragment{ day, month, year -> onSaleDateSelected(day, month, year)}
         datePicker.show(supportFragmentManager, "Date picker")
     }
 
@@ -385,30 +384,34 @@ class SearchActivity : AppCompatActivity() {
         val minBedrooms = bedroomsSeekBar.currentMinValue
         val maxBedrooms = bedroomsSeekBar.currentMaxValue
 
+        val filteredHouse = FilteredHouse(minPhotos, maxPhotos, selectedType, selectedNeighborhood, minPrice, maxPrice, minSurface, maxSurface,
+                minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi, selectedEntryDate, selectedSaleDate,
+                selectedAgentId)
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("filteredHouse", filteredHouse)
+        startActivity(intent)
         //bundle.putSerializable("filteredHouse", FilteredHouse(minPhotos, maxPhotos, selectedType, selectedNeighborhood, minPrice, maxPrice,
         //minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi,
         //selectedEntryDate, selectedSaleDate, selectedAgentId))
-        intent.putExtra("minPhotos", minPhotos)
-        intent.putExtra("maxPhotos", maxPhotos)
-        intent.putExtra("type", selectedType)
-        intent.putExtra("neighborhood", selectedNeighborhood)
-        intent.putExtra("minPrice", minPrice)
-        intent.putExtra("maxPrice", maxPrice)
-        intent.putExtra("minSurface", minSurface)
-        intent.putExtra("maxSurface", maxSurface)
-        intent.putExtra("minRooms", minRooms)
-        intent.putExtra("maxRooms", maxRooms)
-        intent.putExtra("minBathrooms", minBathrooms)
-        intent.putExtra("maxBathrooms", maxBathrooms)
-        intent.putExtra("minBedrooms", minBedrooms)
-        intent.putExtra("maxBedrooms", maxBedrooms)
-        intent.putExtra("status", selectedStatus)
-        intent.putExtra("poi", selectedPoi)
-        intent.putExtra("entryDate", selectedEntryDate)
-        intent.putExtra("saleDate", selectedSaleDate)
-        intent.putExtra("agentId", selectedAgentId)
-        startActivity(intent)
+        //intent.putExtra("minPhotos", minPhotos)
+        //intent.putExtra("maxPhotos", maxPhotos)
+        //intent.putExtra("type", selectedType)
+        //intent.putExtra("neighborhood", selectedNeighborhood)
+        //intent.putExtra("minPrice", minPrice)
+        //intent.putExtra("maxPrice", maxPrice)
+        //intent.putExtra("minSurface", minSurface)
+        //intent.putExtra("maxSurface", maxSurface)
+        //intent.putExtra("minRooms", minRooms)
+        //intent.putExtra("maxRooms", maxRooms)
+        //intent.putExtra("minBathrooms", minBathrooms)
+        //intent.putExtra("maxBathrooms", maxBathrooms)
+        //intent.putExtra("minBedrooms", minBedrooms)
+        //intent.putExtra("maxBedrooms", maxBedrooms)
+        //intent.putExtra("status", selectedStatus)
+        //intent.putExtra("poi", selectedPoi)
+        //intent.putExtra("entryDate", selectedEntryDate)
+        //intent.putExtra("saleDate", selectedSaleDate)
+        //intent.putExtra("agentId", selectedAgentId)
     }
 
     //----------------------------------------------------------------------------------------------

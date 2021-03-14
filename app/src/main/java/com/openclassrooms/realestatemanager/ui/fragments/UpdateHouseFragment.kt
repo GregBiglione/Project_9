@@ -7,8 +7,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +24,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.adapters.UpdateHousePhotoAdapter
-import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.events.DeleteHousePhotoEvent
 import com.openclassrooms.realestatemanager.geocodinglocation.GeoCodingLocation
 import com.openclassrooms.realestatemanager.injections.Injection
@@ -35,15 +32,10 @@ import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.picker.DatePickerFragment
-import com.openclassrooms.realestatemanager.repositories.AgentRepository
-import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
-import com.openclassrooms.realestatemanager.repositories.HouseRepository
-import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
 import com.openclassrooms.realestatemanager.utils.TimeConverters
-import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -108,8 +100,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private var saleHouseDate: Long = 0
     //------------------- Address for lat/lng ------------------------------------------------------
     private var address = ""
-    private var lat = ""
-    private var lng = ""
+    private var lat = 0.0
+    private var lng = 0.0
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -302,6 +294,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private fun fillEditTexts(){
         houseDescriptionEditText.setText(args.currentHouse.description)
         houseAddressEditText.setText(args.currentHouse.address)
+        houseLatEditText.setText(args.currentHouse.lat.toString())
+        houseLngEditText.setText(args.currentHouse.lng.toString())
         housePriceEditText.setText(args.currentHouse.price.toString())
         //upPrice = Integer.parseInt(housePriceEditText.text.toString())
         houseSurfaceEditText.setText(args.currentHouse.surface.toString())
@@ -604,7 +598,8 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         var houseBedRooms = 0
         var houseDescription = ""
         var houseAddress = ""
-        //var longEntryDate = 0
+        var houseLat = 0.0
+        var houseLng = 0.0
 
         val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
 
@@ -616,8 +611,18 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
 
         if (!houseAddressEditText.text.isNullOrEmpty()){
             houseAddress = houseAddressEditText.text.toString().trim()
-            lat = houseLatEditText.text.toString().trim()
-            lng = houseLngEditText.text.toString().trim()
+            address = houseAddress
+            getLatLng()
+        }
+
+        if (!houseLatEditText.text.isNullOrEmpty()){
+            houseLat = houseLatEditText.text.toString().toDouble()
+            lat = houseLat
+        }
+
+        if (!houseLngEditText.text.isNullOrEmpty()){
+            houseLng = houseLngEditText.text.toString().toDouble()
+            lng = houseLng
         }
 
         if (!housePriceEditText.text.isNullOrEmpty()){
@@ -645,9 +650,13 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         val entryDate = timeConverters.convertDateToLong(houseEntryDate.text.toString())
 
         val statusSelectedId: Int = statusSpinner.selectedItemId.toInt()
-        val saleDate: String = houseSaleDateEditText.text.toString().trim()
-        saleHouseDate = timeConverters.convertDateToLong(saleDate)
-        if (statusSelectedId == 1 && saleDate.isEmpty()){
+        if (!houseSaleDateEditText.text.isNullOrEmpty()){
+            val saleDate: String = houseSaleDateEditText.text.toString().trim()
+            saleHouseDate = timeConverters.convertDateToLong(saleDate)
+        }
+
+        if (statusSelectedId == 1 && houseSaleDateEditText.text.isNullOrEmpty()){
+            houseSaleDateEditText.setText("")
             houseSaleDateEditText.error = "Enter a sale date"
             activity?.showErrorToast("Sale date can't be empty", Toast.LENGTH_SHORT, true)
         }
@@ -664,50 +673,36 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
                 updateHousePhoto(housePhotoList = HousePhoto(housePhotoIdFromList, housePhotoFromList, housePhotoDescriptionFromList))
             }
 
-            updateHouse(house = House(houseId, oldHousePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, 28.12412, 5.2354/*lat.toDouble(),
-                    lng.toDouble()*/, housePrice, houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected,
+            updateHouse(house = House(houseId, oldHousePhotoList, typeHouseSelected, neighborhoodSelected, houseAddress, houseLat, houseLng,
+                    housePrice, houseSurface, houseRooms, houseBathRooms, houseBedRooms, houseDescription, statusSelected,
                     pointsOfInterestsSelected, entryDate, saleHouseDate, selectedAgentId))
         }
     }
 
     private fun updateHouse(house: House){
-        //getLatLng()
         mainViewModel.updateHouse(house)
         activity?.showSuccessToast("House updated with success ", Toast.LENGTH_SHORT, true)
-        //findNavController().navigate(R.id.nav_home)
+        findNavController().navigate(R.id.nav_home)
     }
 
     private fun updateHousePhoto(housePhotoList: HousePhoto){
         mainViewModel.updateHousePhoto(housePhotoList)
-        activity?.showSuccessToast("Size HousePhoto = $housePhotoList", Toast.LENGTH_SHORT, true)
     }
 
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Get Lat/lng from address ------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    //private fun getLatLng(){
-    //    val locationAddress = GeoCodingLocation()
-    //    locationAddress.getAddressFromLocation(address, requireContext(), GeoCoderHandler(this))
-    //}
+    private fun getLatLng(){
+        val locationAddress = GeoCodingLocation()
+        val addressTest = locationAddress.getAddressFromLocation(address, requireContext())
+        val separated: List<String> = addressTest!!.split(" ")
+        val addressLat = separated[0]
+        val addressLng = separated[1]
 
-    companion object{
-        private class GeoCoderHandler(private val updateHouseFragment: UpdateHouseFragment): Handler(){
-            override fun handleMessage(message: Message){
-                val locationAddress: String?
-                locationAddress = when(message.what){
-                    1 -> {
-                        val bundle = message.data
-                        bundle.getString("coordinates")
-                    }
-                    else -> null
-                }
-                val separated: List<String> = locationAddress!!.split(" ")
-                val addressLat = separated[0]
-                val addressLng = separated[1]
-                updateHouseFragment.houseLatEditText.setText(addressLat)
-                updateHouseFragment.houseLngEditText.setText(addressLng)
-            }
-        }
+        houseLatEditText.setText("")
+        houseLatEditText.setText(addressLat)
+        houseLngEditText.setText("")
+        houseLngEditText.setText(addressLng)
     }
 }

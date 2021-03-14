@@ -48,6 +48,7 @@ class MapFragment: Fragment() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var injection: Injection
     private var houseLatLng: LatLng? = null
+    private var houseType: String? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -159,19 +160,23 @@ class MapFragment: Fragment() {
                 val houseLng = h.lng
                 val houseLocation = LatLng(houseLat!!, houseLng!!)
                 houseLatLng = houseLocation
+                val type = h.typeOfHouse
+                houseType = type
                 val status = h.available
 
                 if (status == "Available") {
                     val availableMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_available)
                     map!!.addMarker(MarkerOptions()
                             .position(houseLocation)
-                            .icon(availableMarker))
+                            .icon(availableMarker)
+                            .title(h.typeOfHouse))
                     clickOnMarker()
                 } else {
                     val soldMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_sold)
                     map!!.addMarker(MarkerOptions()
                             .position(houseLocation)
-                            .icon(soldMarker))
+                            .icon(soldMarker)
+                            .title(h.typeOfHouse))
                     clickOnMarker()
                 }
             }
@@ -184,16 +189,20 @@ class MapFragment: Fragment() {
 
     private fun clickOnMarker(){
         map?.setOnMarkerClickListener(OnMarkerClickListener { marker ->
-            val markerLatLng = marker.position
-            activity?.showSuccessToast("Marker position: $markerLatLng \nHouse position: $houseLatLng", Toast.LENGTH_SHORT, true)
+            val markerTitle = marker.title
+            //activity?.showSuccessToast("Marker position: $markerTitle \nHouse position: $houseType", Toast.LENGTH_SHORT, true)
 
-            if (houseLatLng?.equals(markerLatLng)!!){
+            if (houseType.equals(markerTitle)){
+                activity?.showSuccessToast("Marker position: $markerTitle \nHouse position: $houseType", Toast.LENGTH_SHORT, true)
                 val detailedHouseFragment = DetailedHouseFragment()
                 val fragmentManager = requireActivity().supportFragmentManager
                 val fragmentTransaction = fragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.main_constraint_layout, detailedHouseFragment)
                         .addToBackStack(null)
                         .commit()
+            }
+            else{
+                activity?.showWarningToast("Marker position: $markerTitle \nHouse position: $houseType", Toast.LENGTH_SHORT, true)
             }
             false
         })

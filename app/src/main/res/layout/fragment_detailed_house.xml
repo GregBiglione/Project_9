@@ -10,6 +10,7 @@
        android:id="@+id/detail_main_lyt"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
+       android:layout_marginBottom="50dp"
        android:orientation="vertical">
 
        <com.denzcoskun.imageslider.ImageSlider

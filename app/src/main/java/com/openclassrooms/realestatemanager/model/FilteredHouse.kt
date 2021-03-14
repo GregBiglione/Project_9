@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.model
 
-import java.io.Serializable
+import android.os.Parcel
+import android.os.Parcelable
 
 data class FilteredHouse(
         var minPhotos: Int,
@@ -22,4 +23,62 @@ data class FilteredHouse(
         var entryDate: Long?,
         var saleDate: Long?,
         var agentId: Long
-) : Serializable
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readString()!!,
+            parcel.readString()!!,
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readString()!!,
+            parcel.readString(),
+            parcel.readValue(Long::class.java.classLoader) as? Long,
+            parcel.readValue(Long::class.java.classLoader) as? Long,
+            parcel.readLong()) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(minPhotos)
+        parcel.writeInt(maxPhotos)
+        parcel.writeString(type)
+        parcel.writeString(neighborhood)
+        parcel.writeInt(minPrice)
+        parcel.writeInt(maxPrice)
+        parcel.writeInt(minSurface)
+        parcel.writeInt(maxSurface)
+        parcel.writeInt(minRooms)
+        parcel.writeInt(maxRooms)
+        parcel.writeInt(minBathrooms)
+        parcel.writeInt(maxBathrooms)
+        parcel.writeInt(minBedrooms)
+        parcel.writeInt(maxBedrooms)
+        parcel.writeString(status)
+        parcel.writeString(poi)
+        parcel.writeValue(entryDate)
+        parcel.writeValue(saleDate)
+        parcel.writeLong(agentId)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<FilteredHouse> {
+        override fun createFromParcel(parcel: Parcel): FilteredHouse {
+            return FilteredHouse(parcel)
+        }
+
+        override fun newArray(size: Int): Array<FilteredHouse?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

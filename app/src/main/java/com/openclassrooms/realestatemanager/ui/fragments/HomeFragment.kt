@@ -5,15 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.droidman.ktoasty.showSuccessToast
-import com.droidman.ktoasty.showWarningToast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HouseAdapter
@@ -23,28 +19,21 @@ import com.openclassrooms.realestatemanager.model.FilteredHouse
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
-//import com.openclassrooms.realestatemanager.viewmodel.FilterMainViewModel
+import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
+
 
 class HomeFragment : Fragment() {
 
     private lateinit var houseRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var injection: Injection
-    //------------------- Data from Search Activity ------------------------------------------------
-    private lateinit var typeFilter: String
-    private lateinit var neighborhoodFilter: String
-    private lateinit var statusFilter: String
-    private var agentIdFilter: Long? = 0
-
-    //------------------------ test
     private lateinit var mainActivity: MainActivity
-    private var currencyBoolean: Boolean = false
-    // 1)
     private val house: ArrayList<House> = ArrayList()
-    var filteredHouse: ArrayList<FilteredHouse> = ArrayList()
-    //private val houseAdapter: HouseAdapter = HouseAdapter(currencyBoolean)
-    private val houseAdapter: HouseAdapter = HouseAdapter()
+
+    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private var isCurrencyChanged: Boolean = false
+    private var houseAdapter: HouseAdapter = HouseAdapter(isCurrencyChanged)
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -61,6 +50,9 @@ class HomeFragment : Fragment() {
         configureHouseRecyclerView()
         houseRecyclerView.layoutManager = LinearLayoutManager(activity)
         houseRecyclerView.adapter = houseAdapter
+        //------------------- Currency view model --------------------------------------------------
+        mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        configureMainActivityViewModel()
         return root
     }
 
@@ -80,6 +72,17 @@ class HomeFragment : Fragment() {
     }
 
     //----------------------------------------------------------------------------------------------
+    //-------------------------------- Configure MainActivityViewModel -----------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun configureMainActivityViewModel(){
+        mainActivityViewModel.isClickedCurrency().observe(requireActivity(), Observer {
+            isCurrencyChanged = it
+            //houseAdapter = HouseAdapter(isCurrencyChanged)
+        })
+    }
+
+    //----------------------------------------------------------------------------------------------
     //------------------- Filter houses ------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
@@ -87,33 +90,14 @@ class HomeFragment : Fragment() {
         val bundle = arguments
 
         if (bundle != null){
-            //var filter = bundle.getSerializable("filteredHouse")
-            val minPhotos = bundle.getInt("minPhotos")
-            val maxPhotos = bundle.getInt("maxPhotos")
-            val type = bundle.getString("type")
-            val selectedNeighborhood = bundle.getString("neighborhood")
-            val minPrice =  bundle.getInt("minPrice")
-            val maxPrice = bundle.getInt("maxPrice")
-            val minSurface = bundle.getInt("minSurface")
-            val maxSurface = bundle.getInt("maxSurface")
-            val minRooms = bundle.getInt("minRooms")
-            val maxRooms =  bundle.getInt("maxRooms")
-            val minBathrooms = bundle.getInt("minBathrooms")
-            val maxBathrooms = bundle.getInt("maxBathrooms")
-            val minBedrooms = bundle.getInt("minBedrooms")
-            val maxBedrooms = bundle.getInt("maxBedrooms")
-            val selectedStatus = bundle.getString("status")
-            val selectedPoi = bundle.getString("poi")
-            val selectedEntryDate = bundle.getLong("entryDate")
-            val selectedSaleDate = bundle.getLong("saleDate")
-            val selectedAgentId = bundle.getLong("agentId")
+            val filteredHouse: FilteredHouse? = bundle.getParcelable("filteredHouse")
             val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
             mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-            //mainViewModel.getAllHousesFiltered()
-            if (type != null) {
-                mainViewModel.getAllHousesFiltered(/*minPhotos, maxPhotos,*/ type/*, selectedNeighborhood!!, minPrice, maxPrice,
-                minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus!!,
-                selectedPoi, selectedEntryDate, selectedSaleDate, selectedAgentId*/)
+            filteredHouse?.let {
+                mainViewModel.getAllHousesFiltered(filteredHouse.minPhotos, filteredHouse.maxPhotos, filteredHouse.type, filteredHouse.neighborhood,
+                        filteredHouse.minPrice, filteredHouse.maxPrice, filteredHouse.minSurface, filteredHouse.maxSurface, filteredHouse.minRooms,
+                        filteredHouse.maxRooms, filteredHouse.minBathrooms, filteredHouse.maxBathrooms, filteredHouse.minBedrooms, filteredHouse.maxBedrooms,
+                        filteredHouse.status, filteredHouse.poi, filteredHouse.entryDate, filteredHouse.saleDate, filteredHouse.agentId)
                         .observe(viewLifecycleOwner, { f ->
                             house.clear()
                             house.addAll(f)

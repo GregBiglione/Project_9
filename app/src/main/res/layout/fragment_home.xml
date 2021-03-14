@@ -11,7 +11,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp"
         android:clipToPadding="false"
         tools:listitem="@layout/house_item"/>
 
@@ -25,6 +26,6 @@
         android:src="@drawable/ic_baseline_add_24"
         android:contentDescription="@string/add_house"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="65dp"/>
+        android:layout_marginBottom="74dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -95,7 +95,7 @@ class UpdateAgentFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private fun showPhotoChoiceDialogBox(){
         val photoChoiceDialog = PhotoChoiceDialog(this, this)
         //check with parentFragment etc to solve deprecated requireFragmentManager()
-        photoChoiceDialog.show(requireFragmentManager(), "Photo choice dialog box")
+        photoChoiceDialog.show(parentFragmentManager, "Photo choice dialog box")
         photoChoiceDialog.setTargetFragment(this, 1)
     }
 

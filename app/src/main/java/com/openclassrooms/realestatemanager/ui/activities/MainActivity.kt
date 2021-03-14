@@ -146,9 +146,14 @@ class MainActivity : AppCompatActivity(){
     //----------------------------------------------------------------------------------------------
 
     private fun filteredHouses(){
-        if (intent.hasExtra("type")){
+        //if (intent.hasExtra("type") ){
+        //    val bundle = Bundle()
+        //    bundle.putString("type", intent.getStringExtra("type"))
+        //    navController.navigate(R.id.nav_home, bundle)
+        //}
+        if (intent.hasExtra("filteredHouse")){
             val bundle = Bundle()
-            bundle.putString("type", intent.getStringExtra("type"))
+            bundle.putParcelable("filteredHouse", intent.getParcelableExtra("filteredHouse"))
             navController.navigate(R.id.nav_home, bundle)
         }
     }

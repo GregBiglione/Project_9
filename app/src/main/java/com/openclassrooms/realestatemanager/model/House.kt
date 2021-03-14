@@ -19,8 +19,8 @@ data class House(
         var typeOfHouse: String?,
         var neighborhood: String?,
         var address: String?,
-        var lat: Double?, //<--
-        var lng: Double?, //<--
+        var lat: Double?,
+        var lng: Double?,
         var price: Int?,
         var surface: Int?,
         var numberOfRooms: Int?,

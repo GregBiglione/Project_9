@@ -8,8 +8,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -21,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
@@ -94,15 +91,11 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private var address = ""
     private var lat = 0.0
     private var lng = 0.0
-    private lateinit var addHouseActivity: AddHouseActivity
-    //private lateinit var geoCoderHandler: GeoCoderHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        addHouseActivity = AddHouseActivity()
-        //geoCoderHandler = GeoCoderHandler(addHouseActivity)
         housePhotoImageView = findViewById(R.id.add_house_photo)
         housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
         agentsSpinner = findViewById(R.id.add_house_agent_spinner)
@@ -456,8 +449,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         var houseLng = 0.0
 
         val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
-        //var lat1 = ""
-        //var lng1 = ""
 
         if (!houseDescriptionEditText.text.isNullOrEmpty()){
             houseDescription = houseDescriptionEditText.text.toString().trim()
@@ -469,14 +460,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
             houseAddress = houseAddressEditText.text.toString().trim()
             address = houseAddress
             getLatLng()
-
-        //var houseLat = 0.0
-        //var houseLng = 0.0
-            //latTest
-            //if (!houseLatEditText.text.isNullOrEmpty() && !houseLngEditText.text.isNullOrEmpty()){
-            //    houseLat = houseLatEditText.text.toString().toDouble()
-            //    houseLng = houseLngEditText.text.toString().toDouble()
-            //}
         }
 
         if (!houseLatEditText.text.isNullOrEmpty()){
@@ -523,13 +506,11 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     }
 
     private fun addHouse(house: House){
-        //getLatLng()
         mainViewModel.createHouse(house)
         showSuccessToast("House added with success ", Toast.LENGTH_SHORT, true)
         // Notification instead of KToasty
         //------------------- Back to main activity after add house --------------------------------
         goBackToMainActivity()
-        //getLatLng()
     }
 
     private fun addHousePhoto(housePhotoList: HousePhoto){
@@ -581,48 +562,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
         houseLatEditText.setText(addressLat)
         houseLngEditText.setText(addressLng)
-        //lat = addressLat
-        //houseLatEditText.setText(lat)
-        //val addressLng = separated[1]
-        ////lng = addressLng
-        //houseLngEditText.setText(lng)
     }
-
-    //private fun getLatLng(){
-    //    val locationAddress = GeoCodingLocation()
-    //    locationAddress.getAddressFromLocation(address, applicationContext, GeoCoderHandler(this))
-    //}
-//
-    //companion object {
-//
-    //    var latTest = ""
-//
-    //    open class GeoCoderHandler(private val addHouseActivity: AddHouseActivity): Handler(){
-    //        override fun handleMessage(message: Message){
-    //            val locationAddress: String?
-    //            locationAddress = when(message.what){
-    //                1 -> {
-    //                    val bundle = message.data
-    //                    bundle.getString("coordinates")
-    //                }
-    //                else -> null
-    //            }
-//
-    //            if (locationAddress != null) {
-    //                val separated: List<String> = locationAddress.split(" ")
-    //                val addressLat = separated[0]
-    //                val addressLng = separated[1]
-    //                addHouseActivity.houseLatEditText.setText(addressLat)
-    //                addHouseActivity.houseLngEditText.setText(addressLng)
-//
-    //                val houseLat = addHouseActivity.houseLatEditText.text.toString().trim()
-    //                //latTest = houseLat
-    //                addHouseActivity.lat = houseLat
-    //                var houseLng = addHouseActivity.houseLngEditText.text.toString().trim()
-    //            }
-    //        }
-    //    }
-    //}
 
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Back button to Main activity --------------------------------

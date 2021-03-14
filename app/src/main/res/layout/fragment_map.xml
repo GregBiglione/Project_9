@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="14dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="74dp"
         android:backgroundTint="@color/white"
         app:borderWidth="0dp"
