@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -126,7 +127,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         //getLatLng()
         clickOnAddHouse()
         clickOnClear()
-        myFirebaseMessagingService = MyFirebaseMessagingService()
+        //myFirebaseMessagingService = MyFirebaseMessagingService()
     }
 
     //----------------------------------------------------------------------------------------------
@@ -347,7 +348,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         checkedPointsOfInterests = BooleanArray(listOfPointsOfInterests.size)
 
         pointsOfInterests.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.dialogTheme))
             builder.setTitle(R.string.points_of_interests)
             builder.setMultiChoiceItems(listOfPointsOfInterests, checkedPointsOfInterests,
                     DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
@@ -507,6 +508,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
     private fun addHouse(house: House){
         mainViewModel.createHouse(house)
+        //sendNotificationAfterAdd()
         showSuccessToast("House added with success ", Toast.LENGTH_SHORT, true)
         // Notification instead of KToasty
         //------------------- Back to main activity after add house --------------------------------
@@ -523,7 +525,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     }
 
     private fun sendNotificationAfterAdd(){
-        //myFirebaseMessagingService.sendVisualNotification(getString(R.string.house_notification_msg_after_add_house))
+        myFirebaseMessagingService = MyFirebaseMessagingService()
+        myFirebaseMessagingService.sendVisualNotification(getString(R.string.house_notification_msg_after_add_house))
     }
 
     //----------------------------------------------------------------------------------------------

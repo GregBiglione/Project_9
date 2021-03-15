@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -200,7 +201,7 @@ class SearchActivity : AppCompatActivity() {
         checkedPointsOfInterests = BooleanArray(listOfPointsOfInterests.size)
 
         pointsOfInterests.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.dialogTheme))
             builder.setTitle(R.string.points_of_interests)
             builder.setMultiChoiceItems(listOfPointsOfInterests, checkedPointsOfInterests,
                     DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->

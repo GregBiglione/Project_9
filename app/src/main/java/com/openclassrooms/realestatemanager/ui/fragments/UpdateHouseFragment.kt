@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -473,7 +474,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
         checkedPointsOfInterests = BooleanArray(listOfPointsOfInterests.size)
 
         pointsOfInterests.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
+            val builder = AlertDialog.Builder(ContextThemeWrapper(requireContext(), R.style.dialogTheme))
             builder.setTitle(R.string.points_of_interests)
             builder.setMultiChoiceItems(listOfPointsOfInterests, checkedPointsOfInterests,
                     DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->

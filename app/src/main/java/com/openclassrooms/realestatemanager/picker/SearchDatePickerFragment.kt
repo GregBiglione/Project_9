@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
+import com.openclassrooms.realestatemanager.R
 import java.util.*
 
 class SearchDatePickerFragment(val listener: (day: Int, month: Int, year: Int) -> Unit): DialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -16,7 +17,7 @@ class SearchDatePickerFragment(val listener: (day: Int, month: Int, year: Int) -
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        return DatePickerDialog(activity as Context, this, year, month, day)
+        return DatePickerDialog(activity as Context, R.style.dialogTheme, this, year, month, day)
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {

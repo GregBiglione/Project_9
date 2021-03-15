@@ -28,11 +28,13 @@ class HomeFragment : Fragment() {
     private lateinit var houseRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var injection: Injection
+    private lateinit var mainActivity: MainActivity
     private val house: ArrayList<House> = ArrayList()
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
     private var isClickedRefresh: Boolean = false
+    private lateinit var homeFragment: HomeFragment
     private var houseAdapter: HouseAdapter = HouseAdapter(isCurrencyChanged)
 
     override fun onCreateView(
@@ -44,6 +46,7 @@ class HomeFragment : Fragment() {
         houseRecyclerView = root.findViewById(R.id.house_recycler_view)
         val fab: FloatingActionButton = root.findViewById(R.id.add_house_fab)
         fab.setOnClickListener { goToAddActivity() }
+        //mainActivity = MainActivity()
         injection = Injection()
         configureViewModel()
         configureHouseRecyclerView()
@@ -52,7 +55,6 @@ class HomeFragment : Fragment() {
         //------------------- Currency view model --------------------------------------------------
         mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
         configureMainActivityViewModel()
-        //refreshHouseList()
         return root
     }
 
@@ -78,7 +80,9 @@ class HomeFragment : Fragment() {
     private fun configureMainActivityViewModel(){
         mainActivityViewModel.isClickedCurrency().observe(requireActivity(), Observer {
             isCurrencyChanged = it
-            //houseAdapter = HouseAdapter(isCurrencyChanged)
+            houseAdapter = HouseAdapter(isCurrencyChanged)
+            houseRecyclerView.adapter = houseAdapter
+            configureHouseRecyclerView()
         })
     }
 
