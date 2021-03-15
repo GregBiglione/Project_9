@@ -270,7 +270,7 @@ class DetailedHouseFragment : Fragment() {
     private fun entryDate(){
         val entryDate = args.currentHouse.entryDate
         val entryFrenchDate = timeConverters.convertLongToTime(entryDate)
-        detailEntryDate.text = entryFrenchDate
+        detailEntryDate.text = " $entryFrenchDate"
     }
 
     //----------------------------------------------------------------------------------------------
@@ -281,7 +281,7 @@ class DetailedHouseFragment : Fragment() {
         val saleDate = args.currentHouse.saleDate
         if (saleDate != null) {
             val saleFrenchDate = timeConverters.convertLongToTime(saleDate)
-            detailSaleDate.text = saleFrenchDate
+            detailSaleDate.text = " $saleFrenchDate"
         }
     }
 

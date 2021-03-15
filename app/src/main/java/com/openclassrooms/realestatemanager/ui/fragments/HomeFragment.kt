@@ -28,11 +28,11 @@ class HomeFragment : Fragment() {
     private lateinit var houseRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var injection: Injection
-    private lateinit var mainActivity: MainActivity
     private val house: ArrayList<House> = ArrayList()
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
+    private var isClickedRefresh: Boolean = false
     private var houseAdapter: HouseAdapter = HouseAdapter(isCurrencyChanged)
 
     override fun onCreateView(
@@ -44,7 +44,6 @@ class HomeFragment : Fragment() {
         houseRecyclerView = root.findViewById(R.id.house_recycler_view)
         val fab: FloatingActionButton = root.findViewById(R.id.add_house_fab)
         fab.setOnClickListener { goToAddActivity() }
-        mainActivity = MainActivity()
         injection = Injection()
         configureViewModel()
         configureHouseRecyclerView()
@@ -53,6 +52,7 @@ class HomeFragment : Fragment() {
         //------------------- Currency view model --------------------------------------------------
         mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
         configureMainActivityViewModel()
+        //refreshHouseList()
         return root
     }
 
@@ -90,20 +90,28 @@ class HomeFragment : Fragment() {
         val bundle = arguments
 
         if (bundle != null){
-            val filteredHouse: FilteredHouse? = bundle.getParcelable("filteredHouse")
-            val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
-            mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-            filteredHouse?.let {
-                mainViewModel.getAllHousesFiltered(filteredHouse.minPhotos, filteredHouse.maxPhotos, filteredHouse.type, filteredHouse.neighborhood,
-                        filteredHouse.minPrice, filteredHouse.maxPrice, filteredHouse.minSurface, filteredHouse.maxSurface, filteredHouse.minRooms,
-                        filteredHouse.maxRooms, filteredHouse.minBathrooms, filteredHouse.maxBathrooms, filteredHouse.minBedrooms, filteredHouse.maxBedrooms,
-                        filteredHouse.status, filteredHouse.poi, filteredHouse.entryDate, filteredHouse.saleDate, filteredHouse.agentId)
-                        .observe(viewLifecycleOwner, { f ->
-                            house.clear()
-                            house.addAll(f)
-                            houseAdapter.setData(house)
-                        })
+            val type = bundle.getString("type")
+            if (type != null) {
+                mainViewModel.getAllHousesFiltered(type).observe(viewLifecycleOwner, { f ->
+                    house.clear()
+                    house.addAll(f)
+                    houseAdapter.setData(house)
+                })
             }
+            //val filteredHouse: FilteredHouse? = bundle.getParcelable("filteredHouse")
+            //val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
+            //mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+            //filteredHouse?.let {
+            //    mainViewModel.getAllHousesFiltered(filteredHouse.minPhotos, filteredHouse.maxPhotos, filteredHouse.type, filteredHouse.neighborhood,
+            //            filteredHouse.minPrice, filteredHouse.maxPrice, filteredHouse.minSurface, filteredHouse.maxSurface, filteredHouse.minRooms,
+            //            filteredHouse.maxRooms, filteredHouse.minBathrooms, filteredHouse.maxBathrooms, filteredHouse.minBedrooms, filteredHouse.maxBedrooms,
+            //            filteredHouse.status, filteredHouse.poi, filteredHouse.entryDate, filteredHouse.saleDate, filteredHouse.agentId)
+            //            .observe(viewLifecycleOwner, { f ->
+            //                house.clear()
+            //                house.addAll(f)
+            //                houseAdapter.setData(house)
+            //            })
+            //}
         }
     }
 
@@ -115,6 +123,30 @@ class HomeFragment : Fragment() {
     private fun configureViewModel(){
         val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
         mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Refresh house list ------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    override fun onResume() {
+        super.onResume()
+        refreshHouseList()
+    }
+
+    private fun refreshHouseList(){
+        mainActivityViewModel.isClickedRefresh().observe(requireActivity(), Observer {
+            isClickedRefresh = it
+            fullList()
+        })
+    }
+
+    private fun fullList(){
+        mainViewModel.allHouses.observe(viewLifecycleOwner, { h ->
+            houseAdapter.setData(h)
+            house.clear()
+            house.addAll(h)
+        })
     }
 
     //----------------------------------------------------------------------------------------------

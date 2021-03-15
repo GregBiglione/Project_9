@@ -117,7 +117,7 @@ class SearchActivity : AppCompatActivity() {
     //----------------------------------------------------------------------------------------------
 
     private fun typeSpinner(){
-        val houseType = resources.getStringArray(R.array.house_type)
+        val houseType = resources.getStringArray(R.array.house_type_search)
         val houseTypeSpinner = findViewById<Spinner>(R.id.search_type_spinner)
         if (houseTypeSpinner != null){
             val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, houseType)
@@ -141,7 +141,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun neighborhoodSpinner(){
         neighborSpinner = findViewById(R.id.search_neighborhood_spinner)
-        val neighborhood = resources.getStringArray(R.array.house_neighborhood)
+        val neighborhood = resources.getStringArray(R.array.house_neighborhood_search)
         val neighborSpinner = findViewById<Spinner>(R.id.search_neighborhood_spinner)
         if (neighborSpinner != null){
             val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, neighborhood)
@@ -384,11 +384,17 @@ class SearchActivity : AppCompatActivity() {
         val minBedrooms = bedroomsSeekBar.currentMinValue
         val maxBedrooms = bedroomsSeekBar.currentMaxValue
 
-        val filteredHouse = FilteredHouse(minPhotos, maxPhotos, selectedType, selectedNeighborhood, minPrice, maxPrice, minSurface, maxSurface,
-                minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi, selectedEntryDate, selectedSaleDate,
-                selectedAgentId)
+        // filter with full object doesn't works
+        //val filteredHouse = FilteredHouse(minPhotos, maxPhotos, selectedType, selectedNeighborhood, minPrice, maxPrice, minSurface, maxSurface,
+        //        minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi, selectedEntryDate, selectedSaleDate,
+        //        selectedAgentId)
+        //val intent = Intent(this, MainActivity::class.java)
+        //intent.putExtra("filteredHouse", filteredHouse)
+        //startActivity(intent)
+
+        // filter with type
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("filteredHouse", filteredHouse)
+        intent.putExtra("type", selectedType)
         startActivity(intent)
         //bundle.putSerializable("filteredHouse", FilteredHouse(minPhotos, maxPhotos, selectedType, selectedNeighborhood, minPrice, maxPrice,
         //minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi,

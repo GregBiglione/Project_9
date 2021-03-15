@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModel
 class MainActivityViewModel: ViewModel() {
 
     private var isClickedCurrency = MutableLiveData<Boolean>()
+    private var isClickedRefresh = MutableLiveData<Boolean>()
+
+    //-------------------------------- Change currency ---------------------------------------------
+
     fun isClickedCurrency(): LiveData<Boolean>{
         return isClickedCurrency
     }
@@ -17,5 +21,15 @@ class MainActivityViewModel: ViewModel() {
 
     fun clickEurosToDollars(){
         isClickedCurrency.value = false
+    }
+
+    //-------------------------------- Refresh house list ------------------------------------------
+
+    fun isClickedRefresh(): LiveData<Boolean>{
+        return isClickedRefresh
+    }
+
+    fun clickToRefresh(){
+        isClickedRefresh.value = true
     }
 }

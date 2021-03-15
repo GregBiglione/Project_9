@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.model
 
+import android.content.ContentValues
 import android.os.Parcelable
 import androidx.room.*
 import com.openclassrooms.realestatemanager.utils.ListConverters
@@ -39,12 +40,14 @@ data class House(
 //        //-------------------------------- Utils ---------------------------------------------------
 //
 //        fun fromContentValues(values: ContentValues): House {
-//                val house = House(id, housePhotoList, typeOfHouse, neighborhood, address, price, surface, numberOfRooms, numberOfBathRooms,
+//                val house = House(id, housePhotoList, typeOfHouse, neighborhood, address, lat, lng, price, surface, numberOfRooms, numberOfBathRooms,
 //                        numberOfBedRooms, description, available, proximityPointsOfInterest, entryDate, saleDate, agentId)
 //                if (values.containsKey("housePhotoList")) house.housePhotoList
 //                if (values.containsKey("typeOfHouse")) house.typeOfHouse
 //                if (values.containsKey("neighborhood")) house.neighborhood
 //                if (values.containsKey("address")) house.address
+//                if (values.containsKey("lat")) house.lat
+//                if (values.containsKey("lng")) house.lng
 //                if (values.containsKey("price")) house.price
 //                if (values.containsKey("surface")) house.surface
 //                if (values.containsKey("numberOfRooms")) house.numberOfRooms

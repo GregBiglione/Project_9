@@ -10,12 +10,12 @@
         android:name="com.openclassrooms.realestatemanager.ui.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
-        <!--<argument
-            android:name="type"
-            app:argType="string" />-->
         <argument
+            android:name="type"
+            app:argType="string" />
+        <!--<argument
             android:name="filteredHouse"
-            app:argType="com.openclassrooms.realestatemanager.model.FilteredHouse" />
+            app:argType="com.openclassrooms.realestatemanager.model.FilteredHouse" />-->
         <action
             android:id="@+id/action_nav_home_to_detailedHouseFragment"
             app:destination="@id/detailedHouseFragment" />
@@ -85,6 +85,10 @@
     <fragment
         android:id="@+id/nav_map"
         android:name="com.openclassrooms.realestatemanager.ui.fragments.MapFragment"
-        android:label="@string/Map" />
+        android:label="@string/Map" >
+        <action
+            android:id="@+id/action_nav_map_to_detailedHouseFragment"
+            app:destination="@id/detailedHouseFragment" />
+    </fragment>
 
 </navigation>

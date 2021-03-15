@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.droidman.ktoasty.showSuccessToast
-import com.droidman.ktoasty.showWarningToast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -26,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
@@ -48,7 +49,7 @@ class MapFragment: Fragment() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var injection: Injection
     private var houseLatLng: LatLng? = null
-    private var houseType: String? = null
+    private lateinit var houseNav: List<House>
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -131,10 +132,12 @@ class MapFragment: Fragment() {
     @SuppressLint("MissingPermission")
     private fun lastKnownLocation(){
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-            val littleItaly = LatLng(location!!.latitude, location.longitude)
-            map!!.addMarker(MarkerOptions().position(littleItaly))
-            map!!.moveCamera(CameraUpdateFactory.newLatLng(littleItaly))
-            zoomOnLocation()
+            if (location != null){
+                val littleItaly = LatLng(location.latitude, location.longitude)
+                map!!.addMarker(MarkerOptions().position(littleItaly))
+                map!!.moveCamera(CameraUpdateFactory.newLatLng(littleItaly))
+                zoomOnLocation()
+            }
         }
     }
 
@@ -155,13 +158,12 @@ class MapFragment: Fragment() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
         mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
+            houseNav = house
             for (h in house) {
                 val houseLat = h.lat
                 val houseLng = h.lng
                 val houseLocation = LatLng(houseLat!!, houseLng!!)
                 houseLatLng = houseLocation
-                val type = h.typeOfHouse
-                houseType = type
                 val status = h.available
 
                 if (status == "Available") {
@@ -169,14 +171,14 @@ class MapFragment: Fragment() {
                     map!!.addMarker(MarkerOptions()
                             .position(houseLocation)
                             .icon(availableMarker)
-                            .title(h.typeOfHouse))
+                            .title(h.address))
                     clickOnMarker()
                 } else {
                     val soldMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_sold)
                     map!!.addMarker(MarkerOptions()
                             .position(houseLocation)
                             .icon(soldMarker)
-                            .title(h.typeOfHouse))
+                            .title(h.address))
                     clickOnMarker()
                 }
             }
@@ -188,22 +190,9 @@ class MapFragment: Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun clickOnMarker(){
-        map?.setOnMarkerClickListener(OnMarkerClickListener { marker ->
-            val markerTitle = marker.title
-            //activity?.showSuccessToast("Marker position: $markerTitle \nHouse position: $houseType", Toast.LENGTH_SHORT, true)
-
-            if (houseType.equals(markerTitle)){
-                activity?.showSuccessToast("Marker position: $markerTitle \nHouse position: $houseType", Toast.LENGTH_SHORT, true)
-                val detailedHouseFragment = DetailedHouseFragment()
-                val fragmentManager = requireActivity().supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.main_constraint_layout, detailedHouseFragment)
-                        .addToBackStack(null)
-                        .commit()
-            }
-            else{
-                activity?.showWarningToast("Marker position: $markerTitle \nHouse position: $houseType", Toast.LENGTH_SHORT, true)
-            }
+        map?.setOnMarkerClickListener(OnMarkerClickListener {
+            val action = MapFragmentDirections.actionNavMapToDetailedHouseFragment(houseNav[0])
+            findNavController().navigate(action)
             false
         })
     }

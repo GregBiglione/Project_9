@@ -14,7 +14,7 @@ import com.openclassrooms.realestatemanager.model.House
 //    //-------------------------------- For data ---------(------------------------------------------
 //
 //    companion object{
-//        private const val AUTHORITY = "com.openclassrooms.savemytrip.provider"
+//        private const val AUTHORITY = "com.openclassrooms.realestatemanager.provider"
 //        private val TABLE_NAME = House::class.java.simpleName
 //        private val URI_HOUSE = Uri.parse("content://$AUTHORITY/$TABLE_NAME")
 //    }

@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(){
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
+    private var isClickedRefresh: Boolean = false
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var navController: NavController
 
@@ -39,25 +40,21 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //-------------------------------- Menu ----------------------------------------------------
+        mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         configureMainActivityViewModel()
+        refreshHouseList()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        /*val navController*/ navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
                 R.id.nav_home, R.id.nav_add_agent, R.id.nav_settings), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        //if (intent.hasExtra("type")){
-        //    val bundle = Bundle()
-        //    bundle.putString("type", intent.getStringExtra("type"))
-        //    navController.navigate(R.id.nav_home, bundle)
-        //}
         filteredHouses()
         navigationBottomMenu()
     }
@@ -75,11 +72,10 @@ class MainActivity : AppCompatActivity(){
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
             R.id.action_refresh -> {
-                KToasty.success(this, "Click on  item " + item.title, Toast.LENGTH_SHORT, true).show()
+                mainActivityViewModel.clickToRefresh()
                 true
             }
             R.id.action_search -> {
-                KToasty.success(this, "Click on  item " + item.title, Toast.LENGTH_SHORT, true).show()
                 goToSearchFragment()
                 true
             }
@@ -120,16 +116,19 @@ class MainActivity : AppCompatActivity(){
     //----------------------------------------------------------------------------------------------
 
     private fun configureMainActivityViewModel(){
-        mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.isClickedCurrency().observe(this, Observer {
             isCurrencyChanged = it
         })
     }
 
-    //-------------------------------- Get live data boolean value ---------------------------------
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Refresh house list ------------------------------------------
+    //----------------------------------------------------------------------------------------------
 
-    fun booleanOnCurrencyClick(): Boolean{
-        return isCurrencyChanged
+    private fun refreshHouseList(){
+        mainActivityViewModel.isClickedRefresh().observe(this, Observer {
+            isClickedRefresh = it
+        })
     }
 
     //----------------------------------------------------------------------------------------------
@@ -146,16 +145,16 @@ class MainActivity : AppCompatActivity(){
     //----------------------------------------------------------------------------------------------
 
     private fun filteredHouses(){
-        //if (intent.hasExtra("type") ){
-        //    val bundle = Bundle()
-        //    bundle.putString("type", intent.getStringExtra("type"))
-        //    navController.navigate(R.id.nav_home, bundle)
-        //}
-        if (intent.hasExtra("filteredHouse")){
+        if (intent.hasExtra("type") ){
             val bundle = Bundle()
-            bundle.putParcelable("filteredHouse", intent.getParcelableExtra("filteredHouse"))
+            bundle.putString("type", intent.getStringExtra("type"))
             navController.navigate(R.id.nav_home, bundle)
         }
+        //if (intent.hasExtra("filteredHouse")){
+        //    val bundle = Bundle()
+        //    bundle.putParcelable("filteredHouse", intent.getParcelableExtra("filteredHouse"))
+        //    navController.navigate(R.id.nav_home, bundle)
+        //}
     }
 
     //----------------------------------------------------------------------------------------------

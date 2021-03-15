@@ -139,6 +139,7 @@
                 app:layout_constraintTop_toBottomOf="@id/update_add_house_address_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
                 android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 style="@style/hint_color">
 
@@ -159,6 +160,7 @@
                 app:layout_constraintTop_toBottomOf="@id/update_house_lat_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
                 android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 style="@style/hint_color">
 
