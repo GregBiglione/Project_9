@@ -256,12 +256,10 @@ class CreditSimulatorFragment: Fragment() {
 
         when(isCurrencyChanged){
             true -> {
-                activity?.showSuccessToast("Boolean case 1 (CreditFrag) is", Toast.LENGTH_SHORT, true)
                 showEuroIcon()
                 showEurosPrice()
             }
             false -> {
-                activity?.showErrorToast("Boolean case 2 (CreditFrag) is", Toast.LENGTH_SHORT, true)
                 showDollarIcon()
                 showDollarsPrice()
             }

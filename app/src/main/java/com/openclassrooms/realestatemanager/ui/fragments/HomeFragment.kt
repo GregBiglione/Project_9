@@ -54,7 +54,6 @@ class HomeFragment : Fragment() {
         houseRecyclerView.adapter = houseAdapter
         //------------------- Currency view model --------------------------------------------------
         mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
-        configureMainActivityViewModel()
         return root
     }
 
@@ -78,11 +77,11 @@ class HomeFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun configureMainActivityViewModel(){
-        mainActivityViewModel.isClickedCurrency().observe(requireActivity(), Observer {
+        mainActivityViewModel.isClickedCurrency().observe(viewLifecycleOwner, Observer {
             isCurrencyChanged = it
-            houseAdapter = HouseAdapter(isCurrencyChanged)
-            houseRecyclerView.adapter = houseAdapter
-            configureHouseRecyclerView()
+            houseAdapter = HouseAdapter(isCurrencyChanged) //
+            houseRecyclerView.adapter = houseAdapter       // These 3 lines imply crash in DetailedHouseFragment & CreditSimulatorFragment
+            configureHouseRecyclerView()                   // when click on $ icon
         })
     }
 
@@ -123,7 +122,6 @@ class HomeFragment : Fragment() {
     //------------------- Configure ViewModel ------------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    // 3)
     private fun configureViewModel(){
         val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
         mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
@@ -135,6 +133,7 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        configureMainActivityViewModel()
         refreshHouseList()
     }
 
