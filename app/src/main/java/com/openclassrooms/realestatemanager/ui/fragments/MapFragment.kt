@@ -26,7 +26,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
-import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
@@ -48,8 +47,8 @@ class MapFragment: Fragment() {
     //-------------------------------- View Model --------------------------------------------------
     private lateinit var mainViewModel: MainViewModel
     private lateinit var injection: Injection
-    private var houseLatLng: LatLng? = null
-    private lateinit var houseNav: List<House>
+    //private var houseLatLng: LatLng? = null
+    //private lateinit var houseNav: List<House>
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -158,12 +157,10 @@ class MapFragment: Fragment() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         //------------------- Get houses from room db ----------------------------------------------
         mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
-            houseNav = house
             for (h in house) {
                 val houseLat = h.lat
                 val houseLng = h.lng
                 val houseLocation = LatLng(houseLat!!, houseLng!!)
-                houseLatLng = houseLocation
                 val status = h.available
 
                 if (status == "Available") {
@@ -190,9 +187,16 @@ class MapFragment: Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun clickOnMarker(){
-        map?.setOnMarkerClickListener(OnMarkerClickListener {
-            val action = MapFragmentDirections.actionNavMapToDetailedHouseFragment(houseNav[0])
-            findNavController().navigate(action)
+        map?.setOnMarkerClickListener(OnMarkerClickListener { marker ->
+            mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
+                for (h in house){
+                    val markerTitle = marker.title
+                    if (h.address.equals(markerTitle)){
+                        val action = MapFragmentDirections.actionNavMapToDetailedHouseFragment(h)
+                        findNavController().navigate(action)
+                    }
+                }
+            })
             false
         })
     }
