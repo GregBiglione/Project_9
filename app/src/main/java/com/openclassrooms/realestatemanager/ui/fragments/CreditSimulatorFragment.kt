@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.droidman.ktoasty.showErrorToast
-import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.utils.Utils
@@ -64,6 +61,7 @@ class CreditSimulatorFragment: Fragment() {
     private var eurosMonthlyPayment = 0.0
     private var eurosTotalCost = 0.0
     private var eurosTotalInterests = 0.0
+    private var df = DecimalFormat("#.##")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_credit_simulator, container, false)
@@ -114,13 +112,20 @@ class CreditSimulatorFragment: Fragment() {
             contributionSimulation = contributionEt.text.toString().toDouble()
             priceWithContributionSimulation = priceSimulation - contributionSimulation
             price = priceSimulation
+            val roundPrice: String = df.format(price)
+            priceEt.setText(roundPrice)
+
             contribution = contributionSimulation
+            val roundContribution: String = df.format(contribution)
+            contributionEt.setText(roundContribution)
+
             priceWithContribution = priceWithContributionSimulation
-            borrowedAmountEt.setText(priceWithContribution.toString())
+            val roundPriceWithContribution: String = df.format(priceWithContribution)
+            borrowedAmountEt.setText(roundPriceWithContribution)
         }
         else if (!priceEt.text.isNullOrEmpty() && contributionEt.text.isNullOrEmpty()){
-            priceWithContribution = price
-            borrowedAmountEt.setText(priceWithContribution.toString())
+            val roundPrice: String = df.format(price)
+            borrowedAmountEt.setText(roundPrice)
         }
     }
 
@@ -137,12 +142,14 @@ class CreditSimulatorFragment: Fragment() {
         }
         else{
             rate = rateEt.text.toString().toDouble()
-            price = borrowedAmountEt.text.toString().toDouble()
+            val roundRate: String = df.format(rate)
+            rateEt.setText(roundRate)
+
             totalCostSimulation = price + (price * (rate / 100))
             totalCost = totalCostSimulation
-            val df = DecimalFormat("#.##")
             val roundTotalCost: String = df.format(totalCost)
             totalCostEt.setText(roundTotalCost)
+
             closeKeyboard(numberOfMonthsEt)
         }
     }
@@ -154,7 +161,6 @@ class CreditSimulatorFragment: Fragment() {
     private fun calculateInterests(){
         val totalInterests: Double = totalCost - price
         interests = totalInterests
-        val df = DecimalFormat("#.##")
         val roundTotalInterests: String = df.format(totalInterests)
         totalInterestsEt.setText(roundTotalInterests)
 
@@ -175,7 +181,6 @@ class CreditSimulatorFragment: Fragment() {
             numberOfMonths = numberOfMonthsEt.text.toString().toInt()
             monthlyPayment = totalCost / numberOfMonths
             monthPayment = monthlyPayment
-            val df = DecimalFormat("#.##")
             val roundMonthlyPayment: String = df.format(monthlyPayment)
             monthlyPaymentEt.setText(roundMonthlyPayment)
             closeKeyboard(numberOfMonthsEt)
@@ -228,7 +233,6 @@ class CreditSimulatorFragment: Fragment() {
     private fun clickOnClear(){
         clearButton.setOnClickListener {
             clearChamps()
-            //eurosIconPrice.visibility = View.VISIBLE
         }
     }
 
@@ -270,7 +274,7 @@ class CreditSimulatorFragment: Fragment() {
     //-------------------------------- Show € icon -------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-     private fun showEuroIcon(){
+    private fun showEuroIcon(){
         eurosIconPrice.visibility = View.VISIBLE
         eurosIconPrice.visibility = View.VISIBLE
         eurosIconContribution.visibility = View.VISIBLE
@@ -341,12 +345,12 @@ class CreditSimulatorFragment: Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun showDollarsPrice(){
-        val dollarsHousePrice = Utils.convertEuroToDollar(eurosHousePrice.toInt())
-        val dollarsContribution = Utils.convertEuroToDollar(eurosContribution.toInt())
-        val dollarsBorrowedAmount = Utils.convertEuroToDollar(eurosBorrowedAmount.toInt())
-        val dollarsMonthlyPayment = Utils.convertEuroToDollar(eurosMonthlyPayment.toInt())
-        val dollarsTotalCost = Utils.convertEuroToDollar(eurosTotalCost.toInt())
-        val dollarsTotalInterests = Utils.convertEuroToDollar(eurosTotalInterests.toInt())
+        val dollarsHousePrice = Utils.convertEuroToDollar(eurosHousePrice.toInt()).toDouble()
+        val dollarsContribution = Utils.convertEuroToDollar(eurosContribution.toInt()).toDouble()
+        val dollarsBorrowedAmount = Utils.convertEuroToDollar(eurosBorrowedAmount.toInt()).toDouble()
+        val dollarsMonthlyPayment = Utils.convertEuroToDollar(eurosMonthlyPayment.toInt()).toDouble()
+        val dollarsTotalCost = Utils.convertEuroToDollar(eurosTotalCost.toInt()).toDouble()
+        val dollarsTotalInterests = Utils.convertEuroToDollar(eurosTotalInterests.toInt()).toDouble()
 
         priceEt.setText(dollarsHousePrice.toString())
         contributionEt.setText(dollarsContribution.toString())
