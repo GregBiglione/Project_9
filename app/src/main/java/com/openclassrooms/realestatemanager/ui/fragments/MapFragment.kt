@@ -47,8 +47,6 @@ class MapFragment: Fragment() {
     //-------------------------------- View Model --------------------------------------------------
     private lateinit var mainViewModel: MainViewModel
     private lateinit var injection: Injection
-    //private var houseLatLng: LatLng? = null
-    //private lateinit var houseNav: List<House>
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

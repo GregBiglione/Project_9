@@ -173,6 +173,10 @@
                    android:orientation="vertical">
 
                    <!-- Add map here -->
+                   <ImageView
+                       android:id="@+id/detail_static_map"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"/>
 
                </LinearLayout>
            </LinearLayout>

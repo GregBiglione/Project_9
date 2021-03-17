@@ -21,13 +21,9 @@ import com.bumptech.glide.Glide
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.repositories.AgentRepository
-import com.openclassrooms.realestatemanager.repositories.HousePhotoRepository
-import com.openclassrooms.realestatemanager.repositories.HouseRepository
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto

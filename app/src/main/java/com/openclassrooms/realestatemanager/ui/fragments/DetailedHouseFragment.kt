@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
@@ -52,6 +54,8 @@ class DetailedHouseFragment : Fragment() {
     //------------------- Image slider -------------------------------------------------------------
     private lateinit var imageSlider: ImageSlider
     private val imageList = ArrayList<SlideModel>()
+    //------------------- Static map image view ----------------------------------------------------
+    private lateinit var staticMap: ImageView
     //------------------- Agent item ---------------------------------------------------------------
     private lateinit var agentPhoto: CircleImageView
     private lateinit var agentFirstName: TextView
@@ -75,6 +79,10 @@ class DetailedHouseFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
+
+    companion object{
+        const val API_KEY = BuildConfig.ApiKey
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -104,6 +112,8 @@ class DetailedHouseFragment : Fragment() {
         agentName = view.findViewById(R.id.detail_agent_item_name)
         agentPhone = view.findViewById(R.id.detail_agent_item_phone)
         agentEmail = view.findViewById(R.id.detail_agent_item_email)
+        //------------------- Static map image view ------------------------------------------------
+        staticMap = view.findViewById(R.id.detail_static_map)
         //------------------- Recycler view --------------------------------------------------------
         agentRecyclerView = view.findViewById(R.id.detail_agent_recycler_view)
         injection = Injection()
@@ -116,6 +126,7 @@ class DetailedHouseFragment : Fragment() {
         //------------------- Currency view model --------------------------------------------------
         mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
         configureMainActivityViewModel()
+        displayStaticMap()
         return view
     }
 
@@ -267,6 +278,7 @@ class DetailedHouseFragment : Fragment() {
     //-------------------------------- Set entry date ----------------------------------------------
     //----------------------------------------------------------------------------------------------
 
+    @SuppressLint("SetTextI18n")
     private fun entryDate(){
         val entryDate = args.currentHouse.entryDate
         val entryFrenchDate = timeConverters.convertLongToTime(entryDate)
@@ -277,6 +289,7 @@ class DetailedHouseFragment : Fragment() {
     //-------------------------------- Set sold date -----------------------------------------------
     //----------------------------------------------------------------------------------------------
 
+    @SuppressLint("SetTextI18n")
     private fun saleDate(){
         val saleDate = args.currentHouse.saleDate
         if (saleDate != null) {
@@ -285,4 +298,17 @@ class DetailedHouseFragment : Fragment() {
         }
     }
 
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Static map --------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun displayStaticMap(){
+        val lat = args.currentHouse.lat.toString()
+        val lng = args.currentHouse.lng.toString()
+        val url = "http://maps.google.com/maps/api/staticmap?center=$lat,$lng&zoom=17&size=200x200&markers=color:red%7Clabel:C%7C$lat,$lng&sensor=false&key=$API_KEY"
+
+        Glide.with(requireContext())
+                .load(url)
+                .into(staticMap)
+    }
 }
