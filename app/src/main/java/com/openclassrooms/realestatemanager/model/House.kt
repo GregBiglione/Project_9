@@ -35,31 +35,31 @@ data class House(
         @ColumnInfo(name = "agentId", index = true)
         var agentId: Long?
 ): Parcelable, Serializable
-//{
-//
-//        //-------------------------------- Utils ---------------------------------------------------
-//
-//        fun fromContentValues(values: ContentValues): House {
-//                val house = House(id, housePhotoList, typeOfHouse, neighborhood, address, lat, lng, price, surface, numberOfRooms, numberOfBathRooms,
-//                        numberOfBedRooms, description, available, proximityPointsOfInterest, entryDate, saleDate, agentId)
-//                if (values.containsKey("housePhotoList")) house.housePhotoList
-//                if (values.containsKey("typeOfHouse")) house.typeOfHouse
-//                if (values.containsKey("neighborhood")) house.neighborhood
-//                if (values.containsKey("address")) house.address
-//                if (values.containsKey("lat")) house.lat
-//                if (values.containsKey("lng")) house.lng
-//                if (values.containsKey("price")) house.price
-//                if (values.containsKey("surface")) house.surface
-//                if (values.containsKey("numberOfRooms")) house.numberOfRooms
-//                if (values.containsKey("numberOfBathRooms")) house.numberOfBathRooms
-//                if (values.containsKey("numberOfBedRooms")) house.numberOfBedRooms
-//                if (values.containsKey("description")) house.description
-//                if (values.containsKey("available")) house.available
-//                if (values.containsKey("proximityPointsOfInterest")) house.proximityPointsOfInterest
-//                if (values.containsKey("entryDate")) house.entryDate
-//                if (values.containsKey("saleDate")) house.saleDate
-//                if (values.containsKey("agentId")) house.agentId
-//                return house
-//        }
-//}
+{
+
+        //-------------------------------- Utils ---------------------------------------------------
+
+        fun fromContentValues(values: ContentValues): House {
+                val house = House(id, housePhotoList, typeOfHouse, neighborhood, address, lat, lng, price, surface, numberOfRooms, numberOfBathRooms,
+                        numberOfBedRooms, description, available, proximityPointsOfInterest, entryDate, saleDate, agentId)
+                if (values.containsKey("housePhotoList")) house.housePhotoList
+                if (values.containsKey("typeOfHouse")) house.typeOfHouse
+                if (values.containsKey("neighborhood")) house.neighborhood
+                if (values.containsKey("address")) house.address
+                if (values.containsKey("lat")) house.lat
+                if (values.containsKey("lng")) house.lng
+                if (values.containsKey("price")) house.price
+                if (values.containsKey("surface")) house.surface
+                if (values.containsKey("numberOfRooms")) house.numberOfRooms
+                if (values.containsKey("numberOfBathRooms")) house.numberOfBathRooms
+                if (values.containsKey("numberOfBedRooms")) house.numberOfBedRooms
+                if (values.containsKey("description")) house.description
+                if (values.containsKey("available")) house.available
+                if (values.containsKey("proximityPointsOfInterest")) house.proximityPointsOfInterest
+                if (values.containsKey("entryDate")) house.entryDate
+                if (values.containsKey("saleDate")) house.saleDate
+                if (values.containsKey("agentId")) house.agentId
+                return house
+        }
+}
 
