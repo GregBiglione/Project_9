@@ -7,7 +7,6 @@ import android.database.Cursor
 import android.net.Uri
 import com.openclassrooms.realestatemanager.database.dao.RealEstateManagerDatabase
 import com.openclassrooms.realestatemanager.model.House
-import com.openclassrooms.realestatemanager.model.HousePhoto
 
 class HouseContentProvider: ContentProvider(){
 
@@ -16,7 +15,7 @@ class HouseContentProvider: ContentProvider(){
     companion object{
         private const val AUTHORITY = "com.openclassrooms.realestatemanager.provider"
         private val TABLE_NAME = House::class.java.simpleName
-        private val URI_HOUSE = Uri.parse("content://$AUTHORITY/$TABLE_NAME")
+        val URI_HOUSE = Uri.parse("content://$AUTHORITY/$TABLE_NAME")
     }
 
     override fun onCreate(): Boolean {
