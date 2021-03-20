@@ -30,11 +30,15 @@ public class Utils {
         return (int) Math.round(dollars * 0.812);
     }
 
+    public static double convertDollarToEuroDouble(double dollars){ return (double) Math.round(dollars * 0.812); }
+
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Convert € to $ ----------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    public static int convertEuroToDollar(int euros){ return (int) Math.round(euros * 1.23152709); }
+    public static int convertEuroToDollar(int euros){ return (int) Math.round(euros / 0.812); }
+
+    public static double convertEuroToDollarDouble(double euros){ return (double) Math.round(euros / 0.812); }
 
     /**
      * Conversion de la date d'aujourd'hui en un format plus approprié
@@ -71,7 +75,7 @@ public class Utils {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-        if (networkInfo.isConnected()){
+        if (networkInfo != null){
             Toasty.success(context, R.string.wifi_available, Toasty.LENGTH_SHORT).show();
             return true;
         }
