@@ -139,4 +139,7 @@ dependencies {
 
     //----------------------------- Location -------------------------------------------------------
     implementation "com.google.android.gms:play-services-location:18.0.0"
+
+    //----------------------------- Mockito --------------------------------------------------------
+    testImplementation "org.mockito:mockito-core:2.19.0"
 }
