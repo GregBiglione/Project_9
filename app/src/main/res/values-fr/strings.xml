@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Real Estate Manager</string>
+
+    <string name="action_add">Ajouter</string>
+    <string name="action_update">Mettre à jour</string>
+    <string name="action_search">Rechercher</string>
+
+    <string name="menu_home_drawer">Accueil</string>
+    <string name="menu_add_agent">Ajouter un agent</string>
+    <string name="menu_settings">Réglages</string>
+    <string name="house_type">Type de maison</string>
+    <string name="house_neighborhood">Quartier</string>
+    <string name="detailed_house">Maison détaillée</string>
+    <string name="update_house">Mettre à jour la maison</string>
+
+    <string name="agent_photo">Photo de l\'agent</string>
+    <string name="first_name">Prénom</string>
+    <string name="name">Nom</string>
+    <string name="phone">Téléphone</string>
+    <string name="add">Ajouter</string>
+    <string name="clear">Supprimer</string>
+    <string name="permission_denied">Permission refusée</string>
+    <string name="enter_first_name">Entrer un prénom</string>
+    <string name="enter_name">Entrer un nom</string>
+    <string name="enter_phone">Entrer un numéro de téléphone</string>
+    <string name="enter_email">Entrer un email</string>
+    <string name="add_house_image">Ajouter une photo de maison</string>
+    <string name="type">Type de maison</string>
+    <string name="neighborhood">Quartier</string>
+    <string name="address">Adresse</string>
+    <string name="price">Prix</string>
+    <string name="surface">Superficie</string>
+    <string name="number_of_rooms">Nombre de pièces</string>
+    <string name="number_of_bedrooms">Nombre de chambres</string>
+    <string name="number_of_bathrooms">Nombre de salle de bains</string>
+    <string name="points_of_interests">Centres d\'intérêts</string>
+    <string name="type_of_house">Type de maison</string>
+
+    <string-array name="house_status_array">
+        <item>Disponible</item>
+        <item>Vendu</item>
+    </string-array>
+
+    <string-array name="house_type">
+        <item>Appartement</item>
+        <item>Château</item>
+        <item>Duplex</item>
+        <item>Appartement de Luxe</item>
+        <item>Maison de Luxe</item>
+        <item>Penthouse</item>
+        <item>Résidence de Prestige</item>
+        <item>Hôtel particulier</item>
+    </string-array>
+
+    <string-array name="house_type_search">
+        <item> </item>
+        <item>Appartement</item>
+        <item>Château</item>
+        <item>Duplex</item>
+        <item>Appartement de Luxe</item>
+        <item>Maison de Luxe</item>
+        <item>Penthouse</item>
+        <item>Résidence de Prestige</item>
+        <item>Hôtel particulier</item>
+    </string-array>
+
+    <string name="update">Mettre à jour</string>
+    <string name="menu_update">Mettre à jour l\'agent</string>
+    <string name="agent_in_charge">Agent en charge</string>
+    <string name="photo_description">Description de la photo</string>
+    <string name="cancel">Annuler</string>
+    <string name="add_photo">Ajouter une photo</string>
+    <string name="enter_photo_description">Ajoutre une description pour ajouter la photo</string>
+    <string name="update_photo">Mettre à jour la photo</string>
+    <string name="search_entry_date">Selectionner une date d\'entrée</string>
+    <string name="sale_date">Selectionner une date de vente</string>
+    <string name="sold">Vendu</string>
+    <string name="published_date">Publié le:</string>
+    <string name="sold_on">Vendu on:</string>
+    <string name="notification_title">Message de Real Estate Manager</string>
+
+    <string-array name="points_of_interests_array">
+        <item>Parc</item>
+        <item>Musée</item>
+        <item>Restaurant</item>
+        <item>Bar</item>
+        <item>Metro</item>
+        <item>Magasin</item>
+        <item>Mer</item>
+        <item>Ecole</item>
+        <item>Hopital</item>
+        <item>Piscine</item>
+    </string-array>
+
+    <string name="notifications">Notifications</string>
+    <string name="summary_notifications_off">Notifications activées</string>
+    <string name="summary_notifications_on">Notifications désactivées</string>
+    <string name="title_camera">Appareil photo</string>
+    <string name="title_gallery">Galerie</string>
+    <string name="camera_permission">Accès à l\'appareil photo autorisé</string>
+    <string name="camera_permission_message">Nous avons besoin de votre autorisation pour accéder à l\'appareil photo</string>
+    <string name="gallery_permission">Accès à la galerie autorisé</string>
+    <string name="gallery_permission_message">Nous avons besoin de votre autorisation pour accéder à la galerie</string>
+
+    <string name="sold_date">Date de vente</string>
+    <string name="entry_date">Date d\entrée</string>
+    <string name="house_notification_msg_after_add_house">Maison ajoutée avec succès</string>
+    <string name="search_photos_title">Nombre de photos</string>
+    <string name="search_type_of_house_title">Type de maison</string>
+    <string name="search_neighborhood_title">Quartier</string>
+    <string name="available">Disponible</string>
+    <string name="search">Recherche</string>
+    <string name="credit_simulator">Simulateur de crédit</string>
+    <string name="simulator_house_price">Prix de la maison</string>
+    <string name="simulator_contribution">Apport</string>
+    <string name="simulator_borrowed_amount">Montant emprunté</string>
+    <string name="simulator_rate">Taux</string>
+    <string name="simulator_monthly_payment">Mensualités</string>
+    <string name="simulator_total_cost">Coût total</string>
+    <string name="simulator_total_interests">Intérêsts totaux</string>
+    <string name="simulate">Simuler</string>
+    <string name="simulator_price_with_contribution">Prix avec apport</string>
+    <string name="number_of_months">Nombre de mois</string>
+    <string name="simulator_error_rate">Définissez un taux</string>
+    <string name="simulator_error_price">Définissez un prix</string>
+    <string name="simulator_error_months">Définissez un nombre de mois</string>
+    <string name="price_special">Prix (x 10000)</string>
+    <string name="wifi_available">Wifi disponible</string>
+    <string name="wifi_unavailable">Wifi indisponible</string>
+    <string name="menu_map">Carte</string>
+    <string name="Map">Carte</string>
+    <string name="permissions_message">Nous avons besoin de votre autorisation pour vous loclaiser</string>
+    <string name="location_granted">Localisation autorisée</string>
+</resources>

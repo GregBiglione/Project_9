@@ -1,25 +1,25 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Real Estate Manager</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Real Estate Manager</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
     <string name="action_add">Add</string>
     <string name="action_update">Update</string>
     <string name="action_search">Search</string>
 
-    <string name="menu_home">Real Estate Manager</string>
+    <string name="menu_home" translatable="false">Real Estate Manager</string>
     <string name="menu_home_drawer">Home</string>
     <string name="menu_add_agent">Add agent</string>
     <string name="menu_settings">Settings</string>
     <string name="house_type">Property type</string>
     <string name="house_neighborhood">Property neighborhood</string>
-    <string name="house_price">$50,000,000</string>
-    <string name="house_image">property_image</string>
+    <string name="house_price" translatable="false">$50,000,000</string>
+    <string name="house_image" translatable="false">property_image</string>
     <string name="detailed_house">Detailed house</string>
     <string name="update_house">Update house</string>
-    <string name="large_text">
+    <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -31,7 +31,7 @@
     <string name="first_name">First name</string>
     <string name="name">Name</string>
     <string name="phone">Phone number</string>
-    <string name="mail">Email</string>
+    <string name="mail" translatable="false">Email</string>
     <string name="add">Add</string>
     <string name="clear">Clear</string>
     <string name="permission_denied">Permission denied</string>
@@ -39,7 +39,7 @@
     <string name="enter_name">Enter a name</string>
     <string name="enter_phone">Enter a phone number</string>
     <string name="enter_email">Enter an email</string>
-    <string name="add_house">fab_add_house</string>
+    <string name="add_house" translatable="false">fab_add_house</string>
     <string name="add_house_image">add house image</string>
     <string name="type">Type of house</string>
     <string name="neighborhood">Neighborhood</string>
@@ -48,9 +48,9 @@
     <string name="surface">Surface</string>
     <string name="number_of_rooms">Number of rooms</string>
     <string name="number_of_bedrooms">Number of bedrooms</string>
-    <string name="description">Description</string>
+    <string name="description" translatable="false">Description</string>
     <string name="number_of_bathrooms">Number of bathrooms</string>
-    <string name="status">Status</string>
+    <string name="status" translatable="false">Status</string>
     <string name="points_of_interests">Points of interests</string>
     <string name="type_of_house">Type of house</string>
 
@@ -551,7 +551,7 @@
         <item>Woodside</item>
     </string-array>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="update">Update</string>
     <string name="menu_update">Update agent</string>
     <string name="agent_in_charge">Agent in charge</string>
@@ -566,7 +566,7 @@
     <string name="published_date">Published on:</string>
     <string name="sold_on">Sold on:</string>
     <string name="notification_title">Message from Real Estate Manager</string>
-    <string name="default_notification_channel_id">fcm default channel</string>
+    <string name="default_notification_channel_id" translatable="false">fcm default channel</string>
 
     <string-array name="points_of_interests_array">
         <item>Park</item>
@@ -582,7 +582,7 @@
     </string-array>
 
     <!-- Preference Titles -->
-    <string name="notification_header">Notification</string>
+    <string name="notification_header" translatable="false">Notification</string>
 
     <!-- Notifications Preferences -->
     <string name="notifications">Disable notifications</string>
@@ -594,19 +594,17 @@
     <string name="camera_permission_message">We need your permission to access the camera</string>
     <string name="gallery_permission">Access gallery granted</string>
     <string name="gallery_permission_message">We need your permission to access the gallery</string>
-    <string name="m2">m<sup><small>2</small></sup></string>
-    <string name="dollars">$</string>
-    <string name="euros">€</string>
+    <string name="m2" translatable="false">m<sup><small>2</small></sup></string>
+    <string name="dollars" translatable="false">$</string>
+    <string name="euros" translatable="false">€</string>
     <string name="sold_date">Sold date</string>
     <string name="entry_date">Entry date</string>
-    <string name="action_money">Money</string>
     <string name="house_notification_msg_after_add_house">House added with success</string>
     <string name="search_photos_title">Number of photos</string>
     <string name="search_type_of_house_title">Type of house</string>
     <string name="search_neighborhood_title">Neighborhood</string>
     <string name="available">Available</string>
     <string name="search">Search</string>
-    <string name="action_refresh">Refresh</string>
     <string name="credit_simulator">Credit simulator</string>
     <string name="simulator_house_price">House price</string>
     <string name="simulator_contribution">Contribution</string>
@@ -615,7 +613,7 @@
     <string name="simulator_monthly_payment">Monthly payment</string>
     <string name="simulator_total_cost">Total cost</string>
     <string name="simulator_total_interests">Total interests</string>
-    <string name="rate">%</string>
+    <string name="rate" translatable="false">%</string>
     <string name="simulate">Simulate</string>
     <string name="simulator_price_with_contribution">Price with contribution</string>
     <string name="number_of_months">Number of months</string>
@@ -627,9 +625,11 @@
     <string name="wifi_unavailable">Wifi unavailable</string>
     <string name="menu_map">Map</string>
     <string name="Map">Map</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
+    <string name="latitude" translatable="false">Latitude</string>
+    <string name="longitude" translatable="false">Longitude</string>
     <string name="permissions_message">We need your permission to locate you</string>
     <string name="location_granted">Location granted</string>
+    <string name="action_refresh" translatable="false">Refresh</string>
+    <string name="action_money" translatable="false">Money</string>
 
 </resources>

@@ -159,22 +159,25 @@ class MapFragment: Fragment() {
                 val houseLat = h.lat
                 val houseLng = h.lng
                 val houseLocation = LatLng(houseLat!!, houseLng!!)
-                val status = h.available
 
-                if (status == "Available") {
-                    val availableMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_available)
-                    map!!.addMarker(MarkerOptions()
-                            .position(houseLocation)
-                            .icon(availableMarker)
-                            .title(h.address))
-                    clickOnMarker()
-                } else {
-                    val soldMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_sold)
-                    map!!.addMarker(MarkerOptions()
-                            .position(houseLocation)
-                            .icon(soldMarker)
-                            .title(h.address))
-                    clickOnMarker()
+                when(h.available){
+                    "Available" -> {
+                        if (houseLat != 0.0 && houseLng != 0.0){
+                            val availableMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_available)
+                            map!!.addMarker(MarkerOptions()
+                                    .position(houseLocation)
+                                    .icon(availableMarker)
+                                    .title(h.address))
+                        }
+                    }
+                    "Sold" ->  if (houseLat != 0.0 && houseLng != 0.0){
+                        val soldMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_sold)
+                        map!!.addMarker(MarkerOptions()
+                                .position(houseLocation)
+                                .icon(soldMarker)
+                                .title(h.address))
+                        clickOnMarker()
+                    }
                 }
             }
         })
