@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.droidman.ktoasty.showErrorToast
 import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -107,7 +108,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_house)
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         housePhotoImageView = findViewById(R.id.add_house_photo)
         housePhotoDescriptionEditText = findViewById(R.id.add_house_photo_description_et)
@@ -272,7 +272,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
             houseTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
-                    showSuccessToast("Type selected: $typeHouseSelected", Toast.LENGTH_SHORT)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -295,7 +294,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
             neighborSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val neighborhoodSelected: String = neighborSpinner.selectedItem.toString().trim()
-                    showSuccessToast("Neighborhood selected: $neighborhoodSelected", Toast.LENGTH_SHORT)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -317,7 +315,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
             statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val statusSelected: String = statusSpinner.selectedItem.toString().trim()
-                    showSuccessToast("Status: $statusSelected", Toast.LENGTH_SHORT)
+
                     houseSaleDateInputLyt = findViewById(R.id.add_house_sale_date_input)
                     if (statusSelected == getString(R.string.sold)){
                         houseSaleDateInputLyt.visibility = View.VISIBLE
@@ -423,7 +421,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
                     val selectedObject = agentsSpinner.selectedItem as Agent
                     selectedAgentId = selectedObject.id!!
-                    showSuccessToast("Status: $selectedAgentId", Toast.LENGTH_SHORT)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -441,7 +438,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         addHouseButton = findViewById(R.id.add_house_add_button)
         addHouseButton.setOnClickListener {
             saveHouse()
-            //FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+            FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
             PushNotification(NotificationData(getString(R.string.app_name),getString(R.string.notification_message)),
                     TOPIC).also {
                 sendNotification(it)
@@ -607,10 +604,10 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
                 Log.d(TAG, "Response: ${Gson().toJson(response)}")
             }
             else{
-                Log.e(TAG, response.errorBody().toString())
+                Log.e(TAG, "Something is wrong: " + response.errorBody().toString())
             }
         } catch (e: Exception){
-            Log.e(TAG, e.toString())
+            Log.e(TAG, "Exception: $e")
         }
     }
 }
