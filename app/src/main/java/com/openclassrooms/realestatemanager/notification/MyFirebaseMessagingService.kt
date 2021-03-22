@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.notification
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -15,6 +16,7 @@ import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.utils.Constants.Companion.NOTIFICATION_ID
 import com.openclassrooms.realestatemanager.utils.Constants.Companion.NOTIFICATION_TAG
 
+@SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

@@ -17,6 +17,13 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.droidman.ktoasty.showSuccessToast
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.CAMERA
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.CAMERA_REQUEST_CODE
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.GALLERY_REQUEST_CODE
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.IMAGE_PICK_CODE
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.READ_STORAGE
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.TAKE_PHOTO_CODE
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.WRITE_STORAGE
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -24,16 +31,6 @@ class PhotoChoiceDialog(private val galleryListener: GalleryListener, private va
 
     private lateinit var photoCamera: ImageView
     private lateinit var photoGallery: ImageView
-    //------------------- Camera & gallery ---------------------------------------------------------
-    companion object{
-        const val CAMERA = permission.CAMERA
-        const val READ_STORAGE = permission.READ_EXTERNAL_STORAGE
-        const val WRITE_STORAGE = permission.WRITE_EXTERNAL_STORAGE
-        const val GALLERY_REQUEST_CODE = 1201
-        const val CAMERA_REQUEST_CODE = 807
-        const val IMAGE_PICK_CODE = 2108
-        const val TAKE_PHOTO_CODE = 3003
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)

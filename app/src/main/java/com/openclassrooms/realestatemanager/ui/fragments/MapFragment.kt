@@ -26,6 +26,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.ACCESS_FINE_LOCATION
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.DEFAULT_ZOOM
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.INTERNET
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.LOCATION_PERMISSION_REQUEST_CODE
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
@@ -35,12 +39,6 @@ import pub.devrel.easypermissions.EasyPermissions
 class MapFragment: Fragment() {
 
     private var map: GoogleMap? = null
-    companion object{
-        const val DEFAULT_ZOOM = 17.0f
-        const val ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
-        const val INTERNET = Manifest.permission.INTERNET
-        const val LOCATION_PERMISSION_REQUEST_CODE = 21
-    }
     //-------------------------------- Last known location -----------------------------------------
     private lateinit var gps: FloatingActionButton
     private lateinit var fusedLocationClient: FusedLocationProviderClient
