@@ -12,11 +12,10 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.NOTIFICATION_ID
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.NOTIFICATION_TAG
 
 class MyFirebaseMessagingService: FirebaseMessagingService() {
-
-    val NOTIFICATION_ID = 2109
-    val NOTIFICATION_TAG = "FIRE_BASE_REAL_ESTATE_MANGER"
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
@@ -36,7 +35,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     //----------------------------- Send notification ----------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    fun sendVisualNotification(messageBody: String?) {
+    private fun sendVisualNotification(messageBody: String?) {
 
         //----------------------------- Create an Intent that will be shown when user will click on the Notification ------
         val notificationIntent = Intent(this, MainActivity::class.java)
@@ -54,7 +53,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.real_estate_manager_logo)
                 .setContentTitle(getString(R.string.app_name))
-                .setContentText("House added in database")
+                .setContentText(getString(R.string.notification_message))
                 .setAutoCancel(true)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentIntent(pendingIntent)

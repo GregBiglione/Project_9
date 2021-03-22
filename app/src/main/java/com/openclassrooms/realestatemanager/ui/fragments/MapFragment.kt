@@ -170,13 +170,15 @@ class MapFragment: Fragment() {
                                     .title(h.address))
                         }
                     }
-                    "Sold" ->  if (houseLat != 0.0 && houseLng != 0.0){
-                        val soldMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_sold)
-                        map!!.addMarker(MarkerOptions()
-                                .position(houseLocation)
-                                .icon(soldMarker)
-                                .title(h.address))
-                        clickOnMarker()
+                    "Sold" -> {
+                        if (houseLat != 0.0 && houseLng != 0.0){
+                            val soldMarker = BitmapDescriptorFactory.fromResource(R.drawable.marker_sold)
+                            map!!.addMarker(MarkerOptions()
+                                    .position(houseLocation)
+                                    .icon(soldMarker)
+                                    .title(h.address))
+                            clickOnMarker()
+                        }
                     }
                 }
             }

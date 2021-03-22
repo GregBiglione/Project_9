@@ -132,4 +132,5 @@
     <string name="Map">Carte</string>
     <string name="permissions_message">Nous avons besoin de votre autorisation pour vous loclaiser</string>
     <string name="location_granted">Localisation autorisée</string>
+    <string name="notification_message">Maison ajoutée en base de données</string>
 </resources>

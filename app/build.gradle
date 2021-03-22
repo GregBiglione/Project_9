@@ -142,4 +142,8 @@ dependencies {
 
     //----------------------------- Mockito --------------------------------------------------------
     testImplementation "org.mockito:mockito-core:2.19.0"
+
+    //----------------------------- Retrofit -------------------------------------------------------
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
 }
