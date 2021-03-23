@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.SearchActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/search_photos_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/search_photos_title"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                style="@style/search_title"
+                app:drawableStartCompat="@drawable/ic_baseline_image_24" />
+
+            <com.mohammedalaa.seekbar.DoubleValueSeekBarView
+                android:id="@+id/search_photos_double_range_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_photos_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:r2CurrentMaxValue="10"
+                app:r2CurrentMinValue="0"
+                app:r2barHeight="15dp"
+                app:r2baseColor="@color/image_view_border_gray"
+                app:r2circleFillColor="@color/colorPrimary"
+                app:r2circleRadius="15dp"
+                app:r2circleTextColor="@color/white"
+                app:r2circleTextSize="@dimen/value_bar_circleTextSize"
+                app:r2fillColor="@color/colorPrimaryDark"
+                app:r2maxValue="50"
+                app:r2maxValueStep="1"
+                app:r2minValue="0"
+                app:r2minValueStep="1" />
+
+            <View
+                android:id="@+id/search_hr1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_photos_double_range_seek_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/search_hr_style"/>
+
+            <TextView
+                android:id="@+id/search_type_of_house_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_hr1"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/search_type_of_house_title"
+                style="@style/search_title"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_type_of_house_ti_ly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_type_of_house_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <Spinner
+                    android:id="@+id/search_type_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/search_hr2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_type_of_house_ti_ly"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/search_hr_style"/>
+
+            <TextView
+                android:id="@+id/search_neighborhood_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_hr2"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/search_neighborhood_title"
+                style="@style/search_title"
+                app:drawableStartCompat="@drawable/ic_baseline_map_24" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_neighborhood_ti_ly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_neighborhood_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <Spinner
+                    android:id="@+id/search_neighborhood_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/search_hr3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_neighborhood_ti_ly"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/search_hr_style"/>
+
+            <TextView
+                android:id="@+id/search_price_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_neighborhood_ti_ly"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/price_special"
+                style="@style/search_title"
+                app:drawableStartCompat="@drawable/ic_baseline_attach_money_24" />
+
+            <com.mohammedalaa.seekbar.DoubleValueSeekBarView
+                android:id="@+id/search_price_range_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_photos_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:r2CurrentMaxValue="500"
+                app:r2CurrentMinValue="0"
+                app:r2barHeight="15dp"
+                app:r2baseColor="@color/image_view_border_gray"
+                app:r2circleFillColor="@color/colorPrimary"
+                app:r2circleRadius="15dp"
+                app:r2circleTextColor="@color/white"
+                app:r2circleTextSize="@dimen/value_bar_circleTextSize"
+                app:r2fillColor="@color/colorPrimaryDark"
+                app:r2maxValue="2000"
+                app:r2maxValueStep="1"
+                app:r2minValue="0"
+                app:r2minValueStep="1" />
+
+
+            <!--<com.mohammedalaa.seekbar.RangeSeekBarView
+                android:id="@+id/search_price_range_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:barHeight="15dp"
+                app:baseColor="@color/image_view_border_gray"
+                app:circleFillColor="@color/colorPrimary"
+                app:circleRadius="15dp"
+                app:circleTextColor="@color/white"
+                app:circleTextSize="@dimen/value_bar_circleTextSize"
+                app:currentValue="5000000"
+                app:fillColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:maxValue="20000000"
+                app:minValue="500000"
+                app:orientation="LEFT_TO_RIGHT"
+                app:stepValue="5" />-->
+
+            <View
+                android:id="@+id/search_hr4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_range_seek_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/search_hr_style"/>
+
+            <TextView
+                android:id="@+id/search_surface_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_hr4"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/surface"
+                style="@style/search_title"
+                app:drawableStartCompat="@drawable/ic_baseline_settings_overscan_24" />
+
+            <com.mohammedalaa.seekbar.DoubleValueSeekBarView
+                android:id="@+id/search_surface_double_range_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_surface_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:r2CurrentMaxValue="1000"
+                app:r2CurrentMinValue="100"
+                app:r2barHeight="15dp"
+                app:r2baseColor="@color/image_view_border_gray"
+                app:r2circleFillColor="@color/colorPrimary"
+                app:r2circleRadius="15dp"
+                app:r2circleTextColor="@color/white"
+                app:r2circleTextSize="@dimen/value_bar_circleTextSize"
+                app:r2fillColor="@color/colorPrimaryDark"
+                app:r2maxValue="3000"
+                app:r2maxValueStep="1"
+                app:r2minValue="100"
+                app:r2minValueStep="1" />
+
+            <View
+                android:id="@+id/search_hr5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_surface_double_range_seek_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/search_hr_style"/>
+
+            <TextView
+                android:id="@+id/search_rooms_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_hr5"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/number_of_rooms"
+                style="@style/search_title"
+                app:drawableStartCompat="@drawable/ic_baseline_home_24" />
+
+            <com.mohammedalaa.seekbar.DoubleValueSeekBarView
+                android:id="@+id/search_rooms_double_range_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_rooms_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:r2CurrentMaxValue="20"
+                app:r2CurrentMinValue="5"
+                app:r2barHeight="15dp"
+                app:r2baseColor="@color/image_view_border_gray"
+                app:r2circleFillColor="@color/colorPrimary"
+                app:r2circleRadius="15dp"
+                app:r2circleTextColor="@color/white"
+                app:r2circleTextSize="@dimen/value_bar_circleTextSize"
+                app:r2fillColor="@color/colorPrimaryDark"
+                app:r2maxValue="100"
+                app:r2maxValueStep="1"
+                app:r2minValue="5"
+                app:r2minValueStep="1" />
+
+            <View
+                android:id="@+id/search_hr6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_rooms_double_range_seek_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/search_hr_style"/>
+
+            <TextView
+                android:id="@+id/search_bathrooms_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_hr6"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/number_of_bathrooms"
+                style="@style/search_title"
+                app:drawableStartCompat="@drawable/ic_baseline_hot_tub_24" />
+
+            <com.mohammedalaa.seekbar.DoubleValueSeekBarView
+                android:id="@+id/search_bathrooms_double_range_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_bathrooms_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:r2CurrentMaxValue="5"
+                app:r2CurrentMinValue="1"
+                app:r2barHeight="15dp"
+                app:r2baseColor="@color/image_view_border_gray"
+                app:r2circleFillColor="@color/colorPrimary"
+                app:r2circleRadius="15dp"
+                app:r2circleTextColor="@color/white"
+                app:r2circleTextSize="@dimen/value_bar_circleTextSize"
+                app:r2fillColor="@color/colorPrimaryDark"
+                app:r2maxValue="10"
+                app:r2maxValueStep="1"
+                app:r2minValue="1"
+                app:r2minValueStep="1" />
+
+            <View
+                android:id="@+id/search_hr7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_bathrooms_double_range_seek_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/search_hr_style"/>
+
+            <TextView
+                android:id="@+id/search_bedrooms_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_hr7"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/number_of_bedrooms"
+                style="@style/search_title"
+                app:drawableStartCompat="@drawable/ic_baseline_bed_24" />
+
+            <com.mohammedalaa.seekbar.DoubleValueSeekBarView
+                android:id="@+id/search_bedrooms_double_range_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_bedrooms_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:r2CurrentMaxValue="10"
+                app:r2CurrentMinValue="1"
+                app:r2barHeight="15dp"
+                app:r2baseColor="@color/image_view_border_gray"
+                app:r2circleFillColor="@color/colorPrimary"
+                app:r2circleRadius="15dp"
+                app:r2circleTextColor="@color/white"
+                app:r2circleTextSize="@dimen/value_bar_circleTextSize"
+                app:r2fillColor="@color/colorPrimaryDark"
+                app:r2maxValue="25"
+                app:r2maxValueStep="1"
+                app:r2minValue="1"
+                app:r2minValueStep="1" />
+
+            <View
+                android:id="@+id/search_hr8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_bedrooms_double_range_seek_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/search_hr_style"/>
+
+            <TextView
+                android:id="@+id/search_status_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_hr8"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/status"
+                style="@style/search_title" />
+
+            <Spinner
+                android:id="@+id/search_status_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"/>
+
+            <View
+                android:id="@+id/search_hr9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_status_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/house_hr_style"/>
+
+            <TextView
+                android:id="@+id/search_poi_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_hr9"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/points_of_interests"
+                style="@style/search_title"
+                app:drawableStartCompat="@drawable/ic_baseline_near_me_24" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_poi_ti_ly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_poi_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/hint_color">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_poi_ti_et"
+                    android:hint="@string/points_of_interests"
+                    android:inputType="textMultiLine"
+                    android:focusable="false"
+                    style="@style/add_house_input_with_icon_style" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/search_hr10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_poi_ti_ly"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/search_hr_style"/>
+
+            <LinearLayout
+                android:id="@+id/search_sates_lyt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/search_entry_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/entry_date"
+                        style="@style/detailed_house_title"
+                        app:drawableStartCompat="@drawable/ic_baseline_calendar_today_24" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/search_entry_date_ti_ly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/hint_color">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/search_entry_et"
+                            android:hint="@string/search_entry_date"
+                            android:inputType="date"
+                            android:focusable="false"
+                            style="@style/add_house_input_with_icon_style"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/search_sold_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sold_date"
+                        style="@style/detailed_house_title"
+                        app:drawableStartCompat="@drawable/ic_baseline_calendar_today_24" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/search_sale_date_ti_ly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/add_house_status_spinner"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/hint_color">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/search_sale_et"
+                            android:hint="@string/sale_date"
+                            android:inputType="date"
+                            android:focusable="false"
+                            style="@style/add_house_input_with_icon_style"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/search_hr11"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_sates_lyt"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/search_hr_style"/>
+
+            <TextView
+                android:id="@+id/search_agent_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_hr10"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/agent_in_charge"
+                style="@style/search_title"
+                app:drawableStartCompat="@drawable/ic_baseline_agent_24"/>
+
+            <Spinner
+                android:id="@+id/search_agent_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_agent_spinner"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <Button
+                    android:id="@+id/search_button"
+                    android:hint="@string/search"
+                    app:cornerRadius="20dp"
+                    style="@style/agent_item_btn_style"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

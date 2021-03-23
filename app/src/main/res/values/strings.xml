@@ -629,8 +629,8 @@
     <string name="longitude" translatable="false">Longitude</string>
     <string name="permissions_message">We need your permission to locate you</string>
     <string name="location_granted">Location granted</string>
-    <string name="action_refresh" translatable="false">Refresh</string>
-    <string name="action_money" translatable="false">Money</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_money">Currency</string>
     <string name="notification_message">House added in database</string>
 
 </resources>

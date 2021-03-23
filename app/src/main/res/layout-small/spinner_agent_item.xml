@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/spinner_agent_item_relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="6dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/spinner_agent_item_image"
+        style="@style/agent_item_image_style_S"/>
+
+    <LinearLayout
+        android:id="@+id/spinner_agent_item_tv_lyt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignTop="@+id/spinner_agent_item_image"
+        android:layout_toEndOf="@+id/spinner_agent_item_image"
+        android:layout_alignBottom="@+id/spinner_agent_item_image">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/agent_item_l_lyt_style">
+
+            <TextView
+                android:id="@+id/spinner_agent_item_first_name"
+                android:text="@string/first_name"
+                style="@style/agent_item_style_S"/>
+
+            <TextView
+                android:id="@+id/spinner_agent_item_name"
+                android:text="@string/name"
+                android:layout_marginStart="5dp"
+                style="@style/agent_item_style_S"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/agent_item_l_lyt_style">
+
+            <TextView
+                android:id="@+id/spinner_agent_item_phone"
+                android:text="@string/phone"
+                style="@style/agent_item_style_S"
+                app:drawableStartCompat="@drawable/ic_baseline_phone_24"
+                android:drawablePadding="5dp"
+                android:gravity="start"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/spinner_agent_item_email"
+            android:text="@string/mail"
+            app:drawableStartCompat="@drawable/ic_baseline_email_24"
+            android:drawablePadding="5dp"
+            style="@style/agent_item_style_S"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -182,4 +182,66 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
+    <!--//////////////////////////////////// N Land Size ////////////////////////////////////////-->
+
+    <style name="neighborhood_style_N_land">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--//////////////////////////////////// S Size /////////////////////////////////////////////-->
+
+    <!-- Credit simulator fragment -->
+    <style name="credit_simulator_title_S">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <!-- Home Fragment -->
+    <style name="neighborhood_style_S">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="neighborhood_style_S_land">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Search house fragment -->
+    <style name="search_title_S">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Add Agent item -->
+    <style name="agent_item_image_style_S">
+        <item name="android:layout_width">65dp</item>
+        <item name="android:layout_height">65dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="agent_item_style_S">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>
