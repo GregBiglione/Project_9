@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mohammedalaa.seekbar.DoubleValueSeekBarView
@@ -20,12 +19,10 @@ import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.model.FilteredHouse
 import com.openclassrooms.realestatemanager.picker.SearchDatePickerFragment
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
-import kotlin.math.min
 
 class SearchActivity : AppCompatActivity() {
 
@@ -128,7 +125,6 @@ class SearchActivity : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
                     selectedType = typeHouseSelected
-                    showSuccessToast("Type selected: $typeHouseSelected", Toast.LENGTH_SHORT)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -152,7 +148,6 @@ class SearchActivity : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val neighborhoodSelected: String = neighborSpinner.selectedItem.toString().trim()
                     selectedNeighborhood = neighborhoodSelected
-                    showSuccessToast("Neighborhood selected: $neighborhoodSelected", Toast.LENGTH_SHORT)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -175,7 +170,6 @@ class SearchActivity : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val statusSelected: String = statusSpinner.selectedItem.toString().trim()
                     selectedStatus = statusSelected
-                    showSuccessToast("Status: $statusSelected", Toast.LENGTH_SHORT)
 
                     if (statusSelected == getString(R.string.sold)){
                         soldDateTitle.visibility = View.VISIBLE
@@ -342,7 +336,6 @@ class SearchActivity : AppCompatActivity() {
 
                     val selectedObject = agentsSpinner.selectedItem as Agent
                     selectedAgentId = selectedObject.id!!
-                    showSuccessToast("Status: $selectedAgentId", Toast.LENGTH_SHORT)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
