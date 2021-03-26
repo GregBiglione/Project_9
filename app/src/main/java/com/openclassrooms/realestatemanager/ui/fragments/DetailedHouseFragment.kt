@@ -305,7 +305,7 @@ class DetailedHouseFragment : Fragment() {
     private fun displayStaticMap(){
         val lat = args.currentHouse.lat.toString()
         val lng = args.currentHouse.lng.toString()
-        val url = "http://maps.google.com/maps/api/staticmap?center=$lat,$lng&zoom=17&size=200x200&markers=color:red%7Clabel:C%7C$lat,$lng&sensor=false&key=$API_KEY"
+        val url = "https://maps.google.com/maps/api/staticmap?center=$lat,$lng&zoom=17&size=200x200&markers=color:red%7Clabel:C%7C$lat,$lng&sensor=false&key=$API_KEY"
 
         Glide.with(requireContext())
                 .load(url)

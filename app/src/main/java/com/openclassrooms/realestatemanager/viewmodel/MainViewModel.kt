@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.realestatemanager.model.Agent
+import com.openclassrooms.realestatemanager.model.FilteredHouse
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.model.HousePhoto
 import com.openclassrooms.realestatemanager.repositories.AgentRepository
@@ -35,21 +36,7 @@ class MainViewModel(private val agentRepository: AgentRepository,
 
     fun updateHouse(house: House) = viewModelScope.launch(Dispatchers.IO) {  houseRepository.updateHouse(house) }
 
-    fun getAllHousesFiltered(/*minHousePhotoNumber: Int, maxHousePhotoNumber: Int,*/
-                             type: String/*,
-                             neighborhood: String,
-                             minPrice: Int, maxPrice: Int,
-                             minSurface: Int, maxSurface: Int,
-                             minRooms: Int, maxRooms: Int,
-                             minBathrooms: Int, maxBathrooms: Int,
-                             minBedrooms: Int, maxBedrooms: Int,
-                             status: String,
-                             poi: String?,
-                             entryDate: Long?, saleDate: Long?,
-                             agentId: Long*/) =
-            houseRepository.getAllHousesFiltered(/*minHousePhotoNumber, maxHousePhotoNumber,*/ type/*, neighborhood, minPrice, maxPrice,
-                    minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, status,
-                    poi, entryDate, saleDate, agentId*/)
+    fun getAllHousesFiltered(filteredHouse: FilteredHouse) = houseRepository.getAllHousesFiltered(filteredHouse)
 
     //------------------- HousePhotos --------------------------------------------------------------
     fun getHousePhoto(id: Long) = viewModelScope.launch(Dispatchers.IO) { housePhotoRepository.getHousePhoto(id) }

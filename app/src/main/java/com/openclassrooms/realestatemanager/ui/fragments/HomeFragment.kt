@@ -1,18 +1,24 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.droidman.ktoasty.showErrorToast
+import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HouseAdapter
+import com.openclassrooms.realestatemanager.databinding.FragmentHomeBinding
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.FilteredHouse
@@ -36,12 +42,50 @@ class HomeFragment : Fragment() {
     private var isClickedRefresh: Boolean = false
     private lateinit var homeFragment: HomeFragment
     private var houseAdapter: HouseAdapter = HouseAdapter(isCurrencyChanged)
+    //-------------------------------- Navigation for XL landscape screen --------------------------
+    private lateinit var navController: NavController
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var fab: FloatingActionButton
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        //if (resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK != Configuration.SCREENLAYOUT_SIZE_LARGE
+        //        && ((resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) != Configuration.SCREENLAYOUT_SIZE_NORMAL)
+        //        && (resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK != Configuration.SCREENLAYOUT_SIZE_SMALL)){
+        //    binding = FragmentHomeBinding.inflate(layoutInflater)
+        //    houseRecyclerView = binding.root.findViewById(R.id.house_recycler_view)
+        //    fab = binding.root.findViewById(R.id.add_house_fab)
+        //    fab.setOnClickListener { goToAddActivity() }
+        //    //mainActivity = MainActivity()
+        //    injection = Injection()
+        //    configureViewModel()
+        //    configureHouseRecyclerView()
+        //    houseRecyclerView.layoutManager = LinearLayoutManager(activity)
+        //    houseRecyclerView.adapter = houseAdapter
+        //    //------------------- Currency view model --------------------------------------------------
+        //    mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        //    activity?.showSuccessToast("XL (home) layout displayed", Toast.LENGTH_SHORT, true)
+        //    return binding.root
+        //}
+        //else{
+        //    val view = inflater.inflate(R.layout.fragment_home, container, false)
+        //    houseRecyclerView = view.findViewById(R.id.house_recycler_view)
+        //    fab = view.findViewById(R.id.add_house_fab)
+        //    fab.setOnClickListener { goToAddActivity() }
+        //    //mainActivity = MainActivity()
+        //    injection = Injection()
+        //    configureViewModel()
+        //    configureHouseRecyclerView()
+        //    houseRecyclerView.layoutManager = LinearLayoutManager(activity)
+        //    houseRecyclerView.adapter = houseAdapter
+        //    //------------------- Currency view model --------------------------------------------------
+        //    mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        //    activity?.showErrorToast("Normal (home) layout displayed", Toast.LENGTH_SHORT, true)
+        //    return view
+        //}
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         houseRecyclerView = root.findViewById(R.id.house_recycler_view)
         val fab: FloatingActionButton = root.findViewById(R.id.add_house_fab)
@@ -79,9 +123,9 @@ class HomeFragment : Fragment() {
     private fun configureMainActivityViewModel(){
         mainActivityViewModel.isClickedCurrency().observe(viewLifecycleOwner, Observer {
             isCurrencyChanged = it
-            houseAdapter = HouseAdapter(isCurrencyChanged) //
-            houseRecyclerView.adapter = houseAdapter       // These 3 lines imply crash in DetailedHouseFragment & CreditSimulatorFragment
-            configureHouseRecyclerView()                   // when click on $ icon
+            houseAdapter = HouseAdapter(isCurrencyChanged)
+            houseRecyclerView.adapter = houseAdapter
+            configureHouseRecyclerView()
         })
     }
 
@@ -93,28 +137,17 @@ class HomeFragment : Fragment() {
         val bundle = arguments
 
         if (bundle != null){
-            val type = bundle.getString("type")
-            if (type != null) {
-                mainViewModel.getAllHousesFiltered(type).observe(viewLifecycleOwner, { f ->
-                    house.clear()
-                    house.addAll(f)
-                    houseAdapter.setData(house)
-                })
+            val filteredHouse: FilteredHouse? = bundle.getParcelable("filteredHouse")
+            val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
+            mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+            filteredHouse?.let {
+                mainViewModel.getAllHousesFiltered(filteredHouse)
+                        .observe(viewLifecycleOwner, { f ->
+                            house.clear()
+                            house.addAll(f)
+                            houseAdapter.setData(house)
+                        })
             }
-            //val filteredHouse: FilteredHouse? = bundle.getParcelable("filteredHouse")
-            //val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
-            //mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-            //filteredHouse?.let {
-            //    mainViewModel.getAllHousesFiltered(filteredHouse.minPhotos, filteredHouse.maxPhotos, filteredHouse.type, filteredHouse.neighborhood,
-            //            filteredHouse.minPrice, filteredHouse.maxPrice, filteredHouse.minSurface, filteredHouse.maxSurface, filteredHouse.minRooms,
-            //            filteredHouse.maxRooms, filteredHouse.minBathrooms, filteredHouse.maxBathrooms, filteredHouse.minBedrooms, filteredHouse.maxBedrooms,
-            //            filteredHouse.status, filteredHouse.poi, filteredHouse.entryDate, filteredHouse.saleDate, filteredHouse.agentId)
-            //            .observe(viewLifecycleOwner, { f ->
-            //                house.clear()
-            //                house.addAll(f)
-            //                houseAdapter.setData(house)
-            //            })
-            //}
         }
     }
 
@@ -133,6 +166,7 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        //displayXLScreen()
         configureMainActivityViewModel()
         refreshHouseList()
     }
@@ -159,5 +193,15 @@ class HomeFragment : Fragment() {
     private fun goToAddActivity(){
         val intent = Intent(context, AddHouseActivity::class.java)
         startActivity(intent)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- XL landscape screen -----------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun displayXLScreen(){
+        childFragmentManager.beginTransaction()
+                .replace(binding.detailedFragmentContainer!!.id, DetailedHouseFragment())
+                .commit()
     }
 }

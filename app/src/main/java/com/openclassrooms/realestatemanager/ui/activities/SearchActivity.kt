@@ -19,6 +19,7 @@ import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
+import com.openclassrooms.realestatemanager.model.FilteredHouse
 import com.openclassrooms.realestatemanager.picker.SearchDatePickerFragment
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 import com.openclassrooms.realestatemanager.utils.TimeConverters
@@ -56,7 +57,6 @@ class SearchActivity : AppCompatActivity() {
     private var selectedSaleDate: Long = 0
     //------------------- Double seek bar ----------------------------------------------------------
     private lateinit var priceSeekBar: DoubleValueSeekBarView
-    private lateinit var photoSeekBar: DoubleValueSeekBarView
     private lateinit var surfaceSeekBar: DoubleValueSeekBarView
     private lateinit var roomsSeekBar: DoubleValueSeekBarView
     private lateinit var bathroomsSeekBar: DoubleValueSeekBarView
@@ -93,7 +93,6 @@ class SearchActivity : AppCompatActivity() {
         pointsOfInterestsCheckBox()
         //------------------- Double seek bar ------------------------------------------------------
         priceSeekBar = findViewById(R.id.search_price_range_seek_bar)
-        photoSeekBar = findViewById(R.id.search_photos_double_range_seek_bar)
         surfaceSeekBar = findViewById(R.id.search_surface_double_range_seek_bar)
         roomsSeekBar = findViewById(R.id.search_rooms_double_range_seek_bar)
         bathroomsSeekBar = findViewById(R.id.search_bathrooms_double_range_seek_bar)
@@ -365,8 +364,6 @@ class SearchActivity : AppCompatActivity() {
     //----------------------------------------------------------------------------------------------
 
     private fun filterHouses(){
-        val minPhotos = photoSeekBar.currentMinValue
-        val maxPhotos = photoSeekBar.currentMaxValue
         val minPrice = priceSeekBar.currentMinValue * 10000
         val maxPrice = priceSeekBar.currentMaxValue * 10000
         val minSurface = surfaceSeekBar.currentMinValue
@@ -379,17 +376,17 @@ class SearchActivity : AppCompatActivity() {
         val maxBedrooms = bedroomsSeekBar.currentMaxValue
 
         // filter with full object doesn't works
-        //val filteredHouse = FilteredHouse(minPhotos, maxPhotos, selectedType, selectedNeighborhood, minPrice, maxPrice, minSurface, maxSurface,
-        //        minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi, selectedEntryDate, selectedSaleDate,
-        //        selectedAgentId)
-        //val intent = Intent(this, MainActivity::class.java)
-        //intent.putExtra("filteredHouse", filteredHouse)
-        //startActivity(intent)
+        val filteredHouse = FilteredHouse(selectedType, selectedNeighborhood, minPrice, maxPrice, minSurface, maxSurface,
+                minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi, selectedEntryDate, selectedSaleDate,
+                selectedAgentId)
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("filteredHouse", filteredHouse)
+        startActivity(intent)
 
         // filter with type
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("type", selectedType)
-        startActivity(intent)
+       //val intent = Intent(this, MainActivity::class.java)
+       //intent.putExtra("type", selectedType)
+       //startActivity(intent)
         //bundle.putSerializable("filteredHouse", FilteredHouse(minPhotos, maxPhotos, selectedType, selectedNeighborhood, minPrice, maxPrice,
         //minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi,
         //selectedEntryDate, selectedSaleDate, selectedAgentId))
