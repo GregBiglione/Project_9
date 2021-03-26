@@ -25,14 +25,12 @@ android {
     buildTypes {
         debug{
             buildConfigField 'String', "ApiKey", MAPS_API_KEY
-            buildConfigField 'String', "ServerKey", SERVER_KEY
             resValue 'string', "ApiKey", MAPS_API_KEY
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "ApiKey", MAPS_API_KEY
-            buildConfigField 'String', "ServerKey", SERVER_KEY
             resValue 'string', "ApiKey", MAPS_API_KEY
         }
     }
@@ -148,8 +146,4 @@ dependencies {
 
     //----------------------------- Mockito --------------------------------------------------------
     testImplementation "org.mockito:mockito-core:2.19.0"
-
-    //----------------------------- Retrofit -------------------------------------------------------
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
 }

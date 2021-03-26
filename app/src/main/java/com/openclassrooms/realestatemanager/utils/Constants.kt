@@ -1,17 +1,21 @@
 package com.openclassrooms.realestatemanager.utils
 
 import android.Manifest
+import android.app.NotificationManager
+import android.media.RingtoneManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.openclassrooms.realestatemanager.BuildConfig
 
 class Constants {
 
     companion object{
         //----------------------------- Notification -----------------------------------------------
-        const val BASE_URL = "https://fcm.googleapis.com"
-        const val SERVER_KEY = BuildConfig.ServerKey
-        const val CONTENT_TYPE = "application/json"
-
-        const val TOPIC = "/topic/myTopic"
+        const val NOTIFICATION_CHANNEL_ID = "notification channel"
+        const val NOTIFICATION_CHANNEL_NAME = "Message from Real Estate Manager"
+        @RequiresApi(Build.VERSION_CODES.N)
+        const val NOTIFICATION_CHANNEL_IMPORTANCE = NotificationManager.IMPORTANCE_HIGH
+        const val NOTIFICATION_RINGTONE_MANAGER = RingtoneManager.TYPE_NOTIFICATION
         const val NOTIFICATION_ID = 2109
         const val NOTIFICATION_TAG = "FIRE_BASE_REAL_ESTATE_MANGER"
 

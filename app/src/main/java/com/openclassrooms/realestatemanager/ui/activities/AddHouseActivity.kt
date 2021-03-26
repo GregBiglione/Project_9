@@ -8,7 +8,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.MenuItem
 import android.view.View
@@ -18,12 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.droidman.ktoasty.showErrorToast
-import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.gson.Gson
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentSpinnerAdapter
 import com.openclassrooms.realestatemanager.adapters.HousePhotoAdapter
@@ -34,23 +29,16 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.model.HousePhoto
-import com.openclassrooms.realestatemanager.notification.MyFirebaseMessagingService
-import com.openclassrooms.realestatemanager.notification.NotificationData
-import com.openclassrooms.realestatemanager.notification.PushNotification
-import com.openclassrooms.realestatemanager.notification.RetrofitInstance
+import com.openclassrooms.realestatemanager.notification.Notification
 import com.openclassrooms.realestatemanager.ui.dialog_box.PhotoChoiceDialog
-import com.openclassrooms.realestatemanager.utils.Constants.Companion.TOPIC
 import com.openclassrooms.realestatemanager.utils.ImageConverters
 import com.openclassrooms.realestatemanager.utils.SavePhoto
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import retrofit2.Response
+
 
 class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener, PhotoChoiceDialog.CameraListener {
 
@@ -98,7 +86,7 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
     private lateinit var timeConverters: TimeConverters
     private var entryDate: Long = 0
     //------------------- Notification -------------------------------------------------------------
-    private lateinit var myFirebaseMessagingService: MyFirebaseMessagingService
+    private lateinit var notification: Notification
     //------------------- Address for lat/lng ------------------------------------------------------
     private var address = ""
     private var lat = 0.0
@@ -438,11 +426,8 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
         addHouseButton = findViewById(R.id.add_house_add_button)
         addHouseButton.setOnClickListener {
             saveHouse()
-            FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
-            PushNotification(NotificationData(getString(R.string.app_name),getString(R.string.notification_message)),
-                    TOPIC).also {
-                sendNotification(it)
-            }
+            notification = Notification()
+            notification.sendNotification(this)
         }
     }
 
@@ -521,14 +506,6 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
 
     private fun addHouse(house: House){
         mainViewModel.createHouse(house)
-        //FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
-        //PushNotification(NotificationData(getString(R.string.app_name),getString(R.string.notification_message)),
-        //        TOPIC).also {
-        //            sendNotification(it)
-        //}
-        //sendNotificationAfterAdd()
-        showSuccessToast("House added with success ", Toast.LENGTH_SHORT, true)
-        // Notification instead of KToasty
         //------------------- Back to main activity after add house --------------------------------
         goBackToMainActivity()
     }
@@ -590,24 +567,5 @@ class AddHouseActivity : AppCompatActivity(), PhotoChoiceDialog.GalleryListener,
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Send notification -------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
-        try {
-            val response = RetrofitInstance.api.postNotification(notification)
-
-            if (response.isSuccessful){
-                Log.d(TAG, "Response: ${Gson().toJson(response)}")
-            }
-            else{
-                Log.e(TAG, "Something is wrong: " + response.errorBody().toString())
-            }
-        } catch (e: Exception){
-            Log.e(TAG, "Exception: $e")
-        }
     }
 }
