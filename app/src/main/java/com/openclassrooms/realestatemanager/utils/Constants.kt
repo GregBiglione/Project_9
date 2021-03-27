@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.openclassrooms.realestatemanager.BuildConfig
 
 class Constants {
 

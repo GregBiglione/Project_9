@@ -35,6 +35,7 @@ class CreditSimulatorFragment: Fragment() {
     private var price: Double = 0.0
     private var contribution: Double? = 0.0
     private var priceWithContribution: Double = 0.0
+    private var rateCredit: Double = 0.0
     private var monthPayment: Double = 0.0
     private var totalCost: Double = 0.0
     private var interests: Double = 0.0
@@ -55,12 +56,6 @@ class CreditSimulatorFragment: Fragment() {
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
     //------------------- Price conversion ---------------------------------------------------------
-    private var eurosHousePrice = 0.0
-    private var eurosContribution = 0.0
-    private var eurosBorrowedAmount = 0.0
-    private var eurosMonthlyPayment = 0.0
-    private var eurosTotalCost = 0.0
-    private var eurosTotalInterests = 0.0
     private var df = DecimalFormat("#.##")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -142,6 +137,7 @@ class CreditSimulatorFragment: Fragment() {
         }
         else{
             rate = rateEt.text.toString().toDouble()
+            rateCredit = rate
             val roundRate: String = df.format(rate)
             rateEt.setText(roundRate)
 
@@ -319,25 +315,22 @@ class CreditSimulatorFragment: Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun showEurosPrice(){
-        val theEurosHousePrice = Utils.convertDollarToEuroDouble(price)
-        eurosHousePrice = theEurosHousePrice
-        val theEurosContribution = Utils.convertDollarToEuroDouble(contribution!!)
-        eurosContribution = theEurosContribution
-        val theEurosBorrowedAmount = Utils.convertDollarToEuroDouble(priceWithContribution)
-        eurosBorrowedAmount = theEurosBorrowedAmount
-        val theEurosMonthlyPayment = Utils.convertDollarToEuroDouble(monthPayment)
-        eurosMonthlyPayment = theEurosMonthlyPayment
-        val theEurosTotalCost = Utils.convertDollarToEuroDouble(totalCost)
-        eurosTotalCost = theEurosTotalCost
-        val theEurosTotalInterests = Utils.convertDollarToEuroDouble(interests)
-        eurosTotalInterests = theEurosTotalInterests
+        if (!priceEt.text.isNullOrEmpty() || !contributionEt.text.isNullOrEmpty() || !borrowedAmountEt.text.isNullOrEmpty() ||
+                !monthlyPaymentEt.text.isNullOrEmpty() || !totalCostEt.text.isNullOrEmpty() || !totalInterestsEt.text.isNullOrEmpty()){
+            val eurosPrice = Utils.convertDollarToEuroDouble(priceEt.text.toString().toDouble())
+            val eurosContribution = Utils.convertDollarToEuroDouble(contributionEt.text.toString().toDouble())
+            val eurosBorrowedAmount = Utils.convertDollarToEuroDouble(contributionEt.text.toString().toDouble())
+            val eurosMonthlyPayment = Utils.convertDollarToEuroDouble(borrowedAmountEt.text.toString().toDouble())
+            val eurosTotalCost = Utils.convertDollarToEuroDouble(totalCostEt.text.toString().toDouble())
+            val eurosTotalInterests = Utils.convertDollarToEuroDouble(totalInterestsEt.text.toString().toDouble())
 
-        priceEt.setText(eurosHousePrice.toString())
-        contributionEt.setText(eurosContribution.toString())
-        borrowedAmountEt.setText(eurosBorrowedAmount.toString())
-        monthlyPaymentEt.setText(eurosMonthlyPayment.toString())
-        totalCostEt.setText(eurosTotalCost.toString())
-        totalInterestsEt.setText(eurosTotalInterests.toString())
+            priceEt.setText(eurosPrice.toString())
+            contributionEt.setText(eurosContribution.toString())
+            borrowedAmountEt.setText(eurosBorrowedAmount.toString())
+            monthlyPaymentEt.setText(eurosMonthlyPayment.toString())
+            totalCostEt.setText(eurosTotalCost.toString())
+            totalInterestsEt.setText(eurosTotalInterests.toString())
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -345,64 +338,21 @@ class CreditSimulatorFragment: Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun showDollarsPrice(){
-        val dollarsHousePrice = Utils.convertEuroToDollarDouble(eurosHousePrice)
-        val dollarsContribution = Utils.convertEuroToDollarDouble(eurosContribution)
-        val dollarsBorrowedAmount = Utils.convertEuroToDollarDouble(eurosBorrowedAmount)
-        val dollarsMonthlyPayment = Utils.convertEuroToDollarDouble(eurosMonthlyPayment)
-        val dollarsTotalCost = Utils.convertEuroToDollarDouble(eurosTotalCost)
-        val dollarsTotalInterests = Utils.convertEuroToDollarDouble(eurosTotalInterests)
+        if (!priceEt.text.isNullOrEmpty() || !contributionEt.text.isNullOrEmpty() || !borrowedAmountEt.text.isNullOrEmpty() ||
+        !monthlyPaymentEt.text.isNullOrEmpty() || !totalCostEt.text.isNullOrEmpty() || !totalInterestsEt.text.isNullOrEmpty()){
+            val dollarsPrice = Utils.convertEuroToDollarDouble(priceEt.text.toString().toDouble())
+            val dollarsContribution = Utils.convertEuroToDollarDouble(contributionEt.text.toString().toDouble())
+            val dollarsBorrowedAmount = Utils.convertEuroToDollarDouble(borrowedAmountEt.text.toString().toDouble())
+            val dollarsMonthlyPayment = Utils.convertEuroToDollarDouble(monthlyPaymentEt.text.toString().toDouble())
+            val dollarsTotalCost = Utils.convertEuroToDollarDouble(totalCostEt.text.toString().toDouble())
+            val dollarsTotalInterests = Utils.convertEuroToDollarDouble(totalInterestsEt.text.toString().toDouble())
 
-        priceEt.setText(dollarsHousePrice.toString())
-        contributionEt.setText(dollarsContribution.toString())
-        borrowedAmountEt.setText(dollarsBorrowedAmount.toString())
-        monthlyPaymentEt.setText(dollarsMonthlyPayment.toString())
-        totalCostEt.setText(dollarsTotalCost.toString())
-        totalInterestsEt.setText(dollarsTotalInterests.toString())
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Currency € by default ---------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun eurosByDefault(){
-        val defaultEurosHousePrice = Utils.convertDollarToEuroDouble(price)
-        eurosHousePrice = defaultEurosHousePrice
-        val defaultEurosContribution = Utils.convertDollarToEuroDouble(contribution!!)
-        eurosContribution = defaultEurosContribution
-        val defaultEurosBorrowedAmount = Utils.convertDollarToEuroDouble(priceWithContribution)
-        eurosBorrowedAmount = defaultEurosBorrowedAmount
-        val defaultEurosMonthlyPayment = Utils.convertDollarToEuroDouble(monthPayment)
-        eurosMonthlyPayment = defaultEurosMonthlyPayment
-        val defaultEurosTotalCost = Utils.convertDollarToEuroDouble(totalCost)
-        eurosTotalCost = defaultEurosTotalCost
-        val defaultEurosTotalInterests = Utils.convertDollarToEuroDouble(interests)
-        eurosTotalInterests = defaultEurosTotalInterests
-
-        priceEt.setText(eurosHousePrice.toString())
-        contributionEt.setText(eurosContribution.toString())
-        borrowedAmountEt.setText(eurosBorrowedAmount.toString())
-        monthlyPaymentEt.setText(eurosMonthlyPayment.toString())
-        totalCostEt.setText(eurosTotalCost.toString())
-        totalInterestsEt.setText(eurosTotalInterests.toString())
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Default € to $ ----------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun showDefaultEurosToDollarsPrice(){
-        val dollarsHousePrice = Utils.convertEuroToDollarDouble(eurosHousePrice)
-        val dollarsContribution = Utils.convertEuroToDollarDouble(eurosContribution)
-        val dollarsBorrowedAmount = Utils.convertEuroToDollarDouble(eurosBorrowedAmount)
-        val dollarsMonthlyPayment = Utils.convertEuroToDollarDouble(eurosMonthlyPayment)
-        val dollarsTotalCost = Utils.convertEuroToDollarDouble(eurosTotalCost)
-        val dollarsTotalInterests = Utils.convertEuroToDollarDouble(eurosTotalInterests)
-
-        priceEt.setText(dollarsHousePrice.toString())
-        contributionEt.setText(dollarsContribution.toString())
-        borrowedAmountEt.setText(dollarsBorrowedAmount.toString())
-        monthlyPaymentEt.setText(dollarsMonthlyPayment.toString())
-        totalCostEt.setText(dollarsTotalCost.toString())
-        totalInterestsEt.setText(dollarsTotalInterests.toString())
+            priceEt.setText(dollarsPrice.toString())
+            contributionEt.setText(dollarsContribution.toString())
+            borrowedAmountEt.setText(dollarsBorrowedAmount.toString())
+            monthlyPaymentEt.setText(dollarsMonthlyPayment.toString())
+            totalCostEt.setText(dollarsTotalCost.toString())
+            totalInterestsEt.setText(dollarsTotalInterests.toString())
+        }
     }
 }
