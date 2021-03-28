@@ -42,4 +42,6 @@ interface HouseDao {
     @Query("SELECT * FROM house WHERE id = :id")
     fun getHouseWithCursor(id: Long): Cursor
 
+    @Query("SELECT * FROM house")
+    fun getAllHousesWithCursor(): Cursor
 }

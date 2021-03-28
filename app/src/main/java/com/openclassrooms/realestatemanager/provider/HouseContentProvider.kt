@@ -17,6 +17,8 @@ class HouseContentProvider: ContentProvider(){
         private val TABLE_NAME = House::class.java.simpleName
         val URI_HOUSE = Uri.parse("content://$AUTHORITY/$TABLE_NAME")
     }
+    private var cursor: Cursor? = null
+    private var houseId: Long? = null
 
     override fun onCreate(): Boolean {
         return true
@@ -25,10 +27,16 @@ class HouseContentProvider: ContentProvider(){
     override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {
 
         if (context != null){
-            val houseId: Long = ContentUris.parseId(uri)
-            val cursor: Cursor = RealEstateManagerDatabase.getInstance(context!!).houseDao.getHouseWithCursor(houseId)
-            cursor.setNotificationUri(context!!.contentResolver, uri)
-            return cursor
+            houseId = ContentUris.parseId(uri)
+            if(houseId != null){
+                cursor = RealEstateManagerDatabase.getInstance(context!!).houseDao.getHouseWithCursor(houseId!!)
+                cursor!!.setNotificationUri(context!!.contentResolver, uri)
+                return cursor as Cursor
+            } else{
+                cursor = RealEstateManagerDatabase.getInstance(context!!).houseDao.getAllHousesWithCursor()
+                cursor!!.setNotificationUri(context!!.contentResolver, uri) // uri probably the problem
+                return cursor as Cursor
+            }
         }
         throw IllegalArgumentException("Failed to query row for uri $uri")
     }

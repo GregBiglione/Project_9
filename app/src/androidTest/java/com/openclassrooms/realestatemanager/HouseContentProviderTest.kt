@@ -21,6 +21,7 @@ class HouseContentProviderTest {
 
     //-------------------------------- For data ----------------------------------------------------
     private lateinit var contentResolver: ContentResolver
+    private var cursor: Cursor? = null
 
     //-------------------------------- Data set for test -------------------------------------------
     companion object{
@@ -37,12 +38,23 @@ class HouseContentProviderTest {
     }
 
     @Test
-    fun getHousesWhenNoHousesInserted(){
-        val cursor: Cursor? = contentResolver.query(ContentUris.withAppendedId(HouseContentProvider.URI_HOUSE, HOUSE_ID), null, null,
-        null, null)
+    fun getHouseWhenNoHousesInserted(){
+        cursor = contentResolver.query(ContentUris.withAppendedId(HouseContentProvider.URI_HOUSE, HOUSE_ID), null, null,
+                null, null)
         assertThat(cursor, notNullValue())
         assertThat(cursor!!.count, `is`(1))
-        cursor.close()
+        cursor!!.close()
     }
 
+    //----------------------------------------------------------------------------------------------
+    //------------------------------ /!\ Modify `is` value if houseList.size change /!\ ------------
+    //----------------------------------------------------------------------------------------------
+
+    @Test
+    fun getAllHousesWhenNoHousesInserted(){
+        cursor = contentResolver.query(HouseContentProvider.URI_HOUSE, null, null, null, null)
+        assertThat(cursor, notNullValue())
+        assertThat(cursor!!.count,  `is`(9))
+        cursor!!.close()
+    }
 }
