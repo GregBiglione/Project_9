@@ -135,4 +135,5 @@
     <string name="action_refresh">rafraîchir</string>
     <string name="action_money">Monnaie</string>
     <string name="notification_message">Maison ajoutée en base de données</string>
+    <string name="no_houses_found">Aucune maison trouvée</string>
 </resources>

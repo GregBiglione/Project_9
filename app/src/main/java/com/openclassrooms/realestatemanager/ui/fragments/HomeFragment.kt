@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -46,6 +47,8 @@ class HomeFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var binding: FragmentHomeBinding
     private lateinit var fab: FloatingActionButton
+    //-------------------------------- No house after filter search --------------------------------
+    private lateinit var noHouseTv: TextView
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -98,6 +101,8 @@ class HomeFragment : Fragment() {
         houseRecyclerView.adapter = houseAdapter
         //------------------- Currency view model --------------------------------------------------
         mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        //-------------------------------- No house after filter search ----------------------------
+        noHouseTv = root.findViewById(R.id.home_no_house)
         return root
     }
 
@@ -112,6 +117,10 @@ class HomeFragment : Fragment() {
             houseAdapter.setData(h)
             house.clear()
             house.addAll(h)
+            noHouseTv.visibility = View.GONE
+            //if (h.isNotEmpty()){
+            //    noHouseTv.visibility = View.GONE
+            //}
             filterHouses()
         })
     }
@@ -146,6 +155,10 @@ class HomeFragment : Fragment() {
                             house.clear()
                             house.addAll(f)
                             houseAdapter.setData(house)
+                            //showNoHouse()
+                            if (f.isEmpty()){
+                                noHouseTv.visibility = View.VISIBLE
+                            }
                         })
             }
         }
@@ -183,6 +196,11 @@ class HomeFragment : Fragment() {
             houseAdapter.setData(h)
             house.clear()
             house.addAll(h)
+            noHouseTv.visibility = View.GONE
+            isClickedRefresh = true
+            //if (h.isNotEmpty()){
+            //    noHouseTv.visibility = View.GONE
+            //}
         })
     }
 
@@ -203,5 +221,21 @@ class HomeFragment : Fragment() {
         childFragmentManager.beginTransaction()
                 .replace(binding.detailedFragmentContainer!!.id, DetailedHouseFragment())
                 .commit()
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Show icon if no house found ---------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun showNoHouse(){
+        if (house.size == 0){
+            noHouseTv.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideNoHouse(){
+        if (house.size != 0){
+            noHouseTv.visibility = View.GONE
+        }
     }
 }

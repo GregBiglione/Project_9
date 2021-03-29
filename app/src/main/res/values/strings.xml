@@ -293,23 +293,23 @@
         <item>Upper West Side (UWS + Lincoln Square + Manhattan Valley)</item>
         <item>Upper East Side (UES + Lenox Hill + Yorkville + Carnegie)</item>
         <item>Vinegar Hill</item>
-        <item>Washington Heights</item>
-        <item>Weeksville</item>
-        <item>West Village</item>
-        <item>White Sands</item>
-        <item>Williamsburg</item>
-        <item>Windsor Terrace</item>
         <item>University Heights-Morris Heights</item>
         <item>Van Cortlandt Village</item>
         <item>Van Nest-Morris Park-Westchester Square</item>
         <item>Wall Street</item>
+        <item>Washington Heights</item>
+        <item>Weeksville</item>
         <item>West Concourse</item>
+        <item>West Village</item>
         <item>Westchester-Unionport</item>
         <item>West Farms-Bronx River</item>
         <item>West New Brighton-New Brighton-St. George</item>
         <item>Westerleigh</item>
+        <item>White Sands</item>
         <item>Whitestone</item>
+        <item>Williamsburg</item>
         <item>Williamsbridge-Olinville</item>
+        <item>Windsor Terrace</item>
         <item>Wingate</item>
         <item>Woodhaven</item>
         <item>Woodlawn-Wakefield</item>
@@ -528,23 +528,23 @@
         <item>Upper West Side (UWS + Lincoln Square + Manhattan Valley)</item>
         <item>Upper East Side (UES + Lenox Hill + Yorkville + Carnegie)</item>
         <item>Vinegar Hill</item>
-        <item>Washington Heights</item>
-        <item>Weeksville</item>
-        <item>West Village</item>
-        <item>White Sands</item>
-        <item>Williamsburg</item>
-        <item>Windsor Terrace</item>
         <item>University Heights-Morris Heights</item>
         <item>Van Cortlandt Village</item>
         <item>Van Nest-Morris Park-Westchester Square</item>
         <item>Wall Street</item>
+        <item>Washington Heights</item>
+        <item>Weeksville</item>
         <item>West Concourse</item>
+        <item>West Village</item>
         <item>Westchester-Unionport</item>
         <item>West Farms-Bronx River</item>
         <item>West New Brighton-New Brighton-St. George</item>
         <item>Westerleigh</item>
+        <item>White Sands</item>
         <item>Whitestone</item>
+        <item>Williamsburg</item>
         <item>Williamsbridge-Olinville</item>
+        <item>Windsor Terrace</item>
         <item>Wingate</item>
         <item>Woodhaven</item>
         <item>Woodlawn-Wakefield</item>
@@ -632,5 +632,6 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_money">Currency</string>
     <string name="notification_message">House added in database</string>
+    <string name="no_houses_found">No houses found</string>
 
 </resources>
