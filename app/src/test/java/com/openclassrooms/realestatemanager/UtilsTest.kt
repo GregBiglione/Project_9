@@ -8,6 +8,7 @@ import junit.framework.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import java.util.*
 
 
 class UtilsTest {
@@ -33,11 +34,9 @@ class UtilsTest {
     @Test
     @Throws(Exception::class)
     fun convertUsDate_To_FrenchDate(){
-        //val stringDate = "07/12/2020"
-        //val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
-        //val longDate = simpleDateFormat.parse(stringDate).time
-        //assertEquals("07/12/2020", Utils.convertUsDateToFrenchDate(longDate))
-        //assertEquals("07/12/2020", Utils.convertUsDateToFrenchDate(1607295600000))
+        val longDate = 1607295600000
+        val date = Date(longDate)
+        assertEquals("07/12/2020", Utils.convertUsDateToFrenchDate(date))
     }
 
     @Test

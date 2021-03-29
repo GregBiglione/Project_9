@@ -54,10 +54,9 @@ public class Utils {
     //-------------------------------- Convert date YYYY/mm/dd to dd/mm/YYYY -----------------------
     //----------------------------------------------------------------------------------------------
 
-    public static String convertUsDateToFrenchDate(long dateInLong){
-        Date date = new Date(dateInLong);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/mm/YYYY");
-        return simpleDateFormat.format(date);
+    public static String convertUsDateToFrenchDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(date);
     }
 
     /**
