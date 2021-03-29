@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
@@ -16,7 +15,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -36,7 +34,7 @@ import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
 
-class MapFragment: Fragment() {
+class MapFragment: Fragment()/*, GoogleMap.OnInfoWindowClickListener*/{
 
     private var map: GoogleMap? = null
     //-------------------------------- Last known location -----------------------------------------
@@ -165,7 +163,8 @@ class MapFragment: Fragment() {
                             map!!.addMarker(MarkerOptions()
                                     .position(houseLocation)
                                     .icon(availableMarker)
-                                    .title(h.address))
+                                    .title(h.typeOfHouse)
+                                    .snippet(h.address))
                         }
                     }
                     "Sold" -> {
@@ -174,31 +173,46 @@ class MapFragment: Fragment() {
                             map!!.addMarker(MarkerOptions()
                                     .position(houseLocation)
                                     .icon(soldMarker)
-                                    .title(h.address))
-                            clickOnMarker()
+                                    .title(h.typeOfHouse)
+                                    .snippet(h.address))
                         }
                     }
                 }
+                //map?.setOnInfoWindowClickListener(this)
+                clickOnWindow()
             }
         })
     }
 
     //----------------------------------------------------------------------------------------------
-    //-------------------------------- Click on marker ---------------------------------------------
+    //-------------------------------- Click on info window  ---------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    private fun clickOnMarker(){
-        map?.setOnMarkerClickListener(OnMarkerClickListener { marker ->
+    //override fun onInfoWindowClick(marker: Marker?) {
+    //    map?.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener { marker ->
+    //        mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
+    //            for (h in house){
+    //                val markerSnippet = marker.snippet
+    //                if (h.address.equals(markerSnippet)){
+    //                    val action = MapFragmentDirections.actionNavMapToDetailedHouseFragment(h)
+    //                    findNavController().navigate(action)
+    //                }
+    //            }
+    //        })
+    //    })
+    //}
+
+    private fun clickOnWindow(){
+        map?.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener { marker ->
             mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
                 for (h in house){
-                    val markerTitle = marker.title
-                    if (h.address.equals(markerTitle)){
+                    val markerSnippet = marker.snippet
+                    if (h.address.equals(markerSnippet)){
                         val action = MapFragmentDirections.actionNavMapToDetailedHouseFragment(h)
                         findNavController().navigate(action)
                     }
                 }
             })
-            false
         })
     }
 }
