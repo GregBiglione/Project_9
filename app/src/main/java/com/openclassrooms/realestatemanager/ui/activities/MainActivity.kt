@@ -11,10 +11,12 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHost
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -29,9 +31,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
+import com.openclassrooms.realestatemanager.databinding.ContentMainBinding
 import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener /*1 ---> l 205*/ {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var mainActivityViewModel: MainActivityViewModel
@@ -40,6 +43,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
     //-------------------------------- Navigation for XL landscape screen --------------------------
     private lateinit var navController: NavController
+    //private lateinit var navControllerXL: NavController
+    //private lateinit var binding: ContentMainBinding
     private lateinit var binding: ActivityMainBinding
     //private lateinit var drawerLayout: DrawerLayout
     //private lateinit var navView: NavigationView
@@ -47,7 +52,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //initXlLandscapeScreen()
         setContentView(R.layout.activity_main)
         //-------------------------------- Menu ----------------------------------------------------
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
@@ -58,17 +62,22 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        //drawerLayout = findViewById(R.id.drawer_layout)
-        //navView = findViewById(R.id.nav_view)
 
-        //checkScreenSize()
+        //4
+        //binding = ContentMainBinding.inflate(layoutInflater) // ---> l 219
+        //binding = ActivityMainBinding.inflate(layoutInflater)
         navController = findNavController(R.id.nav_host_fragment)
+        //3
+        //navControllerXL.addOnDestinationChangedListener(this)
+        navController.addOnDestinationChangedListener(this)  // ---> l 67
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
                 R.id.nav_home, R.id.nav_add_agent, R.id.nav_settings), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        //6
+        initXLLandscapeScreen() // --------> 6* HomeFragment l60
         filteredHouses()
         navigationBottomMenu()
     }
@@ -101,7 +110,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+        //val navController = findNavController(R.id.nav_host_fragment)
+        //return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
@@ -191,28 +202,25 @@ class MainActivity : AppCompatActivity() {
     //-------------------------------- Navigation for XL landscape screen --------------------------
     //----------------------------------------------------------------------------------------------
 
-    //private fun initXLLandscapeScreen(){
-    //    binding = ActivityMainBinding.inflate(layoutInflater)
-    //    val navHostFragment = supportFragmentManager.findFragmentById()
-    //}
-//
-    //private fun checkScreenSize(){
-    //    if (resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK != Configuration.SCREENLAYOUT_SIZE_LARGE
-    //            && ((resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) != Configuration.SCREENLAYOUT_SIZE_NORMAL)
-    //            && (resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK != Configuration.SCREENLAYOUT_SIZE_SMALL)) {
-    //        //initXLLandscapeScreen()
-    //        showSuccessToast("XL layout displayed", Toast.LENGTH_SHORT)
-    //    }
-    //    else{
-    //        navController = findNavController(R.id.nav_host_fragment)
-    //        // Passing each menu ID as a set of Ids because each
-    //        // menu should be considered as top level destinations.
-    //        appBarConfiguration = AppBarConfiguration(setOf(
-    //                R.id.nav_home, R.id.nav_add_agent, R.id.nav_settings), drawerLayout)
-    //        setupActionBarWithNavController(navController, appBarConfiguration)
-    //        navView.setupWithNavController(navController)
-    //        showErrorToast("Normal layout displayed", Toast.LENGTH_SHORT)
-    //    }
-    //}
+    //2
+    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+        when(destination.id){
+            R.id.detailedHouseFragment -> {
+                supportActionBar?.setHomeButtonEnabled(!resources.getBoolean(R.bool.isLandscape))
+                supportActionBar?.setDisplayHomeAsUpEnabled(!resources.getBoolean(R.bool.isLandscape))
+            }
+            else -> {
+                supportActionBar?.setHomeButtonEnabled(false)
+                supportActionBar?.setDisplayHomeAsUpEnabled(false) // ---> l 72
+            }
+        }
+    }
 
+    //5
+    private fun initXLLandscapeScreen(){
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) //as NavHostFragment
+        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        //navControllerXL = navHostFragment?.findNavController()!!
+        navController = navHostFragment?.findNavController()!!  // ---> l 80
+    }
 }

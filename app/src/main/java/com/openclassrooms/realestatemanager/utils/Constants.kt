@@ -5,10 +5,13 @@ import android.app.NotificationManager
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.openclassrooms.realestatemanager.BuildConfig
 
 class Constants {
 
     companion object{
+        //----------------------------- Api key ----------------------------------------------------
+        const val API_KEY = BuildConfig.ApiKey
         //----------------------------- Notification -----------------------------------------------
         const val NOTIFICATION_CHANNEL_ID = "notification channel"
         const val NOTIFICATION_CHANNEL_NAME = "Message from Real Estate Manager"

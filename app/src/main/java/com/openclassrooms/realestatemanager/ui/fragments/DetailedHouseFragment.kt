@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,10 +23,13 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
+import com.openclassrooms.realestatemanager.databinding.FragmentDetailedHouseBinding
+import com.openclassrooms.realestatemanager.databinding.FragmentHomeBinding
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
+import com.openclassrooms.realestatemanager.utils.Constants.Companion.API_KEY
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
@@ -49,6 +54,7 @@ class DetailedHouseFragment : Fragment() {
     private lateinit var detailSaleDate: TextView
     //------------------- Text input layout --------------------------------------------------------
     private lateinit var houseSaleDateInputLyt: LinearLayout
+    private lateinit var mapLinearLayout: LinearLayout
     //------------------- Time converter -----------------------------------------------------------
     private lateinit var timeConverters: TimeConverters
     //------------------- Image slider -------------------------------------------------------------
@@ -79,10 +85,9 @@ class DetailedHouseFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
-
-    companion object{
-        const val API_KEY = BuildConfig.ApiKey
-    }
+    //-------------------------------- Navigation for XL landscape screen --------------------------
+    private lateinit var binding: FragmentDetailedHouseBinding
+    private lateinit var navController: NavController
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -90,6 +95,8 @@ class DetailedHouseFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detailed_house, container, false)
+        //10
+        binding = FragmentDetailedHouseBinding.inflate(layoutInflater, container, false) // ---> l 332
         setHasOptionsMenu(true)
         imageSlider = view.findViewById(R.id.detail_slider)
         detailDescription = view.findViewById(R.id.detail_description)
@@ -113,6 +120,7 @@ class DetailedHouseFragment : Fragment() {
         agentPhone = view.findViewById(R.id.detail_agent_item_phone)
         agentEmail = view.findViewById(R.id.detail_agent_item_email)
         //------------------- Static map image view ------------------------------------------------
+        mapLinearLayout = view.findViewById(R.id.detail_map_lyt)
         staticMap = view.findViewById(R.id.detail_static_map)
         //------------------- Recycler view --------------------------------------------------------
         agentRecyclerView = view.findViewById(R.id.detail_agent_recycler_view)
@@ -305,10 +313,38 @@ class DetailedHouseFragment : Fragment() {
     private fun displayStaticMap(){
         val lat = args.currentHouse.lat.toString()
         val lng = args.currentHouse.lng.toString()
-        val url = "https://maps.google.com/maps/api/staticmap?center=$lat,$lng&zoom=17&size=200x200&markers=color:red%7Clabel:C%7C$lat,$lng&sensor=false&key=$API_KEY"
+        val url = """https://maps.google.com/maps/api/staticmap?center=$lat,$lng&zoom=18&size=300x300&markers=color:red%7Clabel:C%7C$lat,$lng
+            &sensor=false&key=$API_KEY"""
 
-        Glide.with(requireContext())
-                .load(url)
-                .into(staticMap)
+        if (lat.toDouble() != 0.0 && lng.toDouble() !=  0.0){
+            mapLinearLayout.visibility = View.VISIBLE
+
+            Glide.with(requireContext())
+                    .load(url)
+                    .into(staticMap)
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- XL landscape screen -----------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    //11
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment) // ---> l 344
+    }
+
+    //13
+    override fun onResume() {
+        super.onResume()
+        checkScreenSize()
+    }
+
+    //12
+    private fun checkScreenSize() {
+        if (activity?.resources?.getBoolean(R.bool.isLandscape) == true){
+            navController.navigateUp() // ---> l 338
+        }
     }
 }

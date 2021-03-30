@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.droidman.ktoasty.showErrorToast
@@ -41,11 +42,11 @@ class HomeFragment : Fragment() {
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
     private var isClickedRefresh: Boolean = false
-    private lateinit var homeFragment: HomeFragment
+    //private lateinit var homeFragment: HomeFragment
     private var houseAdapter: HouseAdapter = HouseAdapter(isCurrencyChanged)
     //-------------------------------- Navigation for XL landscape screen --------------------------
-    private lateinit var navController: NavController
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var navController: NavController
     private lateinit var fab: FloatingActionButton
     //-------------------------------- No house after filter search --------------------------------
     private lateinit var noHouseTv: TextView
@@ -55,41 +56,9 @@ class HomeFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        //if (resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK != Configuration.SCREENLAYOUT_SIZE_LARGE
-        //        && ((resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) != Configuration.SCREENLAYOUT_SIZE_NORMAL)
-        //        && (resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK != Configuration.SCREENLAYOUT_SIZE_SMALL)){
-        //    binding = FragmentHomeBinding.inflate(layoutInflater)
-        //    houseRecyclerView = binding.root.findViewById(R.id.house_recycler_view)
-        //    fab = binding.root.findViewById(R.id.add_house_fab)
-        //    fab.setOnClickListener { goToAddActivity() }
-        //    //mainActivity = MainActivity()
-        //    injection = Injection()
-        //    configureViewModel()
-        //    configureHouseRecyclerView()
-        //    houseRecyclerView.layoutManager = LinearLayoutManager(activity)
-        //    houseRecyclerView.adapter = houseAdapter
-        //    //------------------- Currency view model --------------------------------------------------
-        //    mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
-        //    activity?.showSuccessToast("XL (home) layout displayed", Toast.LENGTH_SHORT, true)
-        //    return binding.root
-        //}
-        //else{
-        //    val view = inflater.inflate(R.layout.fragment_home, container, false)
-        //    houseRecyclerView = view.findViewById(R.id.house_recycler_view)
-        //    fab = view.findViewById(R.id.add_house_fab)
-        //    fab.setOnClickListener { goToAddActivity() }
-        //    //mainActivity = MainActivity()
-        //    injection = Injection()
-        //    configureViewModel()
-        //    configureHouseRecyclerView()
-        //    houseRecyclerView.layoutManager = LinearLayoutManager(activity)
-        //    houseRecyclerView.adapter = houseAdapter
-        //    //------------------- Currency view model --------------------------------------------------
-        //    mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
-        //    activity?.showErrorToast("Normal (home) layout displayed", Toast.LENGTH_SHORT, true)
-        //    return view
-        //}
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+        //7
+        binding = FragmentHomeBinding.inflate(layoutInflater, container, false) // ---> l 199
         houseRecyclerView = root.findViewById(R.id.house_recycler_view)
         val fab: FloatingActionButton = root.findViewById(R.id.add_house_fab)
         fab.setOnClickListener { goToAddActivity() }
@@ -179,9 +148,19 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //displayXLScreen()
+        //dualFragment()
+        //9
+        replaceFragmentXL()
         configureMainActivityViewModel()
         refreshHouseList()
+    }
+
+    private fun replaceFragmentXL() {
+        if (binding.detailedFragmentContainer != null){
+            childFragmentManager.beginTransaction()
+                    .replace(binding.detailedFragmentContainer!!.id, DetailedHouseFragment())
+                    .commit() // ---> DetailedHouseFragment() l 99
+        }
     }
 
     private fun refreshHouseList(){
@@ -217,11 +196,15 @@ class HomeFragment : Fragment() {
     //-------------------------------- XL landscape screen -----------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    private fun displayXLScreen(){
-        childFragmentManager.beginTransaction()
-                .replace(binding.detailedFragmentContainer!!.id, DetailedHouseFragment())
-                .commit()
+    //8
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //navigateToDetailInHomeFragment()
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment) // ---> l 149
+
     }
+
+    //9 ---> onResume() l 187
 
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Show icon if no house found ---------------------------------
