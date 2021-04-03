@@ -1,13 +1,12 @@
 package com.openclassrooms.realestatemanager
 
 import android.content.Context
-import android.net.ConnectivityManager
 import com.openclassrooms.realestatemanager.utils.Utils
 import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
+import org.robolectric.Robolectric
+import org.robolectric.RuntimeEnvironment.application
 import java.util.*
 
 
@@ -39,6 +38,11 @@ class UtilsTest {
         assertEquals("07/12/2020", Utils.convertUsDateToFrenchDate(date))
     }
 
+
+    //@Before
+    //fun before(){
+    //    val cm = Robolectric.application.getSystemService(Context.CONNECTIVITY_SERVICE)
+    //}
     //@Test
     //@Throws(Exception::class)
     //fun check_Internet_isAvailable(){

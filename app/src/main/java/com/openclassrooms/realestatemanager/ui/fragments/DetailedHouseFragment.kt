@@ -143,17 +143,19 @@ class DetailedHouseFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     private fun fillCarousel(){
-        if (args.currentHouse.housePhotoList?.isNotEmpty() == true) {
-            for (p in args.currentHouse.housePhotoList!!){
-                val photos = p.photo
-                val description = p.photoDescription
+        if (args != null) {
+            if (args.currentHouse.housePhotoList?.isNotEmpty() == true) {
+                for (p in args.currentHouse.housePhotoList!!){
+                    val photos = p.photo
+                    val description = p.photoDescription
 
-                imageList.add(SlideModel(photos, description))
-                imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+                    imageList.add(SlideModel(photos, description))
+                    imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+                }
             }
-        }
-        else{
-            imageSlider.visibility = View.GONE
+            else{
+                imageSlider.visibility = View.GONE
+            }
         }
     }
 

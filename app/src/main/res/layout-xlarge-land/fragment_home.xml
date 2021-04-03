@@ -66,7 +66,6 @@
         app:layout_constraintHorizontal_weight="7"
         app:layout_constraintStart_toEndOf="@id/house_recycler_view"
         app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/colorPrimary"
         tools:layout="@layout/fragment_detailed_house" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,7 +54,7 @@ class HouseContentProviderTest {
     fun getAllHousesWhenNoHousesInserted(){
         cursor = contentResolver.query(HouseContentProvider.URI_HOUSE, null, null, null, null)
         assertThat(cursor, notNullValue())
-        assertThat(cursor!!.count,  `is`(9))
+        assertThat(cursor!!.count,  `is`(10))
         cursor!!.close()
     }
 }

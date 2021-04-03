@@ -8,7 +8,6 @@ import android.net.wifi.WifiManager;
 import com.openclassrooms.realestatemanager.R;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -72,14 +71,14 @@ public class Utils {
 
     public static Boolean isInternetAvailableNew(Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        if (networkInfo != null){
-            Toasty.success(context, R.string.wifi_available, Toasty.LENGTH_SHORT).show();
+        if (networkInfo != null && networkInfo.isConnectedOrConnecting()){
+            Toasty.success(context, R.string.internet_available, Toasty.LENGTH_SHORT).show(); //internet available
             return true;
         }
         else{
-            Toasty.error(context, R.string.wifi_unavailable, Toasty.LENGTH_SHORT).show();
+            Toasty.error(context, R.string.internet_unavailable, Toasty.LENGTH_SHORT).show();
             return false;
         }
     }

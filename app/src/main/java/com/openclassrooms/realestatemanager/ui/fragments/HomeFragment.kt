@@ -150,7 +150,7 @@ class HomeFragment : Fragment() {
         super.onResume()
         //dualFragment()
         //9
-        replaceFragmentXL()
+        replaceFragmentXL() //
         configureMainActivityViewModel()
         refreshHouseList()
     }
@@ -166,6 +166,7 @@ class HomeFragment : Fragment() {
     private fun refreshHouseList(){
         mainActivityViewModel.isClickedRefresh().observe(requireActivity(), Observer {
             isClickedRefresh = it
+            arguments?.remove("filteredHouse")
             fullList()
         })
     }

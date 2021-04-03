@@ -17,17 +17,21 @@ class HouseContentProvider: ContentProvider(){
         private val TABLE_NAME = House::class.java.simpleName
         val URI_HOUSE = Uri.parse("content://$AUTHORITY/$TABLE_NAME")
     }
-    private var cursor: Cursor? = null
-    private var houseId: Long? = null
 
     override fun onCreate(): Boolean {
         return true
     }
 
     override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {
+        var houseId: Long? = null
+        val cursor: Cursor
 
         if (context != null){
-            houseId = ContentUris.parseId(uri)
+            try {
+               houseId = ContentUris.parseId(uri)
+            } catch (e: NumberFormatException) {
+                e.printStackTrace()
+            }
             if(houseId != null){
                 cursor = RealEstateManagerDatabase.getInstance(context!!).houseDao.getHouseWithCursor(houseId!!)
                 cursor!!.setNotificationUri(context!!.contentResolver, uri)

@@ -34,7 +34,7 @@ import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
 
-class MapFragment: Fragment()/*, GoogleMap.OnInfoWindowClickListener*/{
+class MapFragment: Fragment(){
 
     private var map: GoogleMap? = null
     //-------------------------------- Last known location -----------------------------------------
@@ -178,7 +178,6 @@ class MapFragment: Fragment()/*, GoogleMap.OnInfoWindowClickListener*/{
                         }
                     }
                 }
-                //map?.setOnInfoWindowClickListener(this)
                 clickOnWindow()
             }
         })
@@ -187,20 +186,6 @@ class MapFragment: Fragment()/*, GoogleMap.OnInfoWindowClickListener*/{
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Click on info window  ---------------------------------------
     //----------------------------------------------------------------------------------------------
-
-    //override fun onInfoWindowClick(marker: Marker?) {
-    //    map?.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener { marker ->
-    //        mainViewModel.allHouses.observe(viewLifecycleOwner, { house ->
-    //            for (h in house){
-    //                val markerSnippet = marker.snippet
-    //                if (h.address.equals(markerSnippet)){
-    //                    val action = MapFragmentDirections.actionNavMapToDetailedHouseFragment(h)
-    //                    findNavController().navigate(action)
-    //                }
-    //            }
-    //        })
-    //    })
-    //}
 
     private fun clickOnWindow(){
         map?.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener { marker ->
