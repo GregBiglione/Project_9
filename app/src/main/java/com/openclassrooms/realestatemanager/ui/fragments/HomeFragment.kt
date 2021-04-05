@@ -1,26 +1,22 @@
 package com.openclassrooms.realestatemanager.ui.fragments
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.droidman.ktoasty.showErrorToast
-import com.droidman.ktoasty.showSuccessToast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.HouseAdapter
 import com.openclassrooms.realestatemanager.databinding.FragmentHomeBinding
+import com.openclassrooms.realestatemanager.events.NavigateToDetailedHouseInSameFragmentEvent
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.FilteredHouse
@@ -29,6 +25,8 @@ import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 
 class HomeFragment : Fragment() {
@@ -86,10 +84,7 @@ class HomeFragment : Fragment() {
             houseAdapter.setData(h)
             house.clear()
             house.addAll(h)
-            noHouseTv.visibility = View.GONE
-            //if (h.isNotEmpty()){
-            //    noHouseTv.visibility = View.GONE
-            //}
+            hideNoHouse()
             filterHouses()
         })
     }
@@ -125,8 +120,8 @@ class HomeFragment : Fragment() {
                             house.addAll(f)
                             houseAdapter.setData(house)
                             //showNoHouse()
-                            if (f.isEmpty()){
-                                noHouseTv.visibility = View.VISIBLE
+                            if (f.isEmpty()) {
+                                showNoHouse()
                             }
                         })
             }
@@ -148,19 +143,8 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //dualFragment()
-        //9
-        replaceFragmentXL() //
         configureMainActivityViewModel()
         refreshHouseList()
-    }
-
-    private fun replaceFragmentXL() {
-        if (binding.detailedFragmentContainer != null){
-            childFragmentManager.beginTransaction()
-                    .replace(binding.detailedFragmentContainer!!.id, DetailedHouseFragment())
-                    .commit() // ---> DetailedHouseFragment() l 99
-        }
     }
 
     private fun refreshHouseList(){
@@ -176,11 +160,7 @@ class HomeFragment : Fragment() {
             houseAdapter.setData(h)
             house.clear()
             house.addAll(h)
-            noHouseTv.visibility = View.GONE
-            isClickedRefresh = true
-            //if (h.isNotEmpty()){
-            //    noHouseTv.visibility = View.GONE
-            //}
+            hideNoHouse()
         })
     }
 
@@ -198,12 +178,44 @@ class HomeFragment : Fragment() {
     //----------------------------------------------------------------------------------------------
 
     //8
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        //navigateToDetailInHomeFragment()
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment) // ---> l 149
+    //override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    //    super.onViewCreated(view, savedInstanceState)
+    //    //navigateToDetailInHomeFragment()
+    //    navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment) // ---> l 149
+//
+    //}
 
+    @Subscribe
+    fun onClickedRestaurantLandscapeScreen(event: NavigateToDetailedHouseInSameFragmentEvent){
+        val detailFragment = DetailedHouseFragment()
+        val argsXL = Bundle()
+        argsXL.putParcelable("DetailSplitScreen", event.house)
+        detailFragment.arguments = argsXL
+
+        if (binding.detailedFragmentContainer != null){
+            childFragmentManager.beginTransaction()
+                    .replace(binding.detailedFragmentContainer!!.id, detailFragment)
+                    .commit() // ---> DetailedHouseFragment() l 99
+        }
     }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    //private fun replaceFragmentXL() {
+    //    if (binding.detailedFragmentContainer != null){
+    //        childFragmentManager.beginTransaction()
+    //                .replace(binding.detailedFragmentContainer!!.id, DetailedHouseFragment())
+    //                .commit() // ---> DetailedHouseFragment() l 99
+    //    }
+    //}
 
     //9 ---> onResume() l 187
 

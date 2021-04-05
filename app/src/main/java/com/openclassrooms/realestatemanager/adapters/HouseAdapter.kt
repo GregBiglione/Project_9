@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.adapters
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +12,21 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.events.NavigateToDetailedHouseInSameFragmentEvent
 import com.openclassrooms.realestatemanager.model.House
+import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragmentDirections
 import com.openclassrooms.realestatemanager.utils.Utils
+import org.greenrobot.eventbus.EventBus
 
 class HouseAdapter(private var isCurrencyChanged: Boolean): RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
     private var houseList = emptyList<House>()
+    private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HouseViewHolder {
         val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.house_item, parent, false)
+        context = parent.context
         return HouseViewHolder(itemView)
     }
 
@@ -53,8 +59,14 @@ class HouseAdapter(private var isCurrencyChanged: Boolean): RecyclerView.Adapter
         }
 
         holder.houseConstraintLayout.setOnClickListener {
-            val actionDetail = HomeFragmentDirections.actionNavHomeToDetailedHouseFragment(currentHouse)
-            holder.houseConstraintLayout.findNavController().navigate(actionDetail)
+            if (context.resources.getBoolean(R.bool.isLandscape) == false){
+                val actionDetail = HomeFragmentDirections.actionNavHomeToDetailedHouseFragment(currentHouse)
+                holder.houseConstraintLayout.findNavController().navigate(actionDetail)
+            }
+
+            else{
+                EventBus.getDefault().post(NavigateToDetailedHouseInSameFragmentEvent(currentHouse))
+            }
         }
 
         holder.updateHouseButton.setOnClickListener {

@@ -19,8 +19,8 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments["room.incremental"] = "true"
-                className 'org.robolectric.annotation.processing.RobolectricProcessor'
-                arguments = [ 'org.robolectric.annotation.processing.shadowPackage' : 'com.example.myshadowpackage' ]
+                //className 'org.robolectric.annotation.processing.RobolectricProcessor'
+                //arguments = [ 'org.robolectric.annotation.processing.shadowPackage' : 'com.example.myshadowpackage' ]
             }
         }
     }

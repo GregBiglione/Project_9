@@ -46,17 +46,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="74dp"/>
 
-    <!--<include
-        android:id="@+id/detailed_Home"
-        layout="@layout/fragment_detailed_house"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="7"
-        app:layout_constraintStart_toEndOf="@id/house_recycler_view"
-        app:layout_constraintTop_toTopOf="parent"/>-->
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/detailed_fragment_container"
         android:layout_width="0dp"
@@ -65,7 +54,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="7"
         app:layout_constraintStart_toEndOf="@id/house_recycler_view"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_detailed_house" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

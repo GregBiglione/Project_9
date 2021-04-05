@@ -382,33 +382,6 @@ class SearchActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("filteredHouse", filteredHouse)
         startActivity(intent)
-
-        // filter with type
-       //val intent = Intent(this, MainActivity::class.java)
-       //intent.putExtra("type", selectedType)
-       //startActivity(intent)
-        //bundle.putSerializable("filteredHouse", FilteredHouse(minPhotos, maxPhotos, selectedType, selectedNeighborhood, minPrice, maxPrice,
-        //minSurface, maxSurface, minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi,
-        //selectedEntryDate, selectedSaleDate, selectedAgentId))
-        //intent.putExtra("minPhotos", minPhotos)
-        //intent.putExtra("maxPhotos", maxPhotos)
-        //intent.putExtra("type", selectedType)
-        //intent.putExtra("neighborhood", selectedNeighborhood)
-        //intent.putExtra("minPrice", minPrice)
-        //intent.putExtra("maxPrice", maxPrice)
-        //intent.putExtra("minSurface", minSurface)
-        //intent.putExtra("maxSurface", maxSurface)
-        //intent.putExtra("minRooms", minRooms)
-        //intent.putExtra("maxRooms", maxRooms)
-        //intent.putExtra("minBathrooms", minBathrooms)
-        //intent.putExtra("maxBathrooms", maxBathrooms)
-        //intent.putExtra("minBedrooms", minBedrooms)
-        //intent.putExtra("maxBedrooms", maxBedrooms)
-        //intent.putExtra("status", selectedStatus)
-        //intent.putExtra("poi", selectedPoi)
-        //intent.putExtra("entryDate", selectedEntryDate)
-        //intent.putExtra("saleDate", selectedSaleDate)
-        //intent.putExtra("agentId", selectedAgentId)
     }
 
     //----------------------------------------------------------------------------------------------

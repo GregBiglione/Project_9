@@ -34,7 +34,7 @@ import com.openclassrooms.realestatemanager.databinding.ActivityMainBinding
 import com.openclassrooms.realestatemanager.databinding.ContentMainBinding
 import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 
-class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener /*1 ---> l 205*/ {
+class MainActivity : AppCompatActivity()/*, NavController.OnDestinationChangedListener*/ /*1 ---> l 205*/ {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var mainActivityViewModel: MainActivityViewModel
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         navController = findNavController(R.id.nav_host_fragment)
         //3
         //navControllerXL.addOnDestinationChangedListener(this)
-        navController.addOnDestinationChangedListener(this)  // ---> l 67
+        //navController.addOnDestinationChangedListener(this)  // ---> l 67
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         //6
-        initXLLandscapeScreen() // --------> 6* HomeFragment l60
+        //initXLLandscapeScreen() // --------> 6* HomeFragment l60
         filteredHouses()
         navigationBottomMenu()
     }
@@ -203,24 +203,24 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     //----------------------------------------------------------------------------------------------
 
     //2
-    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
-        when(destination.id){
-            R.id.detailedHouseFragment -> {
-                supportActionBar?.setHomeButtonEnabled(!resources.getBoolean(R.bool.isLandscape))
-                supportActionBar?.setDisplayHomeAsUpEnabled(!resources.getBoolean(R.bool.isLandscape))
-            }
-            else -> {
-                supportActionBar?.setHomeButtonEnabled(false)
-                supportActionBar?.setDisplayHomeAsUpEnabled(false) // ---> l 72
-            }
-        }
-    }
-
-    //5
-    private fun initXLLandscapeScreen(){
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) //as NavHostFragment
-        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-        //navControllerXL = navHostFragment?.findNavController()!!
-        navController = navHostFragment?.findNavController()!!  // ---> l 80
-    }
+    //override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+    //    when(destination.id){
+    //        R.id.detailedHouseFragment -> {
+    //            supportActionBar?.setHomeButtonEnabled(!resources.getBoolean(R.bool.isLandscape))
+    //            supportActionBar?.setDisplayHomeAsUpEnabled(!resources.getBoolean(R.bool.isLandscape))
+    //        }
+    //        else -> {
+    //            supportActionBar?.setHomeButtonEnabled(false)
+    //            supportActionBar?.setDisplayHomeAsUpEnabled(false) // ---> l 72
+    //        }
+    //    }
+    //}
+//
+    ////5
+    //private fun initXLLandscapeScreen(){
+    //    val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) //as NavHostFragment
+    //    //val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+    //    //navControllerXL = navHostFragment?.findNavController()!!
+    //    navController = navHostFragment?.findNavController()!!  // ---> l 80
+    //}
 }
