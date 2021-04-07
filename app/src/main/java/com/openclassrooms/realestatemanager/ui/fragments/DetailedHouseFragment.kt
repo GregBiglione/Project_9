@@ -86,6 +86,8 @@ class DetailedHouseFragment : Fragment() {
     private var isCurrencyChanged: Boolean = false
     //-------------------------------- XL detail split screen --------------------------------------
     private var xlLandScapeHouseDetail: House? = null
+    private lateinit var mapFragment: MapFragment
+    private lateinit var homeFragment: HomeFragment
 
 
     override fun onCreateView(
@@ -124,22 +126,87 @@ class DetailedHouseFragment : Fragment() {
         injection = Injection()
         mainActivity = MainActivity()
         mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        mapFragment = MapFragment()
+        homeFragment = HomeFragment()
+
         if (activity?.resources?.getBoolean(R.bool.isLandscape) == false){
             fillCarousel()
             fillDetailHouseChamps()
             showSaleDate()
             configureViewModel()
             configureAgentRecyclerView()
-            //------------------- Currency view model --------------------------------------------------
+            //------------------- Currency view model ----------------------------------------------
             configureMainActivityViewModel()
             displayStaticMap()
             return view
         }
         else{
-            xlLandScapeHouseDetail = arguments?.getParcelable("DetailSplitScreen")
-            configureMainActivityViewModelSplitScreen()
-            checkScreenSize()
-            return view
+            when(requireContext().applicationContext/*mainActivity.application*/){ // when(context) else works but map return empty detailedHouse
+                mapFragment.context -> {    // when(mainActivity.application) detailedHouse ok but hom crash clicking on itam
+                    fillCarousel()
+                    fillDetailHouseChamps()
+                    showSaleDate()
+                    configureViewModel()
+                    configureAgentRecyclerView()
+                    //------------------- Currency view model --------------------------------------
+                    configureMainActivityViewModel()
+                    displayStaticMap()
+                    return view
+                }
+
+                else -> {
+                    xlLandScapeHouseDetail = arguments?.getParcelable("DetailSplitScreen")
+                    configureMainActivityViewModelSplitScreen()
+                    checkScreenSize()
+                    return view
+                }
+            }
+            //xlLandScapeHouseDetail = arguments?.getParcelable("DetailSplitScreen")
+            //configureMainActivityViewModelSplitScreen()
+            //checkScreenSize()
+            //return view
+            //fillCarousel()
+            //fillDetailHouseChamps()
+            //showSaleDate()
+            //configureViewModel()
+            //configureAgentRecyclerView()
+            ////------------------- Currency view model --------------------------------------------------
+            //configureMainActivityViewModel()
+            //displayStaticMap()
+            //return view
+
+        //    when(context){
+        //        mapFragment.context ->{
+        //            fillCarousel()
+        //            fillDetailHouseChamps()
+        //            showSaleDate()
+        //            configureViewModel()
+        //            configureAgentRecyclerView()
+        //            //------------------- Currency view model --------------------------------------------------
+        //            configureMainActivityViewModel()
+        //            displayStaticMap()
+        //            return view
+        //        }
+//
+        //        //else -> {
+        //        //    configureMainActivityViewModelSplitScreen()
+        //        //    checkScreenSize()
+        //        //    return view
+        //        //}
+        //    }
+        //    // Problem with map XL landscape go to detail
+        //    //fillCarousel()
+        //    //fillDetailHouseChamps()
+        //    //showSaleDate()
+        //    //configureViewModel()
+        //    //configureAgentRecyclerView()
+        //    ////------------------- Currency view model --------------------------------------------------
+        //    //configureMainActivityViewModel()
+        //    //displayStaticMap()
+        //    xlLandScapeHouseDetail = arguments?.getParcelable("DetailSplitScreen")
+        //    configureMainActivityViewModelSplitScreen()
+        //    checkScreenSize()
+        //    return view
         }
     }
 
