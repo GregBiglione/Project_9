@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.events.NavigateToDetailedHouseInSameFragmentEvent
 import com.openclassrooms.realestatemanager.model.House
-import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.ui.fragments.HomeFragmentDirections
 import com.openclassrooms.realestatemanager.utils.Utils
 import org.greenrobot.eventbus.EventBus
@@ -22,6 +22,7 @@ import org.greenrobot.eventbus.EventBus
 class HouseAdapter(private var isCurrencyChanged: Boolean): RecyclerView.Adapter<HouseAdapter.HouseViewHolder>() {
     private var houseList = emptyList<House>()
     private lateinit var context: Context
+    private var selectedPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HouseViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -59,14 +60,26 @@ class HouseAdapter(private var isCurrencyChanged: Boolean): RecyclerView.Adapter
         }
 
         holder.houseConstraintLayout.setOnClickListener {
-            if (context.resources.getBoolean(R.bool.isLandscape) == false){
+            selectedPosition = position
+            notifyDataSetChanged()
+
+            if (!context.resources.getBoolean(R.bool.isLandscape)){
                 val actionDetail = HomeFragmentDirections.actionNavHomeToDetailedHouseFragment(currentHouse)
                 holder.houseConstraintLayout.findNavController().navigate(actionDetail)
             }
-
             else{
                 EventBus.getDefault().post(NavigateToDetailedHouseInSameFragmentEvent(currentHouse))
             }
+        }
+
+        if (selectedPosition == position) {
+            holder.houseConstraintLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            holder.houseNeighborhood.setTextColor(ContextCompat.getColor(context, R.color.white))
+            holder.housePrice.setTextColor(ContextCompat.getColor(context, R.color.colorAccentLight))
+        } else {
+            holder.houseConstraintLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+            holder.houseNeighborhood.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            holder.housePrice.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
         }
 
         holder.updateHouseButton.setOnClickListener {

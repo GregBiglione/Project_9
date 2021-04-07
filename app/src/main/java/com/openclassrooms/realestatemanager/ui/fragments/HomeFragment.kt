@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,7 +21,6 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.FilteredHouse
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.ui.activities.AddHouseActivity
-import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.viewmodel.MainActivityViewModel
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import org.greenrobot.eventbus.EventBus
@@ -34,18 +32,15 @@ class HomeFragment : Fragment() {
     private lateinit var houseRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var injection: Injection
-    private lateinit var mainActivity: MainActivity
     private val house: ArrayList<House> = ArrayList()
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
     private var isClickedRefresh: Boolean = false
-    //private lateinit var homeFragment: HomeFragment
     private var houseAdapter: HouseAdapter = HouseAdapter(isCurrencyChanged)
     //-------------------------------- Navigation for XL landscape screen --------------------------
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var navController: NavController
-    private lateinit var fab: FloatingActionButton
+
     //-------------------------------- No house after filter search --------------------------------
     private lateinit var noHouseTv: TextView
 
@@ -55,12 +50,10 @@ class HomeFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        //7
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false) // ---> l 199
         houseRecyclerView = root.findViewById(R.id.house_recycler_view)
         val fab: FloatingActionButton = root.findViewById(R.id.add_house_fab)
         fab.setOnClickListener { goToAddActivity() }
-        //mainActivity = MainActivity()
         injection = Injection()
         configureViewModel()
         configureHouseRecyclerView()
@@ -119,7 +112,7 @@ class HomeFragment : Fragment() {
                             house.clear()
                             house.addAll(f)
                             houseAdapter.setData(house)
-                            //showNoHouse()
+
                             if (f.isEmpty()) {
                                 showNoHouse()
                             }
@@ -177,14 +170,6 @@ class HomeFragment : Fragment() {
     //-------------------------------- XL landscape screen -----------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    //8
-    //override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    //    super.onViewCreated(view, savedInstanceState)
-    //    //navigateToDetailInHomeFragment()
-    //    navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment) // ---> l 149
-//
-    //}
-
     @Subscribe
     fun onClickedRestaurantLandscapeScreen(event: NavigateToDetailedHouseInSameFragmentEvent){
         val detailFragment = DetailedHouseFragment()
@@ -195,7 +180,7 @@ class HomeFragment : Fragment() {
         if (binding.detailedFragmentContainer != null){
             childFragmentManager.beginTransaction()
                     .replace(binding.detailedFragmentContainer!!.id, detailFragment)
-                    .commit() // ---> DetailedHouseFragment() l 99
+                    .commit()
         }
     }
 
@@ -208,16 +193,6 @@ class HomeFragment : Fragment() {
         super.onStop()
         EventBus.getDefault().unregister(this)
     }
-
-    //private fun replaceFragmentXL() {
-    //    if (binding.detailedFragmentContainer != null){
-    //        childFragmentManager.beginTransaction()
-    //                .replace(binding.detailedFragmentContainer!!.id, DetailedHouseFragment())
-    //                .commit() // ---> DetailedHouseFragment() l 99
-    //    }
-    //}
-
-    //9 ---> onResume() l 187
 
     //----------------------------------------------------------------------------------------------
     //-------------------------------- Show icon if no house found ---------------------------------

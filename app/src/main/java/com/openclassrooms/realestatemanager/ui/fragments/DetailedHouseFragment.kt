@@ -20,15 +20,12 @@ import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.AgentAdapter
 import com.openclassrooms.realestatemanager.databinding.FragmentDetailedHouseBinding
-import com.openclassrooms.realestatemanager.databinding.FragmentHomeBinding
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.model.FilteredHouse
 import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.utils.Constants.Companion.API_KEY
@@ -87,9 +84,6 @@ class DetailedHouseFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
-    //-------------------------------- Navigation for XL landscape screen --------------------------
-    private lateinit var binding: FragmentDetailedHouseBinding
-    private lateinit var navController: NavController
     //-------------------------------- XL detail split screen --------------------------------------
     private var xlLandScapeHouseDetail: House? = null
 
@@ -100,8 +94,6 @@ class DetailedHouseFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detailed_house, container, false)
-        //10
-        binding = FragmentDetailedHouseBinding.inflate(layoutInflater, container, false) // ---> l 332
         setHasOptionsMenu(true)
         imageSlider = view.findViewById(R.id.detail_slider)
         detailDescription = view.findViewById(R.id.detail_description)
@@ -139,13 +131,13 @@ class DetailedHouseFragment : Fragment() {
             configureViewModel()
             configureAgentRecyclerView()
             //------------------- Currency view model --------------------------------------------------
-            //mainActivityViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
             configureMainActivityViewModel()
             displayStaticMap()
             return view
         }
         else{
             xlLandScapeHouseDetail = arguments?.getParcelable("DetailSplitScreen")
+            configureMainActivityViewModelSplitScreen()
             checkScreenSize()
             return view
         }
@@ -186,13 +178,6 @@ class DetailedHouseFragment : Fragment() {
         detailPointOfInterests.text = args.currentHouse.proximityPointsOfInterest
         switchPrice()
         entryDate()
-
-        //------------------- Split screen ---------------------------------------------------------
-        if (activity?.resources?.getBoolean(R.bool.isLandscape) == true){
-            detailDescription.text = xlLandScapeHouseDetail?.description
-            detailSurface.text = xlLandScapeHouseDetail?.surface.toString()
-            detailRooms
-        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -349,19 +334,6 @@ class DetailedHouseFragment : Fragment() {
     //-------------------------------- XL landscape screen -----------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    //11
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment) // ---> l 344
-    }
-
-    //13
-    //override fun onResume() {
-    //    super.onResume()
-    //    checkScreenSize()
-    //}
-
-    //12
     private fun checkScreenSize() {
         if (xlLandScapeHouseDetail != null) {
             fillCarouselSplitScreen()
@@ -406,8 +378,15 @@ class DetailedHouseFragment : Fragment() {
         detailNeighborhood.text = xlLandScapeHouseDetail?.neighborhood
         detailAddress.text = xlLandScapeHouseDetail?.address
         detailPointOfInterests.text = xlLandScapeHouseDetail?.proximityPointsOfInterest
-        switchPriceSplitScreen()
+        detailPrice.text = xlLandScapeHouseDetail?.price.toString()
         entryDateSplitScreen()
+    }
+
+    private fun configureMainActivityViewModelSplitScreen(){
+        mainActivityViewModel.isClickedCurrency().observe(requireActivity(), Observer {
+            isCurrencyChanged = it
+            switchPriceSplitScreen()
+        })
     }
 
     private fun switchPriceSplitScreen(){
@@ -426,7 +405,7 @@ class DetailedHouseFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun showEurosPriceSplitScreen(){
-        val euros = xlLandScapeHouseDetail?.price?.let { Utils.convertDollarToEuro(it) }
+        val euros = Utils.convertDollarToEuro(xlLandScapeHouseDetail?.price!!.toInt())
         detailPrice.text = "$euros€"
     }
 
