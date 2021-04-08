@@ -172,7 +172,7 @@ class HomeFragment : Fragment() {
 
     @Subscribe
     fun onClickedRestaurantLandscapeScreen(event: NavigateToDetailedHouseInSameFragmentEvent){
-        val detailFragment = DetailedHouseFragment()
+        val detailFragment = DetailedHouseSplitFragment()
         val argsXL = Bundle()
         argsXL.putParcelable("DetailSplitScreen", event.house)
         detailFragment.arguments = argsXL

@@ -7,6 +7,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
+    testOptions.unitTests.includeAndroidResources = true
     defaultConfig {
         applicationId "com.openclassrooms.realestatemanager"
         minSdkVersion 19
@@ -47,6 +48,12 @@ android {
 
     buildFeatures{
         viewBinding = true
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 

@@ -29,6 +29,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="detailedHouseFragmentXLLandscape">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="527" />
+                            <option name="y" value="505" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="nav_add_agent">
                     <value>
                       <LayoutPositions>
@@ -78,6 +90,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_nav_home_to_detailedHouseFragmentXLLandscape">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_nav_home_to_updateHouseFragment">
                               <value>
                                 <LayoutPositions />
@@ -100,6 +117,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_nav_map_to_detailedHouseFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_nav_map_to_detailedHouseFragmentXLLandscape">
                               <value>
                                 <LayoutPositions />
                               </value>

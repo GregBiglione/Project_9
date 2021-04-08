@@ -33,7 +33,7 @@ import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
 
-class DetailedHouseFragment : Fragment() {
+class DetailedHouseSplitFragment : Fragment() {
 
     private val args by navArgs<DetailedHouseFragmentArgs>()
     private lateinit var detailDescription: TextView
@@ -126,15 +126,23 @@ class DetailedHouseFragment : Fragment() {
         mapFragment = MapFragment()
         homeFragment = HomeFragment()
 
-        fillCarousel()
-        fillDetailHouseChamps()
-        showSaleDate()
-        configureViewModel()
-        configureAgentRecyclerView()
-        //------------------- Currency view model ----------------------------------------------
-        configureMainActivityViewModel()
-        displayStaticMap()
-        return view
+        if (activity?.resources?.getBoolean(R.bool.isLandscape) == false){
+            fillCarousel()
+            fillDetailHouseChamps()
+            showSaleDate()
+            configureViewModel()
+            configureAgentRecyclerView()
+            //------------------- Currency view model ----------------------------------------------
+            configureMainActivityViewModel()
+            displayStaticMap()
+            return view
+        }
+        else{
+            xlLandScapeHouseDetail = arguments?.getParcelable("DetailSplitScreen")
+            configureMainActivityViewModelSplitScreen()
+            checkScreenSize()
+            return view
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -323,4 +331,199 @@ class DetailedHouseFragment : Fragment() {
                     .into(staticMap)
         }
     }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- XL landscape screen -----------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun checkScreenSize() {
+        if (xlLandScapeHouseDetail != null) {
+            fillCarouselSplitScreen()
+            fillDetailHouseChampsSplitScreen()
+            configureAgentRecyclerViewSplitScreen()
+            configureViewModelSplitScreen()
+            showSaleDateSplitScreen()
+            displayStaticMapSplitScreen()
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Fill image slider with photos --------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun fillCarouselSplitScreen(){
+        if (xlLandScapeHouseDetail?.housePhotoList?.isNotEmpty() == true){
+            for (p in xlLandScapeHouseDetail!!.housePhotoList!!){
+                val photos = p.photo
+                val description = p.photoDescription
+
+                imageList.add(SlideModel(photos, description))
+                imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+            }
+        }
+        else{
+            imageSlider.visibility = View.GONE
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Fill detail house champs -------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    @SuppressLint("SetTextI18n")
+    private fun fillDetailHouseChampsSplitScreen(){
+        detailDescription.text = xlLandScapeHouseDetail?.description
+        detailSurface.text = xlLandScapeHouseDetail?.surface.toString()
+        detailRooms.text = xlLandScapeHouseDetail?.numberOfRooms.toString()
+        detailBathrooms.text = xlLandScapeHouseDetail?.numberOfBathRooms.toString()
+        detailBedrooms.text = xlLandScapeHouseDetail?.numberOfBedRooms.toString()
+        detailNeighborhood.text = xlLandScapeHouseDetail?.neighborhood
+        detailAddress.text = xlLandScapeHouseDetail?.address
+        detailPointOfInterests.text = xlLandScapeHouseDetail?.proximityPointsOfInterest
+        detailPrice.text = xlLandScapeHouseDetail?.price.toString()
+        entryDateSplitScreen()
+    }
+
+    private fun configureMainActivityViewModelSplitScreen(){
+        mainActivityViewModel.isClickedCurrency().observe(requireActivity(), Observer {
+            isCurrencyChanged = it
+            switchPriceSplitScreen()
+        })
+    }
+
+    private fun switchPriceSplitScreen(){
+
+        when(isCurrencyChanged){
+            true -> {
+                showEurosPriceSplitScreen()
+            }
+            false -> {
+                showDollarsPriceSplitScreen()
+            }
+        }
+    }
+
+    //------------------- Price in € ---------------------------------------------------------------
+
+    @SuppressLint("SetTextI18n")
+    private fun showEurosPriceSplitScreen(){
+        val euros = Utils.convertDollarToEuro(xlLandScapeHouseDetail?.price!!.toInt())
+        detailPrice.text = "$euros€"
+    }
+
+    //------------------- Price in $ ---------------------------------------------------------------
+
+    @SuppressLint("SetTextI18n")
+    private fun showDollarsPriceSplitScreen(){
+        val dollars = xlLandScapeHouseDetail?.price
+        detailPrice.text = "$$dollars"
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //------------------- Configure agent recyclerview ---------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun configureAgentRecyclerViewSplitScreen(){
+        agentAdapter = AgentAdapter()
+        agentRecyclerView.adapter = agentAdapter
+        agentRecyclerView.layoutManager = LinearLayoutManager(activity)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Configure ViewModel -----------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun configureViewModelSplitScreen(){
+        val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
+        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        //------------------- Get agents from room db ----------------------------------------------
+        mainViewModel.allAgents.observe(viewLifecycleOwner, { agent ->
+            agentAdapter.setData(agent)
+            agentList = agent
+            getAgentInformationSplitScreen()
+        })
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Get agent information ---------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun getAgentInformationSplitScreen(){
+        agentid = xlLandScapeHouseDetail?.agentId
+        detailAgent.text = xlLandScapeHouseDetail?.agentId.toString()
+
+        for (a in agentList){
+            id = a.id
+
+            if (agentid?.let { id?.compareTo(it) } == 0){
+                photo = a.agentPhoto.toString()
+                firstName = a.firstName
+                name = a.name
+                phone = a.phoneNumber
+                email = a.email
+
+                Glide.with(requireContext())
+                        .load(photo)
+                        .into(agentPhoto)
+                agentFirstName.text = firstName
+                agentName.text = name
+                agentPhone.text = phone
+                agentEmail.text = email
+            }
+        }
+    }
+
+    //------------------- Show sale date if exists -------------------------------------------------
+
+    private fun showSaleDateSplitScreen(){
+        if (xlLandScapeHouseDetail?.saleDate != null) {
+            saleDateSplitScreen()
+            houseSaleDateInputLyt.visibility = View.VISIBLE
+
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Set entry date ----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    @SuppressLint("SetTextI18n")
+    private fun entryDateSplitScreen(){
+        val entryDate = xlLandScapeHouseDetail?.entryDate
+        val entryFrenchDate = entryDate?.let { timeConverters.convertLongToTime(it) }
+        detailEntryDate.text = " $entryFrenchDate"
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Set sold date -----------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    @SuppressLint("SetTextI18n")
+    private fun saleDateSplitScreen(){
+        val saleDate = xlLandScapeHouseDetail?.saleDate
+        if (saleDate != null) {
+            val saleFrenchDate = timeConverters.convertLongToTime(saleDate)
+            detailSaleDate.text = " $saleFrenchDate"
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-------------------------------- Static map --------------------------------------------------
+    //----------------------------------------------------------------------------------------------
+
+    private fun displayStaticMapSplitScreen(){
+        val lat = xlLandScapeHouseDetail?.lat.toString()
+        val lng = xlLandScapeHouseDetail?.lng.toString()
+        val url = """https://maps.google.com/maps/api/staticmap?center=$lat,$lng&zoom=18&size=300x300&markers=color:red%7Clabel:C%7C$lat,$lng
+            &sensor=false&key=$API_KEY"""
+
+        if (lat.toDouble() != 0.0 && lng.toDouble() !=  0.0){
+            mapLinearLayout.visibility = View.VISIBLE
+
+            Glide.with(requireContext())
+                    .load(url)
+                    .into(staticMap)
+        }
+    }
+
 }
