@@ -35,7 +35,6 @@ class SavePhoto {
     //----------------------------------------------------------------------------------------------
 
     fun getRealPathFromUri(context: Context, uri: Uri?): String? {
-        //val cursor: Cursor = getContentResolver().query(uri, null, null, null, null)
         val cursor: Cursor? = uri?.let { context?.contentResolver?.query(it, null, null,
                 null, null) }
         cursor?.moveToFirst()

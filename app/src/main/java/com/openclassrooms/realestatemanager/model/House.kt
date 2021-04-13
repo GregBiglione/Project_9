@@ -1,12 +1,9 @@
 package com.openclassrooms.realestatemanager.model
 
-import android.content.ContentValues
 import android.os.Parcelable
 import androidx.room.*
 import com.openclassrooms.realestatemanager.utils.ListConverters
 import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
-
 
 @Parcelize
 @Entity(foreignKeys = [ForeignKey(entity = Agent::class,

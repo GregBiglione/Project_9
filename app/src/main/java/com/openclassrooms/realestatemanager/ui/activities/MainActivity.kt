@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_search -> {
-                goToSearchFragment()
+                goToSearchActivity()
                 true
             }
             R.id.action_money -> {
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
     //-------------------------------- Go to search fragment ---------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    private fun goToSearchFragment() {
+    private fun goToSearchActivity() {
         val intent = Intent(this, SearchActivity::class.java)
         startActivity(intent)
     }

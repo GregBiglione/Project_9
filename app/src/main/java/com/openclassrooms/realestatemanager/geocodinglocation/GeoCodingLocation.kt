@@ -7,7 +7,6 @@ import android.util.Log
 import java.io.IOException
 import java.util.*
 
-
 class GeoCodingLocation{
 
     private val TAG = "GeoCodingLocation"

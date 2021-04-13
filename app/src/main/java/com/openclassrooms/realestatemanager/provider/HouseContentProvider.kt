@@ -33,13 +33,13 @@ class HouseContentProvider: ContentProvider(){
                 e.printStackTrace()
             }
             if(houseId != null){
-                cursor = RealEstateManagerDatabase.getInstance(context!!).houseDao.getHouseWithCursor(houseId!!)
-                cursor!!.setNotificationUri(context!!.contentResolver, uri)
-                return cursor as Cursor
+                cursor = RealEstateManagerDatabase.getInstance(context!!).houseDao.getHouseWithCursor(houseId)
+                cursor.setNotificationUri(context!!.contentResolver, uri)
+                return cursor
             } else{
                 cursor = RealEstateManagerDatabase.getInstance(context!!).houseDao.getAllHousesWithCursor()
-                cursor!!.setNotificationUri(context!!.contentResolver, uri) // uri probably the problem
-                return cursor as Cursor
+                cursor.setNotificationUri(context!!.contentResolver, uri) // uri probably the problem
+                return cursor
             }
         }
         throw IllegalArgumentException("Failed to query row for uri $uri")

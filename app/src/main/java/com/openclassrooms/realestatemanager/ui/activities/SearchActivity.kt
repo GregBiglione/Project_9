@@ -21,7 +21,6 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
 import com.openclassrooms.realestatemanager.model.FilteredHouse
 import com.openclassrooms.realestatemanager.picker.SearchDatePickerFragment
-import com.openclassrooms.realestatemanager.ui.fragments.HomeFragment
 import com.openclassrooms.realestatemanager.utils.TimeConverters
 import com.openclassrooms.realestatemanager.viewmodel.MainViewModel
 
@@ -61,8 +60,6 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var roomsSeekBar: DoubleValueSeekBarView
     private lateinit var bathroomsSeekBar: DoubleValueSeekBarView
     private lateinit var bedroomsSeekBar: DoubleValueSeekBarView
-
-    private lateinit var homeFragment: HomeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -375,7 +372,6 @@ class SearchActivity : AppCompatActivity() {
         val minBedrooms = bedroomsSeekBar.currentMinValue
         val maxBedrooms = bedroomsSeekBar.currentMaxValue
 
-        // filter with full object doesn't works
         val filteredHouse = FilteredHouse(selectedType, selectedNeighborhood, minPrice, maxPrice, minSurface, maxSurface,
                 minRooms, maxRooms, minBathrooms, maxBathrooms, minBedrooms, maxBedrooms, selectedStatus, selectedPoi, selectedEntryDate, selectedSaleDate,
                 selectedAgentId)

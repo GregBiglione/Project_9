@@ -1,7 +1,5 @@
 package com.openclassrooms.realestatemanager.model
 
-import android.net.Uri
-
 class AgentDataSource {
     companion object{
         fun createAgentDataSet(): ArrayList<Agent>{

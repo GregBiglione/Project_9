@@ -112,6 +112,31 @@ abstract class RealEstateManagerDatabase : RoomDatabase() {
                 for (p in housePhotos9){
                     housePhotoDao?.createHousePhoto(p)
                 }
+
+                val housePhotos10: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet10()
+                for (p in housePhotos10){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos11: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet11()
+                for (p in housePhotos11){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos12: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet12()
+                for (p in housePhotos12){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos13: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet13()
+                for (p in housePhotos13){
+                    housePhotoDao?.createHousePhoto(p)
+                }
+
+                val housePhotos14: ArrayList<HousePhoto> = HousePhotoDataSource.createHousePhotoDataSet14()
+                for (p in housePhotos14){
+                    housePhotoDao?.createHousePhoto(p)
+                }
                 return null
             }
         }

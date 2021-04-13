@@ -10,7 +10,7 @@ interface HousePhotoDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun createHousePhoto(housePhoto: HousePhoto)
 
-    @Query("SELECT * from housePhoto") // may be add house_id if not will show all photos
+    @Query("SELECT * from housePhoto")
     fun getAllHousePhotos(): LiveData<List<HousePhoto>>
 
     @Query("SELECT * from housePhoto WHERE id = :id ")

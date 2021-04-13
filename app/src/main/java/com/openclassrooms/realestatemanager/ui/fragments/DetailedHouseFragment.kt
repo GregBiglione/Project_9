@@ -23,7 +23,6 @@ import com.openclassrooms.realestatemanager.adapters.AgentAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory
 import com.openclassrooms.realestatemanager.model.Agent
-import com.openclassrooms.realestatemanager.model.House
 import com.openclassrooms.realestatemanager.ui.activities.MainActivity
 import com.openclassrooms.realestatemanager.utils.Constants.Companion.API_KEY
 import com.openclassrooms.realestatemanager.utils.TimeConverters
@@ -81,8 +80,6 @@ class DetailedHouseFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private var isCurrencyChanged: Boolean = false
-    //-------------------------------- XL detail split screen --------------------------------------
-    private var xlLandScapeHouseDetail: House? = null
     private lateinit var mapFragment: MapFragment
     private lateinit var homeFragment: HomeFragment
 

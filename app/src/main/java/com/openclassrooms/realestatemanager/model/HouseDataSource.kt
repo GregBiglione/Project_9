@@ -263,6 +263,146 @@ class HouseDataSource {
                             5L
                     )
             )
+            listOfHouse.add(
+                    House(
+                            10L,
+                            HousePhotoDataSource.createHousePhotoDataSet10(),
+                            "Apartment",
+                            "Wall Street",
+                            "57 Wall St, New York, NY 10005",
+                            40.706070,
+                            -74.009150,
+                            17540000,
+                            345,
+                            15,
+                            4,
+                            5,
+                            "Very nice apartment square in Wall Street. \n" +
+                                    "\n" +
+                                    "The L-Series, a collection of 50 West Streets penthouses, full and half ground floor residences, offers an impressive array of additional features. The kitchens, featuring stone slab counters and backsplashes, are equipped with an extra spacious refrigerator and freezer, a six-burner stove, and a full-height wine refrigerator. Large marble stone slabs, a freestanding soaking tub, steam shower and a benched sauna enhance the elegant master bathroom. West, a 64-story residential tower located in the center of New Downtown, offers breathtaking views of New York Harbor, the Hudson and East Rivers, the Statue of Liberty and Ellis Island. \n" +
+                                    "\n" +
+                                    "Internationally renowned architect Helmut Jahn designed the approximately 780' skyscraper to feature floor-to-ceiling curved glass windows. The extensive interior layouts, ranging from one to five bedrooms and featuring a network of duplexes and double height spaces, were designed and finished by Thomas Juul-Hansen. \n" +
+                                    "\n" +
+                                    "Four floors of the tower are devoted to state-of-the-art amenities: a huge fitness center, the beautifully appointed Water Club, unique childrens amenities, and the West Street Observatory, a spectacular 64th floor outdoor entertainment space with seemingly endless views of New York City and beyond. penthouse.",
+                            "Available",
+                            "Sea, Shops, Park",
+                            1614726000000,
+                            null,
+                            2L
+                    )
+            )
+            listOfHouse.add(
+                    House(
+                            11L,
+                            HousePhotoDataSource.createHousePhotoDataSet11(),
+                            "Apartment",
+                            "Little Italy",
+                            "179 Grand St, New York, NY 10013",
+                            40.719340,
+                            -73.997980,
+                            14540000,
+                            262,
+                            10,
+                            2,
+                            3,
+                            "Very nice apartment in the center of one of the most famous and classic New York neighborhood. \n" +
+                                    "\n" +
+                                    "The L-Series, a collection of 50 West Streets penthouses, full and half ground floor residences, offers an impressive array of additional features. The kitchens, featuring stone slab counters and backsplashes, are equipped with an extra spacious refrigerator and freezer, a six-burner stove, and a full-height wine refrigerator. Large marble stone slabs, a freestanding soaking tub, steam shower and a benched sauna enhance the elegant master bathroom. West, a 64-story residential tower located in the center of New Downtown, offers breathtaking views of New York Harbor, the Hudson and East Rivers, the Statue of Liberty and Ellis Island. \n" +
+                                    "\n" +
+                                    "Internationally renowned architect Helmut Jahn designed the approximately 780' skyscraper to feature floor-to-ceiling curved glass windows. The extensive interior layouts, ranging from one to five bedrooms and featuring a network of duplexes and double height spaces, were designed and finished by Thomas Juul-Hansen. \n" +
+                                    "\n" +
+                                    "Four floors of the tower are devoted to state-of-the-art amenities: a huge fitness center, the beautifully appointed Water Club, unique childrens amenities, and the West Street Observatory, a spectacular 64th floor outdoor entertainment space with seemingly endless views of New York City and beyond. penthouse.",
+                            "Available",
+                            "Shops, Park, School",
+                            1615244400000,
+                            null,
+                            5L
+                    )
+            )
+            listOfHouse.add(
+                    House(
+                            12L,
+                            HousePhotoDataSource.createHousePhotoDataSet12(),
+                            "Luxury House",
+                            "Little Italy",
+                            "194 Grand St, New York, NY 10013",
+                            40.7194124,
+                            -73.9968282,
+                            10540000,
+                            374,
+                            12,
+                            3,
+                            3,
+                            "Huge luxury house built in 1936 in Little Italy. \n" +
+                                    "\n" +
+                                    "The L-Series, a collection of 50 West Streets penthouses, full and half ground floor residences, offers an impressive array of additional features. The kitchens, featuring stone slab counters and backsplashes, are equipped with an extra spacious refrigerator and freezer, a six-burner stove, and a full-height wine refrigerator. Large marble stone slabs, a freestanding soaking tub, steam shower and a benched sauna enhance the elegant master bathroom. West, a 64-story residential tower located in the center of New Downtown, offers breathtaking views of New York Harbor, the Hudson and East Rivers, the Statue of Liberty and Ellis Island. \n" +
+                                    "\n" +
+                                    "Internationally renowned architect Helmut Jahn designed the approximately 780' skyscraper to feature floor-to-ceiling curved glass windows. The extensive interior layouts, ranging from one to five bedrooms and featuring a network of duplexes and double height spaces, were designed and finished by Thomas Juul-Hansen. \n" +
+                                    "\n" +
+                                    "Four floors of the tower are devoted to state-of-the-art amenities: a huge fitness center, the beautifully appointed Water Club, unique childrens amenities, and the West Street Observatory, a spectacular 64th floor outdoor entertainment space with seemingly endless views of New York City and beyond. penthouse.",
+                            "Available",
+                            "Museum, School, Park, Metro",
+                            1616281200000,
+                            null,
+                            2L
+                    )
+            )
+            listOfHouse.add(
+                    House(
+                            13L,
+                            HousePhotoDataSource.createHousePhotoDataSet13(),
+                            "Private Mansion",
+                            "Little Italy",
+                            "265 Canal St STE 516, New York, NY 10013",
+                            40.719020,
+                            -74.000990,
+                            11750000,
+                            456,
+                            16,
+                            3,
+                            6,
+                            "Classic facade but amazing modern interior in this private mansion located in Little Italy. \n" +
+                                    "\n" +
+                                    "The L-Series, a collection of 50 West Streets penthouses, full and half ground floor residences, offers an impressive array of additional features. The kitchens, featuring stone slab counters and backsplashes, are equipped with an extra spacious refrigerator and freezer, a six-burner stove, and a full-height wine refrigerator. Large marble stone slabs, a freestanding soaking tub, steam shower and a benched sauna enhance the elegant master bathroom. West, a 64-story residential tower located in the center of New Downtown, offers breathtaking views of New York Harbor, the Hudson and East Rivers, the Statue of Liberty and Ellis Island. \n" +
+                                    "\n" +
+                                    "Internationally renowned architect Helmut Jahn designed the approximately 780' skyscraper to feature floor-to-ceiling curved glass windows. The extensive interior layouts, ranging from one to five bedrooms and featuring a network of duplexes and double height spaces, were designed and finished by Thomas Juul-Hansen. \n" +
+                                    "\n" +
+                                    "Four floors of the tower are devoted to state-of-the-art amenities: a huge fitness center, the beautifully appointed Water Club, unique childrens amenities, and the West Street Observatory, a spectacular 64th floor outdoor entertainment space with seemingly endless views of New York City and beyond. penthouse.",
+                            "Available",
+                            "Sea, Shops, Park",
+                            1617487200000,
+                            null,
+                            4L
+                    )
+            )
+            listOfHouse.add(
+                    House(
+                            14L,
+                            HousePhotoDataSource.createHousePhotoDataSet14(),
+                            "Apartment",
+                            "Little Italy",
+                            "146 Mulberry St, New York, NY 10013",
+                            40.7189102,
+                            -73.9973496,
+                            12870000,
+                            268,
+                            14,
+                            4,
+                            5,
+                            "Very modern apartment in the famous Little Italy neighborhood. \n" +
+                                    "\n" +
+                                    "The L-Series, a collection of 50 West Streets penthouses, full and half ground floor residences, offers an impressive array of additional features. The kitchens, featuring stone slab counters and backsplashes, are equipped with an extra spacious refrigerator and freezer, a six-burner stove, and a full-height wine refrigerator. Large marble stone slabs, a freestanding soaking tub, steam shower and a benched sauna enhance the elegant master bathroom. West, a 64-story residential tower located in the center of New Downtown, offers breathtaking views of New York Harbor, the Hudson and East Rivers, the Statue of Liberty and Ellis Island. \n" +
+                                    "\n" +
+                                    "Internationally renowned architect Helmut Jahn designed the approximately 780' skyscraper to feature floor-to-ceiling curved glass windows. The extensive interior layouts, ranging from one to five bedrooms and featuring a network of duplexes and double height spaces, were designed and finished by Thomas Juul-Hansen. \n" +
+                                    "\n" +
+                                    "Four floors of the tower are devoted to state-of-the-art amenities: a huge fitness center, the beautifully appointed Water Club, unique childrens amenities, and the West Street Observatory, a spectacular 64th floor outdoor entertainment space with seemingly endless views of New York City and beyond. penthouse.",
+                            "Available",
+                            "Sea, Shops, Park",
+                            1618610400000,
+                            null,
+                            3L
+                    )
+            )
             return listOfHouse
         }
     }

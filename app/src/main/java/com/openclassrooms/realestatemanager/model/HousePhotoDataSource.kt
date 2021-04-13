@@ -1,15 +1,13 @@
 package com.openclassrooms.realestatemanager.model
 
-import android.net.Uri
-
 class HousePhotoDataSource {
-    companion object{
+    companion object {
 
         //------------------------------------------------------------------------------------------
         //-------------------------------- House #1 ------------------------------------------------
         //------------------------------------------------------------------------------------------
 
-        fun createHousePhotoDataSet1() :ArrayList<HousePhoto>{
+        fun createHousePhotoDataSet1(): ArrayList<HousePhoto> {
             val listOfPhoto1 = ArrayList<HousePhoto>()
             listOfPhoto1.add(
                     HousePhoto(
@@ -60,7 +58,7 @@ class HousePhotoDataSource {
         //-------------------------------- House #2 ------------------------------------------------
         //------------------------------------------------------------------------------------------
 
-        fun createHousePhotoDataSet2() :ArrayList<HousePhoto>{
+        fun createHousePhotoDataSet2(): ArrayList<HousePhoto> {
             val listOfPhoto2 = ArrayList<HousePhoto>()
             listOfPhoto2.add(
                     HousePhoto(
@@ -72,7 +70,7 @@ class HousePhotoDataSource {
             listOfPhoto2.add(
                     HousePhoto(
                             21L,
-                            "https://fr.luxuryestate.com/p97656643-appartement-en-vente-new-york",
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/12/properties/Property-431f0000000005d2000e5f9be395-97656643.jpg",
                             "Terrace"
                     )
             )
@@ -93,14 +91,14 @@ class HousePhotoDataSource {
             listOfPhoto2.add(
                     HousePhoto(
                             24L,
-                            "https://fr.luxuryestate.com/p97656643-appartement-en-vente-new-york",
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-431f0000000005d200035f9be394-97656643.jpg",
                             "Facade"
                     )
             )
             listOfPhoto2.add(
                     HousePhoto(
                             25L,
-                            "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-431f0000000005d200025f9be394-97656643.jpg",
+                            "https://pic.le-cdn.com/thumbs/1024x768/04/15/properties/Property-431f0000000005d200125f9be395-97656643.jpg",
                             "Swimming pool"
                     )
             )
@@ -111,34 +109,34 @@ class HousePhotoDataSource {
         //-------------------------------- House #3 ------------------------------------------------
         //------------------------------------------------------------------------------------------
 
-        fun createHousePhotoDataSet3() :ArrayList<HousePhoto>{
+        fun createHousePhotoDataSet3(): ArrayList<HousePhoto> {
             val listOfPhoto3 = ArrayList<HousePhoto>()
             listOfPhoto3.add(
                     HousePhoto(
                             3L,
-                            "https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-d7aa00000000054e00055fa5bc67-89041623.jpg",
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/6/properties/Property-8eb10ae34814890a650a7b36ef6da9e5-90899465.jpg",
                             "Living room"
                     )
             )
             listOfPhoto3.add(
                     HousePhoto(
                             31L,
-                            "https://pic.le-cdn.com/thumbs/1024x768/04/9/properties/Property-d7aa00000000054e00065ebe7ef0-89041623.jpg",
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/22/properties/Property-1d7fce4bc6400c55bb2b2c3f1427efee-90899465.jpg",
                             "Kitchen"
                     )
             )
             listOfPhoto3.add(
                     HousePhoto(
                             32L,
-                            "https://pic.le-cdn.com/thumbs/1024x768/04/13/properties/Property-d7aa00000000054e000a5ebe7ef0-89041623.jpg",
-                            "WC"
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/13/properties/Property-d80e3eb0c14c9f0221689297d65371da-90899465.jpg",
+                            "Bed room"
                     )
             )
             listOfPhoto3.add(
                     HousePhoto(
                             33L,
-                            "https://pic.le-cdn.com/thumbs/1024x768/04/1/properties/Property-d7aa00000000054e00015fa5bc67-89041623.jpg",
-                            "Neighborhood"
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/12/properties/Property-d58c683a16004784deeed87157eb7529-90899465.jpg",
+                            "Bed room"
                     )
             )
             return listOfPhoto3
@@ -148,7 +146,7 @@ class HousePhotoDataSource {
         //-------------------------------- House #4 ------------------------------------------------
         //------------------------------------------------------------------------------------------
 
-        fun createHousePhotoDataSet4() :ArrayList<HousePhoto>{
+        fun createHousePhotoDataSet4(): ArrayList<HousePhoto> {
             val listOfPhoto4 = ArrayList<HousePhoto>()
             listOfPhoto4.add(
                     HousePhoto(
@@ -174,34 +172,27 @@ class HousePhotoDataSource {
             listOfPhoto4.add(
                     HousePhoto(
                             43L,
-                            "https://fr.luxuryestate.com/p89430503-appartement-en-vente-new-york",
-                            "Wine cellar"
-                    )
-            )
-            listOfPhoto4.add(
-                    HousePhoto(
-                            44L,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/8/properties/Property-e79900000000055400085ec8cf50-89430503.jpg",
                             "Bedroom",
                     )
             )
             listOfPhoto4.add(
                     HousePhoto(
-                            45L,
+                            44L,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/13/properties/Property-e799000000000554000d5ec8cf50-89430503.jpg",
                             "Bathroom"
                     )
             )
             listOfPhoto4.add(
                     HousePhoto(
-                            46L,
+                            45L,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/14/properties/Property-e799000000000554000e5ec8cf50-89430503.jpg",
                             "Kitchen"
                     )
             )
             listOfPhoto4.add(
                     HousePhoto(
-                            47L,
+                            46L,
                             "https://pic.le-cdn.com/thumbs/1024x768/04/11/properties/Property-e799000000000554000b5ec8cf50-89430503.jpg",
                             "Facade"
                     )
@@ -213,7 +204,7 @@ class HousePhotoDataSource {
         //-------------------------------- House #5 ------------------------------------------------
         //------------------------------------------------------------------------------------------
 
-        fun createHousePhotoDataSet5() :ArrayList<HousePhoto>{
+        fun createHousePhotoDataSet5(): ArrayList<HousePhoto> {
             val listOfPhoto5 = ArrayList<HousePhoto>()
             listOfPhoto5.add(
                     HousePhoto(
@@ -243,7 +234,7 @@ class HousePhotoDataSource {
         //-------------------------------- House #6 ------------------------------------------------
         //------------------------------------------------------------------------------------------
 
-        fun createHousePhotoDataSet6() :ArrayList<HousePhoto>{
+        fun createHousePhotoDataSet6(): ArrayList<HousePhoto> {
             val listOfPhoto6 = ArrayList<HousePhoto>()
             listOfPhoto6.add(
                     HousePhoto(
@@ -280,7 +271,7 @@ class HousePhotoDataSource {
         //-------------------------------- House #7 ------------------------------------------------
         //------------------------------------------------------------------------------------------
 
-        fun createHousePhotoDataSet7() :ArrayList<HousePhoto>{
+        fun createHousePhotoDataSet7(): ArrayList<HousePhoto> {
             val listOfPhoto7 = ArrayList<HousePhoto>()
             listOfPhoto7.add(
                     HousePhoto(
@@ -331,7 +322,7 @@ class HousePhotoDataSource {
         //-------------------------------- House #8 ------------------------------------------------
         //------------------------------------------------------------------------------------------
 
-        fun createHousePhotoDataSet8() :ArrayList<HousePhoto>{
+        fun createHousePhotoDataSet8(): ArrayList<HousePhoto> {
             val listOfPhoto8 = ArrayList<HousePhoto>()
             listOfPhoto8.add(
                     HousePhoto(
@@ -343,7 +334,7 @@ class HousePhotoDataSource {
             listOfPhoto8.add(
                     HousePhoto(
                             81L,
-                            "https://pic.le-cdn.com/thumbs/1024x768/04/5/properties/Property-0b8e00000000055500045eca19cc-89493003.jpg",
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/11/properties/Property-ca9da726012b8b2ce688d2510e589ae7-103063565.jpg",
                             "Bathroom"
                     )
             )
@@ -368,7 +359,7 @@ class HousePhotoDataSource {
         //-------------------------------- House #9 ------------------------------------------------
         //------------------------------------------------------------------------------------------
 
-        fun createHousePhotoDataSet9() :ArrayList<HousePhoto>{
+        fun createHousePhotoDataSet9(): ArrayList<HousePhoto> {
             val listOfPhoto9 = ArrayList<HousePhoto>()
             listOfPhoto9.add(
                     HousePhoto(
@@ -406,6 +397,191 @@ class HousePhotoDataSource {
                     )
             )
             return listOfPhoto9
+        }
+
+        //------------------------------------------------------------------------------------------
+        //-------------------------------- House #10 ------------------------------------------------
+        //------------------------------------------------------------------------------------------
+
+        fun createHousePhotoDataSet10(): ArrayList<HousePhoto> {
+            val listOfPhoto10 = ArrayList<HousePhoto>()
+            listOfPhoto10.add(
+                    HousePhoto(
+                            100L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/794/2/properties/Property-f2add1b6d3c418d3e686b716a130c81e-92568845.jpg",
+                            "Living room"
+                    )
+            )
+            listOfPhoto10.add(
+                    HousePhoto(
+                            101L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/794/8/properties/Property-0665124d7a584de00c8aa726f572205a-92568845.jpg",
+                            "Kitchen"
+                    )
+            )
+            listOfPhoto10.add(
+                    HousePhoto(
+                            102L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/794/6/properties/Property-7670d7e83a61634352ec2816174b83b0-92568845.jpg",
+                            "Living room"
+                    )
+            )
+            return listOfPhoto10
+        }
+
+        //------------------------------------------------------------------------------------------
+        //-------------------------------- House #11 ------------------------------------------------
+        //------------------------------------------------------------------------------------------
+
+        fun createHousePhotoDataSet11(): ArrayList<HousePhoto> {
+            val listOfPhoto11 = ArrayList<HousePhoto>()
+            listOfPhoto11.add(
+                    HousePhoto(
+                            110L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/1/properties/Property-6c612a5874cf5fc48a9c4e4658fa6ccf-96708465.jpg",
+                            "Living room"
+                    )
+            )
+            listOfPhoto11.add(
+                    HousePhoto(
+                            111L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/16/properties/Property-2a29b43ce16a9de61940e601a9ce5282-96708465.jpg",
+                            "Terrace"
+                    )
+            )
+            listOfPhoto11.add(
+                    HousePhoto(
+                            112L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/9/properties/Property-b5ba9859001495dfcca9e115d67cf6f6-96708465.jpg",
+                            "Bed room"
+                    )
+            )
+            return listOfPhoto11
+        }
+
+        //------------------------------------------------------------------------------------------
+        //-------------------------------- House #12 ------------------------------------------------
+        //------------------------------------------------------------------------------------------
+
+        fun createHousePhotoDataSet12(): ArrayList<HousePhoto> {
+            val listOfPhoto12 = ArrayList<HousePhoto>()
+            listOfPhoto12.add(
+                    HousePhoto(
+                            120L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/1/properties/Property-c9850c48d481c8c0fd4a10a4a00168b5-101415865.jpg",
+                            "Living room"
+                    )
+            )
+            listOfPhoto12.add(
+                    HousePhoto(
+                            121L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/5/properties/Property-f454215afd3cd3f4e9d35cc8b8093abe-101415865.jpg",
+                            "Bed room"
+                    )
+            )
+            listOfPhoto12.add(
+                    HousePhoto(
+                            122L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/10/properties/Property-27994131f903538f1d20406e87ec6420-101415865.jpg",
+                            "Terrace"
+                    )
+            )
+            return listOfPhoto12
+        }
+
+        //------------------------------------------------------------------------------------------
+        //-------------------------------- House #13 ------------------------------------------------
+        //------------------------------------------------------------------------------------------
+
+        fun createHousePhotoDataSet13(): ArrayList<HousePhoto> {
+            val listOfPhoto13 = ArrayList<HousePhoto>()
+            listOfPhoto13.add(
+                    HousePhoto(
+                            130L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/4/properties/Property-eb4978bb7108583f6a0bdfc715cb2b3b-105248805.jpg",
+                            "Dinning room"
+                    )
+            )
+            listOfPhoto13.add(
+                    HousePhoto(
+                            131L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/5/properties/Property-281fdbf82e7276a87c92c1fe1661d881-105248805.jpg",
+                            "Kitchen"
+                    )
+            )
+            listOfPhoto13.add(
+                    HousePhoto(
+                            132L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/6/properties/Property-9b92ad7aaff3db71b5e6e4481aae0a6c-105248805.jpg",
+                            "Garden"
+                    )
+            )
+            listOfPhoto13.add(
+                    HousePhoto(
+                            133L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/7/properties/Property-8950abf75e67e7abafb02ecf3fe623e6-105248805.jpg",
+                            "Bed room"
+                    )
+            )
+            listOfPhoto13.add(
+                    HousePhoto(
+                            134L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/8/properties/Property-e41d13c68ea0a529c6ea6391a2608a5b-105248805.jpg",
+                            "Bath room"
+                    )
+            )
+            listOfPhoto13.add(
+                    HousePhoto(
+                            135L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/9/properties/Property-6781ffabc224fcf8c5b6c8e3ac18781c-105248805.jpg",
+                            "Bed room"
+                    )
+            )
+            listOfPhoto13.add(
+                    HousePhoto(
+                            136L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/10/properties/Property-b15488bfec24bc9e032dd9a93293e10d-105248805.jpg",
+                            "Bed room"
+                    )
+            )
+            return listOfPhoto13
+        }
+
+        //------------------------------------------------------------------------------------------
+        //-------------------------------- House #14 -----------------------------------------------
+        //------------------------------------------------------------------------------------------
+
+        fun createHousePhotoDataSet14(): ArrayList<HousePhoto> {
+            val listOfPhoto14 = ArrayList<HousePhoto>()
+            listOfPhoto14.add(
+                    HousePhoto(
+                            140L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/5/properties/Property-9b96a9edbac88589344f8343bf0210b1-87213305.jpg",
+                            "Living room"
+                    )
+            )
+            listOfPhoto14.add(
+                    HousePhoto(
+                            141L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/8/properties/Property-49c0dc7377906eed3e35ca66d84a7500-87213305.jpg",
+                            "Terrace"
+                    )
+            )
+            listOfPhoto14.add(
+                    HousePhoto(
+                            142L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/13/properties/Property-7ca97e15e30b2350e7e28df900467322-87213305.jpg",
+                            "Bed room"
+                    )
+            )
+            listOfPhoto14.add(
+                    HousePhoto(
+                            143L,
+                            "https://pic.le-cdn.com/thumbs/1024x768/08/16/properties/Property-500b9fd20d9d730ee09a38a87316df77-87213305.jpg",
+                            "Bath room"
+                    )
+            )
+            return listOfPhoto14
         }
     }
 }

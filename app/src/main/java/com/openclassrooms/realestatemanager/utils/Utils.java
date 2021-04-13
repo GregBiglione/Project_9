@@ -35,8 +35,6 @@ public class Utils {
     //-------------------------------- Convert € to $ ----------------------------------------------
     //----------------------------------------------------------------------------------------------
 
-    public static int convertEuroToDollar(int euros){ return (int) Math.round(euros / 0.812); }
-
     public static double convertEuroToDollarDouble(double euros){ return (double) Math.round(euros / 0.812); }
 
     /**

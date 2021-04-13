@@ -330,7 +330,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
             houseTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val typeHouseSelected: String = houseTypeSpinner.selectedItem.toString().trim()
-                    //upType = typeHouseSelected
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -498,7 +497,7 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
                         item = item + ", "
                     }
                 }
-                pointsOfInterests.setText(item) // use event if moved in DialogFragment()
+                pointsOfInterests.setText(item)
             })
             //-------------------------------- Negative button -------------------------------------
             builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, which ->
@@ -562,8 +561,6 @@ class UpdateHouseFragment : Fragment(), PhotoChoiceDialog.GalleryListener, Photo
     private fun fillAgent(){
         mainViewModel.allAgents.observe(requireActivity(), androidx.lifecycle.Observer {
             for (a in it) {
-                // Depending of house selected agent selected is not the good one if agentId = 2 agent selected = #3, id agentId = 3
-                // agent selected = #4 so alreadySelectedIAgentId!!.toInt() - 1
                 val alreadySelectedIAgentId = args.currentHouse.agentId
                 val agentIdToInt: Int = alreadySelectedIAgentId!!.toInt() - 1
                 agentsSpinner.setSelection(agentIdToInt)

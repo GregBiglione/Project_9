@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -35,7 +34,6 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class DetailedHouseSplitFragment : Fragment() {
 
-    private val args by navArgs<DetailedHouseFragmentArgs>()
     private lateinit var detailDescription: TextView
     private lateinit var detailSurface: TextView
     private lateinit var detailRooms: TextView
@@ -126,210 +124,10 @@ class DetailedHouseSplitFragment : Fragment() {
         mapFragment = MapFragment()
         homeFragment = HomeFragment()
 
-        if (activity?.resources?.getBoolean(R.bool.isLandscape) == false){
-            fillCarousel()
-            fillDetailHouseChamps()
-            showSaleDate()
-            configureViewModel()
-            configureAgentRecyclerView()
-            //------------------- Currency view model ----------------------------------------------
-            configureMainActivityViewModel()
-            displayStaticMap()
-            return view
-        }
-        else{
-            xlLandScapeHouseDetail = arguments?.getParcelable("DetailSplitScreen")
-            configureMainActivityViewModelSplitScreen()
-            checkScreenSize()
-            return view
-        }
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //------------------- Fill image slider with photos --------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun fillCarousel(){
-        if (args.currentHouse.housePhotoList?.isNotEmpty() == true) {
-            for (p in args.currentHouse.housePhotoList!!){
-                val photos = p.photo
-                val description = p.photoDescription
-
-                imageList.add(SlideModel(photos, description))
-                imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
-            }
-        }
-        else{
-            imageSlider.visibility = View.GONE
-        }
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //------------------- Fill detail house champs -------------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    @SuppressLint("SetTextI18n")
-    private fun fillDetailHouseChamps(){
-        detailDescription.text = args.currentHouse.description
-        detailSurface.text = args.currentHouse.surface.toString()
-        detailRooms.text = args.currentHouse.numberOfRooms.toString()
-        detailBathrooms.text = args.currentHouse.numberOfBathRooms.toString()
-        detailBedrooms.text = args.currentHouse.numberOfBedRooms.toString()
-        detailNeighborhood.text = args.currentHouse.neighborhood
-        detailAddress.text = args.currentHouse.address
-        detailPointOfInterests.text = args.currentHouse.proximityPointsOfInterest
-        switchPrice()
-        entryDate()
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Configure MainActivityViewModel -----------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun configureMainActivityViewModel(){
-        mainActivityViewModel.isClickedCurrency().observe(requireActivity(), Observer {
-            isCurrencyChanged = it
-            switchPrice()
-        })
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //------------------- Switch price -------------------------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun switchPrice(){
-
-        when(isCurrencyChanged){
-            true -> {
-                showEurosPrice()
-            }
-            false -> {
-                showDollarsPrice()
-            }
-        }
-    }
-
-    //------------------- Price in € ---------------------------------------------------------------
-
-    @SuppressLint("SetTextI18n")
-    private fun showEurosPrice(){
-        val euros = args.currentHouse.price?.let { Utils.convertDollarToEuro(it) }
-        detailPrice.text = "$euros€"
-    }
-
-    //------------------- Price in $ ---------------------------------------------------------------
-
-    @SuppressLint("SetTextI18n")
-    private fun showDollarsPrice(){
-        val dollars = args.currentHouse.price
-        detailPrice.text = "$$dollars"
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //------------------- Configure agent recyclerview ---------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun configureAgentRecyclerView(){
-        agentAdapter = AgentAdapter()
-        agentRecyclerView.adapter = agentAdapter
-        agentRecyclerView.layoutManager = LinearLayoutManager(activity)
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Configure ViewModel -----------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun configureViewModel(){
-        val viewModelFactory: ViewModelFactory = injection.provideViewModelFactory(requireContext())
-        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        //------------------- Get agents from room db ----------------------------------------------
-        mainViewModel.allAgents.observe(viewLifecycleOwner, { agent ->
-            agentAdapter.setData(agent)
-            agentList = agent
-            getAgentInformation()
-        })
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Get agent information ---------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun getAgentInformation(){
-        agentid = args.currentHouse.agentId
-        detailAgent.text = args.currentHouse.agentId.toString()
-
-        for (a in agentList){
-            id = a.id
-
-            if (agentid?.let { id?.compareTo(it) } == 0){
-                photo = a.agentPhoto.toString()
-                firstName = a.firstName
-                name = a.name
-                phone = a.phoneNumber
-                email = a.email
-
-                Glide.with(requireContext())
-                        .load(photo)
-                        .into(agentPhoto)
-                agentFirstName.text = firstName
-                agentName.text = name
-                agentPhone.text = phone
-                agentEmail.text = email
-            }
-        }
-    }
-
-    //------------------- Show sale date if exists -------------------------------------------------
-
-    private fun showSaleDate(){
-        if (args.currentHouse.saleDate != null) {
-            saleDate()
-            houseSaleDateInputLyt.visibility = View.VISIBLE
-
-        }
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Set entry date ----------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    @SuppressLint("SetTextI18n")
-    private fun entryDate(){
-        val entryDate = args.currentHouse.entryDate
-        val entryFrenchDate = timeConverters.convertLongToTime(entryDate)
-        detailEntryDate.text = " $entryFrenchDate"
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Set sold date -----------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    @SuppressLint("SetTextI18n")
-    private fun saleDate(){
-        val saleDate = args.currentHouse.saleDate
-        if (saleDate != null) {
-            val saleFrenchDate = timeConverters.convertLongToTime(saleDate)
-            detailSaleDate.text = " $saleFrenchDate"
-        }
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //-------------------------------- Static map --------------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    private fun displayStaticMap(){
-        val lat = args.currentHouse.lat.toString()
-        val lng = args.currentHouse.lng.toString()
-        val url = """https://maps.google.com/maps/api/staticmap?center=$lat,$lng&zoom=18&size=300x300&markers=color:red%7Clabel:C%7C$lat,$lng
-            &sensor=false&key=$API_KEY"""
-
-        if (lat.toDouble() != 0.0 && lng.toDouble() !=  0.0){
-            mapLinearLayout.visibility = View.VISIBLE
-
-            Glide.with(requireContext())
-                    .load(url)
-                    .into(staticMap)
-        }
+        xlLandScapeHouseDetail = arguments?.getParcelable("DetailSplitScreen")
+        configureMainActivityViewModelSplitScreen()
+        checkScreenSize()
+        return view
     }
 
     //----------------------------------------------------------------------------------------------
